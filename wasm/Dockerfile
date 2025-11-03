@@ -37,8 +37,6 @@ RUN ! grep -e MARISA_CATCH -e catch -Fr include | grep -v '//'
 # note: commented out for now since implmenting __cxa_throw works fine, but if it ever doesn't, this will work (and add -fno-exceptions to the marisa build)
 #RUN sed -e '/#define MARISA_BASE_H_/a void wautil_throw[[noreturn]](const std::exception&); static bool wautil_throw(const std::exception& ex, bool b) { wautil_throw(ex); return b; }' -e 's/(throw /wautil_throw(/g' -i include/marisa/base.h
 
-# TODO: figure out how to get MARISA building with SIMD instructions
-
 COPY --link ./src/wautil.cc ./src/wautil.h /src/misc/
 
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
@@ -47,10 +45,10 @@ RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
  misc/wautil.cc
 
 COPY --link ./src/io.cc /src/lib/marisa/grimoire/io/
-COPY --link ./src/io.h /src/lib/marisa/grimoire/
+COPY --link ./src/io.h ./src/intrin.h /src/lib/marisa/grimoire/
 
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -Wno-implicit-fallthrough -Wno-unused-function -O2 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 -D_WASI_EMULATED_MMAN \
+ -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 \
  -std=c++20 -Iinclude -Ilib -Ilib/marisa/grimoire -isystemmisc -DNDEBUG \
  lib/marisa/agent.cc \
  lib/marisa/grimoire/io/io.cc \
