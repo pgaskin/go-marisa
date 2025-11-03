@@ -211,8 +211,44 @@ var _ = register(ExportFuncVIIIIII("cxx_throw", func(ctx context.Context, mod ap
 		panic("gocpp: invalid pointer")
 	}
 	Throw(&Exception{
-		typ:  string(typBuf),
+		typ:  cmp.Or(simpleDemangleClass(string(typBuf)), string(typBuf)),
 		std:  StdException(strings.TrimPrefix(string(stdBuf), stdExceptionPrefix)),
 		what: string(whatBuf),
 	})
 }, "panic[*Exception]", "typ", "typlen", "std", "stdlen", "what", "whatlen"))
+
+// simpleDemangleClass demangles a small subset of C++ class names (for the
+// Itanium C++ ABI). If invalid or unsupported, an empty string is returned.
+// Notably, it does not support templates.
+func simpleDemangleClass(s string) string {
+	var b strings.Builder
+	s, _ = strings.CutPrefix(s, "_Z")
+	s, nested := strings.CutPrefix(s, "N")
+	s, std := strings.CutPrefix(s, "St")
+	if std {
+		b.WriteString("std")
+	}
+	for s != "" {
+		var n int
+		for s != "" && !(n == 0 && s[0] == '0') && n <= len(s) && '0' <= s[0] && s[0] <= '9' {
+			n *= 10
+			n += int(s[0] - '0')
+			s = s[1:]
+		}
+		if n == 0 || n > len(s) {
+			return ""
+		}
+		if b.Len() != 0 {
+			b.WriteString("::")
+		}
+		b.WriteString(s[:n])
+		s = s[n:]
+		if !nested && s != "" {
+			break
+		}
+		if !nested || s == "E" {
+			return b.String()
+		}
+	}
+	return ""
+}

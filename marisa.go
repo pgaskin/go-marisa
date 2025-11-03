@@ -20,7 +20,6 @@ import (
 	"github.com/pgaskin/go-marisa/internal/wautil"
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
-	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
 )
 
 //go:generate docker build --platform amd64 --pull --no-cache --progress plain --output wasm wasm
@@ -73,8 +72,6 @@ func initialize() {
 	cfg = cfg.WithCoreFeatures(api.CoreFeaturesV2)
 
 	instance.runtime = wazero.NewRuntimeWithConfig(ctx, cfg)
-
-	_, instance.err = wasi_snapshot_preview1.Instantiate(ctx, instance.runtime) // TODO: remove the symbols which requires this (we don't actually use it)
 
 	_, instance.err = wautil.InstantiateHostModule(ctx, instance.runtime)
 	if instance.err != nil {

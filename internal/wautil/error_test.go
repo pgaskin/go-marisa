@@ -184,3 +184,33 @@ func TestStdException(t *testing.T) {
 		t.Errorf("error type should not match another error")
 	}
 }
+
+func TestSimpleDemangleClass(t *testing.T) {
+	for _, tc := range [][2]string{
+		{"", ""},
+		{"1", ""},
+		{"_Z", ""},
+		{"_ZSt9exception", "std::exception"},
+		{"_ZSt9exceptio", ""},
+		{"_ZNSt3__18ios_base7failureE", "std::__1::ios_base::failure"},
+		{"_ZNSt3__18ios_base7failure", ""},
+		{"_ZNSt3__18ios_base7failureEa", ""},
+		{"N3tmp3tmp22asdasdasdsdfgsdfsdfsdf11CustomErrorE", "tmp::tmp::asdasdasdsdfgsdfsdfsdf::CustomError"},
+		{"4test", "test"},
+		{"4testE", ""},
+		{"N0E", ""},
+		{"N0aE", ""},
+		{"N01aE", ""},
+		{"N1aE", "a"},
+		{"N4testE", "test"},
+		{"N4test3abcE", "test::abc"},
+		{"N4test3_23E", "test::_23"},
+		{"N4test3_234abcdE", "test::_23::abcd"},
+		{"N4test3_234abcdeE", ""},
+		{"N4test3_234abcd1E", ""},
+	} {
+		if s := simpleDemangleClass(tc[0]); s != tc[1] {
+			t.Errorf("demangle(%q) != %q, got %q", tc[0], tc[1], s)
+		}
+	}
+}

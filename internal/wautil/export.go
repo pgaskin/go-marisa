@@ -32,6 +32,50 @@ func ExportFuncIIII[TR, T0, T1, T2 i32](exportName string, fn func(context.Conte
 	}
 }
 
+type funcVII[T0, T1 i32] func(context.Context, api.Module, T0, T1)
+
+func (fn funcVII[T0, T1]) Call(ctx context.Context, mod api.Module, stack []uint64) {
+	_ = stack[1]
+	fn(ctx, mod, T0(stack[0]), T1(stack[1]))
+}
+
+func ExportFuncVII[T0, T1 i32](exportName string, fn func(context.Context, api.Module, T0, T1), name ...string) func(wazero.HostModuleBuilder) {
+	return func(mod wazero.HostModuleBuilder) {
+		b := mod.NewFunctionBuilder()
+		b.WithGoModuleFunction(funcVII[T0, T1](fn), []api.ValueType{api.ValueTypeI32, api.ValueTypeI32}, nil)
+		if len(name) != 0 {
+			if len(name) != 3 {
+				panic("incorrect number of names")
+			}
+			b.WithName(name[0])
+			b.WithParameterNames(name[1], name[2])
+		}
+		b.Export(exportName)
+	}
+}
+
+type funcVIII[T0, T1, T2 i32] func(context.Context, api.Module, T0, T1, T2)
+
+func (fn funcVIII[T0, T1, T2]) Call(ctx context.Context, mod api.Module, stack []uint64) {
+	_ = stack[2]
+	fn(ctx, mod, T0(stack[0]), T1(stack[1]), T2(stack[2]))
+}
+
+func ExportFuncVIII[T0, T1, T2 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2), name ...string) func(wazero.HostModuleBuilder) {
+	return func(mod wazero.HostModuleBuilder) {
+		b := mod.NewFunctionBuilder()
+		b.WithGoModuleFunction(funcVIII[T0, T1, T2](fn), []api.ValueType{api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32}, nil)
+		if len(name) != 0 {
+			if len(name) != 4 {
+				panic("incorrect number of names")
+			}
+			b.WithName(name[0])
+			b.WithParameterNames(name[1], name[2], name[3])
+		}
+		b.Export(exportName)
+	}
+}
+
 type funcVIIII[T0, T1, T2, T3 i32] func(context.Context, api.Module, T0, T1, T2, T3)
 
 func (fn funcVIIII[T0, T1, T2, T3]) Call(ctx context.Context, mod api.Module, stack []uint64) {

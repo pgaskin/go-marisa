@@ -41,7 +41,7 @@ func GetHandle[T any](ctx context.Context, handle Handle) T {
 // note: we're not using externrefs since they're unnecessarily complicated to
 // store and have no real benefit other than typing
 
-var _ = register(ExportFuncIIII("cxx_write", func(ctx context.Context, mod api.Module, handle Handle, ptr, size uint32) uint32 {
+var _ = register(ExportFuncVIII("cxx_write", func(ctx context.Context, mod api.Module, handle Handle, ptr, size uint32) {
 	w := GetHandle[io.Writer](ctx, handle)
 	if w == nil {
 		panic("gocpp: nil handle")
@@ -57,10 +57,19 @@ var _ = register(ExportFuncIIII("cxx_write", func(ctx context.Context, mod api.M
 	if n != len(b) {
 		Throw(io.ErrShortWrite)
 	}
-	return uint32(n)
-}, "io.Writer.Write", "handle", "ptr", "size", "n"))
+}, "io.Writer.Write", "handle", "ptr", "size"))
 
-var _ = register(ExportFuncIIII("cxx_read", func(ctx context.Context, mod api.Module, handle Handle, ptr, size uint32) uint32 {
+var _ = register(ExportFuncVII("cxx_write_zeros", func(ctx context.Context, mod api.Module, handle Handle, size uint32) {
+	w := GetHandle[io.Writer](ctx, handle)
+	if w == nil {
+		panic("gocpp: nil handle")
+	}
+	if _, err := io.CopyN(w, zeros{}, int64(size)); err != nil {
+		Throw(err)
+	}
+}, "io.CopyN_zeros", "handle", "size"))
+
+var _ = register(ExportFuncVIII("cxx_read_full", func(ctx context.Context, mod api.Module, handle Handle, ptr, size uint32) {
 	r := GetHandle[io.Reader](ctx, handle)
 	if r == nil {
 		panic("gocpp: nil handle")
@@ -69,16 +78,32 @@ var _ = register(ExportFuncIIII("cxx_read", func(ctx context.Context, mod api.Mo
 	if !ok {
 		panic("gocpp: invalid pointer")
 	}
-	for {
-		n, err := r.Read(b)
+	if _, err := io.ReadFull(r, b); err != nil {
 		if err == io.EOF {
-			return 0
+			err = io.ErrUnexpectedEOF
 		}
-		if err != nil {
-			Throw(err)
-		}
-		if n > 0 {
-			return uint32(n)
-		}
+		Throw(err)
 	}
-}, "io.Reader.Read", "handle", "ptr", "size", "n"))
+}, "io.ReadFull", "handle", "ptr", "size"))
+
+var _ = register(ExportFuncVII("cxx_read_skip", func(ctx context.Context, mod api.Module, handle Handle, size uint32) {
+	r := GetHandle[io.Reader](ctx, handle)
+	if r == nil {
+		panic("gocpp: nil handle")
+	}
+	if _, err := io.CopyN(io.Discard, r, int64(size)); err != nil {
+		if err == io.EOF {
+			err = io.ErrUnexpectedEOF
+		}
+		Throw(err)
+	}
+}, "io.CopyN_Discard", "handle", "size"))
+
+type zeros struct{}
+
+func (z zeros) Read(p []byte) (n int, err error) {
+	for i := range p {
+		p[i] = 0
+	}
+	return len(p), nil
+}

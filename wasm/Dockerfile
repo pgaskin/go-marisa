@@ -39,32 +39,35 @@ RUN ! grep -e MARISA_CATCH -e catch -Fr include | grep -v '//'
 
 # TODO: figure out how to get MARISA building with SIMD instructions
 
+COPY --link ./src/wautil.cc ./src/wautil.h /src/misc/
+
+RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
+ -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 -fno-exceptions -Xclang -target-abi -Xclang experimental-mv \
+ -std=c++20 -Imisc -isysteminclude \
+ misc/wautil.cc
+
+COPY --link ./src/io.cc /src/lib/marisa/grimoire/io/
+COPY --link ./src/io.h /src/lib/marisa/grimoire/
+
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -Wno-implicit-fallthrough -Wno-unused-function -O2 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 -D_WASI_EMULATED_MMAN \
- -std=c++20 -Iinclude -Ilib -DNDEBUG \
+ -std=c++20 -Iinclude -Ilib -Ilib/marisa/grimoire -isystemmisc -DNDEBUG \
  lib/marisa/agent.cc \
- lib/marisa/grimoire/io/mapper.cc \
- lib/marisa/grimoire/io/reader.cc \
- lib/marisa/grimoire/io/writer.cc \
+ lib/marisa/grimoire/io/io.cc \
  lib/marisa/grimoire/trie/louds-trie.cc \
  lib/marisa/grimoire/trie/tail.cc \
  lib/marisa/grimoire/vector/bit-vector.cc \
  lib/marisa/keyset.cc \
  lib/marisa/trie.cc
 
-COPY --link ./src/wautil.cc ./src/wautil.h /src/
+COPY --link ./src/wrapper.cc /src/misc/
 
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 -fno-exceptions -Xclang -target-abi -Xclang experimental-mv \
- -std=c++20 -I. \
- wautil.cc
+ -std=c++20 -isystemmisc -isysteminclude \
+ misc/wrapper.cc
 
-COPY --link ./src/wrapper.cc ./exports.txt /src/
-
-RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 -fno-exceptions -Xclang -target-abi -Xclang experimental-mv \
- -std=c++20 -isysteminclude -isystem. \
- wrapper.cc
+COPY --link ./exports.txt /src/
 
 RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor $(printf " -Wl,--export=%s" $(cat exports.txt)) *.o
 

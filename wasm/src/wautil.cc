@@ -3,9 +3,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <cstring>
-#include <cxxabi.h>
 #include <functional>
-#include <iostream>
 #include <memory>
 #include <new>
 #include <stdexcept>
@@ -23,57 +21,18 @@
 
 namespace wautil {
 
-/** cxx_write calls io.Writer.Write(buf[:n]), throwing on error */
-wasm_import(wautil, cxx_write) size_t cxx_write(uintptr_t handle, const char *buf, size_t n);
-
-/** cxx_read calls io.Reader.Read(buf[:n]), throwing on error, and returning 0 on eof */
-wasm_import(wautil, cxx_read) size_t cxx_read(uintptr_t handle, const char *buf, size_t n);
-
-/** cxx_throw throws an exception, stopping execution immeidately without running destructors */
 wasm_import(wautil, cxx_throw) void cxx_throw[[noreturn]](const char *typ, size_t typlen, const char *std, size_t stdlen, const char *msg, size_t msglen);
-
-/** alloc allocates memory */
+wasm_import(wautil, cxx_write) void cxx_write(uintptr_t handle, const char *buf, size_t n);
+wasm_import(wautil, cxx_read_full) void cxx_read_full(uintptr_t handle, char *buf, size_t n);
+wasm_import(wautil, cxx_write_zeros) void cxx_write_zeros(uintptr_t handle, size_t n);
+wasm_import(wautil, cxx_read_skip) void cxx_read_skip(uintptr_t handle, size_t n);
 wasm_export(wautil_alloc) void *wautil_alloc(size_t n) { return ::operator new(n); }
-
-/** free frees memory */
 wasm_export(wautil_free) void wautil_free(void *ptr) { ::operator delete(ptr); }
 
-gostream::gostream(uint32_t handle) : handle_(handle) {
-    this->setg(&this->rbuf_, &this->rbuf_ + 1, &this->rbuf_ + 1); // set the buffer, but at the end to force the next read to underflow
-}
-
-gostream::int_type gostream::underflow() {
-    streamsize n = this->xsgetn(&this->rbuf_, sizeof(char_type));
-    if (n == traits_type::eof()) return traits_type::eof();
-    return traits_type::to_int_type(this->rbuf_);
-}
-
-gostream::streamsize gostream::xsgetn(char_type* buf, streamsize buf_n) {
-    streamsize n = 0;
-    while (n != buf_n) {
-        size_t x = cxx_read(handle_, buf+n, static_cast<size_t>(buf_n-n));
-        if (x == 0) break;
-        n += x;
-    }
-    this->rbuf_ = n>0 ? buf[n-1] : 0;
-    this->setg(&this->rbuf_, &this->rbuf_, &this->rbuf_ + (n>0 ? 1 : 0));
-    if (this->gptr() == this->egptr()) return traits_type::eof();
-    return n;
-}
-
-gostream::int_type gostream::overflow(int_type c) {
-    if (traits_type::eq_int_type(c, traits_type::eof())) return 0;
-    this->xsputn(reinterpret_cast<traits_type::char_type*>(&c), 1);
-    return c;
-}
-
-gostream::streamsize gostream::xsputn(const char_type* buf, streamsize buf_n) {
-    return static_cast<streamsize>(cxx_write(handle_, buf, static_cast<size_t>(buf_n)));
-}
-
-reader::reader(uint32_t handle) : gostream(handle), std::istream(this) {}
-
-writer::writer(uint32_t handle) : gostream(handle), std::ostream(this) {}
+void write(uintptr_t handle, const char *buf, size_t n) { cxx_write(handle, buf, n); }
+void write(uintptr_t handle, size_t n) { cxx_write_zeros(handle, n); }
+void read(uintptr_t handle, char *buf, size_t n) { cxx_read_full(handle, buf, n); }
+void read(uintptr_t handle, size_t n) { cxx_read_skip(handle, n); }
 
 }
 
@@ -82,15 +41,6 @@ void wautil_throw[[noreturn]](const std::exception& ex) {
     // search for "MARISA_THROW" to see what's used
     const char *typ = typeid(ex).name();
     size_t typlen = std::strlen(typ);
-
-    char dtyp[128];
-    size_t dtyplen = sizeof(dtyp);
-    int dstatus = -1;
-    abi::__cxa_demangle(typ, dtyp, &dtyplen, &dstatus);
-    if (dstatus == 0) {
-        typ = dtyp;
-        typlen = dtyplen-1;
-    }
 
     // these must be a subset of the ones defined in internal/wautil/error.go for unwrapping to work correctly
     const char *std = "exception";
@@ -160,4 +110,17 @@ extern "C" void __cxa_throw(void *thrown_exception, [[maybe_unused]] std::type_i
     // anything throws a non-exception (but at least wazero will give us a
     // useful stack trace)
     wautil_throw(*reinterpret_cast<std::exception*>(thrown_exception));
+}
+
+// printf_core (and write/writev/close) is brought in by __abort_message, which
+// is only used internally in libcxx in places we won't hit in practice (in
+// particular, we override operator new's error handling), so just replace
+// __abort_message (and since the messages are mostly static, don't bother with
+// the format string)
+//  - run `twiggy top wasm/marisa.wasm --retained`
+//  - run `twiggy paths wasm/marisa.wasm printf_core`
+//  - run `wasm-objdump -x wasm/marisa.wasm`
+//  - https://github.com/llvm/llvm-project/blob/f3b407f8f4624461eedfe5a2da540469a0f69dc9/libcxxabi/src/stdlib_new_delete.cpp#L31C13-L43
+extern "C" void __abort_message[[noreturn]](const char* fmt, ...) {
+    wautil::cxx_throw(nullptr, 0, nullptr, 0, fmt, std::strlen(fmt));
 }

@@ -1,17 +1,7 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "marisa/iostream.h"
 #include "marisa/trie.h"
-#include "wautil.h"
-
-extern "C" void* mmap(void*, size_t, int, int, int, off_t) { __builtin_unreachable(); }
-extern "C" int munmap(void*, size_t) { __builtin_unreachable(); }
-extern "C" ssize_t read(int, void*, size_t) { __builtin_unreachable(); }
-extern "C" ssize_t write(int, void*, size_t) { __builtin_unreachable(); }
-extern "C" off_t lseek(int, off_t, int) { __builtin_unreachable(); }
-extern "C" int close(int) { __builtin_unreachable(); }
-extern "C" int fstat(int, struct stat *) { __builtin_unreachable(); }
 
 // note: even on 64-bit platforms with 64-bit size_t, key IDs and lengths are
 // limited to uint32s in MARISA
@@ -31,11 +21,11 @@ extern "C" void marisa_new(void *ptr, size_t size) {
 }
 
 extern "C" void marisa_load(uint32_t handle) {
-    wautil::reader(handle) >> trie;
+    trie.read(static_cast<int>(handle));
 }
 
 extern "C" void marisa_save(uint32_t handle) {
-    wautil::writer(handle) << trie;
+    trie.write(static_cast<int>(handle));
 }
 
 extern "C" void marisa_build_push(const char *ptr, size_t length, float weight) {
