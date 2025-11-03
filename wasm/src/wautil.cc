@@ -21,7 +21,7 @@
 
 namespace wautil {
 
-wasm_import(wautil, cxx_throw) void cxx_throw[[noreturn]](const char *typ, size_t typlen, const char *std, size_t stdlen, const char *msg, size_t msglen);
+wasm_import(wautil, cxx_throw) void cxx_throw[[noreturn]](const char *typ, const char *std, const char *msg);
 wasm_import(wautil, cxx_write) void cxx_write(uintptr_t handle, const char *buf, size_t n);
 wasm_import(wautil, cxx_read_full) void cxx_read_full(uintptr_t handle, char *buf, size_t n);
 wasm_import(wautil, cxx_write_zeros) void cxx_write_zeros(uintptr_t handle, size_t n);
@@ -34,13 +34,9 @@ void write(uintptr_t handle, size_t n) { cxx_write_zeros(handle, n); }
 void read(uintptr_t handle, char *buf, size_t n) { cxx_read_full(handle, buf, n); }
 void read(uintptr_t handle, size_t n) { cxx_read_skip(handle, n); }
 
-}
-
-void wautil_throw[[noreturn]](const std::exception& ex) {
+void wthrow[[noreturn]](const std::exception& ex) {
     // see https://en.cppreference.com/w/cpp/error/exception.html for the hierachy
     // search for "MARISA_THROW" to see what's used
-    const char *typ = typeid(ex).name();
-    size_t typlen = std::strlen(typ);
 
     // these must be a subset of the ones defined in internal/wautil/error.go for unwrapping to work correctly
     const char *std = "exception";
@@ -73,17 +69,38 @@ void wautil_throw[[noreturn]](const std::exception& ex) {
     std_(std::bad_alloc)                      // exception
     std_(std::bad_exception)                  // exception
     //std_(std::bad_variant_access)           // exception
-    size_t stdlen = std::strlen(std);
 
-    const char *msg = ex.what();
-    size_t msglen = std::strlen(msg);
-
-    wautil::cxx_throw(typ, typlen, std, stdlen, msg, msglen);
+    wautil::cxx_throw(typeid(ex).name(), std, ex.what());
 }
 
-wasm_constructor static void wautil_new_handler_init() {
-    static auto ex = std::bad_alloc(); // preallocate
-    std::set_new_handler([]() { wautil_throw(ex); });
+void wthrow[[noreturn]](const char *typ, const char *what) {
+    wautil::cxx_throw(typ, nullptr, what);
+}
+
+void wthrow[[noreturn]](const std::type_info &tinfo, const char *what) {
+    wautil::wthrow(tinfo.name(), what);
+}
+
+void wthrow[[noreturn]](const char *what) {
+    wautil::wthrow(nullptr, what);
+}
+
+static void *wthrow_destruct_obj = nullptr;
+static void *(*wthrow_destruct_fn)(void*) = nullptr;
+
+static void wthrow_set_destructor(void *obj, void *(*dest)(void*)) {
+    wthrow_destruct_obj = obj;
+    wthrow_destruct_fn = dest;
+}
+
+wasm_export(wautil_post_throw) void wautil_post_throw() {
+    if (wthrow_destruct_fn && wthrow_destruct_obj) {
+        wthrow_destruct_fn(wthrow_destruct_obj);
+        wthrow_destruct_fn = nullptr;
+        wthrow_destruct_obj = nullptr;
+    }
+}
+
 }
 
 static uint8_t fallback_exception_buf[4096];
@@ -102,14 +119,41 @@ extern "C" void __cxa_free_exception(void *thrown_exception) {
     ::operator delete(thrown_exception);
 }
 
-extern "C" void __cxa_throw(void *thrown_exception, [[maybe_unused]] std::type_info *tinfo, [[maybe_unused]] void *(*dest)(void *)) {
-    // this is a terrible hack which will work as long as stuff is derived from
-    // std::exception* (since the vtable prefix will be the same and
-    // dynamic_cast will still be able to figure out the base type since
-    // reinterpret_cast doesn't overwrite the vtable), but it will fail badly if
-    // anything throws a non-exception (but at least wazero will give us a
-    // useful stack trace)
-    wautil_throw(*reinterpret_cast<std::exception*>(thrown_exception));
+namespace __cxxabiv1 {
+class __shim_type_info : public std::type_info {
+public:
+    virtual ~__shim_type_info();
+    virtual void noop1() const;
+    virtual void noop2() const;
+    virtual bool can_catch(const __shim_type_info *thrown_type, void *&adjustedPtr) const = 0;
+};
+}
+
+extern "C" void __cxa_throw(void *thrown_exception, std::type_info *tinfo, void *(*dest)(void*)) {
+    // this took a while to figure out, but it's really simple in the end
+    //
+    // see the following links:
+    //  - https://github.com/llvm/llvm-project/blob/564c3de67d20d578d05678b49045378fdcf5ccaa/libcxxabi/include/cxxabi.h
+    //  - https://github.com/llvm/llvm-project/blob/564c3de67d20d578d05678b49045378fdcf5ccaa/libcxxabi/src/private_typeinfo.cpp
+    //  - https://github.com/llvm/llvm-project/blob/564c3de67d20d578d05678b49045378fdcf5ccaa/libcxx/include/typeinfo#L189
+    //  - https://github.com/llvm/llvm-project/blob/564c3de67d20d578d05678b49045378fdcf5ccaa/libcxxabi/src/cxa_default_handlers.cpp#L65-L78
+    //  - https://github.com/llvm/llvm-project/blob/564c3de67d20d578d05678b49045378fdcf5ccaa/libcxxabi/src/aix_state_tab_eh.inc#L579-L628
+    //  - https://github.com/llvm/llvm-project/blob/564c3de67d20d578d05678b49045378fdcf5ccaa/libcxxabi/src/private_typeinfo.h#L17-L55
+    //
+    // limitations:
+    //   - we don't support c++ catch blocks (all exceptions will go straight to go)
+    //   - we don't support unwinding the stack, so destructors won't get called
+
+    wautil::wthrow_set_destructor(thrown_exception, dest);
+    if (tinfo) {
+        auto throw_type = static_cast<const __cxxabiv1::__shim_type_info*>(tinfo);
+        auto catch_type = static_cast<const __cxxabiv1::__shim_type_info*>(&typeid(std::exception));
+        if (catch_type->can_catch(throw_type, thrown_exception)) {
+            wautil::wthrow(*static_cast<std::exception*>(thrown_exception));
+        }
+        wautil::wthrow(*tinfo, "unknown error type");
+    }
+    wautil::wthrow("unknown error type");
 }
 
 // printf_core (and write/writev/close) is brought in by __abort_message, which
@@ -122,5 +166,10 @@ extern "C" void __cxa_throw(void *thrown_exception, [[maybe_unused]] std::type_i
 //  - run `wasm-objdump -x wasm/marisa.wasm`
 //  - https://github.com/llvm/llvm-project/blob/f3b407f8f4624461eedfe5a2da540469a0f69dc9/libcxxabi/src/stdlib_new_delete.cpp#L31C13-L43
 extern "C" void __abort_message[[noreturn]](const char* fmt, ...) {
-    wautil::cxx_throw(nullptr, 0, nullptr, 0, fmt, std::strlen(fmt));
+    wautil::wthrow("abort", fmt);
+}
+
+wasm_constructor static void wautil_new_handler_init() {
+    static auto ex = std::bad_alloc(); // preallocate
+    std::set_new_handler([]() { wautil::wthrow(ex); });
 }

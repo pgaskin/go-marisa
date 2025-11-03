@@ -1,9 +1,11 @@
 package wautil
 
 import (
+	"bytes"
 	"cmp"
 	"context"
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/tetratelabs/wazero/api"
@@ -104,17 +106,21 @@ func (e *Exception) Unwrap() error {
 
 // As converts an Exception to a StdException.
 func (e *Exception) As(target any) bool {
-	if target, ok := target.(*StdException); ok {
-		*target = e.std
-		return true
+	if e.std != "" {
+		if target, ok := target.(*StdException); ok {
+			*target = e.std
+			return true
+		}
 	}
 	return false
 }
 
 // Is allows [errors.Is] to work with [StdException] values.
 func (e *Exception) Is(target error) bool {
-	if target, ok := target.(StdException); ok {
-		return e.std.Is(target) // we don't need to check the parents ourselves since we implement Unwrap for each one
+	if e.std != "" {
+		if target, ok := target.(StdException); ok {
+			return e.std.Is(target) // we don't need to check the parents ourselves since we implement Unwrap for each one
+		}
 	}
 	return false
 }
@@ -197,25 +203,31 @@ func (std StdException) Is(target error) bool {
 	return false
 }
 
-var _ = register(ExportFuncVIIIIII("cxx_throw", func(ctx context.Context, mod api.Module, typ, typlen, std, stdlen, what, whatlen uint32) {
-	typBuf, ok := mod.Memory().Read(typ, typlen)
-	if !ok {
-		panic("gocpp: invalid pointer")
+var _ = register(ExportFuncVIII("cxx_throw", func(ctx context.Context, mod api.Module, typ, std, what uint32) {
+	type nestedThrowKey struct{}
+	if ctx.Value(nestedThrowKey{}) == true {
+		panic(fmt.Errorf("wautil: post-throw callback threw"))
 	}
-	stdBuf, ok := mod.Memory().Read(std, stdlen)
-	if !ok {
-		panic("gocpp: invalid pointer")
+	exc := new(Exception)
+	if s, ok := cString(mod.Memory(), typ, 256); ok {
+		exc.typ = cmp.Or(simpleDemangleClass(s), s)
 	}
-	whatBuf, ok := mod.Memory().Read(what, whatlen)
-	if !ok {
-		panic("gocpp: invalid pointer")
+	if s, ok := cString(mod.Memory(), std, 256); ok {
+		if s, ok := strings.CutPrefix(s, stdExceptionPrefix); ok {
+			exc.std = StdException(strings.TrimPrefix(s, stdExceptionPrefix))
+		}
 	}
-	Throw(&Exception{
-		typ:  cmp.Or(simpleDemangleClass(string(typBuf)), string(typBuf)),
-		std:  StdException(strings.TrimPrefix(string(stdBuf), stdExceptionPrefix)),
-		what: string(whatBuf),
-	})
-}, "panic[*Exception]", "typ", "typlen", "std", "stdlen", "what", "whatlen"))
+	if s, ok := cString(mod.Memory(), what, 8192); ok {
+		exc.what = s
+	}
+	if exc.typ == "" && exc.std != "" {
+		exc.typ = exc.std.Error()
+	}
+	if _, err := mod.ExportedFunction("wautil_post_throw").Call(context.WithValue(ctx, nestedThrowKey{}, true)); err != nil {
+		panic(fmt.Errorf("wautil: failed to call post-throw callback: %w", err))
+	}
+	Throw(exc)
+}, "panic[*Exception]", "typ", "std", "what"))
 
 // simpleDemangleClass demangles a small subset of C++ class names (for the
 // Itanium C++ ABI). If invalid or unsupported, an empty string is returned.
@@ -251,4 +263,15 @@ func simpleDemangleClass(s string) string {
 		}
 	}
 	return ""
+}
+
+func cString(memory api.Memory, ptr, maxLen uint32) (string, bool) {
+	if ptr != 0 {
+		if buf, ok := memory.Read(ptr, min(maxLen, memory.Size()-ptr)); ok {
+			if i := bytes.IndexByte(buf, 0); i != -1 {
+				return string(buf[:i]), true
+			}
+		}
+	}
+	return "", false
 }

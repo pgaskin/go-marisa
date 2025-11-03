@@ -77,6 +77,15 @@ func TestException(t *testing.T) {
 	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, StdException("system_error")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
+
+	assertExceptionString("test::something_else", "", "test",
+		"test::something_else: test")
+	if p := StdException(""); errors.As(&Exception{"test::something_else", "test", ""}, &p) {
+		t.Errorf("should not get StdException for a non-exception type")
+	}
+	if errors.Is(&Exception{"test::something_else", "test", ""}, StdException("")) {
+		t.Errorf("should not get StdException for a non-exception type")
+	}
 }
 
 func TestStdException(t *testing.T) {

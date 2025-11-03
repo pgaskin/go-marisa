@@ -33,14 +33,10 @@ ENV PATH="/opt/wasi-sdk/bin:/opt/binaryen/bin:$PATH"
 RUN ! grep -e MARISA_CATCH -e catch -Fr lib
 RUN ! grep -e MARISA_CATCH -e catch -Fr include | grep -v '//'
 
-# replace throws
-# note: commented out for now since implmenting __cxa_throw works fine, but if it ever doesn't, this will work (and add -fno-exceptions to the marisa build)
-#RUN sed -e '/#define MARISA_BASE_H_/a void wautil_throw[[noreturn]](const std::exception&); static bool wautil_throw(const std::exception& ex, bool b) { wautil_throw(ex); return b; }' -e 's/(throw /wautil_throw(/g' -i include/marisa/base.h
-
 COPY --link ./src/wautil.cc ./src/wautil.h /src/misc/
 
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 -fno-exceptions -Xclang -target-abi -Xclang experimental-mv \
+ -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
  -std=c++20 -Imisc -isysteminclude \
  misc/wautil.cc
 
@@ -48,7 +44,7 @@ COPY --link ./src/io.cc /src/lib/marisa/grimoire/io/
 COPY --link ./src/io.h ./src/intrin.h /src/lib/marisa/grimoire/
 
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -Wno-implicit-fallthrough -Wno-unused-function -O2 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 \
+ -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 \
  -std=c++20 -Iinclude -Ilib -Ilib/marisa/grimoire -isystemmisc -DNDEBUG \
  lib/marisa/agent.cc \
  lib/marisa/grimoire/io/io.cc \
@@ -61,7 +57,7 @@ RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -Wno-implicit-fallthrough 
 COPY --link ./src/wrapper.cc /src/misc/
 
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -mreference-types -msign-ext -msimd128 -fno-exceptions -Xclang -target-abi -Xclang experimental-mv \
+ -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
  -std=c++20 -isystemmisc -isysteminclude \
  misc/wrapper.cc
 
@@ -72,7 +68,7 @@ RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor $(printf " -Wl,--exp
 RUN wasm-ctor-eval -g -c _initialize marisa.wasm -o marisa.tmp
 
 RUN wasm-opt -g marisa.tmp -o marisa.wasm -O2 \
- --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-reference-types --enable-sign-ext --enable-simd \
+ --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext --enable-simd \
  --low-memory-unused --strip-debug --strip-dwarf
 
 RUN chmod 644 marisa.wasm

@@ -1,5 +1,6 @@
 wautil_alloc
 wautil_free
+wautil_post_throw
 
 marisa_new
 marisa_load
