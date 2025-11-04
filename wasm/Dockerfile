@@ -33,6 +33,9 @@ ENV PATH="/opt/wasi-sdk/bin:/opt/binaryen/bin:$PATH"
 RUN ! grep -e MARISA_CATCH -e catch -Fr lib
 RUN ! grep -e MARISA_CATCH -e catch -Fr include | grep -v '//'
 
+# preserve the i/o functions for stack traces
+RUN sed -E 's/void (map\(Mapper|read\(Reader|write\(Writer) /[[clang::noinline]] &/g' -i lib/marisa/grimoire/trie/*.h lib/marisa/grimoire/vector/*.h
+
 COPY --link ./io.cc /src/lib/marisa/grimoire/io/
 COPY --link ./io.h ./intrin.h /src/lib/marisa/grimoire/
 

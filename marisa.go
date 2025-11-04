@@ -7,6 +7,7 @@ import (
 	"context"
 	_ "embed"
 	"encoding"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"io"
@@ -679,6 +680,7 @@ var write = wexport.VII("write", func(ctx context.Context, m api.Module, p, n ui
 			if !ok {
 				panic("invalid pointer")
 			}
+			maybePanicAtOffset(w, n, b)
 			n, err := w.Write(b)
 			if err != nil {
 				wexcept.Throw(err)
@@ -687,6 +689,7 @@ var write = wexport.VII("write", func(ctx context.Context, m api.Module, p, n ui
 				wexcept.Throw(io.ErrShortWrite)
 			}
 		} else {
+			maybePanicAtOffset(w, n, nil)
 			if _, err := io.CopyN(w, zeroReader{}, int64(n)); err != nil {
 				wexcept.Throw(err)
 			}
@@ -723,4 +726,54 @@ func (c *countReader) Read(p []byte) (n int, err error) {
 	n, err = c.R.Read(p)
 	c.N += int64(n)
 	return
+}
+
+// debugPanicAtOffset causes a stack trace to be printed when a write overlaps
+// the specified offsets. This is intended for debugging, or for figuring out
+// what exactly a specific offset is for.
+var debugPanicAtOffset uint32 = math.MaxUint32
+
+func init() {
+	if s := os.Getenv("MARISA_DEBUG_PANIC_AT_OFFSET"); s != "" {
+		if n, err := strconv.ParseUint(s, 0, 32); err == nil {
+			debugPanicAtOffset = uint32(n)
+		}
+	}
+}
+
+func maybePanicAtOffset(a any, n uint32, b []byte) {
+	if debugPanicAtOffset == math.MaxUint32 {
+		return
+	}
+	var o uint32
+	switch a := a.(type) {
+	case *countWriter:
+		o = uint32(a.N)
+	default:
+		return
+	}
+	if o <= debugPanicAtOffset && debugPanicAtOffset-o < n {
+		var s strings.Builder
+		s.WriteString("write (MARISA_DEBUG_PANIC_AT_OFFSET)")
+		s.WriteString("\nmatch: ")
+		s.WriteString(strconv.FormatUint(uint64(o), 10))
+		s.WriteString(" <= ")
+		s.WriteString(strconv.FormatUint(uint64(debugPanicAtOffset), 10))
+		s.WriteString(" < ")
+		s.WriteString(strconv.FormatUint(uint64(o+n), 10))
+		s.WriteString(" (")
+		s.WriteString(strconv.FormatUint(uint64(n), 10))
+		s.WriteString(")")
+		s.WriteString("\ndata:")
+		if b != nil {
+			for _, l := range strings.Split(hex.Dump(b), "\n") {
+				s.WriteString("\n\t")
+				s.WriteString(l)
+			}
+		} else {
+			s.WriteString("zeros")
+		}
+		s.WriteString("\n")
+		panic(s.String())
+	}
 }
