@@ -6,3 +6,5 @@ require (
 	github.com/tetratelabs/wazero v1.9.0
 	golang.org/x/sys v0.35.0
 )
+
+require github.com/spf13/pflag v1.0.10
