@@ -45,6 +45,7 @@ var wasm []byte
 // the maximum dictionary size is 2 GiB. Note that if you build/load the same
 // trie twice, it needs twice the amount of memory since it swaps it at the end.
 type Trie struct {
+	noCopy    noCopy // can't be copied since it's essentialy a handle
 	mod       *wwrap.Module
 	qry       *query // cache the last query (we'll usually only have one at a time unless someone is nesting iterators)
 	size      uint32
@@ -445,7 +446,7 @@ func (t *Trie) WriteTo(w io.Writer) (int64, error) {
 }
 
 // String returns a human-readable description of the dictionary.
-func (t Trie) String() string {
+func (t *Trie) String() string {
 	var b strings.Builder
 	b.WriteString(reflect.TypeOf(t).String())
 	b.WriteString("(")
@@ -469,32 +470,33 @@ func (t Trie) String() string {
 
 // Size returns the number of keys in the dictionary. Key are numbered from 0 to
 // Size-1.
-func (t Trie) Size() uint32 {
+func (t *Trie) Size() uint32 {
 	return t.size
 }
 
 // DiskSize returns the serialized size of the dictionary.
-func (t Trie) DiskSize() uint32 {
+func (t *Trie) DiskSize() uint32 {
 	return t.ioSize
 }
 
 // TotalSize returns the in-memory size of the dictionary.
-func (t Trie) TotalSize() uint32 {
+func (t *Trie) TotalSize() uint32 {
 	return t.ioSize
 }
 
 // NumTries returns the number of tries in the dictionary
-func (t Trie) NumTries() uint32 {
+func (t *Trie) NumTries() uint32 {
 	return t.numTries
 }
 
 // NumNodes returns the number of nodes in the dictionary.
-func (t Trie) NumNodes() uint32 {
+func (t *Trie) NumNodes() uint32 {
 	return t.numNodes
 }
 
 // query is a MARISA agent.
 type query struct {
+	noCopy   noCopy
 	mod      *wwrap.Module
 	ptr      uint32
 	shortStr uint32 // pre-allocated shortQueryLen
@@ -917,3 +919,8 @@ func maybePanicAtOffset(a any, n uint32, b []byte) {
 		panic(s.String())
 	}
 }
+
+type noCopy struct{}
+
+func (*noCopy) Lock()   {}
+func (*noCopy) Unlock() {}
