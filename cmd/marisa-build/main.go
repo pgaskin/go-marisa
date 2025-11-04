@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	NumTries    = pflag.IntP("num-tries", "n", marisa.DefaultNumTries, "limit the number of tries ["+strconv.Itoa(marisa.MinNumTries)+", "+strconv.Itoa(marisa.MaxNumTries)+"]")
+	NumTries    = pflag.IntP("num-tries", "n", 3, "limit the number of tries ["+strconv.Itoa(marisa.MinNumTries)+", "+strconv.Itoa(marisa.MaxNumTries)+"]")
 	TextTail    = pflag.BoolP("text-tail", "t", false, "build a dictionary with text TAIL (default)")
 	BinaryTail  = pflag.BoolP("binary-tail", "b", false, "build a dictionary with binary TAIL (exclusive with -t)")
 	WeightOrder = pflag.BoolP("weight-order", "w", false, "arrange siblings in weight order (default)")

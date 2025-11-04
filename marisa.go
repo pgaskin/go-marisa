@@ -149,77 +149,123 @@ type Config struct {
 	NodeOrder NodeOrder
 }
 
-func (c Config) build() (uint32, bool) {
-	if c.NumTries = cmp.Or(c.NumTries, DefaultNumTries); c.NumTries&^numTriesMask != 0 {
-		return 0, false
-	}
-	if c.CacheLevel = cmp.Or(c.CacheLevel, DefaultCache); c.CacheLevel&^cacheLevelMask != 0 {
-		return 0, false
-	}
-	if c.TailMode = cmp.Or(c.TailMode, DefaultTail); c.TailMode&^tailModeMask != 0 {
-		return 0, false
-	}
-	if c.NodeOrder = cmp.Or(c.NodeOrder, DefaultOrder); c.NodeOrder&^nodeOrderMask != 0 {
-		return 0, false
-	}
-	return uint32(c.NumTries) | uint32(c.CacheLevel) | uint32(c.TailMode) | uint32(c.NodeOrder), true
-}
-
 const (
-	MinNumTries     = 0x00001
-	MaxNumTries     = 0x0007F
-	DefaultNumTries = 0x00003
+	MinNumTries = 1
+	MaxNumTries = 127
 )
 
 type CacheLevel uint32
 
 const (
-	HugeCache    CacheLevel = 0x00080
-	LargeCache   CacheLevel = 0x00100
-	NormalCache  CacheLevel = 0x00200
-	SmallCache   CacheLevel = 0x00400
-	TinyCache    CacheLevel = 0x00800
-	DefaultCache CacheLevel = NormalCache
+	DefaultCache CacheLevel = iota
+	HugeCache
+	LargeCache
+	NormalCache
+	SmallCache
+	TinyCache
 )
 
 type TailMode uint32
 
 const (
+	DefaultTail TailMode = iota
+
 	// TextTail merges last labels as zero-terminated strings. So, it is
 	// available if and only if the last labels do not contain a NULL character.
 	// If TextTail is specified and a NULL character exists in the last labels,
 	// the setting is automatically switched to MARISA_BINARY_TAIL.
-	TextTail TailMode = 0x01000
+	TextTail
 
 	// BinaryTail also merges last labels but as byte sequences. It uses a bit
 	// vector to detect the end of a sequence, instead of NULL characters. So,
 	// BinaryTail requires a larger space if the average length of labels is
 	// greater than 8.
-	BinaryTail TailMode = 0x02000
-
-	DefaultTail TailMode = TextTail
+	BinaryTail
 )
 
 type NodeOrder uint32
 
 const (
+	DefaultOrder NodeOrder = iota
+
 	// LabelOrder arranges nodes in ascending label order. LabelOrder is useful
 	// if an application needs to predict keys in label order.
-	LabelOrder NodeOrder = 0x10000
+	LabelOrder
 
 	// WeightOrder arranges nodes in descending weight order. WeightOrder is
 	// generally a better choice because it enables faster matching.
-	WeightOrder NodeOrder = 0x20000
-
-	DefaultOrder NodeOrder = WeightOrder
+	WeightOrder
 )
 
-const (
-	numTriesMask   = 0x0007F
-	cacheLevelMask = 0x00F80
-	tailModeMask   = 0x0F000
-	nodeOrderMask  = 0xF0000
-)
+func numTriesFlag(v int) (uint32, bool) {
+	if MinNumTries <= v && v <= MaxNumTries {
+		return uint32(v), true
+	}
+	return 0, false
+}
+
+func cacheLevelFlag(v CacheLevel) (uint32, bool) {
+	switch cmp.Or(v, NormalCache) {
+	case HugeCache:
+		return 0x00080, true
+	case LargeCache:
+		return 0x00100, true
+	case NormalCache:
+		return 0x00200, true
+	case SmallCache:
+		return 0x00400, true
+	case TinyCache:
+		return 0x00800, true
+	default:
+		return 0, false
+	}
+}
+
+func tailModeFlag(v TailMode) (uint32, bool) {
+	switch cmp.Or(v, TextTail) {
+	case TextTail:
+		return 0x01000, true
+	case BinaryTail:
+		return 0x20000, true
+	default:
+		return 0, false
+	}
+}
+
+func nodeOrderFlag(v NodeOrder) (uint32, bool) {
+	switch cmp.Or(v, WeightOrder) {
+	case LabelOrder:
+		return 0x10000, true
+	case WeightOrder:
+		return 0x20000, true
+	default:
+		return 0, false
+	}
+}
+
+func configFlags(c Config) (flags uint32, ok bool) {
+	if f, ok := numTriesFlag(c.NumTries); ok {
+		flags |= f
+	} else {
+		return 0, false
+	}
+	if f, ok := cacheLevelFlag(c.CacheLevel); ok {
+		flags |= f
+	} else {
+		return 0, false
+	}
+	if f, ok := tailModeFlag(c.TailMode); ok {
+		flags |= f
+	} else {
+		return 0, false
+	}
+	if f, ok := nodeOrderFlag(c.NodeOrder); ok {
+		flags |= f
+	} else {
+		return 0, false
+	}
+	return flags, true
+}
 
 // Build builds a dictionary out of the specified set of keys, with a weight of
 // 1 for each.
@@ -238,7 +284,7 @@ const chunkSize = 4 * 1024 * 1024
 // BuildWeights builds a dictionary out of the specified set of keys and
 // weights. If a key is specified multiple times, the weights are accumulated.
 func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
-	flag, ok := cfg.build()
+	flag, ok := configFlags(cfg)
 	if !ok {
 		return errors.New("invalid config")
 	}
