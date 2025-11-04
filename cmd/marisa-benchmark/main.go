@@ -30,6 +30,7 @@ var (
 	ReuseOff    = pflag.BoolP("reuse-off", "r", false, "don't reuse agents")
 	PrintSpeed  = pflag.BoolP("print-speed", "S", false, "print speed [1000 keys/s] (default)")
 	PrintTime   = pflag.BoolP("print-time", "s", false, "print time [ns/key]")
+	DisableJIT  = pflag.Bool("disable-jit", false, "disable wazero jit") // not in the original version
 	Help        = pflag.BoolP("help", "h", false, "print this help")
 )
 
@@ -45,6 +46,9 @@ func main() {
 		internal.NoCacheQuery = false
 	} else {
 		internal.NoCacheQuery = true
+	}
+	if *DisableJIT {
+		internal.NoJIT = true
 	}
 
 	cfg := marisa.Config{

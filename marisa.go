@@ -84,6 +84,9 @@ func Initialize() error {
 func initialize() {
 	ctx := context.Background()
 	cfg := wazero.NewRuntimeConfig()
+	if internal.NoJIT {
+		cfg = wazero.NewRuntimeConfigInterpreter()
+	}
 
 	cfg = cfg.WithCoreFeatures(
 		api.CoreFeatureMutableGlobal |
