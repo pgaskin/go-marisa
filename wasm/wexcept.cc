@@ -154,7 +154,7 @@ extern "C" void abort() {
     wexcept::wthrow("abort", "abort");
 }
 
-__attribute__((constructor)) static void wexcept_new_handler_init() {
+[[gnu::constructor(1)]] static void wexcept_new_handler_init() {
     static auto ex = std::bad_alloc(); // preallocate
     std::set_new_handler([]() { wexcept::wthrow(ex); });
 }
