@@ -16,6 +16,7 @@ import (
 	"math"
 	"os"
 	"reflect"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -121,7 +122,11 @@ func instantiate(alloc experimental.MemoryAllocator) (*wwrap.Module, error) {
 	if err != nil {
 		return nil, err
 	}
-	return wwrap.New(mod), nil
+	w := wwrap.New(mod)
+	runtime.SetFinalizer(w, func(w *wwrap.Module) {
+		w.Module().Close(context.Background())
+	})
+	return w, nil
 }
 
 // Config specifies options for a dictionary. Any unspecified options will be
