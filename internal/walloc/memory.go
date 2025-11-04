@@ -6,6 +6,7 @@ import (
 	"os"
 	"runtime"
 	"slices"
+	"unsafe"
 
 	"github.com/tetratelabs/wazero/experimental"
 )
@@ -75,5 +76,5 @@ var newVirtualMemoryImpl func(cap, max uint64) (virtualMemoryImpl, error)
 
 func (m *virtualMemory) String() string {
 	b := m.backing()
-	return fmt.Sprintf("(%T)(%p)[:%d:%d]", m.virtualMemoryImpl, &b[0], len(b), cap(b))
+	return fmt.Sprintf("(%T)(%p)[:%d:%d]", m.virtualMemoryImpl, unsafe.SliceData(b), len(b), cap(b))
 }

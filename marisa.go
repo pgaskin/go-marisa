@@ -347,8 +347,8 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	return t.swap(mod)
 }
 
-// ReadFrom reads a dictionary from r. It may read past the end if not at EOF.
-// On error, the trie is left unchanged.
+// ReadFrom reads a dictionary from r. On success, it will have read exactly the
+// size of the dictionary. On error, the trie is left unchanged.
 func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 	// note: it won't actually read past in practice, since it reads exactly
 	// what it wants with std::istream::read, and our stream impl is effectively

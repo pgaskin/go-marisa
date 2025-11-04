@@ -12,7 +12,6 @@ import (
 	"golang.org/x/sys/unix"
 )
 
-// memory implements [Memory] for unix-like platforms.
 type unixVirtualMemory struct {
 	buf []byte // [:committed:reserved]
 }
