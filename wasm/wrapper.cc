@@ -29,7 +29,7 @@ extern "C" void marisa_save() {
 }
 
 extern "C" void marisa_build_push(const char *ptr, size_t length, float weight) {
-    build.push_back(ptr, length, weight); // copies, heap allocates
+    build.push_back(ptr, length, weight); // does not copy
 }
 
 extern "C" void marisa_build(int flags) {

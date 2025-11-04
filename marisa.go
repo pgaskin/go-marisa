@@ -153,7 +153,7 @@ func (c Config) build() (uint32, bool) {
 }
 
 const (
-	MinNumTries     = 0x00003
+	MinNumTries     = 0x00001
 	MaxNumTries     = 0x0007F
 	DefaultNumTries = 0x00003
 )
@@ -236,20 +236,13 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 		return err
 	}
 
-	ptr, buf, err := mod.Alloc(1)
-	if err != nil {
-		return err
-	}
-	defer func() { mod.Free(ptr) }() // so we can modify ptr
-
+	var free []uint32
 	for key, weight := range keys {
-		if len(key) > len(buf) {
-			mod.Free(ptr)
-			ptr, buf, err = mod.Alloc(len(key))
-			if err != nil {
-				return err
-			}
+		ptr, buf, err := mod.Alloc(len(key))
+		if err != nil {
+			return err
 		}
+		free = append(free, ptr)
 		copy(buf, key)
 
 		_, err = mod.Call("marisa_build_push", uint64(ptr), uint64(len(key)), uint64(math.Float32bits(weight)))
@@ -260,6 +253,9 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 	}
 	if _, err := mod.Call("marisa_build", uint64(flag)); err != nil {
 		return err
+	}
+	for _, ptr := range free {
+		mod.Free(ptr)
 	}
 	return t.swap(mod)
 }

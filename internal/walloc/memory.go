@@ -33,7 +33,7 @@ func (m *sliceMemory) Reallocate(size uint64) []byte {
 		return nil
 	}
 	if cap := uint64(cap(m.buf)); size > cap {
-		m.buf = slices.Grow(m.buf, int(size-cap))
+		m.buf = slices.Grow(m.buf[:cap], int(size-cap))
 	}
 	m.buf = m.buf[:size]
 	return m.buf
