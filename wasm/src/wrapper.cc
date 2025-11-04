@@ -20,12 +20,12 @@ extern "C" void marisa_new(void *ptr, size_t size) {
     trie.map(ptr, size);
 }
 
-extern "C" void marisa_load(uint32_t handle) {
-    trie.read(static_cast<int>(handle));
+extern "C" void marisa_load() {
+    trie.read(0);
 }
 
-extern "C" void marisa_save(uint32_t handle) {
-    trie.write(static_cast<int>(handle));
+extern "C" void marisa_save() {
+    trie.write(0);
 }
 
 extern "C" void marisa_build_push(const char *ptr, size_t length, float weight) {

@@ -1,5 +1,3 @@
-#include "wautil.h"
-
 #include <cstdint>
 #include <cstddef>
 #include <cstring>
@@ -22,17 +20,6 @@
 namespace wautil {
 
 wasm_import(wautil, cxx_throw) void cxx_throw[[noreturn]](const char *typ, const char *std, const char *msg);
-wasm_import(wautil, cxx_write) void cxx_write(uintptr_t handle, const char *buf, size_t n);
-wasm_import(wautil, cxx_read_full) void cxx_read_full(uintptr_t handle, char *buf, size_t n);
-wasm_import(wautil, cxx_write_zeros) void cxx_write_zeros(uintptr_t handle, size_t n);
-wasm_import(wautil, cxx_read_skip) void cxx_read_skip(uintptr_t handle, size_t n);
-wasm_export(wautil_alloc) void *wautil_alloc(size_t n) { return ::operator new(n); }
-wasm_export(wautil_free) void wautil_free(void *ptr) { ::operator delete(ptr); }
-
-void write(uintptr_t handle, const char *buf, size_t n) { cxx_write(handle, buf, n); }
-void write(uintptr_t handle, size_t n) { cxx_write_zeros(handle, n); }
-void read(uintptr_t handle, char *buf, size_t n) { cxx_read_full(handle, buf, n); }
-void read(uintptr_t handle, size_t n) { cxx_read_skip(handle, n); }
 
 void wthrow[[noreturn]](const std::exception& ex) {
     // see https://en.cppreference.com/w/cpp/error/exception.html for the hierachy

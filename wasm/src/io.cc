@@ -1,23 +1,32 @@
 #include <utility>
 
 #include "io.h"
-#include "wautil.h"
 
 namespace marisa::grimoire::io {
 
-static_assert(sizeof(uint32_t) == sizeof(int));
+namespace cb {
+#ifdef __wasm__
+__attribute__((__import_module__("marisa"),__import_name__(("read"))))
+#endif
+extern void read(void *buf, size_t n);
+
+#ifdef __wasm__
+__attribute__((__import_module__("marisa"),__import_name__(("write"))))
+#endif
+extern void write(const void *buf, size_t n);
+}
 
 Mapper::Mapper() = default;
 Reader::Reader() = default;
 Writer::Writer() = default;
 
-void Mapper::open(const void *ptr, std::size_t size) {
+void Mapper::open(const void *ptr, size_t size) {
     ptr_ = ptr;
     avail_ = size;
 }
 
-void Mapper::seek(std::size_t size) {
-    map_data(size);
+void Mapper::seek(size_t size) {
+    data(size);
 }
 
 void Mapper::swap(Mapper &rhs) noexcept {
@@ -25,41 +34,33 @@ void Mapper::swap(Mapper &rhs) noexcept {
     std::swap(avail_, rhs.avail_);
 }
 
-const void *Mapper::map_data(std::size_t size) {
+const void *Mapper::data(size_t size) {
     MARISA_THROW_IF(size > avail_, std::runtime_error);
-
     const char *const data = static_cast<const char*>(ptr_);
     ptr_ = data + size;
     avail_ -= size;
     return data;
 }
 
-void Reader::open(int fd) {
-    handle_ = static_cast<uint32_t>(fd);
+void Reader::open(int) {}
+void Writer::open(int) {}
+
+void Reader::seek(size_t size) {
+    cb::read(nullptr, size);
 }
 
-void Reader::seek(std::size_t size) {
-    MARISA_THROW_IF(!handle_, std::logic_error);
-    wautil::read(handle_, size);
+void Writer::seek(size_t size) {
+    cb::write(nullptr, size);
 }
 
-void Reader::read_data(void *buf, std::size_t size) {
-    MARISA_THROW_IF(!handle_, std::logic_error);
-    wautil::read(handle_, static_cast<char*>(buf), size);
+void Reader::data(void *buf, size_t size) {
+    MARISA_THROW_IF(size && !buf, std::logic_error);
+    cb::read(buf, size);
 }
 
-void Writer::open(int fd) {
-    handle_ = static_cast<uint32_t>(fd);
-}
-
-void Writer::seek(std::size_t size) {
-    MARISA_THROW_IF(!handle_, std::logic_error);
-    wautil::write(handle_, size);
-}
-
-void Writer::write_data(const void *data, std::size_t size) {
-    MARISA_THROW_IF(!handle_, std::logic_error);
-    wautil::write(handle_, static_cast<const char*>(data), size);
+void Writer::data(const void *data, size_t size) {
+    MARISA_THROW_IF(size && !data, std::logic_error);
+    cb::write(const_cast<void*>(data), size);
 }
 
 }

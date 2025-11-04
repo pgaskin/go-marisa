@@ -95,6 +95,14 @@ func initialize() {
 		return
 	}
 
+	hmb := instance.runtime.NewHostModuleBuilder("marisa")
+	read(hmb)
+	write(hmb)
+	_, instance.err = hmb.Instantiate(ctx)
+	if instance.err != nil {
+		return
+	}
+
 	instance.compiled, instance.err = instance.runtime.CompileModule(ctx, binary)
 }
 
@@ -354,8 +362,7 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 		return 0, err
 	}
 	c := &countReader{R: r}
-	ctx, handle := wautil.NewHandle(context.Background(), c)
-	if _, err := mod.CallContext(ctx, "marisa_load", uint64(handle)); err != nil {
+	if _, err := mod.CallContext(withReader(context.Background(), c), "marisa_load"); err != nil {
 		var ex *wautil.Exception
 		if errors.As(err, &ex) {
 			if errors.Is(ex, wautil.StdException("runtime_error")) && strings.Contains(ex.What(), "!stream_->read") {
@@ -385,8 +392,7 @@ func (t *Trie) WriteTo(w io.Writer) (int64, error) {
 		return 0, errors.New("dictionary not initialized")
 	}
 	c := &countWriter{W: w}
-	ctx, handle := wautil.NewHandle(context.Background(), c)
-	_, err := t.mod.CallContext(ctx, "marisa_save", uint64(handle))
+	_, err := t.mod.CallContext(withWriter(context.Background(), c), "marisa_save")
 	return c.N, err
 }
 
@@ -623,6 +629,79 @@ func (t *Trie) search(name, query string) func(*error) iter.Seq2[uint32, string]
 			}()
 		}
 	}
+}
+
+type ioKey string
+
+func withReader(ctx context.Context, r io.Reader) context.Context {
+	return context.WithValue(ctx, ioKey("read"), r)
+}
+
+func withWriter(ctx context.Context, w io.Writer) context.Context {
+	return context.WithValue(ctx, ioKey("write"), w)
+}
+
+var read = wautil.ExportFuncVII("read", func(ctx context.Context, m api.Module, p, n uint32) {
+	r, ok := ctx.Value(ioKey("read")).(io.Reader)
+	if !ok {
+		panic("no active reader")
+	}
+	if n != 0 {
+		if p != 0 {
+			b, ok := m.Memory().Read(p, n)
+			if !ok {
+				panic("invalid pointer")
+			}
+			if _, err := io.ReadFull(r, b); err != nil {
+				if err == io.EOF {
+					err = io.ErrUnexpectedEOF
+				}
+				wautil.Throw(err)
+			}
+		} else {
+			if _, err := io.CopyN(io.Discard, r, int64(n)); err != nil {
+				if err == io.EOF {
+					err = io.ErrUnexpectedEOF
+				}
+				wautil.Throw(err)
+			}
+		}
+	}
+}, "read", "buf", "n")
+
+var write = wautil.ExportFuncVII("write", func(ctx context.Context, m api.Module, p, n uint32) {
+	w, ok := ctx.Value(ioKey("write")).(io.Writer)
+	if !ok {
+		panic("no active writer")
+	}
+	if n != 0 {
+		if p != 0 {
+			b, ok := m.Memory().Read(p, n)
+			if !ok {
+				panic("gocpp: invalid pointer")
+			}
+			n, err := w.Write(b)
+			if err != nil {
+				wautil.Throw(err)
+			}
+			if n != len(b) {
+				wautil.Throw(io.ErrShortWrite)
+			}
+		} else {
+			if _, err := io.CopyN(w, zeroReader{}, int64(n)); err != nil {
+				wautil.Throw(err)
+			}
+		}
+	}
+}, "write", "buf", "n")
+
+type zeroReader struct{}
+
+func (z zeroReader) Read(p []byte) (n int, err error) {
+	for i := range p {
+		p[i] = 0
+	}
+	return len(p), nil
 }
 
 type countWriter struct {

@@ -133,7 +133,7 @@ func (m *Module) CallContext(ctx context.Context, name string, params ...uint64)
 // is returned successfully.
 func (m *Module) Alloc(n int) (addr uint32, buf []byte, err error) {
 	if m.allocfn == nil {
-		m.allocfn = m.mod.ExportedFunction("wautil_alloc")
+		m.allocfn = m.mod.ExportedFunction("malloc")
 	}
 	if m.allocfn == nil {
 		panic("wautil: missing memory allocator helpers")
@@ -144,12 +144,12 @@ func (m *Module) Alloc(n int) (addr uint32, buf []byte, err error) {
 		}
 		m.stack[0] = uint64(n)
 		if err := m.allocfn.CallWithStack(m.ctx, m.stack[:]); err != nil {
-			if err, ok := Catch(err); ok {
-				return 0, nil, err
-			}
 			return 0, nil, err
 		}
 		addr = uint32(m.stack[0])
+		if addr == 0 {
+			return 0, nil, NewException("bad_alloc", "failed to allocate memory")
+		}
 		var ok bool
 		buf, ok = m.mod.Memory().Read(addr, uint32(n))
 		if !ok {
@@ -162,7 +162,7 @@ func (m *Module) Alloc(n int) (addr uint32, buf []byte, err error) {
 // Free frees memory. If addr is zero, no action is taken.
 func (m *Module) Free(addr uint32) {
 	if m.freefn == nil {
-		m.freefn = m.mod.ExportedFunction("wautil_free")
+		m.freefn = m.mod.ExportedFunction("free")
 	}
 	if m.freefn == nil {
 		panic("wautil: missing memory allocator helpers")

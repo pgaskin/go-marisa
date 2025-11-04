@@ -1,7 +1,7 @@
+malloc
+free
 aligned_alloc
 
-wautil_alloc
-wautil_free
 wautil_post_throw
 
 marisa_new
