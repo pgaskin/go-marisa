@@ -60,7 +60,7 @@ func main() {
 	var failed bool
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
-		keyset, err := collect(trie.CommonPrefixSearch(sc.Text()))
+		keyset, err := trie.CommonPrefixSearch(sc.Text(), *NumResults) // supporting -1 for infinite results is not in the original version
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "error: common prefix search failed: %v\n", err)
 			os.Exit(30)
@@ -73,10 +73,7 @@ func main() {
 			if _, err := fmt.Printf("%d found\n", len(keyset)); err != nil {
 				failed = true
 			}
-			for i, k := range keyset {
-				if *NumResults > 0 && i >= *NumResults { // supporting -1 for infinite results is not in the original version
-					break
-				}
+			for _, k := range keyset {
 				if _, err := fmt.Printf("%d\t%s\n", k.ID, k.Key); err != nil {
 					failed = true
 				}

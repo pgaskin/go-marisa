@@ -256,7 +256,7 @@ func benchmarkCommonPrefixSearch(trie *marisa.Trie, keyset []string) {
 	start := time.Now()
 	for _, key := range keyset {
 		var err error
-		for id, key := range trie.CommonPrefixSearch(key)(&err) {
+		for id, key := range trie.CommonPrefixSearchSeq(key)(&err) {
 			_ = id
 			_ = key
 		}
@@ -272,7 +272,7 @@ func benchmarkPredictiveSearch(trie *marisa.Trie, keyset []string) {
 	start := time.Now()
 	for _, key := range keyset {
 		var err error
-		for id, key := range trie.PredictiveSearch(key)(&err) {
+		for id, key := range trie.PredictiveSearchSeq(key)(&err) {
 			_ = id
 			_ = key
 		}

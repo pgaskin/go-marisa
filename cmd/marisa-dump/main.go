@@ -67,7 +67,7 @@ func dump(name string) int {
 	}
 	var err error
 	var keys int
-	for _, key := range trie.Dump()(&err) {
+	for _, key := range trie.DumpSeq()(&err) {
 		if _, err := fmt.Printf("%s%s", key, *Delimiter); err != nil {
 			fmt.Fprintf(os.Stderr, "error: failed to write stdout: %v\n", err)
 			os.Exit(20)

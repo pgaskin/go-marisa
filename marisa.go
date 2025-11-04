@@ -691,19 +691,55 @@ func (t *Trie) ReverseLookup(id uint32) (string, bool, error) {
 	return q.Key(), true, nil
 }
 
-// CommonPrefixSearch returns keys which equal any prefix of the query string.
-func (t *Trie) CommonPrefixSearch(query string) func(*error) iter.Seq2[uint32, string] {
-	return t.search("marisa_query_common_prefix_search", query)
+// Dump dumps all keys.
+func (t *Trie) Dump(limit int) ([]Key, error) {
+	return collectKeys(limit, t.DumpSeq())
 }
 
 // PredictiveSearch returns keys starting with a query string.
-func (t *Trie) PredictiveSearch(query string) func(*error) iter.Seq2[uint32, string] {
+func (t *Trie) PredictiveSearch(query string, limit int) ([]Key, error) {
+	return collectKeys(limit, t.search("marisa_query_predictive_search", query))
+}
+
+// CommonPrefixSearchSeq returns keys which equal any prefix of the query string.
+func (t *Trie) CommonPrefixSearch(query string, limit int) ([]Key, error) {
+	return collectKeys(limit, t.search("marisa_query_common_prefix_search", query))
+}
+
+type Key struct {
+	ID  uint32
+	Key string
+}
+
+func collectKeys(limit int, seq func(*error) iter.Seq2[uint32, string]) (res []Key, err error) {
+	if limit > 0 {
+		res = make([]Key, 0, limit)
+	}
+	for id, key := range seq(&err) {
+		if limit == 0 {
+			break
+		}
+		res = append(res, Key{id, key})
+		if limit > 0 && len(res) >= limit {
+			break
+		}
+	}
+	return res, err
+}
+
+// DumpSeq dumps all keys.
+func (t *Trie) DumpSeq() func(*error) iter.Seq2[uint32, string] {
+	return t.search("marisa_query_predictive_search", "")
+}
+
+// PredictiveSearch returns keys starting with a query string.
+func (t *Trie) PredictiveSearchSeq(query string) func(*error) iter.Seq2[uint32, string] {
 	return t.search("marisa_query_predictive_search", query)
 }
 
-// Dump dumps all keys.
-func (t *Trie) Dump() func(*error) iter.Seq2[uint32, string] {
-	return t.search("marisa_query_predictive_search", "")
+// CommonPrefixSearchSeq returns keys which equal any prefix of the query string.
+func (t *Trie) CommonPrefixSearchSeq(query string) func(*error) iter.Seq2[uint32, string] {
+	return t.search("marisa_query_common_prefix_search", query)
 }
 
 // search iterates over results for the specified query function.

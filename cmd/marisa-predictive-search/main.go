@@ -8,7 +8,6 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"iter"
 	"os"
 
 	"github.com/pgaskin/go-marisa"
@@ -60,7 +59,7 @@ func main() {
 	var failed bool
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
-		keyset, err := collect(trie.PredictiveSearch(sc.Text()))
+		keyset, err := trie.PredictiveSearch(sc.Text(), *NumResults) // supporting -1 for infinite results is not in the original version
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "error: predictive search failed: %v\n", err)
 			os.Exit(30)
@@ -73,10 +72,7 @@ func main() {
 			if _, err := fmt.Printf("%d found\n", len(keyset)); err != nil {
 				failed = true
 			}
-			for i, k := range keyset {
-				if *NumResults > 0 && i >= *NumResults { // supporting -1 for infinite results is not in the original version
-					break
-				}
+			for _, k := range keyset {
 				if _, err := fmt.Printf("%d\t%s\n", k.ID, k.Key); err != nil {
 					failed = true
 				}
@@ -119,16 +115,4 @@ func load(trie *marisa.Trie, name string) error {
 		return err
 	}
 	return nil
-}
-
-type key struct {
-	ID  uint32
-	Key string
-}
-
-func collect(seq func(*error) iter.Seq2[uint32, string]) (keyset []key, err error) {
-	for a, b := range seq(&err) {
-		keyset = append(keyset, key{a, b})
-	}
-	return
 }
