@@ -1,12 +1,15 @@
 // Command marisa-benchmark is a Go re-implementation of the same command.
+//
+// The options and output format are the same, but errors may differ.
 package main
 
 import (
 	"bufio"
-	"errors"
+	"cmp"
 	"fmt"
 	"io"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -136,7 +139,7 @@ func main() {
 	}
 
 	var (
-		keyset  []string
+		keys    []string
 		weights []float32
 		total   int
 	)
@@ -146,39 +149,42 @@ func main() {
 			names = []string{"-"}
 		}
 		for _, name := range names {
+			var r io.ReadCloser
 			if name == "-" { // note: support for '-' for stdin is not in the original version
-				if err := readKeys(yield, os.Stdin); err == errBreak {
-					return
-				} else if err != nil {
-					if err == errBreak {
-						return
-					}
-					fmt.Fprintf(os.Stderr, "error: failed read keys: %v\n", err)
-					os.Exit(10)
-				}
+				r = io.NopCloser(os.Stdin)
 			} else {
 				f, err := os.Open(name)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "error: failed to open %q: %v\n", name, err)
 					os.Exit(10)
 				}
-				if err := readKeys(yield, f); err == errBreak {
-					f.Close()
-					return
-				} else if err != nil {
-					f.Close()
-					fmt.Fprintf(os.Stderr, "error: failed read keys from %q: %v\n", name, err)
-					os.Exit(10)
+				r = f
+			}
+			sc := bufio.NewScanner(r)
+			for sc.Scan() {
+				key := sc.Text()
+				weight := float32(1.0)
+				if i := strings.LastIndexByte(key, '\t'); i != -1 {
+					if v, err := strconv.ParseFloat(key[i+1:], 32); err == nil {
+						key = key[:i]
+						weight = float32(v)
+					}
 				}
-				f.Close()
+				keys = append(keys, key)
+				weights = append(weights, weight)
+			}
+			if err := sc.Err(); err != nil {
+				// the original version doesn't handle read errors, but there's no point in not doing so
+				fmt.Fprintf(os.Stderr, "error: failed to read keys from %q: %v\n", name, err)
+				os.Exit(10)
 			}
 		}
 	} {
-		keyset = append(keyset, key)
+		keys = append(keys, key)
 		weights = append(weights, weight)
 		total += len(key)
 	}
-	fmt.Printf("Number of keys: %d\n", len(keyset))
+	fmt.Printf("Number of keys: %d\n", len(keys))
 	fmt.Printf("Total length: %d\n", total)
 
 	fmt.Printf("------+----------+--------+--------+--------+--------+--------\n")
@@ -193,21 +199,60 @@ func main() {
 	for numTries := *MinNumTries; numTries <= *MaxNumTries; numTries++ {
 		cfg.NumTries = numTries
 		fmt.Printf("%6d", numTries)
+
 		var trie marisa.Trie
-		benchmarkBuild(keyset, weights, cfg, &trie)
+		benchmarkBuild(keys, weights, cfg, &trie)
+
+		keyset, err := trie.Dump(-1)
+		if err != nil {
+			panic(err)
+		}
+		if len(keyset) != int(trie.Size()) {
+			panic("dump incorrect")
+		}
+		slices.SortFunc(keyset, func(a, b marisa.Key) int {
+			return cmp.Compare(a.ID, b.ID)
+		})
+		for i, k := range keyset {
+			if int(k.ID) != i {
+				panic("dump incorrect")
+			}
+		}
+
 		if trie.Size() != 0 {
 			benchmarkLookup(&trie, keyset)
 			benchmarkReverseLookup(&trie, keyset)
 			benchmarkCommonPrefixSearch(&trie, keyset)
 			benchmarkPredictiveSearch(&trie, keyset)
 		}
+
 		fmt.Println()
 	}
 	fmt.Printf("------+----------+--------+--------+--------+--------+--------\n")
 }
 
+func printTimeInfo(n int) func() {
+	now := time.Now()
+	return func() {
+		elapsed := time.Since(now)
+		if *PrintSpeed || !*PrintTime {
+			if elapsed == 0 {
+				fmt.Printf(" %8s ", "-")
+			} else {
+				fmt.Printf(" %8.2f", float64(n)/elapsed.Seconds()/1000.0)
+			}
+		} else {
+			if elapsed == 0 || n == 0 {
+				fmt.Printf(" %8s ", "-")
+			} else {
+				fmt.Printf(" %8.1f", 1000000000.0*elapsed.Seconds()/float64(n))
+			}
+		}
+	}
+}
+
 func benchmarkBuild(keyset []string, weights []float32, cfg marisa.Config, trie *marisa.Trie) {
-	start := time.Now()
+	done := printTimeInfo(len(keyset))
 	if err := trie.BuildWeights(func(yield func(string, float32) bool) {
 		for i, key := range keyset {
 			if !yield(key, float32(weights[i])) {
@@ -217,105 +262,62 @@ func benchmarkBuild(keyset []string, weights []float32, cfg marisa.Config, trie 
 	}, cfg); err != nil {
 		panic(err)
 	}
-	elapsed := time.Since(start)
+	done()
 	fmt.Printf(" %10d", trie.DiskSize())
-	printTimeInfo(len(keyset), elapsed)
 }
 
-func benchmarkLookup(trie *marisa.Trie, keyset []string) {
-	start := time.Now()
-	for _, key := range keyset {
-		_, ok, err := trie.Lookup(key)
+func benchmarkLookup(trie *marisa.Trie, keyset []marisa.Key) {
+	defer printTimeInfo(len(keyset))()
+	for _, k := range keyset {
+		id, ok, err := trie.Lookup(k.Key)
 		if err != nil {
 			panic(err)
 		}
-		if !ok {
-			panic("lookup failed: " + strconv.Quote(key))
+		if !ok || id != k.ID {
+			panic("lookup failed: " + strconv.Quote(k.Key))
 		}
-		// note: we don't do additional validation like the original one
 	}
-	printTimeInfo(len(keyset), time.Since(start))
 }
 
-func benchmarkReverseLookup(trie *marisa.Trie, keyset []string) {
-	start := time.Now()
-	for i := range trie.Size() {
-		_, ok, err := trie.ReverseLookup(i)
+func benchmarkReverseLookup(trie *marisa.Trie, keyset []marisa.Key) {
+	defer printTimeInfo(len(keyset))()
+	for _, k := range keyset {
+		key, ok, err := trie.ReverseLookup(k.ID)
 		if err != nil {
 			panic(err)
 		}
-		if !ok {
+		if !ok || key != k.Key {
 			panic("reverse lookup failed")
 		}
-		// note: we don't do additional validation like the original one
 	}
-	printTimeInfo(len(keyset), time.Since(start))
 }
 
-func benchmarkCommonPrefixSearch(trie *marisa.Trie, keyset []string) {
-	start := time.Now()
-	for _, key := range keyset {
+func benchmarkCommonPrefixSearch(trie *marisa.Trie, keyset []marisa.Key) {
+	defer printTimeInfo(len(keyset))()
+	for _, k := range keyset {
 		var err error
-		for id, key := range trie.CommonPrefixSearchSeq(key)(&err) {
-			_ = id
-			_ = key
-		}
-		if err != nil {
-			panic(err)
-		}
-		// note: we don't do additional validation like the original one
-	}
-	printTimeInfo(len(keyset), time.Since(start))
-}
-
-func benchmarkPredictiveSearch(trie *marisa.Trie, keyset []string) {
-	start := time.Now()
-	for _, key := range keyset {
-		var err error
-		for id, key := range trie.PredictiveSearchSeq(key)(&err) {
-			_ = id
-			_ = key
-		}
-		if err != nil {
-			panic(err)
-		}
-		// note: we don't do additional validation like the original one
-	}
-	printTimeInfo(len(keyset), time.Since(start))
-}
-
-func printTimeInfo(n int, elapsed time.Duration) {
-	if *PrintSpeed || !*PrintTime {
-		if elapsed == 0 {
-			fmt.Printf(" %8s ", "-")
-		} else {
-			fmt.Printf(" %8.2f", float64(n)/elapsed.Seconds()/1000.0)
-		}
-	} else {
-		if elapsed == 0 || n == 0 {
-			fmt.Printf(" %8s ", "-")
-		} else {
-			fmt.Printf(" %8.1f", 1000000000.0*elapsed.Seconds()/float64(n))
-		}
-	}
-}
-
-var errBreak = errors.New("break")
-
-func readKeys(yield func(string, float32) bool, r io.Reader) error {
-	sc := bufio.NewScanner(r)
-	for sc.Scan() {
-		key := sc.Text()
-		weight := float32(1.0)
-		if i := strings.LastIndexByte(key, '\t'); i != -1 {
-			if v, err := strconv.ParseFloat(key[i+1:], 32); err == nil {
-				key = key[:i]
-				weight = float32(v)
+		for id, key := range trie.CommonPrefixSearchSeq(k.Key)(&err) {
+			if int(id) >= len(keyset) || keyset[id].Key != key || !strings.HasPrefix(k.Key, key) {
+				panic("common prefix search failed")
 			}
 		}
-		if !yield(key, weight) {
-			return errBreak
+		if err != nil {
+			panic(err)
 		}
 	}
-	return sc.Err()
+}
+
+func benchmarkPredictiveSearch(trie *marisa.Trie, keyset []marisa.Key) {
+	defer printTimeInfo(len(keyset))()
+	for _, k := range keyset {
+		var err error
+		for id, key := range trie.PredictiveSearchSeq(k.Key)(&err) {
+			if int(id) >= len(keyset) || keyset[id].Key != key || !strings.HasPrefix(key, k.Key) {
+				panic("predictive search failed")
+			}
+		}
+		if err != nil {
+			panic(err)
+		}
+	}
 }
