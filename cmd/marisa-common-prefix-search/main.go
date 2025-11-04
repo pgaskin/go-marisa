@@ -8,7 +8,6 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"iter"
 	"os"
 
 	"github.com/pgaskin/go-marisa"
@@ -116,16 +115,4 @@ func load(trie *marisa.Trie, name string) error {
 		return err
 	}
 	return nil
-}
-
-type key struct {
-	ID  uint32
-	Key string
-}
-
-func collect(seq func(*error) iter.Seq2[uint32, string]) (keyset []key, err error) {
-	for a, b := range seq(&err) {
-		keyset = append(keyset, key{a, b})
-	}
-	return
 }
