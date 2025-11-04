@@ -30,5 +30,6 @@ jobs:
           go-version-file: go.mod
       - run: go mod download
       - run: go mod verify
+      - run: go vet ./...
       - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v ./...
         shell: bash
