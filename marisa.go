@@ -12,7 +12,6 @@ import (
 	"io"
 	"iter"
 	"math"
-	"math/bits"
 	"os"
 	"reflect"
 	"strconv"
@@ -48,7 +47,8 @@ type Trie struct {
 	numNodes  uint32
 }
 
-const is32bit = bits.UintSize < 64
+const scratchSpace = 32 * 1024 * 1024             // scratch space to allocate when the size is known in advance
+const maxAlloc = min(math.MaxUint32, math.MaxInt) // on 32-bit platforms, limit to 2GiB, on others, limit to 4GiB
 
 // TODO: support cloning or shared/copy-on-write or wasm threads for concurrent use?
 
@@ -65,7 +65,6 @@ var instance struct {
 	compiled wazero.CompiledModule
 	err      error
 	once     sync.Once
-	alloc    walloc.SliceAllocator
 }
 
 // Initialize compiles the wasm binary.
@@ -96,12 +95,6 @@ func initialize() {
 		return
 	}
 
-	if is32bit {
-		instance.alloc.OverrideMax = math.MaxInt
-	} else {
-		instance.alloc.OverrideMax = math.MaxUint32
-	}
-
 	instance.compiled, instance.err = instance.runtime.CompileModule(ctx, binary)
 }
 
@@ -109,9 +102,6 @@ func initialize() {
 func instantiate(alloc experimental.MemoryAllocator) (*wautil.Module, error) {
 	if err := Initialize(); err != nil {
 		return nil, err
-	}
-	if alloc == nil {
-		alloc = &instance.alloc
 	}
 	mod, err := instance.runtime.InstantiateModule(experimental.WithMemoryAllocator(context.Background(), alloc), instance.compiled, wazero.NewModuleConfig().WithName(""))
 	if err != nil {
@@ -227,7 +217,10 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 		return errors.New("invalid config")
 	}
 
-	mod, err := instantiate(nil)
+	sa := &walloc.SliceAllocator{
+		OverrideMax: maxAlloc,
+	}
+	mod, err := instantiate(sa)
 	if err != nil {
 		return err
 	}
@@ -280,14 +273,18 @@ func (t *Trie) swap(mod *wautil.Module) error {
 // left unchanged. If not supported by the current platform, an error matching
 // [errors.ErrUnsupported] is returned.
 func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
-	va := &walloc.VirtualAllocator{
-		Fallback: &instance.alloc,
-	}
-	if uint64(length) > min(math.MaxUint32, math.MaxInt) {
+	if uint64(length) > maxAlloc {
 		return errors.New("dictionary too large")
 	}
-	if is32bit {
-		va.OverrideMax = uint64(length) + 32*1024*1024 // required space for file + 32 MiB of working memory
+	va := &walloc.VirtualAllocator{
+		Fallback: &walloc.SliceAllocator{
+			// if it falls back to this, we'll be returning an error anyways
+			OverrideMax: scratchSpace,
+		},
+		// on 32-bit hosts, it's critical for this (unlike the SliceAllocator)
+		// since it immediately reserves virtual address space, which we only
+		// have 4 GiB of
+		OverrideMax: uint64(length) + scratchSpace,
 	}
 	mod, err := instantiate(va)
 	if err != nil {
@@ -316,7 +313,13 @@ func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
 // than [Trie.ReadFrom], but may have a less optimal memory layout. On error,
 // the trie is left unchanged.
 func (t *Trie) UnmarshalBinary(b []byte) error {
-	mod, err := instantiate(nil)
+	if uint64(len(b)) > min(math.MaxUint32, math.MaxInt) {
+		return errors.New("dictionary too large")
+	}
+	sa := &walloc.SliceAllocator{
+		OverrideMax: uint64(len(b)) + scratchSpace,
+	}
+	mod, err := instantiate(sa)
 	if err != nil {
 		return err
 	}
@@ -343,7 +346,10 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 	// note: it won't actually read past in practice, since it reads exactly
 	// what it wants with std::istream::read, and our stream impl is effectively
 	// unbuffered
-	mod, err := instantiate(nil)
+	sa := &walloc.SliceAllocator{
+		OverrideMax: maxAlloc,
+	}
+	mod, err := instantiate(sa)
 	if err != nil {
 		return 0, err
 	}
