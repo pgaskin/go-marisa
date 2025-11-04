@@ -181,7 +181,7 @@ func (t *Trie) DiskSize() uint32 {
 
 // TotalSize returns the in-memory size of the dictionary.
 func (t *Trie) TotalSize() uint32 {
-	return t.ioSize
+	return t.totalSize
 }
 
 // NumTries returns the number of tries in the dictionary

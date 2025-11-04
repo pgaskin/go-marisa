@@ -170,6 +170,7 @@ func main() {
 				}
 				keys = append(keys, key)
 				weights = append(weights, weight)
+				total += len(key)
 			}
 			if err := sc.Err(); err != nil {
 				// the original version doesn't handle read errors, but there's no point in not doing so
