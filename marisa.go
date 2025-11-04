@@ -378,6 +378,53 @@ func (t *Trie) swap(mod *wwrap.Module) error {
 	return nil
 }
 
+// Open opens a dictionary from a file.
+func Open(name string) (*Trie, error) {
+	var t Trie
+
+	// only try mmap if it's likely to succeed and it's on a fully tested platform
+	if (runtime.GOOS == "linux" || runtime.GOOS == "darwin") && (runtime.GOARCH == "amd64" || runtime.GOARCH == "arm64") {
+		// attempt to get the size (and if it's not seekable, it's unlikely to be mappable either)
+		f, err := os.Open(name)
+		if err != nil {
+			return nil, err
+		}
+		defer f.Close()
+		if size, err := f.Seek(0, io.SeekEnd); err == nil {
+			if err := t.MapFile(f, 0, size); err == nil {
+				return &t, nil
+			}
+		}
+	}
+
+	// read the entire dictionary
+	b, err := os.ReadFile(name)
+	if err != nil {
+		return nil, err
+	}
+	return New(b)
+}
+
+// New is shorthand for initializing a dictionary with [Trie.UnmarshalBinary].
+// Using Load with a [bytes.Reader] may result in a more optimal in-memory
+// layout.
+func New(b []byte) (*Trie, error) {
+	var t Trie
+	if err := t.UnmarshalBinary(b); err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// Load is shorthand for initializing a dictionary with [Trie.ReadFrom].
+func Load(r io.Reader) (*Trie, error) {
+	var t Trie
+	if _, err := t.ReadFrom(r); err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
 // MapFile mmaps a file and loads the dictionary from it. On error, the trie is
 // left unchanged. If not supported by the current platform, an error matching
 // [errors.ErrUnsupported] is returned.
