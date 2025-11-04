@@ -137,7 +137,7 @@ type Config struct {
 }
 
 func (c Config) build() (uint32, bool) {
-	if c.NumTries = cmp.Or(c.NumTries, MARISA_DEFAULT_NUM_TRIES); c.NumTries&^numTriesMask != 0 {
+	if c.NumTries = cmp.Or(c.NumTries, DefaultNumTries); c.NumTries&^numTriesMask != 0 {
 		return 0, false
 	}
 	if c.CacheLevel = cmp.Or(c.CacheLevel, DefaultCache); c.CacheLevel&^cacheLevelMask != 0 {
@@ -152,7 +152,11 @@ func (c Config) build() (uint32, bool) {
 	return uint32(c.NumTries) | uint32(c.CacheLevel) | uint32(c.TailMode) | uint32(c.NodeOrder), true
 }
 
-const MARISA_DEFAULT_NUM_TRIES = 0x00003
+const (
+	MinNumTries     = 0x00003
+	MaxNumTries     = 0x0007F
+	DefaultNumTries = 0x00003
+)
 
 type CacheLevel uint32
 
