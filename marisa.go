@@ -7,6 +7,7 @@ import (
 	"context"
 	_ "embed"
 	"encoding"
+	"encoding/binary"
 	"encoding/hex"
 	"errors"
 	"fmt"
@@ -31,7 +32,7 @@ import (
 
 //go:generate docker build --platform amd64 --pull --no-cache --progress plain --output wasm wasm
 //go:embed wasm/marisa.wasm
-var binary []byte
+var wasm []byte
 
 // Trie is a read-only in-memory little-endian MARISA dictionary.
 //
@@ -108,7 +109,7 @@ func initialize() {
 		return
 	}
 
-	instance.compiled, instance.err = instance.runtime.CompileModule(ctx, binary)
+	instance.compiled, instance.err = instance.runtime.CompileModule(ctx, wasm)
 }
 
 // instantiate creates a new instance of the module.
@@ -226,6 +227,8 @@ func (t *Trie) Build(keys iter.Seq[string], cfg Config) error {
 	}, cfg)
 }
 
+const chunkSize = 4 * 1024 * 1024
+
 // BuildWeights builds a trie out of the specified set of keys and weights. If a key is
 // specified multiple times, the weights are accumulated.
 func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
@@ -242,20 +245,52 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 		return err
 	}
 
-	var free []uint32
+	var (
+		free []uint32
+		cptr uint32
+		cbuf []byte
+		cnum uint32
+	)
 	for key, weight := range keys {
-		ptr, buf, err := mod.Alloc(len(key))
-		if err != nil {
-			return err
-		}
-		free = append(free, ptr)
-		copy(buf, key)
+		if csz := 8 + len(key); !internal.NoChunkBuild && csz < chunkSize {
+			if cptr != 0 && csz > len(cbuf) {
+				if _, err := mod.Call("marisa_build_push_chunk", uint64(cptr), uint64(cnum)); err != nil {
+					return err
+				}
+				cptr, cbuf = 0, nil
+			}
+			if cptr == 0 {
+				cptr, cbuf, err = mod.Alloc(chunkSize)
+				if err != nil {
+					return err
+				}
+				cnum = 0
+				free = append(free, cptr)
+			}
+			var tmp []byte
+			tmp, cbuf = cbuf[:csz], cbuf[csz:]
+			binary.LittleEndian.PutUint32(tmp[0:4], uint32(len(key)))
+			binary.LittleEndian.PutUint32(tmp[4:8], math.Float32bits(weight))
+			copy(tmp[8:], key)
+			cnum++
+		} else {
+			ptr, buf, err := mod.Alloc(len(key))
+			if err != nil {
+				return err
+			}
+			free = append(free, ptr)
+			copy(buf, key)
 
-		_, err = mod.Call("marisa_build_push", uint64(ptr), uint64(len(key)), uint64(math.Float32bits(weight)))
-		if err != nil {
+			if _, err := mod.Call("marisa_build_push", uint64(ptr), uint64(len(key)), uint64(math.Float32bits(weight))); err != nil {
+				return err
+			}
+		}
+	}
+	if !internal.NoChunkBuild && cptr != 0 {
+		if _, err = mod.Call("marisa_build_push_chunk", uint64(cptr), uint64(cnum)); err != nil {
 			return err
 		}
-		// TODO: batch?
+		cptr, cbuf = 0, nil
 	}
 	if _, err := mod.Call("marisa_build", uint64(flag)); err != nil {
 		return err

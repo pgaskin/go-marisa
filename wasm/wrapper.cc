@@ -32,6 +32,18 @@ extern "C" void marisa_build_push(const char *ptr, size_t length, float weight) 
     build.push_back(ptr, length, weight); // does not copy
 }
 
+extern "C" void marisa_build_push_chunk(const uint8_t *ptr, size_t n) {
+    while (n--) {
+        size_t length = *reinterpret_cast<const size_t*>(ptr);
+        ptr += sizeof(length);
+        float weight = *reinterpret_cast<const float*>(ptr);
+        ptr += sizeof(weight);
+        const char *data = reinterpret_cast<const char*>(ptr);
+        ptr += length;
+        build.push_back(data, length, weight);
+    }
+}
+
 extern "C" void marisa_build(int flags) {
     trie.build(build, flags);
     build.clear();
