@@ -308,12 +308,15 @@ func (t *Trie) swap(mod *wwrap.Module) error {
 	if err != nil {
 		return err
 	}
-	t.mod = mod
-	t.size = uint32(res[0])
-	t.ioSize = uint32(res[1])
-	t.totalSize = uint32(res[2])
-	t.numTries = uint32(res[3])
-	t.numNodes = uint32(res[4])
+	*t = Trie{
+		mod:       mod,
+		qry:       nil,
+		size:      uint32(res[0]),
+		ioSize:    uint32(res[1]),
+		totalSize: uint32(res[2]),
+		numTries:  uint32(res[3]),
+		numNodes:  uint32(res[4]),
+	}
 	return nil
 }
 
