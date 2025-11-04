@@ -2,7 +2,6 @@
 package marisa
 
 import (
-	"bytes"
 	"cmp"
 	"context"
 	_ "embed"
@@ -17,6 +16,7 @@ import (
 	"os"
 	"reflect"
 	"runtime"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -60,9 +60,15 @@ const maxAlloc = min(math.MaxUint32, math.MaxInt) // on 32-bit platforms, limit 
 
 // TODO: support cloning or shared/copy-on-write or wasm threads for concurrent use?
 
+// binaryAppender is encoding.BinaryAppender (go1.24)
+type binaryAppender interface {
+	AppendBinary(b []byte) ([]byte, error)
+}
+
 var (
 	_ fmt.Stringer               = (*Trie)(nil)
 	_ encoding.BinaryMarshaler   = (*Trie)(nil)
+	_ binaryAppender             = (*Trie)(nil)
 	_ encoding.BinaryUnmarshaler = (*Trie)(nil)
 	_ io.WriterTo                = (*Trie)(nil)
 	_ io.ReaderFrom              = (*Trie)(nil)
@@ -198,7 +204,7 @@ const (
 )
 
 func numTriesFlag(v int) (uint32, bool) {
-	if MinNumTries <= v && v <= MaxNumTries {
+	if v = cmp.Or(v, 3); MinNumTries <= v && v <= MaxNumTries {
 		return uint32(v), true
 	}
 	return 0, false
@@ -474,11 +480,13 @@ func (t *Trie) MarshalBinary() ([]byte, error) {
 	if t.mod == nil {
 		return nil, errors.New("dictionary not initialized")
 	}
-	buf := bytes.NewBuffer(make([]byte, 0, t.ioSize))
-	if _, err := t.WriteTo(buf); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
+	return t.AppendBinary(nil)
+}
+
+func (t *Trie) AppendBinary(b []byte) ([]byte, error) {
+	b = slices.Grow(b, int(t.ioSize))
+	_, err := t.mod.CallContext(withWriteBuffer(context.Background(), &b), "marisa_save")
+	return b, err
 }
 
 // WriteTo serializes the dictionary to w.
@@ -829,6 +837,10 @@ func withWriter(ctx context.Context, w io.Writer) context.Context {
 	return context.WithValue(ctx, ioKey("write"), w)
 }
 
+func withWriteBuffer(ctx context.Context, b *[]byte) context.Context {
+	return context.WithValue(ctx, ioKey("write_buffer"), b)
+}
+
 var read = wexport.VII("read", func(ctx context.Context, m api.Module, p, n uint32) {
 	r, ok := ctx.Value(ioKey("read")).(io.Reader)
 	if !ok {
@@ -858,31 +870,46 @@ var read = wexport.VII("read", func(ctx context.Context, m api.Module, p, n uint
 }, "read", "buf", "n")
 
 var write = wexport.VII("write", func(ctx context.Context, m api.Module, p, n uint32) {
-	w, ok := ctx.Value(ioKey("write")).(io.Writer)
-	if !ok {
-		panic("no active writer")
-	}
-	if n != 0 {
-		if p != 0 {
-			b, ok := m.Memory().Read(p, n)
-			if !ok {
-				panic("invalid pointer")
-			}
-			maybePanicAtOffset(w, n, b)
-			n, err := w.Write(b)
-			if err != nil {
-				wexcept.Throw(err)
-			}
-			if n != len(b) {
-				wexcept.Throw(io.ErrShortWrite)
-			}
-		} else {
-			maybePanicAtOffset(w, n, nil)
-			if _, err := io.CopyN(w, zeroReader{}, int64(n)); err != nil {
-				wexcept.Throw(err)
+	if w, ok := ctx.Value(ioKey("write")).(io.Writer); ok {
+		if n != 0 {
+			if p != 0 {
+				b, ok := m.Memory().Read(p, n)
+				if !ok {
+					panic("invalid pointer")
+				}
+				maybePanicAtOffset(w, n, b)
+				n, err := w.Write(b)
+				if err != nil {
+					wexcept.Throw(err)
+				}
+				if n != len(b) {
+					wexcept.Throw(io.ErrShortWrite)
+				}
+			} else {
+				maybePanicAtOffset(w, n, nil)
+				if _, err := io.CopyN(w, zeroReader{}, int64(n)); err != nil {
+					wexcept.Throw(err)
+				}
 			}
 		}
+		return
 	}
+	if b, ok := ctx.Value(ioKey("write_buffer")).(*[]byte); ok {
+		if n != 0 {
+			if p != 0 {
+				x, ok := m.Memory().Read(p, n)
+				if !ok {
+					panic("invalid pointer")
+				}
+				*b = append(*b, x...)
+				fmt.Println("sdfsdf", len(*b), len(x))
+			} else {
+				*b = append(*b, make([]byte, n)...)
+			}
+		}
+		return
+	}
+	panic("no active writer")
 }, "write", "buf", "n")
 
 type zeroReader struct{}
