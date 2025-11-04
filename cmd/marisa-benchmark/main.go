@@ -71,16 +71,14 @@ func main() {
 		fmt.Fprintf(os.Stderr, "error: option '-N' with an invalid argument: %d\n", *MaxNumTries)
 		os.Exit(2)
 	}
-	if *TextTail {
+	if *TextTail || !*BinaryTail {
 		cfg.TailMode = marisa.TextTail
-	}
-	if *BinaryTail {
+	} else {
 		cfg.TailMode = marisa.BinaryTail
 	}
-	if *WeightOrder {
+	if *WeightOrder || !*LabelOrder {
 		cfg.NodeOrder = marisa.WeightOrder
-	}
-	if *LabelOrder {
+	} else {
 		cfg.NodeOrder = marisa.LabelOrder
 	}
 	switch *CacheLevel {
@@ -252,7 +250,7 @@ func printTimeInfo(n int) func() {
 }
 
 func benchmarkBuild(keyset []string, weights []float32, cfg marisa.Config, trie *marisa.Trie) {
-	done := printTimeInfo(len(keyset))
+	defer printTimeInfo(len(keyset))()
 	if err := trie.BuildWeights(func(yield func(string, float32) bool) {
 		for i, key := range keyset {
 			if !yield(key, float32(weights[i])) {
@@ -262,7 +260,6 @@ func benchmarkBuild(keyset []string, weights []float32, cfg marisa.Config, trie 
 	}, cfg); err != nil {
 		panic(err)
 	}
-	done()
 	fmt.Printf(" %10d", trie.DiskSize())
 }
 
