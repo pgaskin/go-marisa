@@ -55,18 +55,22 @@ extern "C" struct marisa_stat marisa_stat() {
     };
 }
 
-extern "C" marisa::Agent *marisa_query_new_str(const char *ptr, size_t len) {
+extern "C" marisa::Agent *marisa_query_new() {
     auto agent = new marisa::Agent;
-    agent->set_query(ptr, len); // does not copy
     agent->init_state(); // heap allocates
     return agent;
 }
 
-extern "C" marisa::Agent *marisa_query_new_id(uint32_t id) {
-    auto agent = new marisa::Agent;
+extern "C" void marisa_query_set_str(marisa::Agent *agent, const char *ptr, size_t len) {
+    agent->set_query(ptr, len); // does not copy
+}
+
+extern "C" void marisa_query_set_id(marisa::Agent *agent, uint32_t id) {
     agent->set_query(static_cast<size_t>(id));
-    agent->init_state(); // heap allocates
-    return agent;
+}
+
+extern "C" void marisa_query_clear(marisa::Agent *agent) {
+    agent->clear();
 }
 
 extern "C" void marisa_query_free(marisa::Agent *agent) {

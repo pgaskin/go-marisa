@@ -11,8 +11,10 @@ marisa_build_push
 marisa_build
 marisa_stat
 
-marisa_query_new_str
-marisa_query_new_id
+marisa_query_new
+marisa_query_set_str
+marisa_query_set_id
+marisa_query_clear
 marisa_query_free
 marisa_query_lookup
 marisa_query_reverse_lookup

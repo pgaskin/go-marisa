@@ -19,6 +19,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/pgaskin/go-marisa/internal"
 	"github.com/pgaskin/go-marisa/internal/walloc"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
 	"github.com/pgaskin/go-marisa/internal/wexport"
@@ -43,6 +44,7 @@ var binary []byte
 // the end.
 type Trie struct {
 	mod       *wwrap.Module
+	qry       *query // cache the last query (we'll usually only have one at a time unless someone is nesting iterators)
 	size      uint32
 	ioSize    uint32
 	totalSize uint32
@@ -445,13 +447,37 @@ func (t Trie) NumNodes() uint32 {
 	return t.numNodes
 }
 
-// query is a MARISA agent. Multiple queries can be open at once, but they are
-// still subject to the concurrency limitations of [Trie].
+// query is a MARISA agent.
 type query struct {
-	mod *wwrap.Module
-	str uint32
-	ptr uint32
-	res [3]uint64
+	mod      *wwrap.Module
+	ptr      uint32
+	shortStr uint32 // pre-allocated shortQueryLen
+	shortBuf []byte
+	longStr  uint32
+	res      [3]uint64
+}
+
+const shortQueryLen = 128
+
+func (t *Trie) query() (*query, error) {
+	if t.mod == nil {
+		return nil, nil
+	}
+
+	var q *query
+	if !internal.NoCacheQuery && t.qry != nil {
+		q, t.qry = t.qry, nil
+	} else {
+		res, err := t.mod.Call("marisa_query_new")
+		if err != nil {
+			return nil, err
+		}
+		q = &query{
+			mod: t.mod,
+			ptr: uint32(res[0]),
+		}
+	}
+	return q, nil
 }
 
 // queryString starts a new query for s. If t is not loaded, it returns nil.
@@ -460,22 +486,40 @@ func (t *Trie) queryString(s string) (*query, error) {
 		return nil, nil
 	}
 
-	str, buf, err := t.mod.Alloc(len(s))
+	q, err := t.query()
 	if err != nil {
 		return nil, err
+	}
+
+	var (
+		str uint32
+		buf []byte
+	)
+	if !internal.NoCacheQuery && len(s) < shortQueryLen {
+		if q.shortStr == 0 {
+			q.shortStr, q.shortBuf, err = t.mod.Alloc(shortQueryLen)
+			if err != nil {
+				t.queryDone(q)
+				return nil, err
+			}
+		}
+		str = q.shortStr
+		buf = q.shortBuf
+	} else {
+		str, buf, err = t.mod.Alloc(len(s))
+		if err != nil {
+			t.queryDone(q)
+			return nil, err
+		}
+		q.longStr = str
 	}
 	copy(buf, s)
 
-	res, err := t.mod.Call("marisa_query_new_str", uint64(str), uint64(len(s)))
-	if err != nil {
-		t.mod.Free(str)
+	if _, err := t.mod.Call("marisa_query_set_str", uint64(q.ptr), uint64(str), uint64(len(s))); err != nil {
+		t.queryDone(q)
 		return nil, err
 	}
-	return &query{
-		mod: t.mod,
-		str: str,
-		ptr: uint32(res[0]),
-	}, nil
+	return q, nil
 }
 
 // queryID starts a new query for id. If t is not loaded, it returns nil.
@@ -484,26 +528,44 @@ func (t *Trie) queryID(id uint32) (*query, error) {
 		return nil, nil
 	}
 
-	res, err := t.mod.Call("marisa_query_new_id", uint64(id))
+	q, err := t.query()
 	if err != nil {
 		return nil, err
 	}
-	return &query{
-		mod: t.mod,
-		ptr: uint32(res[0]),
-	}, nil
+
+	if _, err := t.mod.Call("marisa_query_set_id", uint64(q.ptr), uint64(id)); err != nil {
+		t.queryDone(q)
+		return nil, err
+	}
+	return q, nil
 }
 
-// Free frees a query. If q is nil, this is a no-op.
-func (q *query) Free() {
-	if q == nil {
+func (t *Trie) queryDone(q *query) {
+	if t.mod == nil || q == nil {
 		return
 	}
-
+	if q.ptr == 0 {
+		panic("double-free of query")
+	}
+	if _, err := q.mod.Call("marisa_query_clear", uint64(q.ptr)); err != nil {
+		panic(fmt.Errorf("marisa: failed to free query: %w", err))
+	}
+	if q.longStr != 0 {
+		q.mod.Free(q.longStr)
+		q.longStr = 0
+	}
+	if !internal.NoCacheQuery && t.qry == nil {
+		t.qry = q
+		return
+	}
+	if q.shortStr != 0 {
+		q.mod.Free(q.shortStr)
+		q.shortStr = 0
+	}
 	if _, err := q.mod.Call("marisa_query_free", uint64(q.ptr)); err != nil {
 		panic(fmt.Errorf("marisa: failed to free query: %w", err))
 	}
-	q.mod.Free(q.str)
+	q.ptr = 0
 }
 
 // Next gets the next result for a query, returning true if a result is
@@ -549,7 +611,7 @@ func (t *Trie) Lookup(key string) (uint32, bool, error) {
 	if err != nil {
 		return 0, false, err
 	}
-	defer q.Free()
+	defer t.queryDone(q)
 
 	ok, err := q.Next("marisa_query_lookup")
 	if err != nil {
@@ -571,7 +633,7 @@ func (t *Trie) ReverseLookup(id uint32) (string, bool, error) {
 	if err != nil {
 		return "", false, err
 	}
-	defer q.Free()
+	defer t.queryDone(q)
 
 	ok, err := q.Next("marisa_query_reverse_lookup")
 	if err != nil {
@@ -615,7 +677,7 @@ func (t *Trie) search(name, query string) func(*error) iter.Seq2[uint32, string]
 				if err != nil {
 					return err
 				}
-				defer q.Free()
+				defer t.queryDone(q)
 
 				for {
 					ok, err := q.Next(name)

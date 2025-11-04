@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/pgaskin/go-marisa"
+	"github.com/pgaskin/go-marisa/internal"
 	"github.com/spf13/pflag"
 )
 
@@ -32,17 +33,18 @@ var (
 	Help        = pflag.BoolP("help", "h", false, "print this help")
 )
 
-func init() {
-	pflag.CommandLine.MarkDeprecated("reuse-on", "not supported in this version")
-	pflag.CommandLine.MarkHidden("reuse-off")
-}
-
 func main() {
 	pflag.Parse()
 
 	if *Help {
 		fmt.Printf("usage: %s [options] file...\n%s", os.Args[0], pflag.CommandLine.FlagUsages())
 		os.Exit(0)
+	}
+
+	if *ReuseOn || !*ReuseOff {
+		internal.NoCacheQuery = false
+	} else {
+		internal.NoCacheQuery = true
 	}
 
 	cfg := marisa.Config{
