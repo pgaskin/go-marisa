@@ -1,5 +1,5 @@
-// Package wautil contains various helpers for working with wazero.
-package wautil
+// Package wwrap wraps wazero modules.
+package wwrap
 
 import (
 	"context"
@@ -8,29 +8,9 @@ import (
 	"math/bits"
 	"unsafe"
 
-	"github.com/tetratelabs/wazero"
+	"github.com/pgaskin/go-marisa/internal/wexcept"
 	"github.com/tetratelabs/wazero/api"
 )
-
-type (
-	i32 interface{ ~int32 | ~uint32 }
-	i64 interface{ ~int64 | ~uint64 }
-)
-
-var wautil []func(wazero.HostModuleBuilder)
-
-func InstantiateHostModule(ctx context.Context, runtime wazero.Runtime) (api.Module, error) {
-	b := runtime.NewHostModuleBuilder("wautil")
-	for _, register := range wautil {
-		register(b)
-	}
-	return b.Instantiate(ctx)
-}
-
-func register(register func(wazero.HostModuleBuilder)) func(wazero.HostModuleBuilder) {
-	wautil = append(wautil, register)
-	return register
-}
 
 // Module wraps a module with various optimizations and enhancements.
 type Module struct {
@@ -120,7 +100,7 @@ func (m *Module) CallContext(ctx context.Context, name string, params ...uint64)
 	fn, fd := m.getfn(name)
 	err := fn.CallWithStack(ctx, m.stack[:])
 	if err != nil {
-		if err, ok := Catch(err); ok {
+		if err, ok := wexcept.Catch(err); ok {
 			return nil, err
 		}
 		panic(err)
@@ -136,11 +116,11 @@ func (m *Module) Alloc(n int) (addr uint32, buf []byte, err error) {
 		m.allocfn = m.mod.ExportedFunction("malloc")
 	}
 	if m.allocfn == nil {
-		panic("wautil: missing memory allocator helpers")
+		panic("wwrap: missing memory allocator helpers")
 	}
 	if n != 0 {
 		if n < 0 || uint64(n) >= math.MaxUint32 {
-			return 0, nil, NewException("bad_alloc", "size out of range")
+			return 0, nil, wexcept.NewException(wexcept.BadAlloc, "size out of range")
 		}
 		m.stack[0] = uint64(n)
 		if err := m.allocfn.CallWithStack(m.ctx, m.stack[:]); err != nil {
@@ -148,12 +128,12 @@ func (m *Module) Alloc(n int) (addr uint32, buf []byte, err error) {
 		}
 		addr = uint32(m.stack[0])
 		if addr == 0 {
-			return 0, nil, NewException("bad_alloc", "failed to allocate memory")
+			return 0, nil, wexcept.NewException(wexcept.BadAlloc, "failed to allocate memory")
 		}
 		var ok bool
 		buf, ok = m.mod.Memory().Read(addr, uint32(n))
 		if !ok {
-			panic("wautil: bad allocation")
+			panic("wwrap: bad allocation")
 		}
 	}
 	return addr, buf, nil
@@ -165,12 +145,12 @@ func (m *Module) Free(addr uint32) {
 		m.freefn = m.mod.ExportedFunction("free")
 	}
 	if m.freefn == nil {
-		panic("wautil: missing memory allocator helpers")
+		panic("wwrap: missing memory allocator helpers")
 	}
 	if addr != 0 {
 		m.stack[0] = uint64(addr)
 		if err := m.freefn.CallWithStack(m.ctx, m.stack[:]); err != nil {
-			panic(fmt.Errorf("wautil: failed to free allocation: %w", err))
+			panic(fmt.Errorf("wwrap: failed to free allocation: %w", err))
 		}
 	}
 }

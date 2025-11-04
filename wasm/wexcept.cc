@@ -7,25 +7,30 @@
 #include <stdexcept>
 #include <typeinfo>
 
+namespace wexcept {
+
 #ifdef __wasm__
-#define wasm_import(module, name) extern "C" __attribute__((__import_module__(#module),__import_name__((#name))))
-#define wasm_export(name) extern "C" __attribute__((export_name(#name)))
-#define wasm_constructor __attribute__((constructor))
-#else
-#define wasm_import(module, name) extern "C"
-#define wasm_export(name) extern "C"
-#define wasm_constructor __attribute__((constructor))
+__attribute__((__import_module__("wexcept"),__import_name__(("cxx_throw"))))
 #endif
+void cxx_throw[[noreturn]](const char *typ, const char *std, const char *msg);
 
-namespace wautil {
-
-wasm_import(wautil, cxx_throw) void cxx_throw[[noreturn]](const char *typ, const char *std, const char *msg);
+namespace cb {
+static void *wthrow_destroy_obj = nullptr;
+static void *(*wthrow_destroy_fn)(void*) = nullptr;
+extern "C" void wexcept_cxx_throw_destroy() {
+    if (wthrow_destroy_fn && wthrow_destroy_obj) {
+        wthrow_destroy_fn(wthrow_destroy_obj);
+        wthrow_destroy_fn = nullptr;
+        wthrow_destroy_obj = nullptr;
+    }
+}
+}
 
 void wthrow[[noreturn]](const std::exception& ex) {
     // see https://en.cppreference.com/w/cpp/error/exception.html for the hierachy
     // search for "MARISA_THROW" to see what's used
 
-    // these must be a subset of the ones defined in internal/wautil/error.go for unwrapping to work correctly
+    // these must be a subset of the ones defined in internal/wexcept/exception.go for unwrapping to work correctly
     const char *std = "exception";
     if (false) {}
     #define std_(exception) else if (dynamic_cast<const exception*>(&ex)) std = #exception;
@@ -57,35 +62,24 @@ void wthrow[[noreturn]](const std::exception& ex) {
     std_(std::bad_exception)                  // exception
     //std_(std::bad_variant_access)           // exception
 
-    wautil::cxx_throw(typeid(ex).name(), std, ex.what());
+    wexcept::cxx_throw(typeid(ex).name(), std, ex.what());
 }
 
 void wthrow[[noreturn]](const char *typ, const char *what) {
-    wautil::cxx_throw(typ, nullptr, what);
+    wexcept::cxx_throw(typ, nullptr, what);
 }
 
 void wthrow[[noreturn]](const std::type_info &tinfo, const char *what) {
-    wautil::wthrow(tinfo.name(), what);
+    wexcept::wthrow(tinfo.name(), what);
 }
 
 void wthrow[[noreturn]](const char *what) {
-    wautil::wthrow(nullptr, what);
+    wexcept::wthrow(nullptr, what);
 }
-
-static void *wthrow_destruct_obj = nullptr;
-static void *(*wthrow_destruct_fn)(void*) = nullptr;
 
 static void wthrow_set_destructor(void *obj, void *(*dest)(void*)) {
-    wthrow_destruct_obj = obj;
-    wthrow_destruct_fn = dest;
-}
-
-wasm_export(wautil_post_throw) void wautil_post_throw() {
-    if (wthrow_destruct_fn && wthrow_destruct_obj) {
-        wthrow_destruct_fn(wthrow_destruct_obj);
-        wthrow_destruct_fn = nullptr;
-        wthrow_destruct_obj = nullptr;
-    }
+    cb::wthrow_destroy_obj = obj;
+    cb::wthrow_destroy_fn = dest;
 }
 
 }
@@ -96,7 +90,7 @@ extern "C" void *__cxa_allocate_exception(size_t size) {
     if (size < sizeof(fallback_exception_buf)) {
         return fallback_exception_buf;
     }
-    //wautil::cxx_throw(nullptr, 0, nullptr, 0, nullptr, 0);
+    //wexcept::wthrow::cxx_throw(nullptr, 0, nullptr, 0, nullptr, 0);
     const auto mem = ::operator new(size);
     return mem;
 }
@@ -131,16 +125,16 @@ extern "C" void __cxa_throw(void *thrown_exception, std::type_info *tinfo, void 
     //   - we don't support c++ catch blocks (all exceptions will go straight to go)
     //   - we don't support unwinding the stack, so destructors won't get called
 
-    wautil::wthrow_set_destructor(thrown_exception, dest);
+    wexcept::wthrow_set_destructor(thrown_exception, dest);
     if (tinfo) {
         auto throw_type = static_cast<const __cxxabiv1::__shim_type_info*>(tinfo);
         auto catch_type = static_cast<const __cxxabiv1::__shim_type_info*>(&typeid(std::exception));
         if (catch_type->can_catch(throw_type, thrown_exception)) {
-            wautil::wthrow(*static_cast<std::exception*>(thrown_exception));
+            wexcept::wthrow(*static_cast<std::exception*>(thrown_exception));
         }
-        wautil::wthrow(*tinfo, "unknown error type");
+        wexcept::wthrow(*tinfo, "unknown error type");
     }
-    wautil::wthrow("unknown error type");
+    wexcept::wthrow("unknown error type");
 }
 
 // printf_core (and write/writev/close) is brought in by __abort_message, which
@@ -153,10 +147,14 @@ extern "C" void __cxa_throw(void *thrown_exception, std::type_info *tinfo, void 
 //  - run `wasm-objdump -x wasm/marisa.wasm`
 //  - https://github.com/llvm/llvm-project/blob/f3b407f8f4624461eedfe5a2da540469a0f69dc9/libcxxabi/src/stdlib_new_delete.cpp#L31C13-L43
 extern "C" void __abort_message[[noreturn]](const char* fmt, ...) {
-    wautil::wthrow("abort", fmt);
+    wexcept::wthrow("abort", fmt);
 }
 
-wasm_constructor static void wautil_new_handler_init() {
+extern "C" void abort() {
+    wexcept::wthrow("abort", "abort");
+}
+
+__attribute__((constructor)) static void wexcept_new_handler_init() {
     static auto ex = std::bad_alloc(); // preallocate
-    std::set_new_handler([]() { wautil::wthrow(ex); });
+    std::set_new_handler([]() { wexcept::wthrow(ex); });
 }

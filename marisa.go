@@ -19,7 +19,9 @@ import (
 	"sync"
 
 	"github.com/pgaskin/go-marisa/internal/walloc"
-	"github.com/pgaskin/go-marisa/internal/wautil"
+	"github.com/pgaskin/go-marisa/internal/wexcept"
+	"github.com/pgaskin/go-marisa/internal/wexport"
+	"github.com/pgaskin/go-marisa/internal/wwrap"
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
 	"github.com/tetratelabs/wazero/experimental"
@@ -39,7 +41,7 @@ var binary []byte
 // the same trie twice, it needs twice the amount of memory since it swaps it at
 // the end.
 type Trie struct {
-	mod       *wautil.Module
+	mod       *wwrap.Module
 	size      uint32
 	ioSize    uint32
 	totalSize uint32
@@ -90,15 +92,12 @@ func initialize() {
 
 	instance.runtime = wazero.NewRuntimeWithConfig(ctx, cfg)
 
-	_, instance.err = wautil.InstantiateHostModule(ctx, instance.runtime)
+	_, instance.err = wexcept.Instantiate(ctx, instance.runtime)
 	if instance.err != nil {
 		return
 	}
 
-	hmb := instance.runtime.NewHostModuleBuilder("marisa")
-	read(hmb)
-	write(hmb)
-	_, instance.err = hmb.Instantiate(ctx)
+	_, instance.err = wexport.Instantiate(ctx, instance.runtime, "marisa", read, write)
 	if instance.err != nil {
 		return
 	}
@@ -107,7 +106,7 @@ func initialize() {
 }
 
 // instantiate creates a new instance of the module.
-func instantiate(alloc experimental.MemoryAllocator) (*wautil.Module, error) {
+func instantiate(alloc experimental.MemoryAllocator) (*wwrap.Module, error) {
 	if err := Initialize(); err != nil {
 		return nil, err
 	}
@@ -115,7 +114,7 @@ func instantiate(alloc experimental.MemoryAllocator) (*wautil.Module, error) {
 	if err != nil {
 		return nil, err
 	}
-	return wautil.New(mod), nil
+	return wwrap.New(mod), nil
 }
 
 // Config specifies options for a dictionary. Any unspecified options will be
@@ -263,7 +262,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 
 // swap sets the trie to use the specified mod containing an initialized
 // dictionary, and updates the stats.
-func (t *Trie) swap(mod *wautil.Module) error {
+func (t *Trie) swap(mod *wwrap.Module) error {
 	res, err := mod.Call("marisa_stat")
 	if err != nil {
 		return err
@@ -306,9 +305,9 @@ func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
 		return err
 	}
 	if _, err := mod.Call("marisa_new", uint64(ptr), uint64(length)); err != nil {
-		var ex *wautil.Exception
+		var ex *wexcept.Exception
 		if errors.As(err, &ex) {
-			if errors.Is(ex, wautil.StdException("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
+			if errors.Is(ex, wexcept.StdException("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
 				err = io.ErrUnexpectedEOF
 			}
 		}
@@ -337,9 +336,9 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	}
 	copy(buf, b)
 	if _, err := mod.Call("marisa_new", uint64(ptr), uint64(len(b))); err != nil {
-		var ex *wautil.Exception
+		var ex *wexcept.Exception
 		if errors.As(err, &ex) {
-			if errors.Is(ex, wautil.StdException("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
+			if errors.Is(ex, wexcept.StdException("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
 				err = io.ErrUnexpectedEOF
 			}
 		}
@@ -363,9 +362,9 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 	}
 	c := &countReader{R: r}
 	if _, err := mod.CallContext(withReader(context.Background(), c), "marisa_load"); err != nil {
-		var ex *wautil.Exception
+		var ex *wexcept.Exception
 		if errors.As(err, &ex) {
-			if errors.Is(ex, wautil.StdException("runtime_error")) && strings.Contains(ex.What(), "!stream_->read") {
+			if errors.Is(ex, wexcept.StdException("runtime_error")) && strings.Contains(ex.What(), "!stream_->read") {
 				err = io.ErrUnexpectedEOF
 			}
 		}
@@ -448,7 +447,7 @@ func (t Trie) NumNodes() uint32 {
 // query is a MARISA agent. Multiple queries can be open at once, but they are
 // still subject to the concurrency limitations of [Trie].
 type query struct {
-	mod *wautil.Module
+	mod *wwrap.Module
 	str uint32
 	ptr uint32
 	res [3]uint64
@@ -641,7 +640,7 @@ func withWriter(ctx context.Context, w io.Writer) context.Context {
 	return context.WithValue(ctx, ioKey("write"), w)
 }
 
-var read = wautil.ExportFuncVII("read", func(ctx context.Context, m api.Module, p, n uint32) {
+var read = wexport.VII("read", func(ctx context.Context, m api.Module, p, n uint32) {
 	r, ok := ctx.Value(ioKey("read")).(io.Reader)
 	if !ok {
 		panic("no active reader")
@@ -656,20 +655,20 @@ var read = wautil.ExportFuncVII("read", func(ctx context.Context, m api.Module, 
 				if err == io.EOF {
 					err = io.ErrUnexpectedEOF
 				}
-				wautil.Throw(err)
+				wexcept.Throw(err)
 			}
 		} else {
 			if _, err := io.CopyN(io.Discard, r, int64(n)); err != nil {
 				if err == io.EOF {
 					err = io.ErrUnexpectedEOF
 				}
-				wautil.Throw(err)
+				wexcept.Throw(err)
 			}
 		}
 	}
 }, "read", "buf", "n")
 
-var write = wautil.ExportFuncVII("write", func(ctx context.Context, m api.Module, p, n uint32) {
+var write = wexport.VII("write", func(ctx context.Context, m api.Module, p, n uint32) {
 	w, ok := ctx.Value(ioKey("write")).(io.Writer)
 	if !ok {
 		panic("no active writer")
@@ -678,18 +677,18 @@ var write = wautil.ExportFuncVII("write", func(ctx context.Context, m api.Module
 		if p != 0 {
 			b, ok := m.Memory().Read(p, n)
 			if !ok {
-				panic("gocpp: invalid pointer")
+				panic("invalid pointer")
 			}
 			n, err := w.Write(b)
 			if err != nil {
-				wautil.Throw(err)
+				wexcept.Throw(err)
 			}
 			if n != len(b) {
-				wautil.Throw(io.ErrShortWrite)
+				wexcept.Throw(io.ErrShortWrite)
 			}
 		} else {
 			if _, err := io.CopyN(w, zeroReader{}, int64(n)); err != nil {
-				wautil.Throw(err)
+				wexcept.Throw(err)
 			}
 		}
 	}

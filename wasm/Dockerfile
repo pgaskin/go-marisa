@@ -33,8 +33,8 @@ ENV PATH="/opt/wasi-sdk/bin:/opt/binaryen/bin:$PATH"
 RUN ! grep -e MARISA_CATCH -e catch -Fr lib
 RUN ! grep -e MARISA_CATCH -e catch -Fr include | grep -v '//'
 
-COPY --link ./src/io.cc /src/lib/marisa/grimoire/io/
-COPY --link ./src/io.h ./src/intrin.h /src/lib/marisa/grimoire/
+COPY --link ./io.cc /src/lib/marisa/grimoire/io/
+COPY --link ./io.h ./intrin.h /src/lib/marisa/grimoire/
 
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -Wno-implicit-fallthrough -Wno-unused-function -O2 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 \
@@ -47,19 +47,19 @@ RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -Wno-implicit-fallthrough 
  lib/marisa/keyset.cc \
  lib/marisa/trie.cc
 
-COPY --link ./src/wautil.cc /src/misc/
+COPY --link ./wrapper.cc /src/
+
+RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
+ -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
+ -std=c++20 -isysteminclude \
+ wrapper.cc
+
+COPY --link ./wexcept.cc /src/
 
 RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
  -std=c++20 \
- misc/wautil.cc
-
-COPY --link ./src/wrapper.cc /src/misc/
-
-RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
- -std=c++20 -isystemmisc -isysteminclude \
- misc/wrapper.cc
+ wexcept.cc
 
 COPY --link ./exports.txt /src/
 

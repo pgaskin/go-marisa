@@ -1,4 +1,5 @@
-package wautil
+// Package wexcept throws and catches Go and C++ exceptions.
+package wexcept
 
 import (
 	"bytes"
@@ -8,8 +9,14 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/pgaskin/go-marisa/internal/wexport"
+	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
 )
+
+func Instantiate(ctx context.Context, runtime wazero.Runtime) (api.Module, error) {
+	return wexport.Instantiate(ctx, runtime, "wexcept", cxxThrow)
+}
 
 // thrownError represents an opaque error thrown from within a host function.
 type thrownError struct {
@@ -17,7 +24,7 @@ type thrownError struct {
 }
 
 func (*thrownError) Error() string {
-	return "gocpp: throw"
+	return "wexcept: throw"
 }
 
 // Throw throws an error. It should only be called from within a host module
@@ -135,6 +142,38 @@ const (
 	stdExceptionBase   StdException = "exception"
 )
 
+const (
+	LogicError       StdException = "logic_error"
+	RuntimeError     StdException = "runtime_error"
+	BadTypeid        StdException = "bad_typeid"
+	BadCast          StdException = "bad_cast"
+	BadAlloc         StdException = "bad_alloc"
+	BadException     StdException = "bad_exception"
+	BadVariantAccess StdException = "bad_variant_access"
+
+	InvalidArgument StdException = "invalid_argument"
+	DomainError     StdException = "domain_error"
+	LengthError     StdException = "length_error"
+	OutOfRange      StdException = "out_of_range"
+	FutureError     StdException = "future_error"
+
+	RangeError           StdException = "range_error"
+	OverflowError        StdException = "overflow_error"
+	UnderflowError       StdException = "underflow_error"
+	RegexError           StdException = "regex_error"
+	SystemError          StdException = "system_error"
+	NonexistentLocalTime StdException = "nonexistent_local_time"
+	AmbiguousLocalTime   StdException = "ambiguous_local_time"
+	FormatError          StdException = "format_error"
+
+	IostreamFailure StdException = "ios_base::failure"
+	FilesystemError StdException = "filesystem::filesystem_error"
+
+	BadAnyCast StdException = "bad_any_cast"
+
+	BadArrayNewLength StdException = "bad_array_new_length"
+)
+
 func (std StdException) Error() string {
 	if std == "" {
 		return stdExceptionBase.Error()
@@ -159,36 +198,18 @@ func (std StdException) Parents() string {
 func (std StdException) Unwrap() error {
 	if std != "" && std != stdExceptionBase {
 		switch std {
-		case "logic_error",
-			"runtime_error",
-			"bad_typeid",
-			"bad_cast",
-			"bad_alloc",
-			"bad_exception",
-			"bad_variant_access":
+		case LogicError, RuntimeError, BadTypeid, BadCast, BadAlloc, BadException, BadVariantAccess:
 			return stdExceptionBase
-		case "invalid_argument",
-			"domain_error",
-			"length_error",
-			"out_of_range",
-			"future_error":
-			return StdException("logic_error")
-		case "range_error",
-			"overflow_error",
-			"underflow_error",
-			"regex_error",
-			"system_error",
-			"nonexistent_local_time",
-			"ambiguous_local_time",
-			"format_error":
-			return StdException("runtime_error")
-		case "ios_base::failure",
-			"filesystem::filesystem_error":
-			return StdException("system_error")
-		case "bad_any_cast":
-			return StdException("bad_cast")
-		case "bad_array_new_length":
-			return StdException("bad_alloc")
+		case InvalidArgument, DomainError, LengthError, OutOfRange, FutureError:
+			return LogicError
+		case RangeError, OverflowError, UnderflowError, RegexError, SystemError, NonexistentLocalTime, AmbiguousLocalTime, FormatError:
+			return RuntimeError
+		case IostreamFailure, FilesystemError:
+			return SystemError
+		case BadAnyCast:
+			return BadCast
+		case BadArrayNewLength:
+			return BadAlloc
 		}
 	}
 	return nil
@@ -203,10 +224,10 @@ func (std StdException) Is(target error) bool {
 	return false
 }
 
-var _ = register(ExportFuncVIII("cxx_throw", func(ctx context.Context, mod api.Module, typ, std, what uint32) {
+var cxxThrow = wexport.VIII("cxx_throw", func(ctx context.Context, mod api.Module, typ, std, what uint32) {
 	type nestedThrowKey struct{}
 	if ctx.Value(nestedThrowKey{}) == true {
-		panic(fmt.Errorf("wautil: post-throw callback threw"))
+		panic(fmt.Errorf("wexcept: post-throw callback threw"))
 	}
 	exc := new(Exception)
 	if s, ok := cString(mod.Memory(), typ, 256); ok {
@@ -223,11 +244,11 @@ var _ = register(ExportFuncVIII("cxx_throw", func(ctx context.Context, mod api.M
 	if exc.typ == "" && exc.std != "" {
 		exc.typ = exc.std.Error()
 	}
-	if _, err := mod.ExportedFunction("wautil_post_throw").Call(context.WithValue(ctx, nestedThrowKey{}, true)); err != nil {
-		panic(fmt.Errorf("wautil: failed to call post-throw callback: %w", err))
+	if _, err := mod.ExportedFunction("wexcept_cxx_throw_destroy").Call(context.WithValue(ctx, nestedThrowKey{}, true)); err != nil {
+		panic(fmt.Errorf("wexcept: failed to call post-throw callback: %w", err))
 	}
 	Throw(exc)
-}, "panic[*Exception]", "typ", "std", "what"))
+}, "cxx_throw", "typ", "std", "what")
 
 // simpleDemangleClass demangles a small subset of C++ class names (for the
 // Itanium C++ ABI). If invalid or unsupported, an empty string is returned.

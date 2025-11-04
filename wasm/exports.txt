@@ -1,8 +1,8 @@
+aligned_alloc
 malloc
 free
-aligned_alloc
 
-wautil_post_throw
+wexcept_cxx_throw_destroy
 
 marisa_new
 marisa_load

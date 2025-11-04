@@ -1,4 +1,4 @@
-package wautil
+package wexcept
 
 import (
 	"errors"

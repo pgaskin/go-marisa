@@ -1,4 +1,5 @@
-package wautil
+// Package wexport contains type-safe wrappers for exporting host functions.
+package wexport
 
 import (
 	"context"
@@ -9,6 +10,21 @@ import (
 
 // inspired by github.com/ncruces/go-sqlite3@v0.29.1/internal/util/func.go, but has a more functional design and supports named parameters
 
+type (
+	i32 interface{ ~int32 | ~uint32 }
+	i64 interface{ ~int64 | ~uint64 }
+)
+
+type Func func(wazero.HostModuleBuilder)
+
+func Instantiate(ctx context.Context, runtime wazero.Runtime, name string, fn ...Func) (api.Module, error) {
+	hmb := runtime.NewHostModuleBuilder(name)
+	for _, fn := range fn {
+		fn(hmb)
+	}
+	return hmb.Instantiate(ctx)
+}
+
 type funcIIII[TR, T0, T1, T2 i32] func(context.Context, api.Module, T0, T1, T2) TR
 
 func (fn funcIIII[TR, T0, T1, T2]) Call(ctx context.Context, mod api.Module, stack []uint64) {
@@ -16,7 +32,7 @@ func (fn funcIIII[TR, T0, T1, T2]) Call(ctx context.Context, mod api.Module, sta
 	stack[0] = uint64(fn(ctx, mod, T0(stack[0]), T1(stack[1]), T2(stack[2])))
 }
 
-func ExportFuncIIII[TR, T0, T1, T2 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2) TR, name ...string) func(wazero.HostModuleBuilder) {
+func IIII[TR, T0, T1, T2 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2) TR, name ...string) Func {
 	return func(mod wazero.HostModuleBuilder) {
 		b := mod.NewFunctionBuilder()
 		b.WithGoModuleFunction(funcIIII[TR, T0, T1, T2](fn), []api.ValueType{api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32}, []api.ValueType{api.ValueTypeI32})
@@ -39,7 +55,7 @@ func (fn funcVII[T0, T1]) Call(ctx context.Context, mod api.Module, stack []uint
 	fn(ctx, mod, T0(stack[0]), T1(stack[1]))
 }
 
-func ExportFuncVII[T0, T1 i32](exportName string, fn func(context.Context, api.Module, T0, T1), name ...string) func(wazero.HostModuleBuilder) {
+func VII[T0, T1 i32](exportName string, fn func(context.Context, api.Module, T0, T1), name ...string) Func {
 	return func(mod wazero.HostModuleBuilder) {
 		b := mod.NewFunctionBuilder()
 		b.WithGoModuleFunction(funcVII[T0, T1](fn), []api.ValueType{api.ValueTypeI32, api.ValueTypeI32}, nil)
@@ -61,7 +77,7 @@ func (fn funcVIII[T0, T1, T2]) Call(ctx context.Context, mod api.Module, stack [
 	fn(ctx, mod, T0(stack[0]), T1(stack[1]), T2(stack[2]))
 }
 
-func ExportFuncVIII[T0, T1, T2 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2), name ...string) func(wazero.HostModuleBuilder) {
+func VIII[T0, T1, T2 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2), name ...string) Func {
 	return func(mod wazero.HostModuleBuilder) {
 		b := mod.NewFunctionBuilder()
 		b.WithGoModuleFunction(funcVIII[T0, T1, T2](fn), []api.ValueType{api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32}, nil)
@@ -83,7 +99,7 @@ func (fn funcVIIII[T0, T1, T2, T3]) Call(ctx context.Context, mod api.Module, st
 	fn(ctx, mod, T0(stack[0]), T1(stack[1]), T2(stack[2]), T3(stack[3]))
 }
 
-func ExportFuncVIIII[T0, T1, T2, T3 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2, T3), name ...string) func(wazero.HostModuleBuilder) {
+func VIIII[T0, T1, T2, T3 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2, T3), name ...string) Func {
 	return func(mod wazero.HostModuleBuilder) {
 		b := mod.NewFunctionBuilder()
 		b.WithGoModuleFunction(funcVIIII[T0, T1, T2, T3](fn), []api.ValueType{api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32}, nil)
@@ -105,7 +121,7 @@ func (fn funcVIIIIII[T0, T1, T2, T3, T4, T5]) Call(ctx context.Context, mod api.
 	fn(ctx, mod, T0(stack[0]), T1(stack[1]), T2(stack[2]), T3(stack[3]), T4(stack[4]), T5(stack[5]))
 }
 
-func ExportFuncVIIIIII[T0, T1, T2, T3, T4, T5 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2, T3, T4, T5), name ...string) func(wazero.HostModuleBuilder) {
+func VIIIIII[T0, T1, T2, T3, T4, T5 i32](exportName string, fn func(context.Context, api.Module, T0, T1, T2, T3, T4, T5), name ...string) Func {
 	return func(mod wazero.HostModuleBuilder) {
 		b := mod.NewFunctionBuilder()
 		b.WithGoModuleFunction(funcVIIIIII[T0, T1, T2, T3, T4, T5](fn), []api.ValueType{api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32, api.ValueTypeI32}, nil)
