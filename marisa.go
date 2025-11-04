@@ -12,14 +12,18 @@ import (
 	"io"
 	"iter"
 	"math"
+	"math/bits"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
 	"sync"
 
+	"github.com/pgaskin/go-marisa/internal/walloc"
 	"github.com/pgaskin/go-marisa/internal/wautil"
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
+	"github.com/tetratelabs/wazero/experimental"
 )
 
 //go:generate docker build --platform amd64 --pull --no-cache --progress plain --output wasm wasm
@@ -30,6 +34,11 @@ var binary []byte
 //
 // At the moment, it must not be used concurrently. This restriction may be
 // lifted in the future.
+//
+// On 64-bit systems, the maximum dictionary size is 4GiB. On 32-bit
+// systems, the maximum dictionary size is 2 GiB. Note that if you build/load
+// the same trie twice, it needs twice the amount of memory since it swaps it at
+// the end.
 type Trie struct {
 	mod       *wautil.Module
 	size      uint32
@@ -38,6 +47,8 @@ type Trie struct {
 	numTries  uint32
 	numNodes  uint32
 }
+
+const is32bit = bits.UintSize < 64
 
 // TODO: support cloning or shared/copy-on-write or wasm threads for concurrent use?
 
@@ -54,6 +65,7 @@ var instance struct {
 	compiled wazero.CompiledModule
 	err      error
 	once     sync.Once
+	alloc    walloc.SliceAllocator
 }
 
 // Initialize compiles the wasm binary.
@@ -67,9 +79,15 @@ func Initialize() error {
 // initialize compiles the module and instantiates the host modules.
 func initialize() {
 	ctx := context.Background()
-
 	cfg := wazero.NewRuntimeConfig()
-	cfg = cfg.WithCoreFeatures(api.CoreFeaturesV2)
+
+	cfg = cfg.WithCoreFeatures(
+		api.CoreFeatureMutableGlobal |
+			api.CoreFeatureBulkMemoryOperations |
+			api.CoreFeatureMultiValue |
+			api.CoreFeatureNonTrappingFloatToIntConversion |
+			api.CoreFeatureSignExtensionOps |
+			api.CoreFeatureSIMD)
 
 	instance.runtime = wazero.NewRuntimeWithConfig(ctx, cfg)
 
@@ -78,16 +96,24 @@ func initialize() {
 		return
 	}
 
+	if is32bit {
+		instance.alloc.OverrideMax = math.MaxInt
+	} else {
+		instance.alloc.OverrideMax = math.MaxUint32
+	}
+
 	instance.compiled, instance.err = instance.runtime.CompileModule(ctx, binary)
 }
 
 // instantiate creates a new instance of the module.
-func instantiate() (*wautil.Module, error) {
+func instantiate(alloc experimental.MemoryAllocator) (*wautil.Module, error) {
 	if err := Initialize(); err != nil {
 		return nil, err
 	}
-	var err error
-	mod, err := instance.runtime.InstantiateModule(context.Background(), instance.compiled, wazero.NewModuleConfig().WithName(""))
+	if alloc == nil {
+		alloc = &instance.alloc
+	}
+	mod, err := instance.runtime.InstantiateModule(experimental.WithMemoryAllocator(context.Background(), alloc), instance.compiled, wazero.NewModuleConfig().WithName(""))
 	if err != nil {
 		return nil, err
 	}
@@ -201,7 +227,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 		return errors.New("invalid config")
 	}
 
-	mod, err := instantiate()
+	mod, err := instantiate(nil)
 	if err != nil {
 		return err
 	}
@@ -250,11 +276,47 @@ func (t *Trie) swap(mod *wautil.Module) error {
 	return nil
 }
 
+// MapFile mmaps a file and loads the dictionary from it. On error, the trie is
+// left unchanged. If not supported by the current platform, an error matching
+// [errors.ErrUnsupported] is returned.
+func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
+	va := &walloc.VirtualAllocator{
+		Fallback: &instance.alloc,
+	}
+	if uint64(length) > min(math.MaxUint32, math.MaxInt) {
+		return errors.New("dictionary too large")
+	}
+	if is32bit {
+		va.OverrideMax = uint64(length) + 32*1024*1024 // required space for file + 32 MiB of working memory
+	}
+	mod, err := instantiate(va)
+	if err != nil {
+		return err
+	}
+	if err := va.Err(); err != nil {
+		return err
+	}
+	ptr, err := va.MapFile(context.Background(), mod.Module(), f, offset, length, false)
+	if err != nil {
+		return err
+	}
+	if _, err := mod.Call("marisa_new", uint64(ptr), uint64(length)); err != nil {
+		var ex *wautil.Exception
+		if errors.As(err, &ex) {
+			if errors.Is(ex, wautil.StdException("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
+				err = io.ErrUnexpectedEOF
+			}
+		}
+		return err
+	}
+	return t.swap(mod)
+}
+
 // UnmarshalBinary copies b and maps the trie directly from it. This is faster
 // than [Trie.ReadFrom], but may have a less optimal memory layout. On error,
 // the trie is left unchanged.
 func (t *Trie) UnmarshalBinary(b []byte) error {
-	mod, err := instantiate()
+	mod, err := instantiate(nil)
 	if err != nil {
 		return err
 	}
@@ -281,7 +343,7 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 	// note: it won't actually read past in practice, since it reads exactly
 	// what it wants with std::istream::read, and our stream impl is effectively
 	// unbuffered
-	mod, err := instantiate()
+	mod, err := instantiate(nil)
 	if err != nil {
 		return 0, err
 	}
