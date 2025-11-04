@@ -38,12 +38,12 @@ var wasm []byte
 // Trie is a read-only in-memory little-endian MARISA dictionary.
 //
 // At the moment, it must not be used concurrently. This restriction may be
-// lifted in the future.
+// lifted in the future. It's okay to nest iterators or call methods from within
+// one.
 //
-// On 64-bit systems, the maximum dictionary size is 4GiB. On 32-bit
-// systems, the maximum dictionary size is 2 GiB. Note that if you build/load
-// the same trie twice, it needs twice the amount of memory since it swaps it at
-// the end.
+// On 64-bit systems, the maximum dictionary size is 4GiB. On 32-bit systems,
+// the maximum dictionary size is 2 GiB. Note that if you build/load the same
+// trie twice, it needs twice the amount of memory since it swaps it at the end.
 type Trie struct {
 	mod       *wwrap.Module
 	qry       *query // cache the last query (we'll usually only have one at a time unless someone is nesting iterators)
@@ -220,8 +220,8 @@ const (
 	nodeOrderMask  = 0xF0000
 )
 
-// Build builds a trie out of the specified set of keys, with a weight of 1 for
-// each.
+// Build builds a dictionary out of the specified set of keys, with a weight of
+// 1 for each.
 func (t *Trie) Build(keys iter.Seq[string], cfg Config) error {
 	return t.BuildWeights(func(yield func(string, float32) bool) {
 		for key := range keys {
@@ -234,8 +234,8 @@ func (t *Trie) Build(keys iter.Seq[string], cfg Config) error {
 
 const chunkSize = 4 * 1024 * 1024
 
-// BuildWeights builds a trie out of the specified set of keys and weights. If a key is
-// specified multiple times, the weights are accumulated.
+// BuildWeights builds a dictionary out of the specified set of keys and
+// weights. If a key is specified multiple times, the weights are accumulated.
 func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 	flag, ok := cfg.build()
 	if !ok {
@@ -306,7 +306,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 	return t.swap(mod)
 }
 
-// swap sets the trie to use the specified mod containing an initialized
+// swap sets the dictionary to use the specified mod containing an initialized
 // dictionary, and updates the stats.
 func (t *Trie) swap(mod *wwrap.Module) error {
 	res, err := mod.Call("marisa_stat")
@@ -444,7 +444,7 @@ func (t *Trie) WriteTo(w io.Writer) (int64, error) {
 	return c.N, err
 }
 
-// String returns a human-readable description of the trie.
+// String returns a human-readable description of the dictionary.
 func (t Trie) String() string {
 	var b strings.Builder
 	b.WriteString(reflect.TypeOf(t).String())
@@ -669,7 +669,7 @@ func (t *Trie) Lookup(key string) (uint32, bool, error) {
 	return q.ID(), true, nil
 }
 
-// ReverseLookup restores a key from its ID.
+// ReverseLookup gets a key by its ID.
 func (t *Trie) ReverseLookup(id uint32) (string, bool, error) {
 	if id >= t.size {
 		return "", false, nil // optimization
@@ -691,21 +691,17 @@ func (t *Trie) ReverseLookup(id uint32) (string, bool, error) {
 	return q.Key(), true, nil
 }
 
-// CommonPrefixSearch searches keys from the possible prefixes of a query
-// string.
+// CommonPrefixSearch returns keys which equal any prefix of the query string.
 func (t *Trie) CommonPrefixSearch(query string) func(*error) iter.Seq2[uint32, string] {
 	return t.search("marisa_query_common_prefix_search", query)
 }
 
-// PredictiveSearch searches keys starting with a query string.
+// PredictiveSearch returns keys starting with a query string.
 func (t *Trie) PredictiveSearch(query string) func(*error) iter.Seq2[uint32, string] {
 	return t.search("marisa_query_predictive_search", query)
 }
 
 // Dump dumps all keys.
-//
-// Other functions on the trie MUST NOT be called while the iterator is being
-// used.
 func (t *Trie) Dump() func(*error) iter.Seq2[uint32, string] {
 	return t.search("marisa_query_predictive_search", "")
 }
