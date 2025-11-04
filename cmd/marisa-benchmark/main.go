@@ -285,7 +285,7 @@ func printTimeInfo(n int, elapsed time.Duration) {
 		if elapsed == 0 || n == 0 {
 			fmt.Printf(" %8s ", "-")
 		} else {
-			fmt.Printf(" %8.1f", 1000000000.0*elapsed.Seconds()/1000.0/float64(n))
+			fmt.Printf(" %8.1f", 1000000000.0*elapsed.Seconds()/float64(n))
 		}
 	}
 }
