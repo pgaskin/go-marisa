@@ -143,8 +143,8 @@ func (t *Trie) swap(mod *wwrap.Module) error {
 		totalSize: uint32(res[2]),
 		numTries:  uint32(res[3]),
 		numNodes:  uint32(res[4]),
-		tailMode:  tailModeValue(uint32(res[5])),
-		nodeOrder: nodeOrderValue(uint32(res[6])),
+		tailMode:  flagTailMode(configFlag(res[5])),
+		nodeOrder: flagNodeOrder(configFlag(res[6])),
 	}
 	return nil
 }
@@ -168,9 +168,9 @@ func (t *Trie) String() string {
 		b.WriteString(" num_nodes=")
 		b.WriteString(strconv.FormatUint(uint64(t.numNodes), 10))
 		b.WriteString(" tail_mode=")
-		b.WriteString(strconv.FormatUint(uint64(t.tailMode), 10))
+		b.WriteString(t.tailMode.String())
 		b.WriteString(" node_order=")
-		b.WriteString(strconv.FormatUint(uint64(t.nodeOrder), 10))
+		b.WriteString(t.nodeOrder.String())
 	}
 	b.WriteString(")")
 	return b.String()
@@ -208,32 +208,10 @@ func (t *Trie) TailMode() TailMode {
 	return t.tailMode
 }
 
-func tailModeValue(f uint32) TailMode {
-	switch f & 0x0F000 {
-	case 0x01000:
-		return TextTail
-	case 0x02000:
-		return BinaryTail
-	default:
-		return 0
-	}
-}
-
 // NodeOrder returns the tail mode of the dictionary. If unknown, it returns
 // zero.
 func (t *Trie) NodeOrder() NodeOrder {
 	return t.nodeOrder
-}
-
-func nodeOrderValue(f uint32) NodeOrder {
-	switch f & 0xF0000 {
-	case 0x10000:
-		return LabelOrder
-	case 0x20000:
-		return WeightOrder
-	default:
-		return 0
-	}
 }
 
 type noCopy struct{}

@@ -58,11 +58,7 @@ func main() {
 		internal.NoChunkBuild = true
 	}
 
-	cfg := marisa.Config{
-		CacheLevel: marisa.DefaultCache,
-		TailMode:   marisa.DefaultTail,
-		NodeOrder:  marisa.DefaultOrder,
-	}
+	var cfg marisa.Config
 	if *MinNumTries < marisa.MinNumTries {
 		fmt.Fprintf(os.Stderr, "error: option '-n' with an invalid argument: %d\n", *MinNumTries)
 		os.Exit(1)
