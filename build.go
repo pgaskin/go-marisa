@@ -107,7 +107,7 @@ func tailModeFlag(v TailMode) (uint32, bool) {
 	case TextTail:
 		return 0x01000, true
 	case BinaryTail:
-		return 0x20000, true
+		return 0x02000, true
 	default:
 		return 0, false
 	}
