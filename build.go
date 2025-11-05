@@ -35,7 +35,7 @@ const (
 	MaxNumTries = 127
 )
 
-type CacheLevel uint32
+type CacheLevel int
 
 const (
 	DefaultCache CacheLevel = iota
@@ -46,7 +46,7 @@ const (
 	TinyCache
 )
 
-type TailMode uint32
+type TailMode int
 
 const (
 	DefaultTail TailMode = iota
@@ -64,7 +64,7 @@ const (
 	BinaryTail
 )
 
-type NodeOrder uint32
+type NodeOrder int
 
 const (
 	DefaultOrder NodeOrder = iota
