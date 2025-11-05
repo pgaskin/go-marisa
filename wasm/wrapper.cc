@@ -55,6 +55,8 @@ struct marisa_stat {
     uint32_t total_size;
     uint32_t num_tries;
     uint32_t num_nodes;
+    uint32_t tail_mode;
+    uint32_t node_order;
 };
 
 extern "C" struct marisa_stat marisa_stat() {
@@ -64,6 +66,8 @@ extern "C" struct marisa_stat marisa_stat() {
         .total_size = static_cast<uint32_t>(trie.total_size()),
         .num_tries = static_cast<uint32_t>(trie.num_tries()),
         .num_nodes = static_cast<uint32_t>(trie.num_nodes()),
+        .tail_mode = static_cast<uint32_t>(trie.tail_mode()),
+        .node_order = static_cast<uint32_t>(trie.node_order()),
     };
 }
 
