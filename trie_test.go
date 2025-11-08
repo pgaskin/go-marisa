@@ -40,6 +40,15 @@ func init() {
 	words = strings.FieldsFunc(string(buf), func(r rune) bool { return r == '\n' })
 }
 
+// mustWordsTrie returns a new copy of the words trie.
+func mustWordsTrie() *marisa.Trie {
+	var trie marisa.Trie
+	if err := trie.Build(slices.Values(words), marisa.Config{}); err != nil {
+		panic(err)
+	}
+	return &trie
+}
+
 // TestHammerInstantiate ensures we don't crash during parallel instantiation.
 func TestHammerInstantiate(t *testing.T) {
 	if testing.Short() {
@@ -63,18 +72,26 @@ func TestReproducibility(t *testing.T) {
 	// gzip -cd testdata/words.gz | marisa-build | sha1sum -
 	const exp = "99604746ae19ad387a778e662a8b9014d43283e2"
 
-	var trie marisa.Trie
-	if err := trie.Build(slices.Values(words), marisa.Config{
-		// defaults
-	}); err != nil {
-		t.Fatalf("error: %v", err)
-	}
-
-	buf, err := trie.MarshalBinary()
+	buf, err := mustWordsTrie().MarshalBinary()
 	if err != nil {
 		t.Fatalf("error: %v", err)
 	}
 	if sha := sha1.Sum(buf); hex.EncodeToString(sha[:]) != exp {
 		t.Errorf("error: does not match native marisa-build v0.3.1 output (sha1:%x)", sha)
+	} else {
+		t.Logf("words = sha1:%x", sha)
+	}
+}
+
+func TestString(t *testing.T) {
+	if s := new(marisa.Trie).String(); !strings.HasSuffix(s, ".Trie(uninitialized)") {
+		t.Errorf("incorrect String() value %q for zero trie", s)
+	} else {
+		t.Logf("zero = %s", s)
+	}
+	if s := mustWordsTrie().String(); !strings.HasSuffix(s, ".Trie(size=466550 io_size=1413352 total_size=1412654 num_tries=3 num_nodes=608368 tail_mode=text node_order=weight)") {
+		t.Errorf("incorrect String() value %q for words trie", s)
+	} else {
+		t.Logf("words = %s", s)
 	}
 }
