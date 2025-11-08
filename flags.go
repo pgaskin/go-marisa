@@ -196,7 +196,7 @@ func flagNumTries(v configFlag) int {
 }
 
 func flagCacheLevel(f configFlag) CacheLevel {
-	switch f {
+	switch f & _MARISA_CACHE_LEVEL_MASK {
 	case _MARISA_HUGE_CACHE:
 		return HugeCache
 	case _MARISA_LARGE_CACHE:
@@ -213,7 +213,7 @@ func flagCacheLevel(f configFlag) CacheLevel {
 }
 
 func flagTailMode(f configFlag) TailMode {
-	switch f {
+	switch f & _MARISA_CONFIG_MASK {
 	case _MARISA_TEXT_TAIL:
 		return TextTail
 	case _MARISA_BINARY_TAIL:
@@ -224,7 +224,7 @@ func flagTailMode(f configFlag) TailMode {
 }
 
 func flagNodeOrder(f configFlag) NodeOrder {
-	switch f {
+	switch f & _MARISA_NODE_ORDER_MASK {
 	case _MARISA_LABEL_ORDER:
 		return LabelOrder
 	case _MARISA_WEIGHT_ORDER:
