@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/hex"
 	"errors"
-	"fmt"
 	"io"
 	"math"
 	"os"
@@ -84,7 +83,6 @@ var write = wexport.VII("write", func(ctx context.Context, m api.Module, p, n ui
 					panic("invalid pointer")
 				}
 				*b = append(*b, x...)
-				fmt.Println("sdfsdf", len(*b), len(x))
 			} else {
 				*b = append(*b, make([]byte, n)...)
 			}
