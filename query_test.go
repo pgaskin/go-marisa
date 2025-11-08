@@ -2,6 +2,7 @@ package marisa_test
 
 import (
 	"iter"
+	"math/bits"
 	"math/rand"
 	"testing"
 	"time"
@@ -41,13 +42,19 @@ func TestNestedQuery(t *testing.T) {
 			// the same way, so just use dump for testing since it's easy
 			seq := trie.DumpSeq()(&err[i])
 			next[i], stop[i] = iter.Pull2(seq)
-			if i%2 == 0 {
-				// stop some early
-				limit[i] = rnd.Intn(len(words)-5) + 5
+			if bits.UintSize < 64 {
+				// 32-bit is slow, use a much smaller limit
+				limit[i] = rnd.Intn(5000) + 5
 				expected += limit[i]
 			} else {
-				limit[i] = -1
-				expected += len(words)
+				if i%2 == 0 {
+					// stop some early
+					limit[i] = rnd.Intn(len(words)-5) + 5
+					expected += limit[i]
+				} else {
+					limit[i] = -1
+					expected += len(words)
+				}
 			}
 		}
 		for {

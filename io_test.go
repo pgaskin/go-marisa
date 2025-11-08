@@ -17,11 +17,7 @@ import (
 
 func TestIO(t *testing.T) {
 	trie := mustWordsTrie()
-
-	expected, err := trie.MarshalBinary()
-	if err != nil {
-		t.Fatalf("error: %v", err)
-	}
+	expected := mustWordsTrieData()
 	// note: we've already verified the hash in [TestReproducibility]
 
 	filename := filepath.Join(t.TempDir(), "words.dat")
