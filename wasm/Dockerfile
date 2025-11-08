@@ -33,6 +33,9 @@ ENV PATH="/opt/wasi-sdk/bin:/opt/binaryen/bin:$PATH"
 RUN ! grep -e MARISA_CATCH -e catch -Fr lib
 RUN ! grep -e MARISA_CATCH -e catch -Fr include | grep -v '//'
 
+# ensure unused space in vectors is zero-initialized for reproducible output
+RUN sed -i 's/new_buf(new char\[sizeof(T).*capacity\]/&()/g' lib/marisa/grimoire/vector/vector.h
+
 # preserve the i/o functions for stack traces
 RUN sed -E 's/void (map\(Mapper|read\(Reader|write\(Writer) /[[clang::noinline]] &/g' -i lib/marisa/grimoire/trie/*.h lib/marisa/grimoire/vector/*.h
 

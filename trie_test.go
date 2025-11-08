@@ -8,6 +8,7 @@ import (
 	"encoding/hex"
 	"io"
 	"runtime"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -56,4 +57,24 @@ func TestHammerInstantiate(t *testing.T) {
 		}()
 	}
 	wg.Wait()
+}
+
+func TestReproducibility(t *testing.T) {
+	// gzip -cd testdata/words.gz | marisa-build | sha1sum -
+	const exp = "99604746ae19ad387a778e662a8b9014d43283e2"
+
+	var trie marisa.Trie
+	if err := trie.Build(slices.Values(words), marisa.Config{
+		// defaults
+	}); err != nil {
+		t.Fatalf("error: %v", err)
+	}
+
+	buf, err := trie.MarshalBinary()
+	if err != nil {
+		t.Fatalf("error: %v", err)
+	}
+	if sha := sha1.Sum(buf); hex.EncodeToString(sha[:]) != exp {
+		t.Errorf("error: does not match native marisa-build v0.3.1 output (sha1:%x)", sha)
+	}
 }
