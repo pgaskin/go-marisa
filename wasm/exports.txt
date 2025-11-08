@@ -8,7 +8,6 @@ marisa_new
 marisa_load
 marisa_save
 marisa_build_push
-marisa_build_push_chunk
 marisa_build
 marisa_stat
 

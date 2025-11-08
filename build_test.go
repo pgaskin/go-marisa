@@ -10,7 +10,6 @@ import (
 	"testing"
 
 	"github.com/pgaskin/go-marisa"
-	"github.com/pgaskin/go-marisa/internal"
 )
 
 func TestBuild(t *testing.T) {
@@ -44,149 +43,171 @@ func TestBuild(t *testing.T) {
 		s = slices.Compact(s)
 		size = uint32(len(s))
 	}
-	testBuild := func(t *testing.T, fn func(t *testing.T)) {
-		t.Run("NoChunkBuild", func(t *testing.T) {
-			internal.NoChunkBuild = true
-			defer func() {
-				if !internal.NoChunkBuild {
-					panic("wtf")
-				}
-				internal.NoChunkBuild = false
-			}()
-			fn(t)
-		})
-		if internal.NoChunkBuild {
-			panic("wtf")
-		}
-		fn(t)
-		if internal.NoChunkBuild {
-			panic("wtf")
-		}
-	}
 	t.Run("Simple", func(t *testing.T) {
-		testBuild(t, func(t *testing.T) {
-			var trie marisa.Trie
-			if err := trie.Build(noWeightKeys(keys), marisa.Config{}); err != nil {
-				t.Fatalf("error: %v", err)
-			}
-			if trie.Size() != size {
-				t.Errorf("incorrect size")
-			}
-			exp := []string{"c", "b", "b/x/a", "b/x/b", "b/x/c", "b/x/d", "b/c/d", "b/c/e", "b/a/d", "a", "a/b", "a/b/c"}
-			if act := mustTrieKeys(&trie); !slices.Equal(act, exp) {
-				t.Errorf("incorrect keys:\nact: %#v\nexp: %#v", act, exp)
-			}
-		})
+		var trie marisa.Trie
+		if err := trie.Build(noWeightKeys(keys), marisa.Config{}); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		if trie.Size() != size {
+			t.Errorf("incorrect size")
+		}
+		exp := []string{"c", "b", "b/x/a", "b/x/b", "b/x/c", "b/x/d", "b/c/d", "b/c/e", "b/a/d", "a", "a/b", "a/b/c"}
+		if act := mustTrieKeys(&trie); !slices.Equal(act, exp) {
+			t.Errorf("incorrect keys:\nact: %#v\nexp: %#v", act, exp)
+		}
 	})
 	t.Run("WeightOrder", func(t *testing.T) {
-		testBuild(t, func(t *testing.T) {
-			var trie marisa.Trie
-			if err := trie.BuildWeights(weightKeys(keys), marisa.Config{NodeOrder: marisa.WeightOrder}); err != nil {
-				t.Fatalf("error: %v", err)
-			}
-			if trie.Size() != size {
-				t.Errorf("incorrect size")
-			}
-			exp := []string{"b", "b/x/c", "b/x/a", "b/x/b", "b/x/d", "b/c/d", "b/c/e", "b/a/d", "c", "a", "a/b", "a/b/c"} // note: b is first since the weight includes the weight of all children
-			if act := mustTrieKeys(&trie); !slices.Equal(act, exp) {
-				t.Errorf("incorrect keys:\nact: %#v\nexp: %#v", act, exp)
-			}
-		})
+		var trie marisa.Trie
+		if err := trie.BuildWeights(weightKeys(keys), marisa.Config{NodeOrder: marisa.WeightOrder}); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		if trie.Size() != size {
+			t.Errorf("incorrect size")
+		}
+		exp := []string{"b", "b/x/c", "b/x/a", "b/x/b", "b/x/d", "b/c/d", "b/c/e", "b/a/d", "c", "a", "a/b", "a/b/c"} // note: b is first since the weight includes the weight of all children
+		if act := mustTrieKeys(&trie); !slices.Equal(act, exp) {
+			t.Errorf("incorrect keys:\nact: %#v\nexp: %#v", act, exp)
+		}
 	})
 	t.Run("LabelOrder", func(t *testing.T) {
-		testBuild(t, func(t *testing.T) {
-			var trie marisa.Trie
-			if err := trie.BuildWeights(weightKeys(keys), marisa.Config{NodeOrder: marisa.LabelOrder}); err != nil {
-				t.Fatalf("error: %v", err)
-			}
-			if trie.Size() != size {
-				t.Errorf("incorrect size")
-			}
-			exp := []string{"a", "a/b", "a/b/c", "b", "b/a/d", "b/c/d", "b/c/e", "b/x/a", "b/x/b", "b/x/c", "b/x/d", "c"}
-			if act := mustTrieKeys(&trie); !slices.Equal(act, exp) {
-				t.Errorf("incorrect keys:\nact: %#v\nexp: %#v", act, exp)
-			}
-		})
+		var trie marisa.Trie
+		if err := trie.BuildWeights(weightKeys(keys), marisa.Config{NodeOrder: marisa.LabelOrder}); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		if trie.Size() != size {
+			t.Errorf("incorrect size")
+		}
+		exp := []string{"a", "a/b", "a/b/c", "b", "b/a/d", "b/c/d", "b/c/e", "b/x/a", "b/x/b", "b/x/c", "b/x/d", "c"}
+		if act := mustTrieKeys(&trie); !slices.Equal(act, exp) {
+			t.Errorf("incorrect keys:\nact: %#v\nexp: %#v", act, exp)
+		}
 	})
 	t.Run("Config", func(t *testing.T) {
-		testBuild(t, func(t *testing.T) {
-			cfg := marisa.Config{
-				NumTries:   1,                 // default is 3
-				CacheLevel: marisa.HugeCache,  // default is normal
-				TailMode:   marisa.BinaryTail, // default is text
-				NodeOrder:  marisa.LabelOrder, // default is weight
+		cfg := marisa.Config{
+			NumTries:   1,                 // default is 3
+			CacheLevel: marisa.HugeCache,  // default is normal
+			TailMode:   marisa.BinaryTail, // default is text
+			NodeOrder:  marisa.LabelOrder, // default is weight
+		}
+		var trie marisa.Trie
+		if err := trie.BuildWeights(weightKeys(keys), cfg); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		if act := trie.NumTries(); act != uint32(cfg.NumTries) {
+			t.Errorf("incorrect num tries %v", act)
+		}
+		if act := trie.TailMode(); act != cfg.TailMode {
+			t.Errorf("incorrect tail mode %v", act)
+		}
+		if act := trie.NodeOrder(); act != cfg.NodeOrder {
+			t.Errorf("incorrect node order %v", act)
+		}
+	})
+	t.Run("ManyKeys", func(t *testing.T) {
+		if bits.UintSize < 64 && testing.Short() {
+			t.Skip("slow on 32-bit")
+		}
+		keys := map[string]bool{}
+		for l := 1; l < 128; l++ {
+			n := 1000
+			if bits.UintSize < 64 {
+				n = 5
 			}
-			var trie marisa.Trie
-			if err := trie.BuildWeights(weightKeys(keys), cfg); err != nil {
-				t.Fatalf("error: %v", err)
+			for range n {
+				key := make([]byte, l)
+				if _, err := io.ReadFull(rand.Reader, key); err != nil {
+					panic("wtf")
+				}
+				for i, b := range key {
+					key[i] = 'a' + b%26
+				}
+				key[len(key)-1] = '$'
+				keys[string(key)] = false
 			}
-			if act := trie.NumTries(); act != uint32(cfg.NumTries) {
-				t.Errorf("incorrect num tries %v", act)
+		}
+		var trie marisa.Trie
+		if err := trie.Build(maps.Keys(keys), marisa.Config{}); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		var err error
+		for id, x := range trie.DumpSeq()(&err) {
+			if x[len(x)-1] != '$' {
+				t.Errorf("corrupt key (id=%d value=%q)", id, x)
+				continue
 			}
-			if act := trie.TailMode(); act != cfg.TailMode {
-				t.Errorf("incorrect tail mode %v", act)
+			if _, ok := keys[x]; !ok {
+				t.Errorf("unexpected key (id=%d len=%d value=%q)", id, len(x), x)
+				continue
 			}
-			if act := trie.NodeOrder(); act != cfg.NodeOrder {
-				t.Errorf("incorrect node order %v", act)
+			keys[x] = true
+		}
+		if err != nil {
+			panic(err)
+		}
+		var missing int
+		for _, ok := range keys {
+			if !ok {
+				missing++
 			}
-		})
+		}
+		if missing != 0 {
+			t.Errorf("missing %d/%d keys", missing, len(keys))
+		}
 	})
 	t.Run("LargeBinary", func(t *testing.T) {
-		testBuild(t, func(t *testing.T) {
-			if bits.UintSize < 64 && testing.Short() {
-				t.Skip("slow on 32-bit")
+		if bits.UintSize < 64 && testing.Short() {
+			t.Skip("slow on 32-bit")
+		}
+		keys := map[string]bool{
+			"test\x00test": false, // ensure we have at least one key with a null
+		}
+		for _, l := range []int{5, 15, 25, 123, 456, 512, 789, 900, 1000} {
+			n := 1000
+			if bits.UintSize < 64 {
+				n = 5
 			}
-			keys := map[string]bool{
-				"test\x00test": false, // ensure we have at least one key with a null
-			}
-			for _, l := range []int{5, 15, 25, 123, 456, 512, 789, 900, 1000} {
-				n := 10000
-				if bits.UintSize < 64 {
-					n = 5
-				}
-				for range n {
-					key := make([]byte, l)
-					if _, err := io.ReadFull(rand.Reader, key); err != nil {
-						panic("wtf")
-					}
-					keys[string(key)] = false
-				}
-			}
-			for range 6 {
-				key := make([]byte, 5*1024*1024) // ensure we have at least a few keys bigger than the chunk size
+			for range n {
+				key := make([]byte, l)
 				if _, err := io.ReadFull(rand.Reader, key); err != nil {
 					panic("wtf")
 				}
 				keys[string(key)] = false
 			}
-			var trie marisa.Trie
-			if err := trie.Build(maps.Keys(keys), marisa.Config{}); err != nil {
-				t.Fatalf("error: %v", err)
+		}
+		for _, l := range []int{300 * 1024, 500 * 1024, 500 * 1024, 800 * 1024, 800 * 1024} {
+			key := make([]byte, l) // ensure we have at least a very large keys
+			if _, err := io.ReadFull(rand.Reader, key); err != nil {
+				panic("wtf")
 			}
-			if trie.TailMode() != marisa.BinaryTail {
-				t.Errorf("expected binary tail mode")
+			keys[string(key)] = false
+		}
+		var trie marisa.Trie
+		if err := trie.Build(maps.Keys(keys), marisa.Config{}); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		if trie.TailMode() != marisa.BinaryTail {
+			t.Errorf("expected binary tail mode")
+		}
+		var err error
+		for id, x := range trie.DumpSeq()(&err) {
+			if _, ok := keys[x]; !ok {
+				t.Errorf("unexpected key (id=%d len=%d)", id, len(x))
+				continue
 			}
-			var err error
-			for id, x := range trie.DumpSeq()(&err) {
-				if _, ok := keys[x]; !ok {
-					t.Errorf("unexpected key (id=%d len=%d)", id, len(x))
-					continue
-				}
-				keys[x] = true
+			keys[x] = true
+		}
+		if err != nil {
+			panic(err)
+		}
+		var missing int
+		for _, ok := range keys {
+			if !ok {
+				missing++
 			}
-			if err != nil {
-				panic(err)
-			}
-			var missing int
-			for _, ok := range keys {
-				if !ok {
-					missing++
-				}
-			}
-			if missing != 0 {
-				t.Errorf("missing %d/%d keys", missing, len(keys))
-			}
-		})
+		}
+		if missing != 0 {
+			t.Errorf("missing %d/%d keys", missing, len(keys))
+		}
 	})
 }
 

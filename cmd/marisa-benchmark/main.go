@@ -20,22 +20,21 @@ import (
 )
 
 var (
-	MinNumTries  = pflag.IntP("min-num-tries", "N", 1, "limit the number of tries ["+strconv.Itoa(marisa.MinNumTries)+", "+strconv.Itoa(marisa.MaxNumTries)+"]")
-	MaxNumTries  = pflag.IntP("max-num-tries", "n", 5, "limit the number of tries ["+strconv.Itoa(marisa.MinNumTries)+", "+strconv.Itoa(marisa.MaxNumTries)+"]")
-	TextTail     = pflag.BoolP("text-tail", "t", false, "build a dictionary with text TAIL (default)")
-	BinaryTail   = pflag.BoolP("binary-tail", "b", false, "build a dictionary with binary TAIL")
-	WeightOrder  = pflag.BoolP("weight-order", "w", false, "arrange siblings in weight order (default)")
-	LabelOrder   = pflag.BoolP("label-order", "l", false, "arrange siblings in label order")
-	CacheLevel   = pflag.IntP("cache-level", "c", 3, "specify the cache size [1, 5]")
-	PredictOn    = pflag.BoolP("predict-on", "P", false, "include predictive search (default)")
-	PredictOff   = pflag.BoolP("predict-off", "p", false, "skip predictive search")
-	ReuseOn      = pflag.BoolP("reuse-on", "R", false, "reuse agents (default, but not supported in this version)")
-	ReuseOff     = pflag.BoolP("reuse-off", "r", false, "don't reuse agents")
-	PrintSpeed   = pflag.BoolP("print-speed", "S", false, "print speed [1000 keys/s] (default)")
-	PrintTime    = pflag.BoolP("print-time", "s", false, "print time [ns/key]")
-	DisableJIT   = pflag.Bool("disable-jit", false, "disable wazero jit")      // not in the original version
-	DisableChunk = pflag.Bool("disable-chunk", false, "disable chunked-build") // not in the original version
-	Help         = pflag.BoolP("help", "h", false, "print this help")
+	MinNumTries = pflag.IntP("min-num-tries", "N", 1, "limit the number of tries ["+strconv.Itoa(marisa.MinNumTries)+", "+strconv.Itoa(marisa.MaxNumTries)+"]")
+	MaxNumTries = pflag.IntP("max-num-tries", "n", 5, "limit the number of tries ["+strconv.Itoa(marisa.MinNumTries)+", "+strconv.Itoa(marisa.MaxNumTries)+"]")
+	TextTail    = pflag.BoolP("text-tail", "t", false, "build a dictionary with text TAIL (default)")
+	BinaryTail  = pflag.BoolP("binary-tail", "b", false, "build a dictionary with binary TAIL")
+	WeightOrder = pflag.BoolP("weight-order", "w", false, "arrange siblings in weight order (default)")
+	LabelOrder  = pflag.BoolP("label-order", "l", false, "arrange siblings in label order")
+	CacheLevel  = pflag.IntP("cache-level", "c", 3, "specify the cache size [1, 5]")
+	PredictOn   = pflag.BoolP("predict-on", "P", false, "include predictive search (default)")
+	PredictOff  = pflag.BoolP("predict-off", "p", false, "skip predictive search")
+	ReuseOn     = pflag.BoolP("reuse-on", "R", false, "reuse agents (default, but not supported in this version)")
+	ReuseOff    = pflag.BoolP("reuse-off", "r", false, "don't reuse agents")
+	PrintSpeed  = pflag.BoolP("print-speed", "S", false, "print speed [1000 keys/s] (default)")
+	PrintTime   = pflag.BoolP("print-time", "s", false, "print time [ns/key]")
+	DisableJIT  = pflag.Bool("disable-jit", false, "disable wazero jit") // not in the original version
+	Help        = pflag.BoolP("help", "h", false, "print this help")
 )
 
 func main() {
@@ -53,9 +52,6 @@ func main() {
 	}
 	if *DisableJIT {
 		internal.NoJIT = true
-	}
-	if *DisableChunk {
-		internal.NoChunkBuild = true
 	}
 
 	var cfg marisa.Config

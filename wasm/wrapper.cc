@@ -29,27 +29,13 @@ extern "C" void marisa_save() {
 }
 
 extern "C" void marisa_build_push(const char *ptr, size_t length, float weight) {
-    build.push_back(ptr, length, weight); // does not copy
-}
-
-extern "C" void marisa_build_push_chunk(const uint8_t *ptr, size_t n) {
-    while (n--) {
-        static_assert(sizeof(const size_t) == 4);
-        size_t length = *reinterpret_cast<const size_t*>(ptr);
-        ptr += sizeof(length);
-        static_assert(sizeof(const float*) == 4);
-        float weight = *reinterpret_cast<const float*>(ptr);
-        ptr += sizeof(weight);
-        static_assert(sizeof(char) == 1);
-        const char *data = reinterpret_cast<const char*>(ptr);
-        ptr += length;
-        build.push_back(data, length, weight);
-    }
+    build.push_back(ptr, length, weight); // copies ptr[:length] into a data block in keyset
+    //assert(build[build.size()-1].ptr() != ptr);
 }
 
 extern "C" void marisa_build(int flags) {
+    // warning: this will continue to reference pointers to data blocks in keyset
     trie.build(build, flags);
-    build.clear();
 }
 
 struct marisa_stat {
