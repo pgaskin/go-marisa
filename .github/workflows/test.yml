@@ -41,5 +41,5 @@ jobs:
       - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v ./internal/...
       - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v -cover -coverpkg=.,./internal/... -coverprofile=cover.out .
       - run: go tool cover -func=cover.out && rm cover.out
-      - run: find ${{startsWith(matrix.os,'windows-')&&'$(cygpath -u '||''}} "$ANDROID_NDK_HOME" ${{startsWith(matrix.os,'windows-')&&')'||''}} | CGO_ENABLED=0 GOARCH=${{matrix.arch}} go run ./cmd/marisa-benchmark
+      - run: gzip -cd testdata/words.gz ${{matrix.arch=='386'&&' | awk "NR<=10000" '||''}} | CGO_ENABLED=0 GOARCH=${{matrix.arch}} go run ./cmd/marisa-benchmark
       - run: go run golang.org/x/exp/cmd/gorelease@v0.0.0-20250811191247-51f88131bc50 -base=$(git describe --tags --abbrev=0)
