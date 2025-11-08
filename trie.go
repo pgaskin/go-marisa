@@ -152,7 +152,7 @@ func (t *Trie) swap(mod *wwrap.Module) error {
 // String returns a human-readable description of the dictionary.
 func (t *Trie) String() string {
 	var b strings.Builder
-	b.WriteString(reflect.TypeOf(t).String())
+	b.WriteString(reflect.TypeFor[Trie]().String())
 	b.WriteString("(")
 	if t.mod == nil {
 		b.WriteString("uninitialized")
