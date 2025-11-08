@@ -209,6 +209,39 @@ func TestBuild(t *testing.T) {
 			t.Errorf("missing %d/%d keys", missing, len(keys))
 		}
 	})
+	t.Run("Words", func(t *testing.T) {
+		keys := map[string]bool{}
+		for _, word := range words {
+			keys[word] = false
+		}
+		var trie marisa.Trie
+		if err := trie.Build(slices.Values(words), marisa.Config{}); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		if trie.TailMode() != marisa.BinaryTail {
+			t.Errorf("expected binary tail mode")
+		}
+		var err error
+		for id, x := range trie.DumpSeq()(&err) {
+			if _, ok := keys[x]; !ok {
+				t.Errorf("unexpected key (id=%d len=%d value=%q)", id, len(x), x)
+				continue
+			}
+			keys[x] = true
+		}
+		if err != nil {
+			panic(err)
+		}
+		var missing int
+		for _, ok := range keys {
+			if !ok {
+				missing++
+			}
+		}
+		if missing != 0 {
+			t.Errorf("missing %d/%d keys", missing, len(keys))
+		}
+	})
 }
 
 type weightKey struct {
