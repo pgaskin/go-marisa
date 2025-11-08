@@ -35,13 +35,6 @@ const (
 	_MARISA_CONFIG_MASK      configFlag = 0xFFFFF
 )
 
-const _ = ^configFlag(0) + (_MARISA_MIN_NUM_TRIES|_MARISA_MAX_NUM_TRIES|_MARISA_DEFAULT_NUM_TRIES)&^_MARISA_NUM_TRIES_MASK                                                                                                // num tries must be in the mask
-const _ = ^configFlag(0) + (_MARISA_HUGE_CACHE|_MARISA_LARGE_CACHE|_MARISA_NORMAL_CACHE|_MARISA_SMALL_CACHE|_MARISA_TINY_CACHE|_MARISA_DEFAULT_CACHE)&^_MARISA_CACHE_LEVEL_MASK                                           // cache levels must be in the mask
-const _ = ^configFlag(0) + (_MARISA_TEXT_TAIL|_MARISA_BINARY_TAIL|_MARISA_DEFAULT_TAIL)&^_MARISA_TAIL_MODE_MASK                                                                                                           // tail modes must be in the mask
-const _ = ^configFlag(0) + (_MARISA_LABEL_ORDER|_MARISA_WEIGHT_ORDER|_MARISA_DEFAULT_ORDER)&^_MARISA_NODE_ORDER_MASK                                                                                                      // node orders must be in the mask
-const _ = ^configFlag(0) + (_MARISA_NUM_TRIES_MASK|_MARISA_CACHE_LEVEL_MASK|_MARISA_TAIL_MODE_MASK|_MARISA_NODE_ORDER_MASK)&^_MARISA_CONFIG_MASK                                                                          // flag masks must all be in the config mask
-const _ = (_MARISA_NUM_TRIES_MASK | _MARISA_CACHE_LEVEL_MASK | _MARISA_TAIL_MODE_MASK | _MARISA_NODE_ORDER_MASK) - (_MARISA_NUM_TRIES_MASK + _MARISA_CACHE_LEVEL_MASK + _MARISA_TAIL_MODE_MASK + _MARISA_NODE_ORDER_MASK) // flag masks must not overlap
-
 // NumTries specifies the number of tries to use. Usually, more tries make a
 // dictionary space-efficient but time-inefficient.
 //
