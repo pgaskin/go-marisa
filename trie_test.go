@@ -84,14 +84,73 @@ func TestReproducibility(t *testing.T) {
 }
 
 func TestString(t *testing.T) {
-	if s := new(marisa.Trie).String(); !strings.HasSuffix(s, ".Trie(uninitialized)") {
-		t.Errorf("incorrect String() value %q for zero trie", s)
-	} else {
-		t.Logf("zero = %s", s)
-	}
-	if s := mustWordsTrie().String(); !strings.HasSuffix(s, ".Trie(size=466550 io_size=1413352 total_size=1412654 num_tries=3 num_nodes=608368 tail_mode=text node_order=weight)") {
-		t.Errorf("incorrect String() value %q for words trie", s)
-	} else {
-		t.Logf("words = %s", s)
-	}
+	t.Run("Zero", func(t *testing.T) {
+		if s := new(marisa.Trie).String(); !strings.HasSuffix(s, ".Trie(uninitialized)") {
+			t.Errorf("incorrect String() value %q for zero trie", s)
+		} else {
+			t.Logf("zero = %s", s)
+		}
+	})
+	t.Run("Words", func(t *testing.T) {
+		if s := mustWordsTrie().String(); !strings.HasSuffix(s, ".Trie(size=466550 io_size=1413352 total_size=1412654 num_tries=3 num_nodes=608368 tail_mode=text node_order=weight)") {
+			t.Errorf("incorrect String() value %q for words trie", s)
+		} else {
+			t.Logf("words = %s", s)
+		}
+	})
+}
+
+func TestStats(t *testing.T) {
+	t.Run("Zero", func(t *testing.T) {
+		var trie marisa.Trie
+		if act := trie.Size(); act != 0 {
+			t.Errorf("expected size to be zero, got %d", act)
+		}
+		if act := trie.DiskSize(); act != 0 {
+			t.Errorf("expected disk size to be zero, got %d", act)
+		}
+		if act := trie.TotalSize(); act != 0 {
+			t.Errorf("expected total size to be zero, got %d", act)
+		}
+		if act := trie.NumTries(); act != 0 {
+			t.Errorf("expected num tries to be zero, got %d", act)
+		}
+		if act := trie.NumNodes(); act != 0 {
+			t.Errorf("expected num nodes to be zero, got %d", act)
+		}
+		if act := trie.TailMode(); act != 0 {
+			t.Errorf("expected tail mode to be zero, got %d", act)
+		}
+		if act := trie.NodeOrder(); act != 0 {
+			t.Errorf("expected node order to be zero, got %d", act)
+		}
+	})
+	t.Run("Words", func(t *testing.T) {
+		trie := mustWordsTrie()
+		buf, err := trie.MarshalBinary()
+		if err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		if exp, act := uint32(466550), trie.Size(); act != exp {
+			t.Errorf("expected size to be %d, got %d", exp, act)
+		}
+		if exp, act := uint32(len(buf)), trie.DiskSize(); act != exp {
+			t.Errorf("expected disk size to be %d, got %d", exp, act)
+		}
+		if exp, act := uint32(1412654), trie.TotalSize(); act != exp {
+			t.Errorf("expected total size to be %d, got %d", exp, act)
+		}
+		if exp, act := uint32(3), trie.NumTries(); act != exp {
+			t.Errorf("expected num tries to be %d, got %d", exp, act)
+		}
+		if exp, act := uint32(608368), trie.NumNodes(); act != exp {
+			t.Errorf("expected num nodes to be %d, got %d", exp, act)
+		}
+		if exp, act := marisa.TextTail, trie.TailMode(); act != exp {
+			t.Errorf("expected tail mode to be %d, got %d", exp, act)
+		}
+		if exp, act := marisa.WeightOrder, trie.NodeOrder(); act != exp {
+			t.Errorf("expected node order to be %d, got %d", exp, act)
+		}
+	})
 }
