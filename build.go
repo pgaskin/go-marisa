@@ -72,7 +72,8 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 	}
 
 	const step = 1024
-	ptr, buf, err := mod.Alloc(step)
+	alloc := step
+	ptr, err := mod.Alloc(step)
 	if err != nil {
 		return err
 	}
@@ -83,14 +84,19 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 	}()
 	for key, weight := range keys {
 		n := len(key)
-		if n > len(buf) {
+		if n > alloc {
 			old := ptr
 			ptr = 0
 			mod.Free(old)
-			ptr, buf, err = mod.Alloc((n + step - 1) / step * step)
+			alloc = (n + step - 1) / step * step
+			ptr, err = mod.Alloc(alloc)
 			if err != nil {
 				return err
 			}
+		}
+		buf, ok := mod.Module().Memory().Read(ptr, uint32(len(key)))
+		if !ok {
+			panic("bad allocation")
 		}
 		copy(buf, key)
 

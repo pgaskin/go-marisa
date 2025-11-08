@@ -116,11 +116,15 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	if err != nil {
 		return err
 	}
-	ptr, buf, err := mod.Alloc(len(b))
+	ptr, err := mod.Alloc(len(b))
 	if err != nil {
 		return err
 	}
-	copy(buf, b)
+	if buf, ok := mod.Module().Memory().Read(ptr, uint32(len(b))); !ok {
+		panic("bad allocation")
+	} else {
+		copy(buf, b)
+	}
 	if _, err := mod.Call("marisa_new", uint64(ptr), uint64(len(b))); err != nil {
 		var ex *wexcept.Exception
 		if errors.As(err, &ex) {

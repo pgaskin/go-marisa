@@ -13,6 +13,3 @@ The wasm blob is fully reproducible and [verified](https://github.com/pgaskin/go
 The API is stable, type-safe, idiomatic, and does not leak implementation details of the marisa-trie library. All errors are handled appropriately and returned. Concurrent usage is not currently supported.
 
 This module also includes drop-in replacements for the native command-line tools. The have compatible input/output and exit codes, but the error messages may differ.
-
-> [!warning]
-> The `Build`/`BuildWeights` functions are currently broken due to a memory corruption bug in marisa-trie. The other functions should work fine.

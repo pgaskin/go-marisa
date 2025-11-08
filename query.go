@@ -14,7 +14,6 @@ type query struct {
 	mod      *wwrap.Module
 	ptr      uint32
 	shortStr uint32 // pre-allocated shortQueryLen
-	shortBuf []byte
 	longStr  uint32
 	res      [3]uint64
 }
@@ -53,29 +52,29 @@ func (t *Trie) queryString(s string) (*query, error) {
 		return nil, err
 	}
 
-	var (
-		str uint32
-		buf []byte
-	)
+	var str uint32
 	if !internal.NoCacheQuery && len(s) < shortQueryLen {
 		if q.shortStr == 0 {
-			q.shortStr, q.shortBuf, err = t.mod.Alloc(shortQueryLen)
+			q.shortStr, err = t.mod.Alloc(shortQueryLen)
 			if err != nil {
 				t.queryDone(q)
 				return nil, err
 			}
 		}
 		str = q.shortStr
-		buf = q.shortBuf
 	} else {
-		str, buf, err = t.mod.Alloc(len(s))
+		str, err = t.mod.Alloc(len(s))
 		if err != nil {
 			t.queryDone(q)
 			return nil, err
 		}
 		q.longStr = str
 	}
-	copy(buf, s)
+	if buf, ok := t.mod.Module().Memory().Read(str, uint32(len(s))); !ok {
+		panic("bad allocation")
+	} else {
+		copy(buf, s)
+	}
 
 	if _, err := t.mod.Call("marisa_query_set_str", uint64(q.ptr), uint64(str), uint64(len(s))); err != nil {
 		t.queryDone(q)

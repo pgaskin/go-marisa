@@ -109,9 +109,8 @@ func (m *Module) CallContext(ctx context.Context, name string, params ...uint64)
 	return m.stack[:fd.results], nil
 }
 
-// Alloc allocates memory, returning a slice pointing into it. If n is zero, nil
-// is returned successfully.
-func (m *Module) Alloc(n int) (addr uint32, buf []byte, err error) {
+// Alloc allocates memory. If n is zero, nil is returned successfully.
+func (m *Module) Alloc(n int) (addr uint32, err error) {
 	if m.allocfn == nil {
 		m.allocfn = m.mod.ExportedFunction("malloc")
 	}
@@ -120,23 +119,18 @@ func (m *Module) Alloc(n int) (addr uint32, buf []byte, err error) {
 	}
 	if n != 0 {
 		if n < 0 || uint64(n) >= math.MaxUint32 {
-			return 0, nil, wexcept.NewException(wexcept.BadAlloc, "size out of range")
+			return 0, wexcept.NewException(wexcept.BadAlloc, "size out of range")
 		}
 		m.stack[0] = uint64(n)
 		if err := m.allocfn.CallWithStack(m.ctx, m.stack[:]); err != nil {
-			return 0, nil, err
+			return 0, err
 		}
 		addr = uint32(m.stack[0])
 		if addr == 0 {
-			return 0, nil, wexcept.NewException(wexcept.BadAlloc, "failed to allocate memory")
-		}
-		var ok bool
-		buf, ok = m.mod.Memory().Read(addr, uint32(n))
-		if !ok {
-			panic("wwrap: bad allocation")
+			return 0, wexcept.NewException(wexcept.BadAlloc, "failed to allocate memory")
 		}
 	}
-	return addr, buf, nil
+	return addr, nil
 }
 
 // Free frees memory. If addr is zero, no action is taken.

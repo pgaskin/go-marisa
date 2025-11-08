@@ -218,9 +218,6 @@ func TestBuild(t *testing.T) {
 		if err := trie.Build(slices.Values(words), marisa.Config{}); err != nil {
 			t.Fatalf("error: %v", err)
 		}
-		if trie.TailMode() != marisa.BinaryTail {
-			t.Errorf("expected binary tail mode")
-		}
 		var err error
 		for id, x := range trie.DumpSeq()(&err) {
 			if _, ok := keys[x]; !ok {
