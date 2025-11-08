@@ -34,10 +34,13 @@ extern "C" void marisa_build_push(const char *ptr, size_t length, float weight) 
 
 extern "C" void marisa_build_push_chunk(const uint8_t *ptr, size_t n) {
     while (n--) {
+        static_assert(sizeof(const size_t) == 4);
         size_t length = *reinterpret_cast<const size_t*>(ptr);
         ptr += sizeof(length);
+        static_assert(sizeof(const float*) == 4);
         float weight = *reinterpret_cast<const float*>(ptr);
         ptr += sizeof(weight);
+        static_assert(sizeof(char) == 1);
         const char *data = reinterpret_cast<const char*>(ptr);
         ptr += length;
         build.push_back(data, length, weight);
@@ -61,13 +64,13 @@ struct marisa_stat {
 
 extern "C" struct marisa_stat marisa_stat() {
     return (struct marisa_stat){
-        .size = static_cast<uint32_t>(trie.size()),
-        .io_size = static_cast<uint32_t>(trie.io_size()),
-        .total_size = static_cast<uint32_t>(trie.total_size()),
-        .num_tries = static_cast<uint32_t>(trie.num_tries()),
-        .num_nodes = static_cast<uint32_t>(trie.num_nodes()),
-        .tail_mode = static_cast<uint32_t>(trie.tail_mode()),
-        .node_order = static_cast<uint32_t>(trie.node_order()),
+        .size = trie.size(),
+        .io_size = trie.io_size(),
+        .total_size = trie.total_size(),
+        .num_tries = trie.num_tries(),
+        .num_nodes = trie.num_nodes(),
+        .tail_mode = trie.tail_mode(),
+        .node_order = trie.node_order(),
     };
 }
 
