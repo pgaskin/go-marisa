@@ -7,6 +7,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
     strategy:
@@ -31,7 +35,7 @@ jobs:
       - run: go mod download
       - run: go mod verify
       - run: go vet ./...
-      - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v ./...
-        shell: bash
+      - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v ./internal/...
+      - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v -cover -coverpkg=.,./internal/... -coverprofile=cover.out .
+      - run: go tool cover -func=cover.out
       - run: find ${{startsWith(matrix.os,'windows-')&&'$(cygpath -u '||''}} "$ANDROID_NDK_HOME" ${{startsWith(matrix.os,'windows-')&&')'||''}} | CGO_ENABLED=0 GOARCH=${{matrix.arch}} go run ./cmd/marisa-benchmark
-        shell: bash
