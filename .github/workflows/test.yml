@@ -38,8 +38,11 @@ jobs:
       - run: go mod download
       - run: go mod verify
       - run: go vet ./...
-      - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v ./internal/...
-      - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v -cover -coverpkg=.,./internal/... -coverprofile=cover.out .
-      - run: go tool cover -func=cover.out && rm cover.out
+      - run: mkdir cover
+      - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v -cover -covermode=set ./internal/... -test.gocoverdir=$PWD/cover
+      - run: CGO_ENABLED=0 GOARCH=${{matrix.arch}} go test -v -cover -covermode=set -coverpkg=.,./internal/... . -test.gocoverdir=$PWD/cover
+      - run: go tool covdata textfmt -i=$PWD/cover -o=cover/overall.txt
+      - run: go tool cover -func=cover/overall.txt && rm -rf cover
+      - run: rm -rf cover
       - run: gzip -cd testdata/words.gz ${{matrix.arch=='386'&&' | awk "NR<=10000" '||''}} | CGO_ENABLED=0 GOARCH=${{matrix.arch}} go run ./cmd/marisa-benchmark
       - run: go run golang.org/x/exp/cmd/gorelease@v0.0.0-20250811191247-51f88131bc50 -base=$(git describe --tags --abbrev=0)
