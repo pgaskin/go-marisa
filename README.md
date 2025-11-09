@@ -1,5 +1,9 @@
 # go-marisa
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/pgaskin/go-marisa.svg)](https://pkg.go.dev/github.com/pgaskin/go-marisa)
+[![Test](https://github.com/pgaskin/go-marisa/actions/workflows/test.yml/badge.svg)](https://github.com/pgaskin/go-marisa/actions/workflows/test.yml)
+[![Attest marisa build](https://github.com/pgaskin/go-marisa/actions/workflows/attest.yml/badge.svg)](https://github.com/pgaskin/go-marisa/actions/workflows/attest.yml)
+
 Go wrapper for [marisa-trie](https://github.com/s-yata/marisa-trie) using [wazero](https://github.com/wazero/wazero).
 
 This library supports little-endian MARISA dictionaries up to 4 GiB. On 32-bit systems, the size is limited to 2 GiB. Big-endian dictionaries (i.e., ones generated with the native tools on big-endian hosts) are not supported.
