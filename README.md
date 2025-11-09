@@ -10,6 +10,47 @@ MARISA is a read-only space-efficient trie data structure optimized for lookup, 
 
 This library wraps a WebAssembly build of MARISA using [wazero](https://github.com/wazero/wazero).
 
+### Getting started
+
+```go
+var trie marisa.Trie
+if err := trie.Build(EnglishWords(), marisa.Config{}); err != nil {
+    panic(err)
+}
+
+id, ok, err := trie.Lookup("iterate")
+if err != nil {
+    panic(err)
+}
+if !ok {
+    fmt.Println("not found")
+}
+
+key, ok, err := trie.ReverseLookup(id)
+if err != nil {
+    panic(err)
+}
+if !ok {
+    fmt.Println("not found")
+}
+
+fmt.Println("l", id, key)
+
+for id, key := range trie.PredictiveSearchSeq("iterat")(&err) {
+    fmt.Println("p", id, key)
+}
+if err != nil {
+    panic(err)
+}
+
+for id, key := range trie.CommonPrefixSearchSeq("iterated")(&err) {
+    fmt.Println("c", id, key)
+}
+if err != nil {
+    panic(err)
+}
+```
+
 ### Limitations
 
 This library supports little-endian MARISA dictionaries up to 4 GiB. On 32-bit systems, the size is limited to around 2 GiB. These are limitations of MARISA itself.

@@ -55,8 +55,6 @@ func (t *Trie) Build(keys iter.Seq[string], cfg Config) error {
 
 // BuildWeights builds a dictionary out of the specified set of keys and
 // weights. If a key is specified multiple times, the weights are accumulated.
-//
-// TODO: figure out the bug in marisa causing memory corruption with a large number of keys
 func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 	flag, ok := configFlags(cfg)
 	if !ok {

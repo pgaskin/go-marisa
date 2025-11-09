@@ -206,17 +206,19 @@ func (t *Trie) ReverseLookup(id uint32) (string, bool, error) {
 	return q.Key(), true, nil
 }
 
-// Dump dumps all keys.
+// Dump dumps all keys. If the limit is -1, all keys are returned.
 func (t *Trie) Dump(limit int) ([]Key, error) {
 	return collectKeys(limit, t.DumpSeq())
 }
 
-// PredictiveSearch returns keys starting with a query string.
+// PredictiveSearch returns keys starting with a query string. If the limit is
+// -1, all keys are returned.
 func (t *Trie) PredictiveSearch(query string, limit int) ([]Key, error) {
 	return collectKeys(limit, t.search("marisa_query_predictive_search", query))
 }
 
-// CommonPrefixSearchSeq returns keys which equal any prefix of the query string.
+// CommonPrefixSearchSeq returns keys which equal any prefix of the query
+// string. If the limit is -1, all keys are returned.
 func (t *Trie) CommonPrefixSearch(query string, limit int) ([]Key, error) {
 	return collectKeys(limit, t.search("marisa_query_common_prefix_search", query))
 }
