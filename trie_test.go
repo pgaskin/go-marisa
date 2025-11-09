@@ -9,6 +9,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"iter"
 	"os"
 	"runtime"
 	"slices"
@@ -104,13 +105,45 @@ func TestHammerInstantiate(t *testing.T) {
 }
 
 func TestReproducibility(t *testing.T) {
+	// printf | marisa-build | sha1sum -
+	testReproducibility(t, "Empty", "1aa6c451104c2c1b24ecb66ecb84bde2403c49b1", slices.Values([]string{}))
+
+	// echo | marisa-build | sha1sum -
+	testReproducibility(t, "Blank", "db55aeb8613305b910d42cc00b56edb53e8a3ff0", slices.Values([]string{""}))
+
+	// printf '%s\n' {a..z}{a..z}{a..z} | marisa-build | sha1sum -
+	testReproducibility(t, "Letters", "bd9586bf7f6984ea693980058de34331f4e47eae", func(yield func(string) bool) {
+		for a := 'a'; a <= 'z'; a++ {
+			for b := 'a'; b <= 'z'; b++ {
+				for c := 'a'; c <= 'z'; c++ {
+					if !yield(string(a) + string(b) + string(c)) {
+						return
+					}
+				}
+			}
+		}
+	})
+
 	// gzip -cd testdata/words.gz | marisa-build | sha1sum -
-	const exp = "99604746ae19ad387a778e662a8b9014d43283e2"
-	if sha := sha1.Sum(mustWordsTrieData()); hex.EncodeToString(sha[:]) != exp {
-		t.Errorf("error: does not match native marisa-build v0.3.1 output (sha1:%x)", sha)
-	} else {
-		t.Logf("words = sha1:%x", sha)
-	}
+	testReproducibility(t, "Words", "99604746ae19ad387a778e662a8b9014d43283e2", slices.Values(words))
+}
+
+func testReproducibility(t *testing.T, name, sha string, seq iter.Seq[string]) {
+	t.Run(name, func(t *testing.T) {
+		var trie marisa.Trie
+		if err := trie.Build(seq, marisa.Config{}); err != nil {
+			t.Errorf("error: %v", err)
+		}
+		buf, err := trie.MarshalBinary()
+		if err != nil {
+			t.Errorf("error: %v", err)
+		}
+		if sum := sha1.Sum(buf); hex.EncodeToString(sum[:]) != sha {
+			t.Errorf("error: does not match native marisa-build v0.3.1 output (sha1:%x)", sum)
+		} else {
+			t.Logf("sha1:%x", sum)
+		}
+	})
 }
 
 func TestString(t *testing.T) {
