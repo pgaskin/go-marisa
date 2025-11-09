@@ -6,7 +6,10 @@ import (
 	"crypto/sha1"
 	_ "embed"
 	"encoding/hex"
+	"flag"
+	"fmt"
 	"io"
+	"os"
 	"runtime"
 	"slices"
 	"strings"
@@ -14,7 +17,26 @@ import (
 	"testing"
 
 	"github.com/pgaskin/go-marisa"
+	"github.com/pgaskin/go-marisa/internal"
 )
+
+func init() {
+	flag.BoolVar(&internal.NoJIT, "marisa.nojit", false, "disable jit")
+	flag.BoolVar(&internal.NoCacheQuery, "marisa.nocachequery", false, "disable query agent caching")
+}
+
+func TestMain(m *testing.M) {
+	flag.Parse()
+
+	if internal.NoJIT {
+		fmt.Println("marisa: jit disabled by flag")
+	}
+	if internal.NoCacheQuery {
+		fmt.Println("marisa: query agent caching disabled by flag")
+	}
+
+	defer os.Exit(m.Run())
+}
 
 var (
 	//go:embed testdata/words.gz
