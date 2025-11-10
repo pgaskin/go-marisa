@@ -6,6 +6,8 @@ on:
       - master
     paths:
       - wasm/marisa.wasm
+      - wasm/marisa.cc
+      - wasm/marisa.h
   workflow_dispatch:
 
 permissions:
@@ -22,4 +24,7 @@ jobs:
       - run: git diff --exit-code # ensure the build was reproducible
       - uses: actions/attest-build-provenance@v3
         with:
-          subject-path: wasm/marisa.wasm
+          subject-path: |
+            wasm/marisa.wasm
+            wasm/marisa.cc
+            wasm/marisa.h

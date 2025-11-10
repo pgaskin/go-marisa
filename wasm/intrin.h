@@ -1,5 +1,6 @@
 #pragma once
 
+#ifdef __wasm__
 #define MARISA_USE_SSE2
 #define MARISA_USE_SSSE3
 
@@ -40,3 +41,4 @@ typedef v128_t __m128i;
 [[clang::always_inline]] [[gnu::nodebug]] [[maybe_unused]] static inline int     _mm_movemask_epi8(__m128i __a) { return (int)wasm_i8x16_bitmask((v128_t)__a); }
 [[clang::always_inline]] [[gnu::nodebug]] [[maybe_unused]] static inline void    _mm_store_si128(__m128i *__p, __m128i __b) { *__p = __b; }
 #define _mm_slli_si128(__a, __imm) __extension__ ({ (__m128i)wasm_i8x16_shuffle(_mm_setzero_si128(), (__a), ((__imm)&0xF0) ? 0 : 16 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 17 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 18 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 19 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 20 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 21 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 22 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 23 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 24 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 25 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 26 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 27 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 28 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 29 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 30 - ((__imm)&0xF), ((__imm)&0xF0) ? 0 : 31 - ((__imm)&0xF)); })
+#endif

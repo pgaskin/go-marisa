@@ -1,9 +1,5 @@
 FROM debian:trixie AS base
 
-# v0.3.1
-ARG MARISA_REV=3e87d53b78e15f2f43783d5e376561a8c9722051
-ARG MARISA_URL=https://github.com/s-yata/marisa-trie.git
-
 ARG WASI_SDK_VERSION=27
 ARG BINARYEN_VERSION=124
 
@@ -22,50 +18,25 @@ ADD --checksum=${BINARYEN_CHECKSUM} ${BINARYEN_URL} ./binaryen.tar.gz
 RUN mkdir /opt/binaryen && tar -C /opt/binaryen --strip-components=1 -xf binaryen.tar.gz
 
 FROM base AS build
-ADD ${MARISA_URL}#${MARISA_REV} /src
 WORKDIR /src
 
 COPY --link --from=wasi-sdk /opt /opt
 COPY --link --from=binaryen /opt /opt
 ENV PATH="/opt/wasi-sdk/bin:/opt/binaryen/bin:$PATH"
 
-# we don't support stack unwinding, so ensure there are no catches
-RUN ! grep -e MARISA_CATCH -e catch -Fr lib
-RUN ! grep -e MARISA_CATCH -e catch -Fr include | grep -v '//'
+COPY --link ./io.h ./intrin.h ./marisa.h ./marisa.cc /src/
 
-# ensure unused space in vectors is zero-initialized for reproducible output
-RUN sed -i 's/new_buf(new char\[sizeof(T).*capacity\]/&()/g' lib/marisa/grimoire/vector/vector.h
-
-# preserve the i/o functions for stack traces
-RUN sed -E 's/void (map\(Mapper|read\(Reader|write\(Writer) /[[clang::noinline]] &/g' -i lib/marisa/grimoire/trie/*.h lib/marisa/grimoire/vector/*.h
-
-COPY --link ./io.cc /src/lib/marisa/grimoire/io/
-COPY --link ./io.h ./intrin.h /src/lib/marisa/grimoire/
-
-RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -Wno-implicit-fallthrough -Wno-unused-function -O2 \
+RUN wasm32-wasi-clang++ -c -O2 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 \
- -std=c++20 -Iinclude -Ilib -Ilib/marisa/grimoire -DNDEBUG \
- lib/marisa/agent.cc \
- lib/marisa/grimoire/io/io.cc \
- lib/marisa/grimoire/trie/louds-trie.cc \
- lib/marisa/grimoire/trie/tail.cc \
- lib/marisa/grimoire/vector/bit-vector.cc \
- lib/marisa/keyset.cc \
- lib/marisa/trie.cc
+ -std=c++20 -DNDEBUG \
+ marisa.cc
 
-COPY --link ./wrapper.cc /src/
+COPY --link ./io.cc ./wexcept.cc ./wrapper.cc /src/
 
-RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
+RUN wasm32-wasi-clang++ -c -O2 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
- -std=c++20 -isysteminclude \
- wrapper.cc
-
-COPY --link ./wexcept.cc /src/
-
-RUN wasm32-wasi-clang++ -c -Wall -Wextra -Wconversion -O2 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
- -std=c++20 \
- wexcept.cc
+ -std=c++20 -DNDEBUG -Wall -Wextra -Wconversion \
+ io.cc wexcept.cc wrapper.cc
 
 COPY --link ./exports.txt /src/
 
@@ -82,7 +53,5 @@ RUN chmod 644 marisa.wasm
 RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-std=c++20' > compile_flags.txt
 
 FROM scratch
-COPY --link --from=build /src/include /include
 COPY --link --from=build /src/compile_flags.txt /
-COPY --link --from=build /src/COPYING.md /marisa.COPYING
 COPY --link --from=build /src/marisa.wasm /

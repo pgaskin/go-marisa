@@ -4,7 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "marisa/base.h"
+#include "marisa.h"
 
 namespace marisa::grimoire {
 

@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "marisa/trie.h"
+#include "marisa.h"
 
 // note: even on 64-bit platforms with 64-bit size_t, key IDs and lengths are
 // limited to uint32s in MARISA
@@ -50,13 +50,13 @@ struct marisa_stat {
 
 extern "C" struct marisa_stat marisa_stat() {
     return (struct marisa_stat){
-        .size = trie.size(),
-        .io_size = trie.io_size(),
-        .total_size = trie.total_size(),
-        .num_tries = trie.num_tries(),
-        .num_nodes = trie.num_nodes(),
-        .tail_mode = trie.tail_mode(),
-        .node_order = trie.node_order(),
+        .size = static_cast<uint32_t>(trie.size()),
+        .io_size = static_cast<uint32_t>(trie.io_size()),
+        .total_size = static_cast<uint32_t>(trie.total_size()),
+        .num_tries = static_cast<uint32_t>(trie.num_tries()),
+        .num_nodes = static_cast<uint32_t>(trie.num_nodes()),
+        .tail_mode = static_cast<uint32_t>(trie.tail_mode()),
+        .node_order = static_cast<uint32_t>(trie.node_order()),
     };
 }
 
