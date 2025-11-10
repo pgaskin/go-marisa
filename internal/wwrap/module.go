@@ -8,6 +8,7 @@ import (
 	"math/bits"
 	"unsafe"
 
+	"github.com/pgaskin/go-marisa/internal/cxxerr"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
 	"github.com/tetratelabs/wazero/api"
 )
@@ -119,7 +120,7 @@ func (m *Module) Alloc(n int) (addr uint32, err error) {
 	}
 	if n != 0 {
 		if n < 0 || uint64(n) >= math.MaxUint32 {
-			return 0, wexcept.NewException(wexcept.BadAlloc, "size out of range")
+			return 0, cxxerr.Error(cxxerr.BadAlloc, "size out of range")
 		}
 		m.stack[0] = uint64(n)
 		if err := m.allocfn.CallWithStack(m.ctx, m.stack[:]); err != nil {
@@ -127,7 +128,7 @@ func (m *Module) Alloc(n int) (addr uint32, err error) {
 		}
 		addr = uint32(m.stack[0])
 		if addr == 0 {
-			return 0, wexcept.NewException(wexcept.BadAlloc, "failed to allocate memory")
+			return 0, cxxerr.Error(cxxerr.BadAlloc, "failed to allocate memory")
 		}
 	}
 	return addr, nil

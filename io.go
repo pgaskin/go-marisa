@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/pgaskin/go-marisa/internal/cxxerr"
 	"github.com/pgaskin/go-marisa/internal/walloc"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
 	"github.com/pgaskin/go-marisa/internal/wexport"
@@ -94,9 +95,9 @@ func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
 		return err
 	}
 	if _, err := mod.Call("marisa_new", uint64(ptr), uint64(length)); err != nil {
-		var ex *wexcept.Exception
+		var ex *cxxerr.Exception
 		if errors.As(err, &ex) {
-			if errors.Is(ex, wexcept.StdException("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
+			if errors.Is(ex, cxxerr.Std("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
 				err = io.ErrUnexpectedEOF
 			}
 		}
@@ -129,9 +130,9 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 		copy(buf, b)
 	}
 	if _, err := mod.Call("marisa_new", uint64(ptr), uint64(len(b))); err != nil {
-		var ex *wexcept.Exception
+		var ex *cxxerr.Exception
 		if errors.As(err, &ex) {
-			if errors.Is(ex, wexcept.StdException("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
+			if errors.Is(ex, cxxerr.Std("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
 				err = io.ErrUnexpectedEOF
 			}
 		}
@@ -155,9 +156,9 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 	}
 	c := &countReader{R: r}
 	if _, err := mod.CallContext(withReader(context.Background(), c), "marisa_load"); err != nil {
-		var ex *wexcept.Exception
+		var ex *cxxerr.Exception
 		if errors.As(err, &ex) {
-			if errors.Is(ex, wexcept.StdException("runtime_error")) && strings.Contains(ex.What(), "!stream_->read") {
+			if errors.Is(ex, cxxerr.Std("runtime_error")) && strings.Contains(ex.What(), "!stream_->read") {
 				err = io.ErrUnexpectedEOF
 			}
 		}

@@ -12,7 +12,7 @@ import (
 	"testing"
 
 	"github.com/pgaskin/go-marisa"
-	"github.com/pgaskin/go-marisa/internal/wexcept"
+	"github.com/pgaskin/go-marisa/internal/cxxerr"
 )
 
 func TestIO(t *testing.T) {
@@ -120,13 +120,13 @@ func TestIO(t *testing.T) {
 			t.Errorf("old trie should still be valid on error")
 		}
 
-		if err := trie.UnmarshalBinary(append(slices.Clone(expected[:500]), filled(byte(0xFF), 10*1024*1024)...)); !errors.Is(err, wexcept.RuntimeError) {
+		if err := trie.UnmarshalBinary(append(slices.Clone(expected[:500]), filled(byte(0xFF), 10*1024*1024)...)); !errors.Is(err, cxxerr.RuntimeError) {
 			t.Fatalf("expected runtime error for junk (got %v)", err)
 		} else if !checkTrie(&trie) {
 			t.Errorf("old trie should still be valid on error")
 		}
 
-		if err := trie.UnmarshalBinary(filled(byte(0xFF), 10*1024*1024)); !errors.Is(err, wexcept.RuntimeError) {
+		if err := trie.UnmarshalBinary(filled(byte(0xFF), 10*1024*1024)); !errors.Is(err, cxxerr.RuntimeError) {
 			t.Fatalf("expected runtime error for junk (got %v)", err)
 		} else if !checkTrie(&trie) {
 			t.Errorf("old trie should still be valid on error")
@@ -169,7 +169,7 @@ func TestIO(t *testing.T) {
 		}
 
 		cr := &countReader{R: bytes.NewReader(append(slices.Clone(expected[:500]), filled(byte(0xFF), 10*1024*1024)...))}
-		if n, err := trie.ReadFrom(cr); !errors.Is(err, wexcept.RuntimeError) {
+		if n, err := trie.ReadFrom(cr); !errors.Is(err, cxxerr.RuntimeError) {
 			t.Fatalf("expected runtime error for junk (got %v)", err)
 		} else if cr.N != n {
 			t.Errorf("incorrect n %d", n)
@@ -180,7 +180,7 @@ func TestIO(t *testing.T) {
 		}
 
 		cr = &countReader{R: bytes.NewReader(filled(byte(0xFF), 10*1024*1024))}
-		if n, err := trie.ReadFrom(cr); !errors.Is(err, wexcept.RuntimeError) {
+		if n, err := trie.ReadFrom(cr); !errors.Is(err, cxxerr.RuntimeError) {
 			t.Fatalf("expected runtime error for junk (got %v)", err)
 		} else if cr.N != n {
 			t.Errorf("incorrect n %d", n)

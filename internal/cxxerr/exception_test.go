@@ -1,4 +1,4 @@
-package wexcept
+package cxxerr
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 )
 
 func TestException(t *testing.T) {
-	assertExceptionString := func(typ string, std StdException, what, str string) {
+	assertExceptionString := func(typ string, std Std, what, str string) {
 		err := &Exception{typ: typ, std: std, what: what}
 		act := err.Error()
 		if act != str {
@@ -29,167 +29,167 @@ func TestException(t *testing.T) {
 	assertExceptionString("test::example_error", "invalid_argument", "test",
 		"test::example_error (std::invalid_argument std::logic_error): test")
 
-	if p := StdException(""); !errors.As(NewException("logic_error", "test"), &p) {
+	if p := Std(""); !errors.As(Error("logic_error", "test"), &p) {
 		t.Errorf("should be able to convert an Exception into the underlying StdException")
 	} else if p != "logic_error" {
 		t.Errorf("wrong converted value")
 	}
 
-	if p := StdException(""); !errors.As(NewException("", "test"), &p) {
+	if p := Std(""); !errors.As(Error("", "test"), &p) {
 		t.Errorf("should be able to convert a generic Exception into the underlying StdException")
 	} else if p != "exception" {
 		t.Errorf("wrong converted value")
 	}
 
-	if p := StdException(""); !errors.As(&Exception{"test::example_error", "test", "logic_error"}, &p) {
+	if p := Std(""); !errors.As(&Exception{"test::example_error", "test", "logic_error"}, &p) {
 		t.Errorf("should be able to convert an Exception with a non-std type into the underlying StdException")
 	} else if p != "logic_error" {
 		t.Errorf("wrong converted value")
 	}
 
-	if p := StdException(""); !errors.As(&Exception{"test::example_error", "test", "exception"}, &p) {
+	if p := Std(""); !errors.As(&Exception{"test::example_error", "test", "exception"}, &p) {
 		t.Errorf("should be able to convert an Exception with a non-std type into the underlying generic StdException")
 	} else if p != "exception" {
 		t.Errorf("wrong converted value")
 	}
 
-	if !errors.Is(&Exception{"std::system_error", "test", "system_error"}, StdException("")) {
+	if !errors.Is(&Exception{"std::system_error", "test", "system_error"}, Std("")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
-	if !errors.Is(&Exception{"std::system_error", "test", "system_error"}, StdException("exception")) {
+	if !errors.Is(&Exception{"std::system_error", "test", "system_error"}, Std("exception")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
-	if !errors.Is(&Exception{"std::system_error", "test", "system_error"}, StdException("runtime_error")) {
+	if !errors.Is(&Exception{"std::system_error", "test", "system_error"}, Std("runtime_error")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
-	if !errors.Is(&Exception{"std::system_error", "test", "system_error"}, StdException("system_error")) {
+	if !errors.Is(&Exception{"std::system_error", "test", "system_error"}, Std("system_error")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
-	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, StdException("")) {
+	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, Std("")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
-	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, StdException("exception")) {
+	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, Std("exception")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
-	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, StdException("runtime_error")) {
+	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, Std("runtime_error")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
-	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, StdException("system_error")) {
+	if !errors.Is(&Exception{"test::example_error", "test", "system_error"}, Std("system_error")) {
 		t.Errorf("errors.Is should work on StdException values")
 	}
 
 	assertExceptionString("test::something_else", "", "test",
 		"test::something_else: test")
-	if p := StdException(""); errors.As(&Exception{"test::something_else", "test", ""}, &p) {
+	if p := Std(""); errors.As(&Exception{"test::something_else", "test", ""}, &p) {
 		t.Errorf("should not get StdException for a non-exception type")
 	}
-	if errors.Is(&Exception{"test::something_else", "test", ""}, StdException("")) {
+	if errors.Is(&Exception{"test::something_else", "test", ""}, Std("")) {
 		t.Errorf("should not get StdException for a non-exception type")
 	}
 }
 
 func TestStdException(t *testing.T) {
-	if !errors.Is(StdException(""), StdException("")) {
+	if !errors.Is(Std(""), Std("")) {
 		t.Errorf("empty error type should match itself")
 	}
-	if errors.Is(StdException(""), StdException("exception")) {
+	if errors.Is(Std(""), Std("exception")) {
 		t.Errorf("empty error type should not match anything else")
 	}
-	if errors.Is(StdException(""), StdException("runtime_error")) {
+	if errors.Is(Std(""), Std("runtime_error")) {
 		t.Errorf("empty error type should not match anything else")
 	}
-	if errors.Is(StdException(""), StdException("system_error")) {
+	if errors.Is(Std(""), Std("system_error")) {
 		t.Errorf("empty error type should not match anything else")
 	}
-	if errors.Is(StdException(""), StdException("ios_base::failure")) {
+	if errors.Is(Std(""), Std("ios_base::failure")) {
 		t.Errorf("empty error type should not match anything else")
 	}
-	if errors.Is(StdException(""), StdException("sdfsdf")) {
+	if errors.Is(Std(""), Std("sdfsdf")) {
 		t.Errorf("empty error type should not match anything else")
 	}
 
-	if !errors.Is(StdException("exception"), StdException("")) {
+	if !errors.Is(Std("exception"), Std("")) {
 		t.Errorf("base error type should match the empty error type")
 	}
-	if !errors.Is(StdException("exception"), StdException("exception")) {
+	if !errors.Is(Std("exception"), Std("exception")) {
 		t.Errorf("base error type should match the base error type")
 	}
-	if errors.Is(StdException("exception"), StdException("runtime_error")) {
+	if errors.Is(Std("exception"), Std("runtime_error")) {
 		t.Errorf("base error type should not match anything more specific")
 	}
-	if errors.Is(StdException("exception"), StdException("system_error")) {
+	if errors.Is(Std("exception"), Std("system_error")) {
 		t.Errorf("base error type should not match anything more specific")
 	}
-	if errors.Is(StdException("exception"), StdException("ios_base::failure")) {
+	if errors.Is(Std("exception"), Std("ios_base::failure")) {
 		t.Errorf("base error type should not match anything more specific")
 	}
-	if errors.Is(StdException("exception"), StdException("sdfsdf")) {
+	if errors.Is(Std("exception"), Std("sdfsdf")) {
 		t.Errorf("base error type should not match an unknown error")
 	}
 
-	if !errors.Is(StdException("runtime_error"), StdException("")) {
+	if !errors.Is(Std("runtime_error"), Std("")) {
 		t.Errorf("error type should match the empty error type")
 	}
-	if !errors.Is(StdException("runtime_error"), StdException("exception")) {
+	if !errors.Is(Std("runtime_error"), Std("exception")) {
 		t.Errorf("error type should match the base error type")
 	}
-	if !errors.Is(StdException("runtime_error"), StdException("runtime_error")) {
+	if !errors.Is(Std("runtime_error"), Std("runtime_error")) {
 		t.Errorf("error type should match itself")
 	}
-	if errors.Is(StdException("runtime_error"), StdException("system_error")) {
+	if errors.Is(Std("runtime_error"), Std("system_error")) {
 		t.Errorf("error type should not match anything more specific")
 	}
-	if errors.Is(StdException("runtime_error"), StdException("ios_base::failure")) {
+	if errors.Is(Std("runtime_error"), Std("ios_base::failure")) {
 		t.Errorf("error type should not match anything more specific")
 	}
-	if errors.Is(StdException("runtime_error"), StdException("sdfsdf")) {
+	if errors.Is(Std("runtime_error"), Std("sdfsdf")) {
 		t.Errorf("error type should not match an unknown error")
 	}
-	if errors.Is(StdException("runtime_error"), StdException("invalid_argument")) {
+	if errors.Is(Std("runtime_error"), Std("invalid_argument")) {
 		t.Errorf("error type should not match another error")
 	}
 
-	if !errors.Is(StdException("system_error"), StdException("")) {
+	if !errors.Is(Std("system_error"), Std("")) {
 		t.Errorf("error type should match the empty error type")
 	}
-	if !errors.Is(StdException("system_error"), StdException("exception")) {
+	if !errors.Is(Std("system_error"), Std("exception")) {
 		t.Errorf("error type should match the base error type")
 	}
-	if !errors.Is(StdException("system_error"), StdException("runtime_error")) {
+	if !errors.Is(Std("system_error"), Std("runtime_error")) {
 		t.Errorf("error type should match the base error type")
 	}
-	if !errors.Is(StdException("system_error"), StdException("system_error")) {
+	if !errors.Is(Std("system_error"), Std("system_error")) {
 		t.Errorf("error type should match itself")
 	}
-	if errors.Is(StdException("system_error"), StdException("ios_base::failure")) {
+	if errors.Is(Std("system_error"), Std("ios_base::failure")) {
 		t.Errorf("error type should not match anything more specific")
 	}
-	if errors.Is(StdException("system_error"), StdException("sdfsdf")) {
+	if errors.Is(Std("system_error"), Std("sdfsdf")) {
 		t.Errorf("error type should not match an unknown error")
 	}
-	if errors.Is(StdException("system_error"), StdException("invalid_argument")) {
+	if errors.Is(Std("system_error"), Std("invalid_argument")) {
 		t.Errorf("error type should not match another error")
 	}
 
-	if !errors.Is(StdException("ios_base::failure"), StdException("")) {
+	if !errors.Is(Std("ios_base::failure"), Std("")) {
 		t.Errorf("error type should match the empty error type")
 	}
-	if !errors.Is(StdException("ios_base::failure"), StdException("exception")) {
+	if !errors.Is(Std("ios_base::failure"), Std("exception")) {
 		t.Errorf("error type should match the base error type")
 	}
-	if !errors.Is(StdException("ios_base::failure"), StdException("runtime_error")) {
+	if !errors.Is(Std("ios_base::failure"), Std("runtime_error")) {
 		t.Errorf("error type should match the base error type")
 	}
-	if !errors.Is(StdException("ios_base::failure"), StdException("system_error")) {
+	if !errors.Is(Std("ios_base::failure"), Std("system_error")) {
 		t.Errorf("error type should match itself")
 	}
-	if !errors.Is(StdException("ios_base::failure"), StdException("ios_base::failure")) {
+	if !errors.Is(Std("ios_base::failure"), Std("ios_base::failure")) {
 		t.Errorf("error type should match itself")
 	}
-	if errors.Is(StdException("ios_base::failure"), StdException("sdfsdf")) {
+	if errors.Is(Std("ios_base::failure"), Std("sdfsdf")) {
 		t.Errorf("error type should not match an unknown error")
 	}
-	if errors.Is(StdException("ios_base::failure"), StdException("invalid_argument")) {
+	if errors.Is(Std("ios_base::failure"), Std("invalid_argument")) {
 		t.Errorf("error type should not match another error")
 	}
 }
