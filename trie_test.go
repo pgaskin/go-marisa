@@ -427,6 +427,72 @@ func benchmarkTrie(b *testing.B, name string,
 				b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
 			})
 		}
+		b.Run("LookupAvg", func(b *testing.B) {
+			trie := newTrie()
+			trie.Lookup("") // ensure we have a cached agent
+			b.ResetTimer()
+			for range b.N {
+				for query := range keys {
+					if _, _, err := trie.Lookup(query); err != nil {
+						panic(err)
+					}
+				}
+			}
+			b.ReportMetric(float64(b.N*numKeys)/float64(b.Elapsed().Seconds()), "keys/s")
+		})
+		b.Run("ReverseLookupAvg", func(b *testing.B) {
+			trie := newTrie()
+			trie.ReverseLookup(0) // ensure we have a cached agent
+			b.ResetTimer()
+			for range b.N {
+				for query := range trie.Size() {
+					if _, _, err := trie.ReverseLookup(query); err != nil {
+						panic(err)
+					}
+				}
+			}
+			b.ReportMetric(float64(b.N*numKeys)/float64(b.Elapsed().Seconds()), "keys/s")
+		})
+		b.Run("PredictiveSearchSeqAvg", func(b *testing.B) {
+			trie := newTrie()
+			trie.PredictiveSearch("", 0) // ensure we have a cached agent
+			b.ResetTimer()
+			var results int64
+			for range b.N {
+				for query := range keys {
+					var err error
+					for range trie.PredictiveSearchSeq(query)(&err) {
+						results++
+					}
+					if err != nil {
+						panic(err)
+					}
+				}
+			}
+			b.ReportMetric(float64(results)/float64(b.Elapsed().Seconds()), "result/s")
+			b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/result")
+			b.ReportMetric(float64(numKeys), "queries/op")
+		})
+		b.Run("CommonPrefixSearchSeqAvg", func(b *testing.B) {
+			trie := newTrie()
+			trie.CommonPrefixSearch("", 0) // ensure we have a cached agent
+			b.ResetTimer()
+			var results int64
+			for range b.N {
+				for query := range keys {
+					var err error
+					for range trie.CommonPrefixSearchSeq(query)(&err) {
+						results++
+					}
+					if err != nil {
+						panic(err)
+					}
+				}
+			}
+			b.ReportMetric(float64(results)/float64(b.Elapsed().Seconds()), "result/s")
+			b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/result")
+			b.ReportMetric(float64(numKeys), "queries/op")
+		})
 	})
 }
 
