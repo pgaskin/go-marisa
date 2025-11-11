@@ -34,25 +34,25 @@ WORKDIR /build/
 COPY --from=download /build/lib/ /build/lib/
 COPY --link io.h intrin.h /build/src/
 
-RUN wasm32-wasi-clang++ -c -O2 \
+RUN wasm32-wasi-clang++ -c -O3 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 \
  -std=c++20 -DNDEBUG \
  lib/marisa.cc
 
 COPY --link io.cc wexcept.cc wrapper.cc /build/src/
 
-RUN wasm32-wasi-clang++ -c -O2 \
+RUN wasm32-wasi-clang++ -c -O3 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
  -std=c++20 -DNDEBUG -Wall -Wextra -Wconversion \
  src/io.cc src/wexcept.cc src/wrapper.cc
 
 COPY --link exports.txt /build/src/
 
-RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
+RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--global-base=1024 $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
 RUN wasm-ctor-eval -g -c _initialize marisa.wasm -o marisa.tmp
-RUN wasm-opt -g marisa.tmp -o marisa.wasm -O2 \
+RUN wasm-opt -g marisa.tmp -o marisa.wasm -O3 \
  --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext --enable-simd \
- --low-memory-unused --strip-debug --strip-dwarf
+ --low-memory-unused --strip-debug --strip-dwarf --gufa --converge
 RUN install -m644 marisa.wasm lib/marisa.wasm
 
 RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-std=c++20' > src/compile_flags.txt
