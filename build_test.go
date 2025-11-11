@@ -211,11 +211,11 @@ func TestBuild(t *testing.T) {
 	})
 	t.Run("Words", func(t *testing.T) {
 		keys := map[string]bool{}
-		for _, word := range words {
+		for _, word := range EnglishWords {
 			keys[word] = false
 		}
 		var trie marisa.Trie
-		if err := trie.Build(slices.Values(words), marisa.Config{}); err != nil {
+		if err := trie.Build(slices.Values(EnglishWords), marisa.Config{}); err != nil {
 			t.Fatalf("error: %v", err)
 		}
 		var err error

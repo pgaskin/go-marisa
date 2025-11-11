@@ -10,8 +10,8 @@ import (
 	"github.com/pgaskin/go-marisa"
 )
 
-func EnglishWords() iter.Seq[string] {
-	return slices.Values(words)
+func EnglishWordsSeq() iter.Seq[string] {
+	return slices.Values(EnglishWords)
 }
 
 func ExampleTrie_Build() {
@@ -77,7 +77,7 @@ func ExampleTrie_BuildWeights() {
 
 func Example_save() {
 	var trie marisa.Trie
-	if err := trie.Build(EnglishWords(), marisa.Config{}); err != nil {
+	if err := trie.Build(EnglishWordsSeq(), marisa.Config{}); err != nil {
 		panic(err)
 	}
 
@@ -106,7 +106,7 @@ func Example_load() {
 
 func Example_marshal() {
 	var trie marisa.Trie
-	if err := trie.Build(EnglishWords(), marisa.Config{}); err != nil {
+	if err := trie.Build(EnglishWordsSeq(), marisa.Config{}); err != nil {
 		panic(err)
 	}
 
@@ -130,7 +130,7 @@ func Example_marshal() {
 
 func ExampleTrie_query() {
 	var trie marisa.Trie
-	if err := trie.Build(EnglishWords(), marisa.Config{}); err != nil {
+	if err := trie.Build(EnglishWordsSeq(), marisa.Config{}); err != nil {
 		panic(err)
 	}
 

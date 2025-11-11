@@ -4,13 +4,14 @@ import (
 	"bytes"
 	"compress/gzip"
 	"crypto/sha1"
-	_ "embed"
+	"embed"
 	"encoding/hex"
 	"flag"
 	"fmt"
 	"io"
 	"iter"
 	"os"
+	"path"
 	"runtime"
 	"slices"
 	"strings"
@@ -40,13 +41,18 @@ func TestMain(m *testing.M) {
 }
 
 var (
-	//go:embed testdata/words.gz
-	wordsGz []byte
-	words   []string
+	//go:embed testdata
+	testdata     embed.FS
+	EnglishWords = mustLoadTestdata("words.gz", "4a53051e1939ced3e07f069a5f58e4ff2dfa9b5b")
+	Go125        = mustLoadTestdata("go125.gz", "93902cc5140413de8eceee147c924dded686f4fc")
 )
 
-func init() {
-	zr, err := gzip.NewReader(bytes.NewReader(wordsGz))
+func mustLoadTestdata(name string, sha string) []string {
+	r, err := testdata.Open(path.Join("testdata", name))
+	if err != nil {
+		panic(err)
+	}
+	zr, err := gzip.NewReader(r)
 	if err != nil {
 		panic(err)
 	}
@@ -57,16 +63,16 @@ func init() {
 	if err := zr.Close(); err != nil {
 		panic(err)
 	}
-	if ss := sha1.Sum(buf); hex.EncodeToString(ss[:]) != "4a53051e1939ced3e07f069a5f58e4ff2dfa9b5b" {
-		panic("word list changed")
+	if ss := sha1.Sum(buf); hex.EncodeToString(ss[:]) != sha {
+		panic(fmt.Errorf("testdata %q changed (%x)", name, ss))
 	}
-	words = strings.FieldsFunc(string(buf), func(r rune) bool { return r == '\n' })
+	return strings.FieldsFunc(string(buf), func(r rune) bool { return r == '\n' })
 }
 
 // mustWordsTrieData returns the serialized words trie.
 var mustWordsTrieData = sync.OnceValue(func() []byte {
 	var trie marisa.Trie
-	if err := trie.Build(slices.Values(words), marisa.Config{}); err != nil {
+	if err := trie.Build(slices.Values(EnglishWords), marisa.Config{}); err != nil {
 		panic(err)
 	}
 	buf, err := trie.MarshalBinary()
@@ -125,7 +131,10 @@ func TestReproducibility(t *testing.T) {
 	})
 
 	// gzip -cd testdata/words.gz | marisa-build | sha1sum -
-	testReproducibility(t, "Words", "99604746ae19ad387a778e662a8b9014d43283e2", slices.Values(words))
+	testReproducibility(t, "Words", "99604746ae19ad387a778e662a8b9014d43283e2", slices.Values(EnglishWords))
+
+	// gzip -cd testdata/go125.gz | marisa-build | sha1sum -
+	testReproducibility(t, "Go125", "e8d5188d58eabc2928dcf20cb25e374137b13674", slices.Values(Go125))
 }
 
 func testReproducibility(t *testing.T, name, sha string, seq iter.Seq[string]) {
@@ -217,9 +226,14 @@ func TestStats(t *testing.T) {
 
 func BenchmarkTrie(b *testing.B) {
 	benchmarkTrie(b, "Words",
-		slices.Values(words),
+		slices.Values(EnglishWords),
 		slices.Values([]string{"inter", "nondeter", "un", "testing"}),
 		slices.Values([]string{"forethoughtfulness", "unthinkingly"}),
+	)
+	benchmarkTrie(b, "Go125",
+		slices.Values(Go125),
+		slices.Values([]string{"go/src/cmd/vendor/golang.org", "go/src/go/ast/"}),
+		slices.Values([]string{"go/api/go1.25.txt", "go/src/cmd/vendor/golang.org/x/tools/internal/analysisinternal/typeindex/typeindex.go"}),
 	)
 }
 

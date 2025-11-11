@@ -62,7 +62,7 @@ func TestQuery(t *testing.T) {
 
 		if a, err := trie.Dump(-1); err != nil {
 			t.Errorf("unexpected error: %v", err)
-		} else if len(a) != len(words) { // assuming they're all unique
+		} else if len(a) != len(EnglishWords) { // assuming they're all unique
 			t.Errorf("incorrect result %d", len(a))
 		}
 		if a, err := trie.PredictiveSearch("addend", -1); err != nil {
@@ -110,7 +110,7 @@ func TestQuery(t *testing.T) {
 
 		if n, err := iterErrCount2(trie.DumpSeq()); err != nil {
 			t.Errorf("unexpected error: %v", err)
-		} else if n != len(words) {
+		} else if n != len(EnglishWords) {
 			t.Errorf("incorrect result")
 		}
 		if ok, err := iterErrValuesEqual2(trie.PredictiveSearchSeq("addend"), "addend", "addendum", "addendums", "addenda", "addends"); err != nil {
@@ -155,7 +155,7 @@ func TestNestedQuery(t *testing.T) {
 		attempts = 2
 		levels   = 6
 	)
-	t.Logf("trying %d nested queries for %d keys %d times", levels, len(words), attempts)
+	t.Logf("trying %d nested queries for %d keys %d times", levels, len(EnglishWords), attempts)
 
 	for try := range attempts { // do it multiple times to test the cache logic
 		var (
@@ -179,11 +179,11 @@ func TestNestedQuery(t *testing.T) {
 			} else {
 				if i%2 == 0 {
 					// stop some early
-					limit[i] = rnd.Intn(len(words)-5) + 5
+					limit[i] = rnd.Intn(len(EnglishWords)-5) + 5
 					expected += limit[i]
 				} else {
 					limit[i] = -1
-					expected += len(words)
+					expected += len(EnglishWords)
 				}
 			}
 		}
