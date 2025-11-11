@@ -288,6 +288,7 @@ func benchmarkTrie(b *testing.B, name string,
 				}
 			}
 			b.ReportMetric(float64(numKeys), "keys/op")
+			b.ReportMetric(float64(numKeys)*float64(b.N)/float64(b.Elapsed().Seconds()), "keys/s")
 			b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(numKeys)/float64(b.N), "ns/key")
 			b.ReportAllocs()
 		})
@@ -353,6 +354,7 @@ func benchmarkTrie(b *testing.B, name string,
 				}
 			}
 			b.ReportAllocs()
+			b.ReportMetric(float64(results)/float64(b.Elapsed().Seconds()), "keys/s")
 			b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
 		})
 		for query := range lookup {
@@ -366,6 +368,7 @@ func benchmarkTrie(b *testing.B, name string,
 					}
 				}
 				b.ReportAllocs()
+				b.ReportMetric(float64(b.N)/float64(b.Elapsed().Seconds()), "keys/s")
 			})
 		}
 		for query := range reverseLookup {
@@ -379,6 +382,7 @@ func benchmarkTrie(b *testing.B, name string,
 					}
 				}
 				b.ReportAllocs()
+				b.ReportMetric(float64(b.N)/float64(b.Elapsed().Seconds()), "keys/s")
 			})
 		}
 		for query := range predictiveSearch {
@@ -398,6 +402,7 @@ func benchmarkTrie(b *testing.B, name string,
 				}
 				b.ReportAllocs()
 				b.ReportMetric(float64(results)/float64(b.N), "keys/op")
+				b.ReportMetric(float64(results)/float64(b.Elapsed().Seconds()), "keys/s")
 				b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
 			})
 		}
@@ -418,6 +423,7 @@ func benchmarkTrie(b *testing.B, name string,
 				}
 				b.ReportAllocs()
 				b.ReportMetric(float64(results)/float64(b.N), "keys/op")
+				b.ReportMetric(float64(results)/float64(b.Elapsed().Seconds()), "keys/s")
 				b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
 			})
 		}
