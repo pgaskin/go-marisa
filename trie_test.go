@@ -227,17 +227,27 @@ func TestStats(t *testing.T) {
 func BenchmarkTrie(b *testing.B) {
 	benchmarkTrie(b, "Words",
 		slices.Values(EnglishWords),
+		slices.Values([]string{"nonexistent---", "testing", "forethoughtfulness"}),
+		slices.Values([]uint32{0, 1234}),
 		slices.Values([]string{"inter", "nondeter", "un", "testing"}),
 		slices.Values([]string{"forethoughtfulness", "unthinkingly"}),
 	)
 	benchmarkTrie(b, "Go125",
 		slices.Values(Go125),
+		slices.Values([]string{"nonexistent---", "go/api/go1.25.txt", "go/src/cmd/vendor/golang.org/x/tools/internal/analysisinternal/typeindex/typeindex.go"}),
+		slices.Values([]uint32{0, 1234}),
 		slices.Values([]string{"go/src/cmd/vendor/golang.org", "go/src/go/ast/"}),
 		slices.Values([]string{"go/api/go1.25.txt", "go/src/cmd/vendor/golang.org/x/tools/internal/analysisinternal/typeindex/typeindex.go"}),
 	)
 }
 
-func benchmarkTrie(b *testing.B, name string, keys iter.Seq[string], predictiveSearch iter.Seq[string], commonPrefixSearch iter.Seq[string]) {
+func benchmarkTrie(b *testing.B, name string,
+	keys iter.Seq[string],
+	lookup iter.Seq[string],
+	reverseLookup iter.Seq[uint32],
+	predictiveSearch iter.Seq[string],
+	commonPrefixSearch iter.Seq[string],
+) {
 	b.Run(name, func(b *testing.B) {
 		marisa.Initialize()
 		var (
@@ -330,6 +340,7 @@ func benchmarkTrie(b *testing.B, name string, keys iter.Seq[string], predictiveS
 		})
 		b.Run("DumpSeq", func(b *testing.B) {
 			trie := newTrie()
+			trie.Dump(0) // ensure we have a cached agent
 			b.ResetTimer()
 			var results int64
 			for range b.N {
@@ -341,11 +352,39 @@ func benchmarkTrie(b *testing.B, name string, keys iter.Seq[string], predictiveS
 					panic(err)
 				}
 			}
+			b.ReportAllocs()
 			b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
 		})
+		for query := range lookup {
+			b.Run("Lookup", func(b *testing.B) {
+				trie := newTrie()
+				trie.Lookup("") // ensure we have a cached agent
+				b.ResetTimer()
+				for range b.N {
+					if _, _, err := trie.Lookup(query); err != nil {
+						panic(err)
+					}
+				}
+				b.ReportAllocs()
+			})
+		}
+		for query := range reverseLookup {
+			b.Run("ReverseLookup", func(b *testing.B) {
+				trie := newTrie()
+				trie.ReverseLookup(0) // ensure we have a cached agent
+				b.ResetTimer()
+				for range b.N {
+					if _, _, err := trie.ReverseLookup(query); err != nil {
+						panic(err)
+					}
+				}
+				b.ReportAllocs()
+			})
+		}
 		for query := range predictiveSearch {
 			b.Run("PredictiveSearchSeq", func(b *testing.B) {
 				trie := newTrie()
+				trie.PredictiveSearch("", 0) // ensure we have a cached agent
 				b.ResetTimer()
 				var results int64
 				for range b.N {
@@ -357,6 +396,7 @@ func benchmarkTrie(b *testing.B, name string, keys iter.Seq[string], predictiveS
 						panic(err)
 					}
 				}
+				b.ReportAllocs()
 				b.ReportMetric(float64(results)/float64(b.N), "keys/op")
 				b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
 			})
@@ -364,6 +404,7 @@ func benchmarkTrie(b *testing.B, name string, keys iter.Seq[string], predictiveS
 		for query := range commonPrefixSearch {
 			b.Run("CommonPrefixSearchSeq", func(b *testing.B) {
 				trie := newTrie()
+				trie.CommonPrefixSearch("", 0) // ensure we have a cached agent
 				b.ResetTimer()
 				var results int64
 				for range b.N {
@@ -375,6 +416,7 @@ func benchmarkTrie(b *testing.B, name string, keys iter.Seq[string], predictiveS
 						panic(err)
 					}
 				}
+				b.ReportAllocs()
 				b.ReportMetric(float64(results)/float64(b.N), "keys/op")
 				b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
 			})
