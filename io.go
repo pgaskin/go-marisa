@@ -223,13 +223,13 @@ func (c *countReader) Read(p []byte) (n int, err error) {
 
 // MarshalBinary serializes the dictionary.
 func (t *Trie) MarshalBinary() ([]byte, error) {
-	if t.mod == nil {
-		return nil, errors.New("dictionary not initialized")
-	}
 	return t.AppendBinary(nil)
 }
 
 func (t *Trie) AppendBinary(b []byte) ([]byte, error) {
+	if t.mod == nil {
+		return nil, errors.New("dictionary not initialized")
+	}
 	b = slices.Grow(b, int(t.ioSize))
 	_, err := t.mod.CallContext(withWriteBuffer(context.Background(), &b), "marisa_save")
 	return b, err
