@@ -214,3 +214,176 @@ func TestStats(t *testing.T) {
 		}
 	})
 }
+
+func BenchmarkTrie(b *testing.B) {
+	benchmarkTrie(b, "Words",
+		slices.Values(words),
+		slices.Values([]string{"inter", "nondeter", "un", "testing"}),
+		slices.Values([]string{"forethoughtfulness", "unthinkingly"}),
+	)
+}
+
+func benchmarkTrie(b *testing.B, name string, keys iter.Seq[string], predictiveSearch iter.Seq[string], commonPrefixSearch iter.Seq[string]) {
+	b.Run(name, func(b *testing.B) {
+		marisa.Initialize()
+		var (
+			numKeys    int
+			keyBytes   int64
+			trieBytes  []byte
+			trieConfig marisa.Config
+			newTrie    func() *marisa.Trie
+		)
+		{
+			for key := range keys {
+				numKeys++
+				keyBytes += int64(len(key))
+			}
+			var trie marisa.Trie
+			if err := trie.Build(keys, trieConfig); err != nil {
+				b.Fatalf("build trie: %v", err)
+			}
+			if buf, err := trie.MarshalBinary(); err != nil {
+				b.Fatalf("marshal trie: %v", err)
+			} else {
+				trieBytes = buf
+			}
+			newTrie = func() *marisa.Trie {
+				var trie marisa.Trie
+				if err := trie.UnmarshalBinary(trieBytes); err != nil {
+					panic(err)
+				}
+				return &trie
+			}
+		}
+		b.Run("Build", func(b *testing.B) {
+			b.SetBytes(keyBytes)
+			b.ResetTimer()
+			for range b.N {
+				if err := new(marisa.Trie).Build(keys, trieConfig); err != nil {
+					panic(err)
+				}
+			}
+			b.ReportMetric(float64(numKeys), "keys/op")
+			b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(numKeys)/float64(b.N), "ns/key")
+			b.ReportAllocs()
+		})
+		b.Run("ReadFrom", func(b *testing.B) {
+			b.SetBytes(int64(len(trieBytes)))
+			b.ResetTimer()
+			c := &readCounter{R: bytes.NewReader(trieBytes)}
+			for range b.N {
+				c.R.(*bytes.Reader).Reset(trieBytes)
+				if _, err := new(marisa.Trie).ReadFrom(c); err != nil {
+					panic(err)
+				}
+			}
+			b.ReportMetric(float64(c.N)/float64(b.N), "reads/op")
+			b.ReportAllocs()
+		})
+		b.Run("WriteTo", func(b *testing.B) {
+			trie := newTrie()
+			b.SetBytes(int64(len(trieBytes)))
+			b.ResetTimer()
+			c := &writeCounter{W: io.Discard}
+			for range b.N {
+				if _, err := trie.WriteTo(c); err != nil {
+					panic(err)
+				}
+			}
+			b.ReportMetric(float64(c.N)/float64(b.N), "writes/op")
+			b.ReportAllocs()
+		})
+		b.Run("UnmarshalBinary", func(b *testing.B) {
+			b.SetBytes(int64(len(trieBytes)))
+			b.ResetTimer()
+			for range b.N {
+				if err := new(marisa.Trie).UnmarshalBinary(trieBytes); err != nil {
+					panic(err)
+				}
+			}
+			b.ReportAllocs()
+		})
+		b.Run("MarshalBinary", func(b *testing.B) {
+			trie := newTrie()
+			b.SetBytes(int64(len(trieBytes)))
+			b.ResetTimer()
+			for range b.N {
+				if _, err := trie.MarshalBinary(); err != nil {
+					panic(err)
+				}
+			}
+			b.ReportAllocs()
+		})
+		b.Run("DumpSeq", func(b *testing.B) {
+			trie := newTrie()
+			b.ResetTimer()
+			var results int64
+			for range b.N {
+				var err error
+				for range trie.DumpSeq()(&err) {
+					results++
+				}
+				if err != nil {
+					panic(err)
+				}
+			}
+			b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
+		})
+		for query := range predictiveSearch {
+			b.Run("PredictiveSearchSeq", func(b *testing.B) {
+				trie := newTrie()
+				b.ResetTimer()
+				var results int64
+				for range b.N {
+					var err error
+					for range trie.PredictiveSearchSeq(query)(&err) {
+						results++
+					}
+					if err != nil {
+						panic(err)
+					}
+				}
+				b.ReportMetric(float64(results)/float64(b.N), "keys/op")
+				b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
+			})
+		}
+		for query := range commonPrefixSearch {
+			b.Run("CommonPrefixSearchSeq", func(b *testing.B) {
+				trie := newTrie()
+				b.ResetTimer()
+				var results int64
+				for range b.N {
+					var err error
+					for range trie.CommonPrefixSearchSeq(query)(&err) {
+						results++
+					}
+					if err != nil {
+						panic(err)
+					}
+				}
+				b.ReportMetric(float64(results)/float64(b.N), "keys/op")
+				b.ReportMetric(float64(b.Elapsed().Nanoseconds())/float64(results), "ns/key")
+			})
+		}
+	})
+}
+
+type writeCounter struct {
+	W io.Writer
+	N uint
+}
+
+func (c *writeCounter) Write(p []byte) (n int, err error) {
+	c.N++
+	return c.W.Write(p)
+}
+
+type readCounter struct {
+	R io.Reader
+	N uint
+}
+
+func (c *readCounter) Read(p []byte) (n int, err error) {
+	c.N++
+	return c.R.Read(p)
+}
