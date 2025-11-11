@@ -1,39 +1,19 @@
-#include <cstdint>
-#include <cstddef>
-#include <cstring>
 #include <functional>
 #include <memory>
 #include <new>
+#include <exception>
 #include <stdexcept>
 #include <typeinfo>
+#include <variant>
 
 namespace wexcept {
 
-#ifdef __wasm__
-__attribute__((__import_module__("wexcept"),__import_name__(("cxx_throw"))))
-#endif
-void cxx_throw[[noreturn]](const char *typ, const char *std, const char *msg);
-
-namespace cb {
-static void *wthrow_destroy_obj = nullptr;
-static void *(*wthrow_destroy_fn)(void*) = nullptr;
-extern "C" void wexcept_cxx_throw_destroy() {
-    if (wthrow_destroy_fn && wthrow_destroy_obj) {
-        wthrow_destroy_fn(wthrow_destroy_obj);
-        wthrow_destroy_fn = nullptr;
-        wthrow_destroy_obj = nullptr;
-    }
-}
-}
-
-void wthrow[[noreturn]](const std::exception& ex) {
-    // see https://en.cppreference.com/w/cpp/error/exception.html for the hierachy
+const char *type(const std::exception *ex) {
     // search for "MARISA_THROW" to see what's used
-
+    // see https://en.cppreference.com/w/cpp/error/exception.html for the hierachy
     // these must be a subset of the ones defined in internal/cxxerr/exception.go for unwrapping to work correctly
-    const char *std = "exception";
     if (false) {}
-    #define std_(exception) else if (dynamic_cast<const exception*>(&ex)) std = #exception;
+    #define std_(exception) else if (dynamic_cast<const exception*>(ex)) return #exception;
     std_(std::invalid_argument)               //   logic-error
     std_(std::domain_error)                   //   logic-error
     std_(std::length_error)                   //   logic-error
@@ -53,38 +33,51 @@ void wthrow[[noreturn]](const std::exception& ex) {
     std_(std::bad_typeid)                     // exception
     //std_(std::bad_any_cast)                 //   bad_cast
     std_(std::bad_cast)                       // exception
-    //std_(std::bad_optional_access)          // exception
+    std_(std::bad_variant_access)             // exception
     //std_(std::bad_expected_access)          // exception
     std_(std::bad_weak_ptr)                   // exception
     std_(std::bad_function_call)              // exception
     std_(std::bad_array_new_length)           //   bad_alloc
     std_(std::bad_alloc)                      // exception
     std_(std::bad_exception)                  // exception
-    //std_(std::bad_variant_access)           // exception
-
-    wexcept::cxx_throw(typeid(ex).name(), std, ex.what());
-}
-
-void wthrow[[noreturn]](const char *typ, const char *what) {
-    wexcept::cxx_throw(typ, nullptr, what);
-}
-
-void wthrow[[noreturn]](const std::type_info &tinfo, const char *what) {
-    wexcept::wthrow(tinfo.name(), what);
-}
-
-void wthrow[[noreturn]](const char *what) {
-    wexcept::wthrow(nullptr, what);
-}
-
-static void wthrow_set_destructor(void *obj, void *(*dest)(void*)) {
-    cb::wthrow_destroy_obj = obj;
-    cb::wthrow_destroy_fn = dest;
+    std_(std::bad_variant_access)             // exception
+    #undef std_
+    return "std::exception";
 }
 
 }
 
-static uint8_t fallback_exception_buf[4096];
+#ifdef __wasm__
+#include <cstddef>
+#include <cstring>
+#include <cxxabi.h>
+
+#ifndef _LIBCPPABI_VERSION
+#error this file depends on implementation details of llvm libc++abi
+#endif
+
+namespace wexcept::env {
+
+__attribute__((__import_module__("wexcept"),__import_name__(("cxx_throw"))))
+void cxx_throw[[noreturn]](const char *typ, const char *std, const char *msg);
+
+static void *wthrow_destroy_obj = nullptr;
+static void *(*wthrow_destroy_fn)(void*) = nullptr;
+extern "C" void wexcept_cxx_throw_destroy() {
+    if (wthrow_destroy_fn && wthrow_destroy_obj) {
+        wthrow_destroy_fn(wthrow_destroy_obj);
+        wthrow_destroy_fn = nullptr;
+        wthrow_destroy_obj = nullptr;
+    }
+}
+static void set_destructor(void *obj, void *(*dest)(void*)) {
+    wthrow_destroy_obj = obj;
+    wthrow_destroy_fn = dest;
+}
+
+}
+
+static char fallback_exception_buf[4096];
 
 extern "C" void *__cxa_allocate_exception(size_t size) {
     if (size < sizeof(fallback_exception_buf)) {
@@ -125,16 +118,17 @@ extern "C" void __cxa_throw(void *thrown_exception, std::type_info *tinfo, void 
     //   - we don't support c++ catch blocks (all exceptions will go straight to go)
     //   - we don't support unwinding the stack, so destructors won't get called
 
-    wexcept::wthrow_set_destructor(thrown_exception, dest);
+    wexcept::env::set_destructor(thrown_exception, dest);
     if (tinfo) {
         auto throw_type = static_cast<const __cxxabiv1::__shim_type_info*>(tinfo);
         auto catch_type = static_cast<const __cxxabiv1::__shim_type_info*>(&typeid(std::exception));
         if (catch_type->can_catch(throw_type, thrown_exception)) {
-            wexcept::wthrow(*static_cast<std::exception*>(thrown_exception));
+            auto ex = static_cast<std::exception*>(thrown_exception);
+            wexcept::env::cxx_throw(typeid(*ex).name(), wexcept::type(ex), ex->what());
         }
-        wexcept::wthrow(*tinfo, "unknown error type");
+        wexcept::env::cxx_throw(tinfo->name(), nullptr, "unknown error type");
     }
-    wexcept::wthrow("unknown error type");
+    wexcept::env::cxx_throw(nullptr, nullptr, "unknown error type");
 }
 
 // printf_core (and write/writev/close) is brought in by __abort_message, which
@@ -142,19 +136,21 @@ extern "C" void __cxa_throw(void *thrown_exception, std::type_info *tinfo, void 
 // particular, we override operator new's error handling), so just replace
 // __abort_message (and since the messages are mostly static, don't bother with
 // the format string)
-//  - run `twiggy top lib/marisa.wasm --retained`
-//  - run `twiggy paths lib/marisa.wasm printf_core`
-//  - run `wasm-objdump -x lib/marisa.wasm`
+//  - run `twiggy top wasm/marisa.wasm --retained`
+//  - run `twiggy paths wasm/marisa.wasm printf_core`
+//  - run `wasm-objdump -x wasm/marisa.wasm`
 //  - https://github.com/llvm/llvm-project/blob/f3b407f8f4624461eedfe5a2da540469a0f69dc9/libcxxabi/src/stdlib_new_delete.cpp#L31C13-L43
 extern "C" void __abort_message[[noreturn]](const char* fmt, ...) {
-    wexcept::wthrow("abort", fmt);
+    wexcept::env::cxx_throw("abort", nullptr, fmt);
 }
 
 extern "C" void abort() {
-    wexcept::wthrow("abort", "abort");
+    wexcept::env::cxx_throw("abort", nullptr, "abort");
 }
 
 [[gnu::constructor(1)]] static void wexcept_new_handler_init() {
-    static auto ex = std::bad_alloc(); // preallocate
-    std::set_new_handler([]() { wexcept::wthrow(ex); });
+    std::set_new_handler([]() {
+        wexcept::env::cxx_throw(typeid(std::bad_alloc).name(), "std::bad_alloc", "allocation failed");
+    });
 }
+#endif

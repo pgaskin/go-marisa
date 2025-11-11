@@ -1,8 +1,12 @@
-#pragma once
+#ifndef MARISA_GRIMOIRE_IO_H_
+#define MARISA_GRIMOIRE_IO_H_
 
+#include <cstddef>
+#include <cstdint>
 #include <cstdio>
 #include <iostream>
 #include <stdexcept>
+#include <utility>
 
 #include "../lib/marisa.h"
 
@@ -12,15 +16,25 @@ namespace io {
 
 class Mapper {
 public:
-    Mapper();
+    Mapper() = default;
     Mapper(const Mapper &) = delete;
     Mapper &operator=(const Mapper &) = delete;
 
-    void open(const char *filename, int flags = 0);
+    void open([[maybe_unused]] const char *filename, [[maybe_unused]] int flags = 0) {
+        MARISA_THROW(std::runtime_error, "not supported");
+    }
 
-    void open(const void *ptr, size_t size);
-    void seek(size_t size);
-    void swap(Mapper &rhs) noexcept;
+    void open(const void *ptr, size_t size) {
+        ptr_ = ptr;
+        avail_ = size;
+    }
+    void seek(size_t size) {
+        data(size);
+    }
+    void swap(Mapper &rhs) noexcept {
+        std::swap(ptr_, rhs.ptr_);
+        std::swap(avail_, rhs.avail_);
+    }
 
     template <typename T>
     void map(T *obj) {
@@ -39,20 +53,34 @@ private:
     const void *ptr_ = nullptr;
     size_t avail_ = 0;
 
-    const void *data(size_t size);
+    const void *data(size_t size) {
+        MARISA_THROW_IF(size > avail_, std::runtime_error);
+        const char *const data = static_cast<const char*>(ptr_);
+        ptr_ = data + size;
+        avail_ -= size;
+        return data;
+    }
 };
 
 class Reader {
 public:
-    Reader();
+    Reader() = default;
     Reader(const Reader &) = delete;
     Reader &operator=(const Reader &) = delete;
 
-    void open(const char *filename);
-    void open(std::FILE *file);
-    void open(std::istream &stream);
+    void open([[maybe_unused]] std::FILE *file) {
+        MARISA_THROW(std::runtime_error, "not supported");
+    }
+    void open([[maybe_unused]] std::istream &stream) {
+        MARISA_THROW(std::runtime_error, "not supported");
+    }
 
-    void open(int fd);
+    void open(int fd) {
+        handle_ = static_cast<uintptr_t>(fd);
+    }
+    void open(const char *filename) {
+        handle_ = reinterpret_cast<uintptr_t>(filename);
+    };
     void seek(size_t size);
 
     template <typename T>
@@ -70,19 +98,28 @@ public:
 
 private:
     void data(void *buf, size_t size);
+    uintptr_t handle_;
 };
 
 class Writer {
 public:
-    Writer();
+    Writer() = default;
     Writer(const Writer &) = delete;
     Writer &operator=(const Writer &) = delete;
 
-    void open(const char *filename);
-    void open(std::FILE *file);
-    void open(std::ostream &stream);
+    void open([[maybe_unused]] std::FILE *file) {
+        MARISA_THROW(std::runtime_error, "not supported");
+    }
+    void open([[maybe_unused]] std::ostream &stream) {
+        MARISA_THROW(std::runtime_error, "not supported");
+    }
 
-    void open(int fd);
+    void open(int fd) {
+        handle_ = static_cast<uintptr_t>(fd);
+    }
+    void open(const char *filename) {
+        handle_ = reinterpret_cast<uintptr_t>(filename);
+    };
     void seek(size_t size);
 
     template <typename T>
@@ -99,6 +136,7 @@ public:
 
 private:
     void data(const void *data, size_t size);
+    uintptr_t handle_;
 };
 
 }
@@ -108,3 +146,5 @@ using io::Reader;
 using io::Writer;
 
 }
+
+#endif

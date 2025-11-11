@@ -105,9 +105,9 @@ func patch(files map[string][]byte) error {
 			if !strings.HasPrefix(name, "lib/marisa/grimoire/") || !strings.HasSuffix(name, ".h") {
 				continue
 			}
-			src = bytes.ReplaceAll(src, []byte(`void map(Mapper`), []byte(`[[clang::noinline]] void map(Mapper`))
-			src = bytes.ReplaceAll(src, []byte(`void read(Reader`), []byte(`[[clang::noinline]] void read(Reader`))
-			src = bytes.ReplaceAll(src, []byte(`void write(Writer`), []byte(`[[clang::noinline]] void write(Writer`))
+			src = bytes.ReplaceAll(src, []byte(`void map(Mapper`), []byte(`__attribute__((noinline)) void map(Mapper`))
+			src = bytes.ReplaceAll(src, []byte(`void read(Reader`), []byte(`__attribute__((noinline)) void read(Reader`))
+			src = bytes.ReplaceAll(src, []byte(`void write(Writer`), []byte(`__attribute__((noinline)) void write(Writer`))
 			files[name] = src
 		}
 	}

@@ -269,19 +269,19 @@ class Vector {
   Vector(Vector &&) noexcept = default;
   Vector &operator=(Vector<T> &&) noexcept = default;
 
-  [[clang::noinline]] void map(Mapper &mapper) {
+  __attribute__((noinline)) void map(Mapper &mapper) {
     Vector temp;
     temp.map_(mapper);
     swap(temp);
   }
 
-  [[clang::noinline]] void read(Reader &reader) {
+  __attribute__((noinline)) void read(Reader &reader) {
     Vector temp;
     temp.read_(reader);
     swap(temp);
   }
 
-  [[clang::noinline]] void write(Writer &writer) const {
+  __attribute__((noinline)) void write(Writer &writer) const {
     write_(writer);
   }
 
@@ -539,17 +539,17 @@ class BitVector {
     swap(temp);
   }
 
-  [[clang::noinline]] void map(Mapper &mapper) {
+  __attribute__((noinline)) void map(Mapper &mapper) {
     BitVector temp;
     temp.map_(mapper);
     swap(temp);
   }
-  [[clang::noinline]] void read(Reader &reader) {
+  __attribute__((noinline)) void read(Reader &reader) {
     BitVector temp;
     temp.read_(reader);
     swap(temp);
   }
-  [[clang::noinline]] void write(Writer &writer) const {
+  __attribute__((noinline)) void write(Writer &writer) const {
     write_(writer);
   }
 
@@ -712,17 +712,17 @@ class FlatVector {
     swap(temp);
   }
 
-  [[clang::noinline]] void map(Mapper &mapper) {
+  __attribute__((noinline)) void map(Mapper &mapper) {
     FlatVector temp;
     temp.map_(mapper);
     swap(temp);
   }
-  [[clang::noinline]] void read(Reader &reader) {
+  __attribute__((noinline)) void read(Reader &reader) {
     FlatVector temp;
     temp.read_(reader);
     swap(temp);
   }
-  [[clang::noinline]] void write(Writer &writer) const {
+  __attribute__((noinline)) void write(Writer &writer) const {
     write_(writer);
   }
 
@@ -927,9 +927,9 @@ class Tail {
 
   void build(Vector<Entry> &entries, Vector<uint32_t> *offsets, TailMode mode);
 
-  [[clang::noinline]] void map(Mapper &mapper);
-  [[clang::noinline]] void read(Reader &reader);
-  [[clang::noinline]] void write(Writer &writer) const;
+  __attribute__((noinline)) void map(Mapper &mapper);
+  __attribute__((noinline)) void read(Reader &reader);
+  __attribute__((noinline)) void write(Writer &writer) const;
 
   void restore(Agent &agent, std::size_t offset) const;
   bool match(Agent &agent, std::size_t offset) const;
@@ -1794,9 +1794,9 @@ class LoudsTrie {
 
   void build(Keyset &keyset, int flags);
 
-  [[clang::noinline]] void map(Mapper &mapper);
-  [[clang::noinline]] void read(Reader &reader);
-  [[clang::noinline]] void write(Writer &writer) const;
+  __attribute__((noinline)) void map(Mapper &mapper);
+  __attribute__((noinline)) void read(Reader &reader);
+  __attribute__((noinline)) void write(Writer &writer) const;
 
   bool lookup(Agent &agent) const;
   void reverse_lookup(Agent &agent) const;
@@ -1919,17 +1919,17 @@ class Header {
   Header(const Header &) = delete;
   Header &operator=(const Header &) = delete;
 
-  [[clang::noinline]] void map(Mapper &mapper) {
+  __attribute__((noinline)) void map(Mapper &mapper) {
     const char *ptr;
     mapper.map(&ptr, HEADER_SIZE);
     MARISA_THROW_IF(!test_header(ptr), std::runtime_error);
   }
-  [[clang::noinline]] void read(Reader &reader) {
+  __attribute__((noinline)) void read(Reader &reader) {
     char buf[HEADER_SIZE];
     reader.read(buf, HEADER_SIZE);
     MARISA_THROW_IF(!test_header(buf), std::runtime_error);
   }
-  [[clang::noinline]] void write(Writer &writer) const {
+  __attribute__((noinline)) void write(Writer &writer) const {
     writer.write(get_header(), HEADER_SIZE);
   }
 
