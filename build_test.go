@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/pgaskin/go-marisa"
+	"github.com/pgaskin/go-marisa/testdata"
 )
 
 func TestBuild(t *testing.T) {
@@ -211,11 +212,11 @@ func TestBuild(t *testing.T) {
 	})
 	t.Run("Words", func(t *testing.T) {
 		keys := map[string]bool{}
-		for _, word := range EnglishWords {
+		for _, word := range testdata.Words {
 			keys[word] = false
 		}
 		var trie marisa.Trie
-		if err := trie.Build(slices.Values(EnglishWords), marisa.Config{}); err != nil {
+		if err := trie.Build(slices.Values(testdata.Words), marisa.Config{}); err != nil {
 			t.Fatalf("error: %v", err)
 		}
 		var err error

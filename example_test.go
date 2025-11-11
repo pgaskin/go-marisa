@@ -2,17 +2,13 @@ package marisa_test
 
 import (
 	"fmt"
-	"iter"
 	"maps"
 	"os"
 	"slices"
 
 	"github.com/pgaskin/go-marisa"
+	"github.com/pgaskin/go-marisa/testdata"
 )
-
-func EnglishWordsSeq() iter.Seq[string] {
-	return slices.Values(EnglishWords)
-}
 
 func ExampleTrie_Build() {
 	keys := []string{
@@ -77,7 +73,7 @@ func ExampleTrie_BuildWeights() {
 
 func Example_save() {
 	var trie marisa.Trie
-	if err := trie.Build(EnglishWordsSeq(), marisa.Config{}); err != nil {
+	if err := trie.Build(slices.Values(testdata.Words), marisa.Config{}); err != nil {
 		panic(err)
 	}
 
@@ -106,7 +102,7 @@ func Example_load() {
 
 func Example_marshal() {
 	var trie marisa.Trie
-	if err := trie.Build(EnglishWordsSeq(), marisa.Config{}); err != nil {
+	if err := trie.Build(slices.Values(testdata.Words), marisa.Config{}); err != nil {
 		panic(err)
 	}
 
@@ -130,7 +126,7 @@ func Example_marshal() {
 
 func ExampleTrie_query() {
 	var trie marisa.Trie
-	if err := trie.Build(EnglishWordsSeq(), marisa.Config{}); err != nil {
+	if err := trie.Build(slices.Values(testdata.Words), marisa.Config{}); err != nil {
 		panic(err)
 	}
 
