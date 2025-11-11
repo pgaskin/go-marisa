@@ -30,7 +30,7 @@ void wthrow[[noreturn]](const std::exception& ex) {
     // see https://en.cppreference.com/w/cpp/error/exception.html for the hierachy
     // search for "MARISA_THROW" to see what's used
 
-    // these must be a subset of the ones defined in internal/wexcept/exception.go for unwrapping to work correctly
+    // these must be a subset of the ones defined in internal/cxxerr/exception.go for unwrapping to work correctly
     const char *std = "exception";
     if (false) {}
     #define std_(exception) else if (dynamic_cast<const exception*>(&ex)) std = #exception;
@@ -142,9 +142,9 @@ extern "C" void __cxa_throw(void *thrown_exception, std::type_info *tinfo, void 
 // particular, we override operator new's error handling), so just replace
 // __abort_message (and since the messages are mostly static, don't bother with
 // the format string)
-//  - run `twiggy top wasm/marisa.wasm --retained`
-//  - run `twiggy paths wasm/marisa.wasm printf_core`
-//  - run `wasm-objdump -x wasm/marisa.wasm`
+//  - run `twiggy top lib/marisa.wasm --retained`
+//  - run `twiggy paths lib/marisa.wasm printf_core`
+//  - run `wasm-objdump -x lib/marisa.wasm`
 //  - https://github.com/llvm/llvm-project/blob/f3b407f8f4624461eedfe5a2da540469a0f69dc9/libcxxabi/src/stdlib_new_delete.cpp#L31C13-L43
 extern "C" void __abort_message[[noreturn]](const char* fmt, ...) {
     wexcept::wthrow("abort", fmt);

@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "marisa.h"
+#include "../lib/marisa.h"
 
 // note: even on 64-bit platforms with 64-bit size_t, key IDs and lengths are
 // limited to uint32s in MARISA

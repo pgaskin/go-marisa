@@ -60,7 +60,7 @@
 
 #include <cassert>
 
-#include "./marisa.h" //amalgamate marisa/base.h
+#include "./../lib/marisa.h" //amalgamate marisa/base.h
 
 namespace marisa::grimoire::trie {
 
@@ -133,7 +133,7 @@ class Entry {
 
 #include <cassert>
 
-#include "./marisa.h" //amalgamate marisa/base.h
+#include "./../lib/marisa.h" //amalgamate marisa/base.h
 
 namespace marisa::grimoire::vector {
 
@@ -225,7 +225,7 @@ class RankIndex {
 #include <type_traits>
 #include <utility>
 
-#include "./io.h" //amalgamate marisa/grimoire/io.h
+#include "../src/io.h" //amalgamate marisa/grimoire/io.h
 
 namespace marisa::grimoire::vector {
 
@@ -912,7 +912,7 @@ using vector::Vector;
 
 #include <cassert>
 
-#include "./marisa.h" //amalgamate marisa/agent.h
+#include "./../lib/marisa.h" //amalgamate marisa/agent.h
 //amalgamate marisa/grimoire/trie/entry.h
 //amalgamate marisa/grimoire/vector.h
 
@@ -980,7 +980,7 @@ class Tail {
 
 #include <cassert>
 
-#include "./marisa.h" //amalgamate marisa/base.h
+#include "./../lib/marisa.h" //amalgamate marisa/base.h
 
 namespace marisa::grimoire::algorithm {
 namespace details {
@@ -1175,7 +1175,7 @@ std::size_t sort(Iterator begin, Iterator end) {
 
 #include <cassert>
 
-#include "./marisa.h" //amalgamate marisa/base.h
+#include "./../lib/marisa.h" //amalgamate marisa/base.h
 
 namespace marisa::grimoire::trie {
 
@@ -1353,7 +1353,7 @@ class State {
 #include <cassert>
 #include <cfloat>
 
-#include "./marisa.h" //amalgamate marisa/base.h
+#include "./../lib/marisa.h" //amalgamate marisa/base.h
 
 namespace marisa::grimoire::trie {
 
@@ -1422,7 +1422,7 @@ class Cache {
 
 #include <stdexcept>
 
-#include "./marisa.h" //amalgamate marisa/base.h
+#include "./../lib/marisa.h" //amalgamate marisa/base.h
 
 namespace marisa::grimoire::trie {
 
@@ -1571,7 +1571,7 @@ class Config {
 
 #include <cassert>
 
-#include "./marisa.h" //amalgamate marisa/base.h
+#include "./../lib/marisa.h" //amalgamate marisa/base.h
 
 namespace marisa::grimoire::trie {
 
@@ -1774,13 +1774,13 @@ inline bool operator>(const ReverseKey &lhs, const ReverseKey &rhs) {
 
 #include <memory>
 
-#include "./marisa.h" //amalgamate marisa/agent.h
+#include "./../lib/marisa.h" //amalgamate marisa/agent.h
 //amalgamate marisa/grimoire/trie/cache.h
 //amalgamate marisa/grimoire/trie/config.h
 //amalgamate marisa/grimoire/trie/key.h
 //amalgamate marisa/grimoire/trie/tail.h
 //amalgamate marisa/grimoire/vector.h
-#include "./marisa.h" //amalgamate marisa/keyset.h
+#include "./../lib/marisa.h" //amalgamate marisa/keyset.h
 
 namespace marisa::grimoire::trie {
 
@@ -1904,7 +1904,7 @@ class LoudsTrie {
 
 #include <stdexcept>
 
-#include "./io.h" //amalgamate marisa/grimoire/io.h
+#include "../src/io.h" //amalgamate marisa/grimoire/io.h
 
 namespace marisa::grimoire::trie {
 
@@ -1962,7 +1962,7 @@ class Header {
 
 #include <cassert>
 
-#include "./marisa.h" //amalgamate marisa/base.h
+#include "./../lib/marisa.h" //amalgamate marisa/base.h
 
 namespace marisa::grimoire::trie {
 
@@ -2078,7 +2078,7 @@ inline WeightedRange make_weighted_range(std::size_t begin, std::size_t end,
  #include <bit>
 #endif
 
-#include "./intrin.h" //amalgamate marisa/grimoire/intrin.h
+#include "../src/intrin.h" //amalgamate marisa/grimoire/intrin.h
 
 namespace marisa::grimoire::vector {
 
@@ -4195,7 +4195,7 @@ void BitVector::build_index(const BitVector &bv, bool enables_select0,
 
 }  // namespace marisa::grimoire::vector
 #line 1 "lib/marisa/agent.cc"
-#include "./marisa.h" //amalgamate marisa/agent.h
+#include "./../lib/marisa.h" //amalgamate marisa/agent.h
 
 #include <new>
 #include <stdexcept>
@@ -4203,7 +4203,7 @@ void BitVector::build_index(const BitVector &bv, bool enables_select0,
 
 //amalgamate marisa/grimoire/trie.h
 //amalgamate marisa/grimoire/trie/state.h
-#include "./marisa.h" //amalgamate marisa/key.h
+#include "./../lib/marisa.h" //amalgamate marisa/key.h
 
 namespace marisa {
 namespace {
@@ -4294,7 +4294,7 @@ void Agent::swap(Agent &rhs) noexcept {
 
 }  // namespace marisa
 #line 1 "lib/marisa/keyset.cc"
-#include "./marisa.h" //amalgamate marisa/keyset.h
+#include "./../lib/marisa.h" //amalgamate marisa/keyset.h
 
 #include <cassert>
 #include <cstring>
@@ -4463,7 +4463,7 @@ void Keyset::append_key_block() {
 
 }  // namespace marisa
 #line 1 "lib/marisa/trie.cc"
-#include "./marisa.h" //amalgamate marisa/trie.h
+#include "./../lib/marisa.h" //amalgamate marisa/trie.h
 
 #include <memory>
 #include <stdexcept>

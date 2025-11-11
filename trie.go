@@ -23,9 +23,8 @@ import (
 	"github.com/tetratelabs/wazero/experimental"
 )
 
-//go:generate go -C wasm run ../download.go
-//go:generate docker build --platform amd64 --pull --no-cache --progress plain --output wasm wasm
-//go:embed wasm/marisa.wasm
+//go:generate docker build --platform amd64 --progress plain --output . src
+//go:embed lib/marisa.wasm
 var wasm []byte
 
 var instance struct {

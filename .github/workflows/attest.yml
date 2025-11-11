@@ -5,9 +5,7 @@ on:
     branches:
       - master
     paths:
-      - wasm/marisa.wasm
-      - wasm/marisa.cc
-      - wasm/marisa.h
+      - lib/**
   workflow_dispatch:
 
 permissions:
@@ -20,11 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - run: go generate .
-      - run: git diff --exit-code # ensure the build was reproducible
+      - run: docker build --platform amd64 --pull --no-cache --progress plain --output . src
+      - run: git diff --exit-code lib # ensure the build was reproducible
       - uses: actions/attest-build-provenance@v3
         with:
           subject-path: |
-            wasm/marisa.wasm
-            wasm/marisa.cc
-            wasm/marisa.h
+            lib/marisa.wasm
+            lib/marisa.cc
+            lib/marisa.h

@@ -35,8 +35,8 @@ var (
 	Replace = map[string]string{
 		"include/marisa/iostream.h":    "",
 		"include/marisa/stdio.h":       "",
-		"lib/marisa/grimoire/intrin.h": "./intrin.h",
-		"lib/marisa/grimoire/io.h":     "./io.h",
+		"lib/marisa/grimoire/intrin.h": "../src/intrin.h",
+		"lib/marisa/grimoire/io.h":     "../src/io.h",
 	}
 	Headers = []string{
 		"include/marisa.h",
@@ -57,8 +57,8 @@ var (
 		"-Wno-unused-function",
 		"-Wno-unused-const-variable",
 	}
-	Source = "marisa.cc"
-	Header = "marisa.h"
+	Source = "../lib/marisa.cc"
+	Header = "../lib/marisa.h"
 )
 
 func patch(files map[string][]byte) error {

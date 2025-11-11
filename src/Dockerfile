@@ -17,41 +17,46 @@ FROM base AS binaryen
 ADD --checksum=${BINARYEN_CHECKSUM} ${BINARYEN_URL} ./binaryen.tar.gz
 RUN mkdir /opt/binaryen && tar -C /opt/binaryen --strip-components=1 -xf binaryen.tar.gz
 
-FROM base AS build
-WORKDIR /src
-
+FROM base AS sdk
 COPY --link --from=wasi-sdk /opt /opt
 COPY --link --from=binaryen /opt /opt
 ENV PATH="/opt/wasi-sdk/bin:/opt/binaryen/bin:$PATH"
 
-COPY --link ./io.h ./intrin.h ./marisa.h ./marisa.cc /src/
+FROM golang:1.25 AS download
+WORKDIR /build/src
+COPY --link download.go /build/src/
+RUN mkdir /build/lib
+RUN go run download.go
+
+FROM sdk AS build
+WORKDIR /build/
+
+COPY --from=download /build/lib/ /build/lib/
+COPY --link io.h intrin.h /build/src/
 
 RUN wasm32-wasi-clang++ -c -O2 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 \
  -std=c++20 -DNDEBUG \
- marisa.cc
+ lib/marisa.cc
 
-COPY --link ./io.cc ./wexcept.cc ./wrapper.cc /src/
+COPY --link io.cc wexcept.cc wrapper.cc /build/src/
 
 RUN wasm32-wasi-clang++ -c -O2 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
  -std=c++20 -DNDEBUG -Wall -Wextra -Wconversion \
- io.cc wexcept.cc wrapper.cc
+ src/io.cc src/wexcept.cc src/wrapper.cc
 
-COPY --link ./exports.txt /src/
+COPY --link exports.txt /build/src/
 
-RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor $(printf " -Wl,--export=%s" $(cat exports.txt)) *.o
-
+RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
 RUN wasm-ctor-eval -g -c _initialize marisa.wasm -o marisa.tmp
-
 RUN wasm-opt -g marisa.tmp -o marisa.wasm -O2 \
  --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext --enable-simd \
  --low-memory-unused --strip-debug --strip-dwarf
+RUN install -m644 marisa.wasm lib/marisa.wasm
 
-RUN chmod 644 marisa.wasm
-
-RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-std=c++20' > compile_flags.txt
+RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-std=c++20' > src/compile_flags.txt
 
 FROM scratch
-COPY --link --from=build /src/compile_flags.txt /
-COPY --link --from=build /src/marisa.wasm /
+COPY --link --from=build /build/src/compile_flags.txt /src/
+COPY --link --from=build /build/lib/ /lib/

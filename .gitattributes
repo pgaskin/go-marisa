@@ -1,2 +1,1 @@
-wasm/marisa.cc linguist-generated linguist-vendored
-wasm/marisa.h  linguist-generated linguist-vendored
+lib/* linguist-generated linguist-vendored
