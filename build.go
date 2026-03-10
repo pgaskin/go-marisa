@@ -61,9 +61,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 		return errors.New("invalid config")
 	}
 
-	sa := &wmem.SliceMemory{
-		Max: wmem.Pages(maxAlloc),
-	}
+	sa := wmem.SliceMemory(0, maxAlloc)
 	mod, err := instantiate(sa)
 	if err != nil {
 		return err

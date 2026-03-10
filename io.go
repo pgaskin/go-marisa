@@ -5,6 +5,7 @@ import (
 	"io"
 	"math"
 	"os"
+	"runtime"
 	"slices"
 	"strconv"
 	"strings"
@@ -16,24 +17,22 @@ import (
 
 // Open opens a dictionary from a file.
 func Open(name string) (*Trie, error) {
-	/*
-		var t Trie
+	var t Trie
 
-			// only try mmap if it's likely to succeed and it's on a fully tested platform
-			if (runtime.GOOS == "linux" || runtime.GOOS == "darwin") && (runtime.GOARCH == "amd64" || runtime.GOARCH == "arm64") {
-				// attempt to get the size (and if it's not seekable, it's unlikely to be mappable either)
-				f, err := os.Open(name)
-				if err != nil {
-					return nil, err
-				}
-				defer f.Close()
-				if size, err := f.Seek(0, io.SeekEnd); err == nil {
-					if err := t.MapFile(f, 0, size); err == nil {
-						return &t, nil
-					}
-				}
+	// only try mmap if it's likely to succeed and it's on a fully tested platform
+	if (runtime.GOOS == "linux" || runtime.GOOS == "darwin") && (runtime.GOARCH == "amd64" || runtime.GOARCH == "arm64") {
+		// attempt to get the size (and if it's not seekable, it's unlikely to be mappable either)
+		f, err := os.Open(name)
+		if err != nil {
+			return nil, err
+		}
+		defer f.Close()
+		if size, err := f.Seek(0, io.SeekEnd); err == nil {
+			if err := t.MapFile(f, 0, size); err == nil {
+				return &t, nil
 			}
-	*/
+		}
+	}
 
 	// read the entire dictionary
 	b, err := os.ReadFile(name)
@@ -63,11 +62,6 @@ func Load(r io.Reader) (*Trie, error) {
 	return &t, nil
 }
 
-func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
-	return errors.ErrUnsupported // TODO
-}
-
-/*
 // MapFile mmaps a file and loads the dictionary from it. On error, the trie is
 // left unchanged. If not supported by the current platform, an error matching
 // [errors.ErrUnsupported] is returned.
@@ -75,24 +69,15 @@ func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
 	if uint64(length) > maxAlloc {
 		return errors.New("dictionary too large")
 	}
-	va := &walloc.VirtualAllocator{
-		Fallback: &walloc.SliceAllocator{
-			// if it falls back to this, we'll be returning an error anyways
-			OverrideMax: scratchSpace,
-		},
-		// on 32-bit hosts, it's critical for this (unlike the SliceAllocator)
-		// since it immediately reserves virtual address space, which we only
-		// have 4 GiB of
-		OverrideMax: uint64(length) + scratchSpace,
+	va, err := wmem.VirtualMemory(uint64(length), uint64(length)+scratchSpace)
+	if err != nil {
+		return err
 	}
 	mod, err := instantiate(va)
 	if err != nil {
 		return err
 	}
-	if err := va.Err(); err != nil {
-		return err
-	}
-	ptr, err := va.MapFile(mod.marisa, f, offset, length, false)
+	ptr, err := wmem.MapFile(mod.marisa, mod.mem, f, offset, length, false)
 	if err != nil {
 		return err
 	}
@@ -111,7 +96,6 @@ func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
 	}
 	return t.swap(mod)
 }
-*/
 
 // UnmarshalBinary copies b and maps the trie directly from it. This is faster
 // than [Trie.ReadFrom], but may have a less optimal memory layout. On error,
@@ -120,9 +104,7 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	if uint64(len(b)) > min(math.MaxUint32, math.MaxInt) {
 		return errors.New("dictionary too large")
 	}
-	sa := &wmem.SliceMemory{
-		Max: wmem.Pages(uint32(len(b)) + scratchSpace),
-	}
+	sa := wmem.SliceMemory(uint32(len(b)), uint32(len(b))+scratchSpace)
 	mod, err := instantiate(sa)
 	if err != nil {
 		return err
@@ -158,9 +140,7 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 	// note: it won't actually read past in practice, since it reads exactly
 	// what it wants with std::istream::read, and our stream impl is effectively
 	// unbuffered
-	sa := &wmem.SliceMemory{
-		Max: wmem.Pages(maxAlloc),
-	}
+	sa := wmem.SliceMemory(8192, maxAlloc)
 	mod, err := instantiate(sa)
 	if err != nil {
 		return 0, err

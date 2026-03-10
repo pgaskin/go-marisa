@@ -8,12 +8,14 @@ import (
 	"io"
 	"math"
 	"reflect"
+	"runtime"
 	"strconv"
 	"strings"
 
 	"github.com/pgaskin/go-marisa/internal/cxxerr"
 	"github.com/pgaskin/go-marisa/internal/marisa_wasm"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
+	"github.com/pgaskin/go-marisa/internal/wmem"
 )
 
 //go:generate docker build --platform amd64 --progress plain --output . src
@@ -65,20 +67,23 @@ const scratchSpace = 32 * 1024 * 1024             // scratch space to allocate w
 const maxAlloc = min(math.MaxUint32, math.MaxInt) // on 32-bit platforms, limit to 2GiB, on others, limit to 4GiB
 
 type module struct {
-	mem     marisa_wasm.Memory
+	mem     wmem.Memory
 	io      *marisaIOImpl
 	wexcept *wexcept.Module
 	marisa  *marisa_wasm.Module
 }
 
 // instantiate creates a new instance of the module.
-func instantiate(mem marisa_wasm.Memory) (*module, error) {
+func instantiate(mem wmem.Memory) (*module, error) {
 	mod := &module{}
 	mod.mem = mem
 	mod.io = &marisaIOImpl{Memory: mod.mem}
 	mod.wexcept = &wexcept.Module{Memory: mod.mem}
 	mod.marisa = marisa_wasm.New(mod.mem, mod.io, mod.wexcept)
 	mod.wexcept.Imports = mod.marisa
+	runtime.SetFinalizer(mod, func(mod *module) {
+		mod.mem.Free()
+	})
 	return mod, nil
 }
 

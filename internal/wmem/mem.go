@@ -9,10 +9,12 @@ const (
 	PageSize = 1 << PageBits
 )
 
-// Memory is the imported memory interface for wasm2go.
+// Memory is the imported memory interface for wasm2go, plus some additional
+// methods.
 type Memory interface {
 	Data() *[]byte
 	Grow(delta, max int32) int32
+	Free()
 }
 
 func Pages(bytes uint32) int32 {
