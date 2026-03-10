@@ -12,7 +12,7 @@ import (
 	"strings"
 
 	"github.com/pgaskin/go-marisa/internal/cxxerr"
-	marisa_wasm "github.com/pgaskin/go-marisa/internal/marisa"
+	"github.com/pgaskin/go-marisa/internal/marisa_wasm"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
 )
 
@@ -78,16 +78,8 @@ func instantiate(mem marisa_wasm.Memory) (*module, error) {
 	mod.io = &marisaIOImpl{Memory: mod.mem}
 	mod.wexcept = &wexcept.Module{Memory: mod.mem}
 	mod.marisa = marisa_wasm.New(mod.mem, mod.io, mod.wexcept)
-	mod.wexcept.Imports = mod.wexcept.Imports
+	mod.wexcept.Imports = mod.marisa
 	return mod, nil
-}
-
-func (m *module) Memory(ptr, n int32) ([]byte, bool) {
-	mem := *m.mem.Data()
-	if int(uint32(ptr)+uint32(n)) >= len(mem) {
-		return nil, false
-	}
-	return mem[uint32(ptr) : uint32(ptr)+uint32(n)], true
 }
 
 func (m *module) Alloc(n int) (addr int32, err error) {

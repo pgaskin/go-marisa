@@ -1,2 +1,1 @@
-lib/* linguist-generated linguist-vendored
-internal/marisa/* linguist-generated linguist-vendored
+internal/marisa_wasm/* linguist-generated linguist-vendored

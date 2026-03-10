@@ -2,8 +2,4 @@ module github.com/pgaskin/go-marisa
 
 go 1.25.0
 
-require (
-	github.com/spf13/pflag v1.0.10
-	github.com/tetratelabs/wazero v1.11.0
-	golang.org/x/sys v0.42.0
-)
+require github.com/spf13/pflag v1.0.10

@@ -5,34 +5,35 @@ import (
 	"io"
 	"math"
 	"os"
-	"runtime"
 	"slices"
 	"strconv"
 	"strings"
 
 	"github.com/pgaskin/go-marisa/internal/cxxerr"
-	"github.com/pgaskin/go-marisa/internal/walloc"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
+	"github.com/pgaskin/go-marisa/internal/wmem"
 )
 
 // Open opens a dictionary from a file.
 func Open(name string) (*Trie, error) {
-	var t Trie
+	/*
+		var t Trie
 
-	// only try mmap if it's likely to succeed and it's on a fully tested platform
-	if (runtime.GOOS == "linux" || runtime.GOOS == "darwin") && (runtime.GOARCH == "amd64" || runtime.GOARCH == "arm64") {
-		// attempt to get the size (and if it's not seekable, it's unlikely to be mappable either)
-		f, err := os.Open(name)
-		if err != nil {
-			return nil, err
-		}
-		defer f.Close()
-		if size, err := f.Seek(0, io.SeekEnd); err == nil {
-			if err := t.MapFile(f, 0, size); err == nil {
-				return &t, nil
+			// only try mmap if it's likely to succeed and it's on a fully tested platform
+			if (runtime.GOOS == "linux" || runtime.GOOS == "darwin") && (runtime.GOARCH == "amd64" || runtime.GOARCH == "arm64") {
+				// attempt to get the size (and if it's not seekable, it's unlikely to be mappable either)
+				f, err := os.Open(name)
+				if err != nil {
+					return nil, err
+				}
+				defer f.Close()
+				if size, err := f.Seek(0, io.SeekEnd); err == nil {
+					if err := t.MapFile(f, 0, size); err == nil {
+						return &t, nil
+					}
+				}
 			}
-		}
-	}
+	*/
 
 	// read the entire dictionary
 	b, err := os.ReadFile(name)
@@ -62,6 +63,11 @@ func Load(r io.Reader) (*Trie, error) {
 	return &t, nil
 }
 
+func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
+	return errors.ErrUnsupported // TODO
+}
+
+/*
 // MapFile mmaps a file and loads the dictionary from it. On error, the trie is
 // left unchanged. If not supported by the current platform, an error matching
 // [errors.ErrUnsupported] is returned.
@@ -105,6 +111,7 @@ func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
 	}
 	return t.swap(mod)
 }
+*/
 
 // UnmarshalBinary copies b and maps the trie directly from it. This is faster
 // than [Trie.ReadFrom], but may have a less optimal memory layout. On error,
@@ -113,8 +120,8 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	if uint64(len(b)) > min(math.MaxUint32, math.MaxInt) {
 		return errors.New("dictionary too large")
 	}
-	sa := &walloc.SliceAllocator{
-		OverrideMax: uint64(len(b)) + scratchSpace,
+	sa := &wmem.SliceMemory{
+		Max: wmem.Pages(uint32(len(b)) + scratchSpace),
 	}
 	mod, err := instantiate(sa)
 	if err != nil {
@@ -124,7 +131,7 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	if err != nil {
 		return err
 	}
-	if buf, ok := mod.Memory(ptr, int32(len(b))); !ok {
+	if buf, ok := wmem.Bytes(mod.mem, ptr, int32(len(b))); !ok {
 		panic("bad allocation")
 	} else {
 		copy(buf, b)
@@ -151,8 +158,8 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 	// note: it won't actually read past in practice, since it reads exactly
 	// what it wants with std::istream::read, and our stream impl is effectively
 	// unbuffered
-	sa := &walloc.SliceAllocator{
-		OverrideMax: maxAlloc,
+	sa := &wmem.SliceMemory{
+		Max: wmem.Pages(maxAlloc),
 	}
 	mod, err := instantiate(sa)
 	if err != nil {
@@ -161,7 +168,7 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 	c := &countReader{R: r}
 	if err := func() (err error) {
 		defer wexcept.Catch(&err)
-		mod.io.Reader = r
+		mod.io.Reader = c
 		defer func() { mod.io.Reader = nil }()
 		mod.marisa.Xmarisa_load()
 		return
@@ -209,7 +216,7 @@ func (t *Trie) AppendBinary(b []byte) ([]byte, error) {
 	b = slices.Grow(b, int(t.ioSize))
 	err := func() (err error) {
 		defer wexcept.Catch(&err)
-		t.mod.io.WriteBuffer = b
+		t.mod.io.WriteBuffer = &b
 		defer func() { t.mod.io.WriteBuffer = nil }()
 		t.mod.marisa.Xmarisa_save()
 		return
@@ -225,7 +232,7 @@ func (t *Trie) WriteTo(w io.Writer) (int64, error) {
 	c := &countWriter{W: w}
 	err := func() (err error) {
 		defer wexcept.Catch(&err)
-		t.mod.io.Writer = w
+		t.mod.io.Writer = c
 		defer func() { t.mod.io.Writer = nil }()
 		t.mod.marisa.Xmarisa_save()
 		return
@@ -258,19 +265,10 @@ func init() {
 }
 
 type marisaIOImpl struct {
-	Memory interface {
-		Data() *[]byte
-	}
+	Memory      wmem.Memory
 	Reader      io.Reader
 	Writer      io.Writer
 	WriteBuffer *[]byte
-}
-
-func (m *marisaIOImpl) mem(p, n int32) []byte {
-	if int(uint32(p)+uint32(n)) >= len(*m.Memory.Data()) {
-		panic("invalid pointer")
-	}
-	return (*m.Memory.Data())[uint32(p) : uint32(p)+uint32(n)]
 }
 
 func (m *marisaIOImpl) Xread(p, n int32) {
@@ -279,7 +277,10 @@ func (m *marisaIOImpl) Xread(p, n int32) {
 	}
 	if n != 0 {
 		if p != 0 {
-			b := m.mem(p, n)
+			b, ok := wmem.Bytes(m.Memory, p, n)
+			if !ok {
+				panic("invalid pointer")
+			}
 			if _, err := io.ReadFull(m.Reader, b); err != nil {
 				if err == io.EOF {
 					err = io.ErrUnexpectedEOF
@@ -301,7 +302,10 @@ func (m *marisaIOImpl) Xwrite(p, n int32) {
 	if w := m.Writer; w != nil {
 		if n != 0 {
 			if p != 0 {
-				b := m.mem(p, n)
+				b, ok := wmem.Bytes(m.Memory, p, n)
+				if !ok {
+					panic("invalid pointer")
+				}
 				n, err := w.Write(b)
 				if err != nil {
 					wexcept.Throw(err)
@@ -320,7 +324,10 @@ func (m *marisaIOImpl) Xwrite(p, n int32) {
 	if b := m.WriteBuffer; b != nil {
 		if n != 0 {
 			if p != 0 {
-				x := m.mem(p, n)
+				x, ok := wmem.Bytes(m.Memory, p, n)
+				if !ok {
+					panic("invalid pointer")
+				}
 				*b = append(*b, x...)
 			} else {
 				*b = append(*b, make([]byte, n)...)

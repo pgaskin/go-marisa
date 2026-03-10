@@ -4,8 +4,8 @@ import (
 	"errors"
 	"iter"
 
-	"github.com/pgaskin/go-marisa/internal/walloc"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
+	"github.com/pgaskin/go-marisa/internal/wmem"
 )
 
 // Config specifies options for a dictionary. Any unspecified options will be
@@ -61,8 +61,8 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 		return errors.New("invalid config")
 	}
 
-	sa := &walloc.SliceAllocator{
-		OverrideMax: maxAlloc,
+	sa := &wmem.SliceMemory{
+		Max: wmem.Pages(maxAlloc),
 	}
 	mod, err := instantiate(sa)
 	if err != nil {
@@ -92,7 +92,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 				return err
 			}
 		}
-		buf, ok := mod.Memory(ptr, int32(uint32(len(key))))
+		buf, ok := wmem.Bytes(mod.mem, ptr, int32(uint32(len(key))))
 		if !ok {
 			panic("bad allocation")
 		}

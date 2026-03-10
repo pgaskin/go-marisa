@@ -5,8 +5,9 @@ import (
 	"iter"
 
 	"github.com/pgaskin/go-marisa/internal"
-	marisa_wasm "github.com/pgaskin/go-marisa/internal/marisa"
+	"github.com/pgaskin/go-marisa/internal/marisa_wasm"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
+	"github.com/pgaskin/go-marisa/internal/wmem"
 )
 
 // query is a MARISA agent.
@@ -75,7 +76,7 @@ func (t *Trie) queryString(s string) (*query, error) {
 		}
 		q.longStr = str
 	}
-	if buf, ok := t.mod.Memory(str, int32(len(s))); !ok {
+	if buf, ok := wmem.Bytes(t.mod.mem, str, int32(len(s))); !ok {
 		panic("bad allocation")
 	} else {
 		copy(buf, s)
@@ -189,7 +190,7 @@ func (q *query) ID() uint32 {
 
 // Key returns the key. It must only be called after Next returns true.
 func (q *query) Key() string {
-	b, ok := q.mod.Memory(int32(q.res[1]), int32(q.res[2]))
+	b, ok := wmem.Bytes(q.mod.mem, int32(q.res[1]), int32(q.res[2]))
 	if !ok {
 		panic("bad pointer")
 	}

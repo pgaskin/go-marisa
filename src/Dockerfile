@@ -59,9 +59,9 @@ RUN wasm-opt -g marisa.tmp -o marisa.wasm -O3 \
 RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-std=c++20' > src/compile_flags.txt
 
 COPY --link --from=wasm2go /wasm2go /usr/local/bin/
-RUN mkdir -p internal/marisa
-RUN wasm2go -endian=little < marisa.wasm > internal/marisa/marisa.go
-RUN wasm2go -endian=big < marisa.wasm > internal/marisa/marisa_big.go
+RUN mkdir -p internal/marisa_wasm
+RUN wasm2go -endian=little < marisa.wasm > internal/marisa_wasm/marisa.go
+RUN wasm2go -endian=big < marisa.wasm > internal/marisa_wasm/marisa_big.go
 
 FROM scratch
 COPY --link --from=build /build/src/compile_flags.txt /src/

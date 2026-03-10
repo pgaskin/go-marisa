@@ -2,9 +2,8 @@
 package wexcept
 
 import (
-	"bytes"
-
 	"github.com/pgaskin/go-marisa/internal/cxxerr"
+	"github.com/pgaskin/go-marisa/internal/wmem"
 )
 
 type Imports interface {
@@ -16,9 +15,7 @@ type Exports interface {
 }
 
 type Module struct {
-	Memory interface {
-		Data() *[]byte
-	}
+	Memory  wmem.Memory
 	Imports Imports
 }
 
@@ -44,33 +41,22 @@ func Throw(err error) {
 // if a thrown error was caught.
 func Catch(err *error) bool {
 	if *err == nil {
-		x := recover()
-		if x != nil {
+		if x := recover(); x != nil {
 			if x, ok := x.(*thrownError); ok {
-				*err = x
+				*err = x.err
 				return true
 			}
+			panic(x)
 		}
-		panic(x)
 	}
 	return false
 }
 
 func (m *Module) Xcxx_throw(typ int32, std int32, what int32) {
-	mem := *m.Memory.Data()
-	typStr, _ := cString(mem, typ)
-	stdStr, _ := cString(mem, std)
-	whatStr, _ := cString(mem, what)
+	typStr, _ := wmem.CString(m.Memory, typ)
+	stdStr, _ := wmem.CString(m.Memory, std)
+	whatStr, _ := wmem.CString(m.Memory, what)
 	exc := cxxerr.Wrap(typStr, stdStr, whatStr)
 	m.Imports.Xwexcept_cxx_throw_destroy()
 	Throw(exc)
-}
-
-func cString(buf []byte, ptr int32) (string, bool) {
-	if ptr != 0 && int(uint32(ptr)) < len(buf) {
-		if buf, _, ok := bytes.Cut(buf[uint32(ptr):], []byte{0}); ok {
-			return string(buf), true
-		}
-	}
-	return "", false
 }
