@@ -49,9 +49,9 @@ func Catch(err *error) bool {
 }
 
 func (m *Module) Xcxx_throw(typ int32, std int32, what int32) {
-	typStr, _ := wmem.CString(m.Memory, typ)
-	stdStr, _ := wmem.CString(m.Memory, std)
-	whatStr, _ := wmem.CString(m.Memory, what)
+	typStr, _ := wmem.CString(m.Memory, uint32(typ))
+	stdStr, _ := wmem.CString(m.Memory, uint32(std))
+	whatStr, _ := wmem.CString(m.Memory, uint32(what))
 	exc := cxxerr.Wrap(typStr, stdStr, whatStr)
 	m.Imports.Xwexcept_cxx_throw_destroy()
 	Throw(exc)

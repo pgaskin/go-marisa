@@ -17,27 +17,23 @@ type Memory interface {
 	Free()
 }
 
-func Pages(bytes uint32) int32 {
-	return int32((int64(bytes) + PageSize - 1) >> PageBits)
-}
-
-func Bytes(m Memory, ptr, n int32) ([]byte, bool) {
+func Bytes(m Memory, ptr, n uint32) ([]byte, bool) {
 	d := m.Data()
 	if d == nil {
 		return nil, false
 	}
 	b := *d
-	if int(uint32(ptr)) >= len(b) {
+	if int(ptr) >= len(b) {
 		return nil, false
 	}
-	b = b[uint32(ptr):]
-	if int(uint32(n)) >= len(b) {
+	b = b[ptr:]
+	if int(n) >= len(b) {
 		return b, false
 	}
-	return b[:uint32(n)], true
+	return b[:n], true
 }
 
-func CString(m Memory, ptr int32) (string, bool) {
+func CString(m Memory, ptr uint32) (string, bool) {
 	if ptr == 0 {
 		return "", false
 	}
@@ -46,10 +42,10 @@ func CString(m Memory, ptr int32) (string, bool) {
 		return "", false
 	}
 	b := *d
-	if int(uint32(ptr)) >= len(b) {
+	if int(ptr) >= len(b) {
 		return "", false
 	}
-	b, _, ok := bytes.Cut(b[uint32(ptr):], []byte{0})
+	b, _, ok := bytes.Cut(b[ptr:], []byte{0})
 	if !ok {
 		return "", false
 	}

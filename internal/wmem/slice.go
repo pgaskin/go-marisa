@@ -7,10 +7,10 @@ type sliceMemory struct {
 
 // SliceMemory allocates a movable slice-backed memory. If allocation fails,
 // it panics.
-func SliceMemory(cap, max uint32) Memory {
+func SliceMemory(cap, max uint64) Memory {
 	return &sliceMemory{
 		buf: make([]byte, 0, cap),
-		max: Pages(max),
+		max: int32((int64(max) + PageSize - 1) >> PageBits),
 	}
 }
 

@@ -4,20 +4,20 @@ free
 
 wexcept_cxx_throw_destroy
 
-marisa_new
-marisa_load
-marisa_save
-marisa_build_push
-marisa_build
-marisa_stat
+New
+Load
+Save
+BuildPush
+Build
+Stat
 
-marisa_query_new
-marisa_query_set_str
-marisa_query_set_id
-marisa_query_clear
-marisa_query_free
-marisa_query_lookup
-marisa_query_reverse_lookup
-marisa_query_common_prefix_search
-marisa_query_predictive_search
-marisa_query_result
+QueryNew
+QuerySetStr
+QuerySetID
+QueryClear
+QueryFree
+QueryLookup
+QueryReverseLookup
+QueryCommonPrefixSearch
+QueryPredictiveSearch
+QueryResult

@@ -90,7 +90,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 				return err
 			}
 		}
-		buf, ok := wmem.Bytes(mod.mem, ptr, int32(uint32(len(key))))
+		buf, ok := wmem.Bytes(mod.mem, ptr, uint32(len(key)))
 		if !ok {
 			panic("bad allocation")
 		}
@@ -98,7 +98,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 
 		if err := func() (err error) {
 			defer wexcept.Catch(&err)
-			mod.marisa.Xmarisa_build_push(ptr, int32(uint32(n)), weight)
+			mod.marisa.XBuildPush(int32(ptr), int32(uint32(n)), weight)
 			return
 		}(); err != nil {
 			return err
@@ -106,7 +106,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 	}
 	if err := func() (err error) {
 		defer wexcept.Catch(&err)
-		mod.marisa.Xmarisa_build(int32(uint32(flag)))
+		mod.marisa.XBuild(int32(uint32(flag)))
 		return
 	}(); err != nil {
 		return err

@@ -16,24 +16,24 @@
 static marisa::Trie trie;
 static marisa::Keyset build;
 
-extern "C" void marisa_new(void *ptr, size_t size) {
+extern "C" void New(void *ptr, size_t size) {
     trie.map(ptr, size);
 }
 
-extern "C" void marisa_load() {
+extern "C" void Load() {
     trie.read(0);
 }
 
-extern "C" void marisa_save() {
+extern "C" void Save() {
     trie.write(0);
 }
 
-extern "C" void marisa_build_push(const char *ptr, size_t length, float weight) {
+extern "C" void BuildPush(const char *ptr, size_t length, float weight) {
     build.push_back(ptr, length, weight); // copies ptr[:length] into a data block in keyset
     //assert(build[build.size()-1].ptr() != ptr);
 }
 
-extern "C" void marisa_build(int flags) {
+extern "C" void Build(int flags) {
     // warning: this will continue to reference pointers to data blocks in keyset
     trie.build(build, flags);
 }
@@ -48,7 +48,7 @@ struct marisa_stat {
     uint32_t node_order;
 };
 
-extern "C" struct marisa_stat marisa_stat() {
+extern "C" struct marisa_stat Stat() {
     return (struct marisa_stat){
         .size = static_cast<uint32_t>(trie.size()),
         .io_size = static_cast<uint32_t>(trie.io_size()),
@@ -60,25 +60,25 @@ extern "C" struct marisa_stat marisa_stat() {
     };
 }
 
-extern "C" marisa::Agent *marisa_query_new() {
+extern "C" marisa::Agent *QueryNew() {
     auto agent = new marisa::Agent;
     agent->init_state(); // heap allocates
     return agent;
 }
 
-extern "C" void marisa_query_set_str(marisa::Agent *agent, const char *ptr, size_t len) {
+extern "C" void QuerySetStr(marisa::Agent *agent, const char *ptr, size_t len) {
     agent->set_query(ptr, len); // does not copy
 }
 
-extern "C" void marisa_query_set_id(marisa::Agent *agent, uint32_t id) {
+extern "C" void QuerySetID(marisa::Agent *agent, uint32_t id) {
     agent->set_query(static_cast<size_t>(id));
 }
 
-extern "C" void marisa_query_clear(marisa::Agent *agent) {
+extern "C" void QueryClear(marisa::Agent *agent) {
     agent->clear();
 }
 
-extern "C" void marisa_query_free(marisa::Agent *agent) {
+extern "C" void QueryFree(marisa::Agent *agent) {
     delete agent;
 }
 
@@ -86,22 +86,22 @@ extern "C" void marisa_query_free(marisa::Agent *agent) {
 // return a single node since the agent contains heap-allocated memory which
 // wouldn't get cleaned up if it threw and we had it on the stack
 
-extern "C" bool marisa_query_lookup(marisa::Agent *agent) {
+extern "C" bool QueryLookup(marisa::Agent *agent) {
     return trie.lookup(*agent);
 }
 
-extern "C" bool marisa_query_reverse_lookup(marisa::Agent *agent) {
+extern "C" bool QueryReverseLookup(marisa::Agent *agent) {
     if (agent->query().id() >= trie.num_keys()) return false;
     // note: this will always throw if id >= trie.num_keys()
     trie.reverse_lookup(*agent);
     return true;
 }
 
-extern "C" bool marisa_query_common_prefix_search(marisa::Agent *agent) {
+extern "C" bool QueryCommonPrefixSearch(marisa::Agent *agent) {
     return trie.common_prefix_search(*agent);
 }
 
-extern "C" bool marisa_query_predictive_search(marisa::Agent *agent) {
+extern "C" bool QueryPredictiveSearch(marisa::Agent *agent) {
     return trie.predictive_search(*agent);
 }
 
@@ -111,7 +111,7 @@ extern "C" struct marisa_query_result {
     uint32_t len;
 };
 
-extern "C" struct marisa_query_result marisa_query_result(marisa::Agent *agent) {
+extern "C" struct marisa_query_result QueryResult(marisa::Agent *agent) {
     auto key = agent->key();
     return (struct marisa_query_result){
         .id = static_cast<uint32_t>(key.id()),

@@ -33,7 +33,7 @@ type mappableMemory interface {
 func MapFile(mod interface {
 	Xaligned_alloc(int32, int32) int32
 	Xfree(int32)
-}, mem Memory, f *os.File, offset, length int64, write bool) (int32, error) {
+}, mem Memory, f *os.File, offset, length int64, write bool) (uint32, error) {
 	m, ok := mem.(mappableMemory)
 	if !ok {
 		return 0, fmt.Errorf("%w: module memory does not support mmap", errors.ErrUnsupported)
@@ -54,17 +54,17 @@ func MapFile(mod interface {
 		return 0, errors.New("offset or length out of range")
 	}
 
-	ptr := mod.Xaligned_alloc(int32(uint32(psz)), int32(uint32(msz)))
+	ptr := uint32(mod.Xaligned_alloc(int32(uint32(psz)), int32(uint32(msz))))
 	if ptr == 0 {
 		return 0, errors.New("memory allocation failed")
 	}
-	if _, ok := Bytes(mem, ptr, int32(msz)); !ok {
+	if _, ok := Bytes(mem, ptr, uint32(msz)); !ok {
 		return 0, errors.New("aligned_alloc returned bad pointer")
 	}
 
 	if err := m.mapFile(f, int(ptr), int64(fof), int(fsz), write); err != nil {
-		mod.Xfree(ptr)
+		mod.Xfree(int32(ptr))
 		return 0, err
 	}
-	return ptr + int32(mof), nil
+	return ptr + uint32(mof), nil
 }

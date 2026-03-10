@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/pgaskin/go-marisa/internal/cxxerr"
@@ -83,7 +82,7 @@ func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
 	}
 	if err := func() (err error) {
 		defer wexcept.Catch(&err)
-		mod.marisa.Xmarisa_new(int32(ptr), int32(length))
+		mod.marisa.XNew(int32(ptr), int32(length))
 		return
 	}(); err != nil {
 		var ex *cxxerr.Exception
@@ -104,7 +103,7 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	if uint64(len(b)) > min(math.MaxUint32, math.MaxInt) {
 		return errors.New("dictionary too large")
 	}
-	sa := wmem.SliceMemory(uint32(len(b)), uint32(len(b))+scratchSpace)
+	sa := wmem.SliceMemory(uint64(len(b)), uint64(len(b))+scratchSpace)
 	mod, err := instantiate(sa)
 	if err != nil {
 		return err
@@ -113,14 +112,14 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	if err != nil {
 		return err
 	}
-	if buf, ok := wmem.Bytes(mod.mem, ptr, int32(len(b))); !ok {
+	if buf, ok := wmem.Bytes(mod.mem, ptr, uint32(len(b))); !ok {
 		panic("bad allocation")
 	} else {
 		copy(buf, b)
 	}
 	if err := func() (err error) {
 		defer wexcept.Catch(&err)
-		mod.marisa.Xmarisa_new(int32(ptr), int32(uint32(len(b))))
+		mod.marisa.XNew(int32(ptr), int32(uint32(len(b))))
 		return
 	}(); err != nil {
 		var ex *cxxerr.Exception
@@ -150,7 +149,7 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 		defer wexcept.Catch(&err)
 		mod.io.Reader = c
 		defer func() { mod.io.Reader = nil }()
-		mod.marisa.Xmarisa_load()
+		mod.marisa.XLoad()
 		return
 	}(); err != nil {
 		var ex *cxxerr.Exception
@@ -198,7 +197,7 @@ func (t *Trie) AppendBinary(b []byte) ([]byte, error) {
 		defer wexcept.Catch(&err)
 		t.mod.io.WriteBuffer = &b
 		defer func() { t.mod.io.WriteBuffer = nil }()
-		t.mod.marisa.Xmarisa_save()
+		t.mod.marisa.XSave()
 		return
 	}()
 	return b, err
@@ -214,7 +213,7 @@ func (t *Trie) WriteTo(w io.Writer) (int64, error) {
 		defer wexcept.Catch(&err)
 		t.mod.io.Writer = c
 		defer func() { t.mod.io.Writer = nil }()
-		t.mod.marisa.Xmarisa_save()
+		t.mod.marisa.XSave()
 		return
 	}()
 	return c.N, err
@@ -231,19 +230,6 @@ func (c *countWriter) Write(p []byte) (n int, err error) {
 	return
 }
 
-// debugPanicAtOffset causes a stack trace to be printed when a write overlaps
-// the specified offsets. This is intended for debugging, or for figuring out
-// what exactly a specific offset is for.
-var debugPanicAtOffset uint32 = math.MaxUint32
-
-func init() {
-	if s := os.Getenv("MARISA_DEBUG_PANIC_AT_OFFSET"); s != "" {
-		if n, err := strconv.ParseUint(s, 0, 32); err == nil {
-			debugPanicAtOffset = uint32(n)
-		}
-	}
-}
-
 type marisaIOImpl struct {
 	Memory      wmem.Memory
 	Reader      io.Reader
@@ -257,7 +243,7 @@ func (m *marisaIOImpl) Xread(p, n int32) {
 	}
 	if n != 0 {
 		if p != 0 {
-			b, ok := wmem.Bytes(m.Memory, p, n)
+			b, ok := wmem.Bytes(m.Memory, uint32(p), uint32(n))
 			if !ok {
 				panic("invalid pointer")
 			}
@@ -282,7 +268,7 @@ func (m *marisaIOImpl) Xwrite(p, n int32) {
 	if w := m.Writer; w != nil {
 		if n != 0 {
 			if p != 0 {
-				b, ok := wmem.Bytes(m.Memory, p, n)
+				b, ok := wmem.Bytes(m.Memory, uint32(p), uint32(n))
 				if !ok {
 					panic("invalid pointer")
 				}
@@ -304,7 +290,7 @@ func (m *marisaIOImpl) Xwrite(p, n int32) {
 	if b := m.WriteBuffer; b != nil {
 		if n != 0 {
 			if p != 0 {
-				x, ok := wmem.Bytes(m.Memory, p, n)
+				x, ok := wmem.Bytes(m.Memory, uint32(p), uint32(n))
 				if !ok {
 					panic("invalid pointer")
 				}

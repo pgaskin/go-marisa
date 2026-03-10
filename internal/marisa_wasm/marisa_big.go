@@ -23531,7 +23531,7 @@ func (m *Module) _wexcept_new_handler_init______0____invoke__() {
 func (m *Module) ___cxx_global_array_dtor(v0 int32) {
 	panic("unreachable")
 }
-func (m *Module) Xmarisa_new(v0 int32, v1 int32) {
+func (m *Module) XNew(v0 int32, v1 int32) {
 	var v2, v3, v4 int32
 	var v5 int64
 	_, _, _, _ = v2, v3, v4, v5
@@ -24003,7 +24003,7 @@ func (m *Module) Xmarisa_new(v0 int32, v1 int32) {
 	}
 l2:
 }
-func (m *Module) Xmarisa_load() {
+func (m *Module) XLoad() {
 	var v0, v1, v2, v3, v4 int32
 	_, _, _, _, _ = v0, v1, v2, v3, v4
 	t0 := m.___stack_pointer
@@ -24434,7 +24434,7 @@ l1:
 	t222 := t221 + int32(16)
 	m.___stack_pointer = t222
 }
-func (m *Module) Xmarisa_save() {
+func (m *Module) XSave() {
 	var v0, v1, v2 int32
 	_, _, _ = v0, v1, v2
 	{
@@ -24471,7 +24471,7 @@ func (m *Module) Xmarisa_save() {
 	}
 l0:
 }
-func (m *Module) Xmarisa_build_push(v0 int32, v1 int32, v2 float32) {
+func (m *Module) XBuildPush(v0 int32, v1 int32, v2 float32) {
 	var v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14 int32
 	_, _, _, _, _, _, _, _, _, _, _, _ = v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14
 	{
@@ -25288,7 +25288,7 @@ func (m *Module) Xmarisa_build_push(v0 int32, v1 int32, v2 float32) {
 	}
 l19:
 }
-func (m *Module) Xmarisa_build(v0 int32) {
+func (m *Module) XBuild(v0 int32) {
 	var v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29, v30 int32
 	var v31 float32
 	var v32 float64
@@ -28830,7 +28830,7 @@ l60:
 	t2065 := t2064 + int32(16)
 	m.___stack_pointer = t2065
 }
-func (m *Module) Xmarisa_stat() (int32, int32, int32, int32, int32, int32, int32) {
+func (m *Module) XStat() (int32, int32, int32, int32, int32, int32, int32) {
 	var v0 int32
 	_ = v0
 	t0 := int32(binary.LittleEndian.Uint32((*m.memory)[uint32(i32_const(12816)):]))
@@ -28907,7 +28907,7 @@ func (m *Module) Xmarisa_stat() (int32, int32, int32, int32, int32, int32, int32
 	t43 := int32(binary.LittleEndian.Uint32((*m.memory)[int64(uint32(t42))+548:]))
 	return t5, t11, t17, t23, t31, t37, t43
 }
-func (m *Module) Xmarisa_query_new() int32 {
+func (m *Module) XQueryNew() int32 {
 	var v0, v1 int32
 	_, _ = v0, v1
 	t0 := m._operator_new_unsigned_long_(int32(28))
@@ -28944,7 +28944,7 @@ func (m *Module) Xmarisa_query_new() int32 {
 	t15 := v0
 	return t15
 }
-func (m *Module) Xmarisa_query_set_str(v0 int32, v1 int32, v2 int32) {
+func (m *Module) XQuerySetStr(v0 int32, v1 int32, v2 int32) {
 	var v3 int32
 	_ = v3
 	{
@@ -28977,7 +28977,7 @@ func (m *Module) Xmarisa_query_set_str(v0 int32, v1 int32, v2 int32) {
 	}
 l0:
 }
-func (m *Module) Xmarisa_query_set_id(v0 int32, v1 int32) {
+func (m *Module) XQuerySetID(v0 int32, v1 int32) {
 	var v2 int32
 	_ = v2
 	t0 := v0
@@ -28991,7 +28991,7 @@ func (m *Module) Xmarisa_query_set_id(v0 int32, v1 int32) {
 	t4 := v1
 	binary.LittleEndian.PutUint32((*m.memory)[int64(uint32(t3))+8:], uint32(t4))
 }
-func (m *Module) Xmarisa_query_clear(v0 int32) {
+func (m *Module) XQueryClear(v0 int32) {
 	var v1 int32
 	_ = v1
 	t0 := v0
@@ -29037,7 +29037,7 @@ func (m *Module) Xmarisa_query_clear(v0 int32) {
 		m.Xfree(t21)
 	}
 }
-func (m *Module) Xmarisa_query_free(v0 int32) {
+func (m *Module) XQueryFree(v0 int32) {
 	var v1, v2 int32
 	_, _ = v1, v2
 	t0 := v0
@@ -29082,7 +29082,7 @@ func (m *Module) Xmarisa_query_free(v0 int32) {
 		m.Xfree(t20)
 	}
 }
-func (m *Module) Xmarisa_query_lookup(v0 int32) int32 {
+func (m *Module) XQueryLookup(v0 int32) int32 {
 	var v1, v2, v3 int32
 	_, _, _ = v1, v2, v3
 	var t0 int32
@@ -29178,7 +29178,7 @@ func (m *Module) Xmarisa_query_lookup(v0 int32) int32 {
 l2:
 	return t0
 }
-func (m *Module) Xmarisa_query_reverse_lookup(v0 int32) int32 {
+func (m *Module) XQueryReverseLookup(v0 int32) int32 {
 	var v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13 int32
 	_, _, _, _, _, _, _, _, _, _, _, _, _ = v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13
 	t0 := v0
@@ -29667,7 +29667,7 @@ func (m *Module) Xmarisa_query_reverse_lookup(v0 int32) int32 {
 	}
 	return t279
 }
-func (m *Module) Xmarisa_query_common_prefix_search(v0 int32) int32 {
+func (m *Module) XQueryCommonPrefixSearch(v0 int32) int32 {
 	var v1, v2, v3 int32
 	_, _, _ = v1, v2, v3
 	var t0 int32
@@ -29812,7 +29812,7 @@ func (m *Module) Xmarisa_query_common_prefix_search(v0 int32) int32 {
 l6:
 	return t0
 }
-func (m *Module) Xmarisa_query_predictive_search(v0 int32) int32 {
+func (m *Module) XQueryPredictiveSearch(v0 int32) int32 {
 	var v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16 int32
 	_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16
 	var t0 int32
@@ -31037,7 +31037,7 @@ func (m *Module) Xmarisa_query_predictive_search(v0 int32) int32 {
 l27:
 	return t0
 }
-func (m *Module) Xmarisa_query_result(v0 int32) (int32, int32, int32) {
+func (m *Module) XQueryResult(v0 int32) (int32, int32, int32) {
 	t0 := v0
 	t1 := int32(binary.LittleEndian.Uint32((*m.memory)[int64(uint32(t0))+20:]))
 	t2 := v0

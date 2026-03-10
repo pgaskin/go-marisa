@@ -87,20 +87,20 @@ func instantiate(mem wmem.Memory) (*module, error) {
 	return mod, nil
 }
 
-func (m *module) Alloc(n int) (addr int32, err error) {
+func (m *module) Alloc(n int) (addr uint32, err error) {
 	if n != 0 {
 		defer wexcept.Catch(&err)
 		if n < 0 || int64(n) >= math.MaxInt32 {
 			return 0, cxxerr.Error(cxxerr.BadAlloc, "size out of range")
 		}
-		addr = m.marisa.Xmalloc(int32(n))
+		addr = uint32(m.marisa.Xmalloc(int32(uint32(n))))
 	}
 	return
 }
 
-func (m *module) Free(addr int32) {
+func (m *module) Free(addr uint32) {
 	if addr != 0 {
-		m.marisa.Xfree(addr)
+		m.marisa.Xfree(int32(addr))
 	}
 }
 
@@ -108,7 +108,7 @@ func (m *module) Free(addr int32) {
 // dictionary, and updates the stats.
 func (t *Trie) swap(mod *module) (err error) {
 	defer wexcept.Catch(&err)
-	size, ioSize, totalSize, numTries, numNodes, tailMode, nodeOrder := mod.marisa.Xmarisa_stat()
+	size, ioSize, totalSize, numTries, numNodes, tailMode, nodeOrder := mod.marisa.XStat()
 	*t = Trie{
 		mod:       mod,
 		qry:       nil,

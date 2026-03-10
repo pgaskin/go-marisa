@@ -14,10 +14,10 @@ import (
 type query struct {
 	noCopy   noCopy
 	mod      *module
-	ptr      int32
-	shortStr int32 // pre-allocated shortQueryLen
-	longStr  int32
-	res      [3]uint64
+	ptr      uint32
+	shortStr uint32 // pre-allocated shortQueryLen
+	longStr  uint32
+	res      [3]uint32
 }
 
 const shortQueryLen = 128
@@ -31,9 +31,9 @@ func (t *Trie) query() (*query, error) {
 	if !internal.NoCacheQuery && t.qry != nil {
 		q, t.qry = t.qry, nil
 	} else {
-		ptr, err := func() (ptr int32, err error) {
+		ptr, err := func() (ptr uint32, err error) {
 			defer wexcept.Catch(&err)
-			ptr = t.mod.marisa.Xmarisa_query_new()
+			ptr = uint32(t.mod.marisa.XQueryNew())
 			return
 		}()
 		if err != nil {
@@ -58,7 +58,7 @@ func (t *Trie) queryString(s string) (*query, error) {
 		return nil, err
 	}
 
-	var str int32
+	var str uint32
 	if !internal.NoCacheQuery && len(s) < shortQueryLen {
 		if q.shortStr == 0 {
 			q.shortStr, err = t.mod.Alloc(shortQueryLen)
@@ -76,7 +76,7 @@ func (t *Trie) queryString(s string) (*query, error) {
 		}
 		q.longStr = str
 	}
-	if buf, ok := wmem.Bytes(t.mod.mem, str, int32(len(s))); !ok {
+	if buf, ok := wmem.Bytes(t.mod.mem, str, uint32(len(s))); !ok {
 		panic("bad allocation")
 	} else {
 		copy(buf, s)
@@ -84,7 +84,7 @@ func (t *Trie) queryString(s string) (*query, error) {
 
 	if err := func() (err error) {
 		defer wexcept.Catch(&err)
-		t.mod.marisa.Xmarisa_query_set_str(q.ptr, str, int32(len(s)))
+		t.mod.marisa.XQuerySetStr(int32(q.ptr), int32(str), int32(uint32(len(s))))
 		return
 	}(); err != nil {
 		t.queryDone(q)
@@ -106,7 +106,7 @@ func (t *Trie) queryID(id uint32) (*query, error) {
 
 	if err := func() (err error) {
 		defer wexcept.Catch(&err)
-		t.mod.marisa.Xmarisa_query_set_id(q.ptr, int32(id))
+		t.mod.marisa.XQuerySetID(int32(q.ptr), int32(id))
 		return
 	}(); err != nil {
 		t.queryDone(q)
@@ -124,7 +124,7 @@ func (t *Trie) queryDone(q *query) {
 	}
 	if err := func() (err error) {
 		defer wexcept.Catch(&err)
-		t.mod.marisa.Xmarisa_query_clear(q.ptr)
+		t.mod.marisa.XQueryClear(int32(q.ptr))
 		return
 	}(); err != nil {
 		panic(fmt.Errorf("marisa: failed to free query: %w", err))
@@ -143,7 +143,7 @@ func (t *Trie) queryDone(q *query) {
 	}
 	if err := func() (err error) {
 		defer wexcept.Catch(&err)
-		t.mod.marisa.Xmarisa_query_free(q.ptr)
+		t.mod.marisa.XQueryFree(int32(q.ptr))
 		return
 	}(); err != nil {
 		panic(fmt.Errorf("marisa: failed to free query: %w", err))
@@ -161,7 +161,7 @@ func (q *query) Next(fn func(*marisa_wasm.Module, int32) int32) (bool, error) {
 	var ok bool
 	if res, err := func() (res int32, err error) {
 		defer wexcept.Catch(&err)
-		res = fn(q.mod.marisa, q.ptr)
+		res = fn(q.mod.marisa, int32(q.ptr))
 		return
 	}(); err != nil {
 		return false, err
@@ -169,16 +169,16 @@ func (q *query) Next(fn func(*marisa_wasm.Module, int32) int32) (bool, error) {
 		ok = res != 0
 	}
 	if ok {
-		res, err := func() (res [3]uint64, err error) {
+		res, err := func() (res [3]uint32, err error) {
 			defer wexcept.Catch(&err)
-			r0, r1, r2 := q.mod.marisa.Xmarisa_query_result(q.ptr)
-			res = [3]uint64{uint64(r0), uint64(r1), uint64(r2)}
+			r0, r1, r2 := q.mod.marisa.XQueryResult(int32(q.ptr))
+			res = [3]uint32{uint32(r0), uint32(r1), uint32(r2)}
 			return
 		}()
 		if err != nil {
 			return false, err
 		}
-		q.res = [3]uint64(res)
+		q.res = res
 	}
 	return ok, nil
 }
@@ -190,7 +190,7 @@ func (q *query) ID() uint32 {
 
 // Key returns the key. It must only be called after Next returns true.
 func (q *query) Key() string {
-	b, ok := wmem.Bytes(q.mod.mem, int32(q.res[1]), int32(q.res[2]))
+	b, ok := wmem.Bytes(q.mod.mem, q.res[1], q.res[2])
 	if !ok {
 		panic("bad pointer")
 	}
@@ -205,7 +205,7 @@ func (t *Trie) Lookup(key string) (uint32, bool, error) {
 	}
 	defer t.queryDone(q)
 
-	ok, err := q.Next((*marisa_wasm.Module).Xmarisa_query_lookup)
+	ok, err := q.Next((*marisa_wasm.Module).XQueryLookup)
 	if err != nil {
 		return 0, false, err
 	}
@@ -227,7 +227,7 @@ func (t *Trie) ReverseLookup(id uint32) (string, bool, error) {
 	}
 	defer t.queryDone(q)
 
-	ok, err := q.Next((*marisa_wasm.Module).Xmarisa_query_reverse_lookup)
+	ok, err := q.Next((*marisa_wasm.Module).XQueryReverseLookup)
 	if err != nil {
 		return "", false, err
 	}
@@ -245,13 +245,13 @@ func (t *Trie) Dump(limit int) ([]Key, error) {
 // PredictiveSearch returns keys starting with a query string. If the limit is
 // -1, all keys are returned.
 func (t *Trie) PredictiveSearch(query string, limit int) ([]Key, error) {
-	return collectKeys(limit, t.search((*marisa_wasm.Module).Xmarisa_query_predictive_search, query))
+	return collectKeys(limit, t.search((*marisa_wasm.Module).XQueryPredictiveSearch, query))
 }
 
 // CommonPrefixSearchSeq returns keys which equal any prefix of the query
 // string. If the limit is -1, all keys are returned.
 func (t *Trie) CommonPrefixSearch(query string, limit int) ([]Key, error) {
-	return collectKeys(limit, t.search((*marisa_wasm.Module).Xmarisa_query_common_prefix_search, query))
+	return collectKeys(limit, t.search((*marisa_wasm.Module).XQueryCommonPrefixSearch, query))
 }
 
 type Key struct {
@@ -277,17 +277,17 @@ func collectKeys(limit int, seq func(*error) iter.Seq2[uint32, string]) (res []K
 
 // DumpSeq dumps all keys.
 func (t *Trie) DumpSeq() func(*error) iter.Seq2[uint32, string] {
-	return t.search((*marisa_wasm.Module).Xmarisa_query_predictive_search, "")
+	return t.search((*marisa_wasm.Module).XQueryPredictiveSearch, "")
 }
 
 // PredictiveSearch returns keys starting with a query string.
 func (t *Trie) PredictiveSearchSeq(query string) func(*error) iter.Seq2[uint32, string] {
-	return t.search((*marisa_wasm.Module).Xmarisa_query_predictive_search, query)
+	return t.search((*marisa_wasm.Module).XQueryPredictiveSearch, query)
 }
 
 // CommonPrefixSearchSeq returns keys which equal any prefix of the query string.
 func (t *Trie) CommonPrefixSearchSeq(query string) func(*error) iter.Seq2[uint32, string] {
-	return t.search((*marisa_wasm.Module).Xmarisa_query_common_prefix_search, query)
+	return t.search((*marisa_wasm.Module).XQueryCommonPrefixSearch, query)
 }
 
 // search iterates over results for the specified query function.
