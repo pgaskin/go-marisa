@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <utility>
 
-#include "../lib/marisa.h"
+#include "marisa.h"
 
 namespace marisa::grimoire {
 

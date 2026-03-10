@@ -24,8 +24,6 @@ import (
 )
 
 //go:generate docker build --platform amd64 --progress plain --output . src
-//go:embed lib/marisa.wasm
-var wasm []byte
 
 var instance struct {
 	runtime  wazero.Runtime

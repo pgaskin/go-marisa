@@ -4,3 +4,5 @@
 cover
 compile_flags.txt
 compile_commands.json
+marisa.h
+marisa.cc
