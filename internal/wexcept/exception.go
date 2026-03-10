@@ -10,10 +10,6 @@ type Imports interface {
 	Xwexcept_cxx_throw_destroy()
 }
 
-type Exports interface {
-	Xcxx_throw(typ, std, what int32)
-}
-
 type Module struct {
 	Memory  wmem.Memory
 	Imports Imports
