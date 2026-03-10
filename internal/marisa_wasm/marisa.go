@@ -78,14 +78,14 @@ func (m *Module) X_initialize() {
 		panic("unreachable")
 	}
 	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(8704)):]))) = int32(int32(1))
-	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13648)):]))) = int32(i32_const(13648))
-	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13704)):]))) = int32(i32_const(0))
-	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13700)):]))) = int32(i32_const(65536))
-	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13696)):]))) = int32(i32_const(79296))
-	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13656)):]))) = int32(i32_const(13648))
-	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13652)):]))) = int32(i32_const(13648))
-	t1 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13644)):])))
-	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13660)):]))) = int32(t1)
+	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13152)):]))) = int32(i32_const(13152))
+	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13208)):]))) = int32(i32_const(0))
+	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13204)):]))) = int32(i32_const(65536))
+	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13200)):]))) = int32(i32_const(79296))
+	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13160)):]))) = int32(i32_const(13152))
+	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13156)):]))) = int32(i32_const(13152))
+	t1 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13148)):])))
+	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13164)):]))) = int32(t1)
 	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(8696)):]))) = int32(i32_const(65536))
 	t2 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12872)):])))
 	_ = t2
@@ -32204,4186 +32204,16 @@ l1:
 		goto l1
 	}
 }
-func (m *Module) Xmalloc(v0 int32) int32 {
-	t0 := v0
-	t1 := m._dlmalloc(t0)
-	return t1
-}
-func (m *Module) _dlmalloc(v0 int32) int32 {
-	var v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11 int32
-	_, _, _, _, _, _, _, _, _, _, _ = v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11
-	t0 := m.___stack_pointer
-	t1 := t0 - int32(16)
-	v10 = t1
-	m.___stack_pointer = t1
-	t2 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):])))
-	v7 = t2
-	if t2 == 0 {
-		t4 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13348)):])))
-		v3 = t4
-		if t4 == 0 {
-			*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13360)):]))) = int64(i64_const(-1))
-			*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13352)):]))) = int64(i64_const(0x1000000010000))
-			t6 := v10
-			t7 := t6 + int32(8)
-			t8 := t7 & i32_const(-16)
-			t9 := t8 ^ i32_const(0x55555558)
-			v3 = t9
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13348)):]))) = int32(t9)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13368)):]))) = int32(i32_const(0))
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13320)):]))) = int32(i32_const(0))
-		}
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13324)):]))) = int32(i32_const(79296))
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12892)):]))) = int32(i32_const(79296))
-		t10 := v3
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12912)):]))) = int32(t10)
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12908)):]))) = int32(i32_const(-1))
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13328)):]))) = int32(i32_const(51776))
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13312)):]))) = int32(i32_const(51776))
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13308)):]))) = int32(i32_const(51776))
-	l0:
-		{
-			t11 := v1
-			t12 := t11 + i32_const(12936)
-			t13 := v1
-			t14 := t13 + i32_const(12924)
-			v2 = t14
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t12):]))) = int32(t14)
-			t15 := v2
-			t16 := v1
-			t17 := t16 + i32_const(12916)
-			v4 = t17
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t15):]))) = int32(t17)
-			t18 := v1
-			t19 := t18 + i32_const(12928)
-			t20 := v4
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t19):]))) = int32(t20)
-			t21 := v1
-			t22 := t21 + i32_const(12944)
-			t23 := v1
-			t24 := t23 + i32_const(12932)
-			v4 = t24
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t22):]))) = int32(t24)
-			t25 := v4
-			t26 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t25):]))) = int32(t26)
-			t27 := v1
-			t28 := t27 + i32_const(12952)
-			t29 := v1
-			t30 := t29 + i32_const(12940)
-			v2 = t30
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t28):]))) = int32(t30)
-			t31 := v2
-			t32 := v4
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t31):]))) = int32(t32)
-			t33 := v1
-			t34 := t33 + i32_const(12948)
-			t35 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t34):]))) = int32(t35)
-			t36 := v1
-			t37 := t36 + int32(32)
-			v1 = t37
-			if t37 != i32_const(256) {
-				goto l0
-			}
-		}
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x1ffcc)):]))) = int32(int32(56))
-		t39 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13364)):])))
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12904)):]))) = int32(t39)
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(i32_const(79304))
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(i32_const(51712))
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(79308)):]))) = int32(i32_const(51713))
-		v7 = i32_const(79304)
-	}
-	{
-		{
-			{
-				{
-					{
-						{
-							{
-								{
-									{
-										{
-											{
-												{
-													t40 := v0
-													if uint32(t40) <= uint32(i32_const(236)) {
-														t42 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-														v4 = t42
-														t43 := v0
-														t44 := t43 + int32(19)
-														t45 := t44 & i32_const(496)
-														t46 := v0
-														t48 := t45
-														if uint32(t46) < uint32(int32(11)) {
-															t48 = int32(16)
-														}
-														v6 = t48
-														t49 := i32_shr_u(t48, int32(3))
-														v0 = t49
-														t50 := i32_shr_u(t42, t49)
-														v1 = t50
-														t51 := t50 & int32(3)
-														if t51 != 0 {
-															{
-																t52 := v1
-																t53 := t52 & int32(1)
-																t54 := v0
-																t55 := t53 | t54
-																t56 := t55 ^ int32(1)
-																v2 = t56
-																t57 := i32_shl(t56, int32(3))
-																v0 = t57
-																t58 := t57 + i32_const(12916)
-																v1 = t58
-																t59 := v0
-																t60 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t59))+12924:])))
-																v0 = t60
-																t61 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t60))+8:])))
-																v5 = t61
-																if t58 == t61 {
-																	t63 := v4
-																	t64 := v2
-																	t65 := i32_rotl(i32_const(-2), t64)
-																	t66 := t63 & t65
-																	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t66)
-																	goto l1
-																}
-																t67 := v1
-																t68 := v5
-																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t67))+8:]))) = int32(t68)
-																t69 := v5
-																t70 := v1
-																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t69))+12:]))) = int32(t70)
-															}
-														l1:
-															t71 := v0
-															t72 := t71 + int32(8)
-															v1 = t72
-															t73 := v0
-															t74 := v2
-															t75 := i32_shl(t74, int32(3))
-															v2 = t75
-															t76 := t75 | int32(3)
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t73))+4:]))) = int32(t76)
-															t77 := v0
-															t78 := v2
-															t79 := t77 + t78
-															v0 = t79
-															t80 := v0
-															t81 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t80))+4:])))
-															t82 := t81 | int32(1)
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t79))+4:]))) = int32(t82)
-															goto l2
-														}
-														t83 := v6
-														t84 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):])))
-														v8 = t84
-														if uint32(t83) <= uint32(t84) {
-															goto l3
-														}
-														t86 := v1
-														if t86 != 0 {
-															{
-																t87 := v0
-																t88 := i32_shl(int32(2), t87)
-																v2 = t88
-																t89 := v2
-																t90 := i32_const(0) - t89
-																t91 := t88 | t90
-																t92 := v1
-																t93 := v0
-																t94 := i32_shl(t92, t93)
-																t95 := t91 & t94
-																t96 := int32(bits.TrailingZeros32(uint32(t95)))
-																v1 = t96
-																t97 := i32_shl(t96, int32(3))
-																v0 = t97
-																t98 := t97 + i32_const(12916)
-																v2 = t98
-																t99 := v0
-																t100 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t99))+12924:])))
-																v0 = t100
-																t101 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t100))+8:])))
-																v5 = t101
-																if t98 == t101 {
-																	t103 := v4
-																	t104 := v1
-																	t105 := i32_rotl(i32_const(-2), t104)
-																	t106 := t103 & t105
-																	v4 = t106
-																	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t106)
-																	goto l4
-																}
-																t107 := v2
-																t108 := v5
-																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t107))+8:]))) = int32(t108)
-																t109 := v5
-																t110 := v2
-																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t109))+12:]))) = int32(t110)
-															}
-														l4:
-															t111 := v0
-															t112 := v6
-															t113 := t112 | int32(3)
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t111))+4:]))) = int32(t113)
-															t114 := v0
-															t115 := v1
-															t116 := i32_shl(t115, int32(3))
-															v1 = t116
-															t117 := t114 + t116
-															t118 := v1
-															t119 := v6
-															t120 := t118 - t119
-															v5 = t120
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t117):]))) = int32(t120)
-															t121 := v0
-															t122 := v6
-															t123 := t121 + t122
-															v3 = t123
-															t124 := v5
-															t125 := t124 | int32(1)
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t123))+4:]))) = int32(t125)
-															t126 := v8
-															if t126 != 0 {
-																t127 := v8
-																t128 := t127 & i32_const(-8)
-																t129 := t128 + i32_const(12916)
-																v1 = t129
-																t130 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-																v2 = t130
-																var t131 int32
-																_ = t131
-																{
-																	t132 := v4
-																	t133 := v8
-																	t134 := i32_shr_u(t133, int32(3))
-																	t135 := i32_shl(int32(1), t134)
-																	v7 = t135
-																	t136 := t132 & t135
-																	if t136 == 0 {
-																		t138 := v4
-																		t139 := v7
-																		t140 := t138 | t139
-																		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t140)
-																		t141 := v1
-																		t131 = t141
-																		goto l5
-																	}
-																	t142 := v1
-																	t143 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t142))+8:])))
-																	t131 = t143
-																}
-															l5:
-																v4 = t131
-																t144 := v2
-																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t131))+12:]))) = int32(t144)
-																t145 := v1
-																t146 := v2
-																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t145))+8:]))) = int32(t146)
-																t147 := v2
-																t148 := v1
-																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t147))+12:]))) = int32(t148)
-																t149 := v2
-																t150 := v4
-																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t149))+8:]))) = int32(t150)
-															}
-															t151 := v0
-															t152 := t151 + int32(8)
-															v1 = t152
-															t153 := v3
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):]))) = int32(t153)
-															t154 := v5
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t154)
-															goto l2
-														}
-														t155 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-														v11 = t155
-														if t155 == 0 {
-															goto l3
-														}
-														t157 := v11
-														t158 := int32(bits.TrailingZeros32(uint32(t157)))
-														t159 := i32_shl(t158, int32(2))
-														t160 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t159))+13180:])))
-														v2 = t160
-														t161 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t160))+4:])))
-														t162 := t161 & i32_const(-8)
-														t163 := v6
-														t164 := t162 - t163
-														v3 = t164
-														t165 := v2
-														v0 = t165
-													l7:
-														{
-															{
-																t166 := v0
-																t167 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t166))+16:])))
-																v1 = t167
-																if t167 == 0 {
-																	t169 := v0
-																	t170 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t169))+20:])))
-																	v1 = t170
-																	if t170 == 0 {
-																		goto l6
-																	}
-																}
-																t172 := v1
-																t173 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t172))+4:])))
-																t174 := t173 & i32_const(-8)
-																t175 := v6
-																t176 := t174 - t175
-																v0 = t176
-																t177 := v3
-																t178 := v0
-																t179 := v3
-																var t180 int32
-																if uint32(t178) < uint32(t179) {
-																	t180 = 1
-																}
-																v0 = t180
-																t181 := t177
-																if t180 != 0 {
-																	t181 = t176
-																}
-																v3 = t181
-																t182 := v1
-																t183 := v2
-																t184 := v0
-																t185 := t183
-																if t184 != 0 {
-																	t185 = t182
-																}
-																v2 = t185
-																t186 := v1
-																v0 = t186
-																goto l7
-															}
-														l6:
-														}
-														t187 := v2
-														t188 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t187))+24:])))
-														v9 = t188
-														t189 := v2
-														t190 := v2
-														t191 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t190))+12:])))
-														v1 = t191
-														if t189 != t191 {
-															t193 := v2
-															t194 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t193))+8:])))
-															v0 = t194
-															t195 := v1
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t194))+12:]))) = int32(t195)
-															t196 := v1
-															t197 := v0
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t196))+8:]))) = int32(t197)
-															goto l8
-														}
-														t198 := v2
-														t199 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t198))+20:])))
-														v0 = t199
-														var t200 int32
-														_ = t200
-														if t199 != 0 {
-															t201 := v2
-															t202 := t201 + int32(20)
-															t200 = t202
-														} else {
-															t203 := v2
-															t204 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t203))+16:])))
-															v0 = t204
-															if t204 == 0 {
-																goto l9
-															}
-															t206 := v2
-															t207 := t206 + int32(16)
-															t200 = t207
-														}
-														v5 = t200
-													l10:
-														{
-															t208 := v5
-															v7 = t208
-															t209 := v0
-															v1 = t209
-															t210 := t209 + int32(20)
-															v5 = t210
-															t211 := v1
-															t212 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t211))+20:])))
-															v0 = t212
-															if t212 != 0 {
-																goto l10
-															}
-															t213 := v1
-															t214 := t213 + int32(16)
-															v5 = t214
-															t215 := v1
-															t216 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t215))+16:])))
-															v0 = t216
-															if t216 != 0 {
-																goto l10
-															}
-														}
-														t217 := v7
-														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t217):]))) = int32(i32_const(0))
-														goto l8
-													}
-													v6 = i32_const(-1)
-													t218 := v0
-													if uint32(t218) > uint32(i32_const(-65)) {
-														goto l3
-													}
-													t220 := v0
-													t221 := t220 + int32(19)
-													v1 = t221
-													t222 := t221 & i32_const(-16)
-													v6 = t222
-													t223 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-													v8 = t223
-													if t223 == 0 {
-														goto l3
-													}
-													v9 = int32(31)
-													t225 := v6
-													t226 := i32_const(0) - t225
-													v3 = t226
-													t227 := v0
-													if uint32(t227) <= uint32(i32_const(0xffffec)) {
-														t229 := v6
-														t230 := v1
-														t231 := i32_shr_u(t230, int32(8))
-														t232 := int32(bits.LeadingZeros32(uint32(t231)))
-														v0 = t232
-														t233 := int32(38) - t232
-														t234 := i32_shr_u(t229, t233)
-														t235 := t234 & int32(1)
-														t236 := v0
-														t237 := i32_shl(t236, int32(1))
-														t238 := t235 - t237
-														t239 := t238 + int32(62)
-														v9 = t239
-													}
-													{
-														{
-															{
-																t240 := v9
-																t241 := i32_shl(t240, int32(2))
-																t242 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t241))+13180:])))
-																v0 = t242
-																if t242 == 0 {
-																	v1 = i32_const(0)
-																	goto l11
-																}
-																v1 = i32_const(0)
-																t244 := v6
-																t245 := v9
-																t246 := i32_shr_u(t245, int32(1))
-																t247 := int32(25) - t246
-																t248 := v9
-																t250 := i32_const(0)
-																if t248 != int32(31) {
-																	t250 = t247
-																}
-																t251 := i32_shl(t244, t250)
-																v2 = t251
-															l14:
-																{
-																	{
-																		t252 := v0
-																		t253 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t252))+4:])))
-																		t254 := t253 & i32_const(-8)
-																		t255 := v6
-																		t256 := t254 - t255
-																		v4 = t256
-																		t257 := v3
-																		if uint32(t256) >= uint32(t257) {
-																			goto l12
-																		}
-																		t259 := v0
-																		v5 = t259
-																		t260 := v4
-																		v3 = t260
-																		if t260 != 0 {
-																			goto l12
-																		}
-																		v3 = i32_const(0)
-																		t261 := v0
-																		v1 = t261
-																		goto l16
-																	}
-																l12:
-																	t262 := v1
-																	t263 := v0
-																	t264 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t263))+20:])))
-																	v4 = t264
-																	t265 := v4
-																	t266 := v0
-																	t267 := v2
-																	t268 := i32_shr_u(t267, int32(29))
-																	t269 := t268 & int32(4)
-																	t270 := t266 + t269
-																	t271 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t270))+16:])))
-																	v0 = t271
-																	t273 := t264
-																	if t265 == t271 {
-																		t273 = t262
-																	}
-																	t274 := v1
-																	t275 := v4
-																	t276 := t274
-																	if t275 != 0 {
-																		t276 = t273
-																	}
-																	v1 = t276
-																	t277 := v2
-																	t278 := i32_shl(t277, int32(1))
-																	v2 = t278
-																	t279 := v0
-																	if t279 != 0 {
-																		goto l14
-																	}
-																}
-															}
-														l11:
-															t280 := v1
-															t281 := v5
-															t282 := t280 | t281
-															if t282 == 0 {
-																v5 = i32_const(0)
-																t284 := v9
-																t285 := i32_shl(int32(2), t284)
-																v0 = t285
-																t286 := v0
-																t287 := i32_const(0) - t286
-																t288 := t285 | t287
-																t289 := v8
-																t290 := t288 & t289
-																v0 = t290
-																if t290 == 0 {
-																	goto l3
-																}
-																t292 := v0
-																t293 := int32(bits.TrailingZeros32(uint32(t292)))
-																t294 := i32_shl(t293, int32(2))
-																t295 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t294))+13180:])))
-																v1 = t295
-															}
-															t296 := v1
-															if t296 == 0 {
-																goto l15
-															}
-														}
-													l16:
-														{
-															t298 := v1
-															t299 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t298))+4:])))
-															t300 := t299 & i32_const(-8)
-															t301 := v6
-															t302 := t300 - t301
-															v2 = t302
-															t303 := v3
-															var t304 int32
-															if uint32(t302) < uint32(t303) {
-																t304 = 1
-															}
-															v0 = t304
-															t305 := v2
-															t306 := v3
-															t307 := v0
-															t308 := t306
-															if t307 != 0 {
-																t308 = t305
-															}
-															v3 = t308
-															t309 := v1
-															t310 := v5
-															t311 := v0
-															t312 := t310
-															if t311 != 0 {
-																t312 = t309
-															}
-															v5 = t312
-															t313 := v1
-															t314 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t313))+16:])))
-															v0 = t314
-															var t315 int32
-															_ = t315
-															if t314 != 0 {
-																t316 := v0
-																t315 = t316
-															} else {
-																t317 := v1
-																t318 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t317))+20:])))
-																t315 = t318
-															}
-															v1 = t315
-															if t315 != 0 {
-																goto l16
-															}
-														}
-													}
-												l15:
-													t319 := v5
-													if t319 == 0 {
-														goto l3
-													}
-													t321 := v3
-													t322 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):])))
-													t323 := v6
-													t324 := t322 - t323
-													if uint32(t321) >= uint32(t324) {
-														goto l3
-													}
-													t326 := v5
-													t327 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t326))+24:])))
-													v7 = t327
-													t328 := v5
-													t329 := v5
-													t330 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t329))+12:])))
-													v1 = t330
-													if t328 != t330 {
-														t332 := v5
-														t333 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t332))+8:])))
-														v0 = t333
-														t334 := v1
-														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t333))+12:]))) = int32(t334)
-														t335 := v1
-														t336 := v0
-														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t335))+8:]))) = int32(t336)
-														goto l17
-													}
-													t337 := v5
-													t338 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t337))+20:])))
-													v0 = t338
-													var t339 int32
-													_ = t339
-													if t338 != 0 {
-														t340 := v5
-														t341 := t340 + int32(20)
-														t339 = t341
-													} else {
-														t342 := v5
-														t343 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t342))+16:])))
-														v0 = t343
-														if t343 == 0 {
-															goto l18
-														}
-														t345 := v5
-														t346 := t345 + int32(16)
-														t339 = t346
-													}
-													v2 = t339
-												l19:
-													{
-														t347 := v2
-														v4 = t347
-														t348 := v0
-														v1 = t348
-														t349 := t348 + int32(20)
-														v2 = t349
-														t350 := v1
-														t351 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t350))+20:])))
-														v0 = t351
-														if t351 != 0 {
-															goto l19
-														}
-														t352 := v1
-														t353 := t352 + int32(16)
-														v2 = t353
-														t354 := v1
-														t355 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t354))+16:])))
-														v0 = t355
-														if t355 != 0 {
-															goto l19
-														}
-													}
-													t356 := v4
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t356):]))) = int32(i32_const(0))
-													goto l17
-												}
-											l3:
-												t357 := v6
-												t358 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):])))
-												v5 = t358
-												if uint32(t357) <= uint32(t358) {
-													t360 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-													v1 = t360
-													{
-														t361 := v5
-														t362 := v6
-														t363 := t361 - t362
-														v0 = t363
-														if uint32(t363) >= uint32(int32(16)) {
-															t365 := v1
-															t366 := v6
-															t367 := t365 + t366
-															v2 = t367
-															t368 := v0
-															t369 := t368 | int32(1)
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t367))+4:]))) = int32(t369)
-															t370 := v1
-															t371 := v5
-															t372 := t370 + t371
-															t373 := v0
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t372):]))) = int32(t373)
-															t374 := v1
-															t375 := v6
-															t376 := t375 | int32(3)
-															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t374))+4:]))) = int32(t376)
-															goto l20
-														}
-														t377 := v1
-														t378 := v5
-														t379 := t378 | int32(3)
-														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t377))+4:]))) = int32(t379)
-														t380 := v1
-														t381 := v5
-														t382 := t380 + t381
-														v0 = t382
-														t383 := v0
-														t384 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t383))+4:])))
-														t385 := t384 | int32(1)
-														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t382))+4:]))) = int32(t385)
-														v2 = i32_const(0)
-														v0 = i32_const(0)
-													}
-												l20:
-													t386 := v0
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t386)
-													t387 := v2
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):]))) = int32(t387)
-													t388 := v1
-													t389 := t388 + int32(8)
-													v1 = t389
-													goto l2
-												}
-												t390 := v6
-												t391 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):])))
-												v2 = t391
-												if uint32(t390) < uint32(t391) {
-													t393 := v6
-													t394 := v7
-													t395 := t393 + t394
-													v0 = t395
-													t396 := v2
-													t397 := v6
-													t398 := t396 - t397
-													v1 = t398
-													t399 := t398 | int32(1)
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t395))+4:]))) = int32(t399)
-													t400 := v0
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(t400)
-													t401 := v1
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(t401)
-													t402 := v7
-													t403 := v6
-													t404 := t403 | int32(3)
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t402))+4:]))) = int32(t404)
-													t405 := v7
-													t406 := t405 + int32(8)
-													v1 = t406
-													goto l2
-												}
-												v1 = i32_const(0)
-												t407 := v6
-												t408 := v6
-												t409 := t408 + int32(71)
-												v5 = t409
-												var t410 int32
-												_ = t410
-												{
-													t411 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13348)):])))
-													if t411 != 0 {
-														t412 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13356)):])))
-														t410 = t412
-														goto l21
-													}
-													*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13360)):]))) = int64(i64_const(-1))
-													*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13352)):]))) = int64(i64_const(0x1000000010000))
-													t413 := v10
-													t414 := t413 + int32(12)
-													t415 := t414 & i32_const(-16)
-													t416 := t415 ^ i32_const(0x55555558)
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13348)):]))) = int32(t416)
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13368)):]))) = int32(i32_const(0))
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13320)):]))) = int32(i32_const(0))
-													t410 = i32_const(65536)
-												}
-											l21:
-												v0 = t410
-												t417 := t409 + t410
-												v4 = t417
-												t418 := v0
-												t419 := i32_const(0) - t418
-												v3 = t419
-												t420 := t417 & t419
-												v0 = t420
-												if uint32(t407) >= uint32(t420) {
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13372)):]))) = int32(int32(48))
-													goto l2
-												}
-												{
-													t422 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13316)):])))
-													v1 = t422
-													if t422 == 0 {
-														goto l22
-													}
-													t424 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13308)):])))
-													v8 = t424
-													t425 := v0
-													t426 := t424 + t425
-													v9 = t426
-													t427 := v8
-													var t428 int32
-													if uint32(t426) > uint32(t427) {
-														t428 = 1
-													}
-													t429 := v1
-													t430 := v9
-													var t431 int32
-													if uint32(t429) >= uint32(t430) {
-														t431 = 1
-													}
-													t432 := t428 & t431
-													if t432 != 0 {
-														goto l22
-													}
-													v1 = i32_const(0)
-													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13372)):]))) = int32(int32(48))
-													goto l2
-												}
-											l22:
-												t433 := int32((*m.memory)[uint32(i32_const(13320))])
-												t434 := t433 & int32(4)
-												if t434 != 0 {
-													goto l23
-												}
-												{
-													{
-														t435 := v7
-														if t435 != 0 {
-															v1 = i32_const(13324)
-														l25:
-															{
-																t436 := v1
-																t437 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t436):])))
-																v8 = t437
-																t438 := v7
-																if uint32(t437) <= uint32(t438) {
-																	t440 := v7
-																	t441 := v8
-																	t442 := v1
-																	t443 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t442))+4:])))
-																	t444 := t441 + t443
-																	if uint32(t440) < uint32(t444) {
-																		goto l24
-																	}
-																}
-																t446 := v1
-																t447 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t446))+8:])))
-																v1 = t447
-																if t447 != 0 {
-																	goto l25
-																}
-															}
-														}
-														t448 := m._sbrk(i32_const(0))
-														v2 = t448
-														if t448 == i32_const(-1) {
-															goto l26
-														}
-														t450 := v0
-														v4 = t450
-														t451 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13352)):])))
-														v1 = t451
-														t452 := t451 - int32(1)
-														v3 = t452
-														t453 := v2
-														t454 := t452 & t453
-														if t454 != 0 {
-															t455 := v0
-															t456 := v2
-															t457 := t455 - t456
-															t458 := v2
-															t459 := v3
-															t460 := t458 + t459
-															t461 := v1
-															t462 := i32_const(0) - t461
-															t463 := t460 & t462
-															t464 := t457 + t463
-															v4 = t464
-														}
-														t465 := v4
-														t466 := v6
-														if uint32(t465) <= uint32(t466) {
-															goto l26
-														}
-														t468 := v4
-														if uint32(t468) > uint32(i32_const(0x7ffffffe)) {
-															goto l26
-														}
-														t470 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13316)):])))
-														v1 = t470
-														if t470 != 0 {
-															t471 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13308)):])))
-															v3 = t471
-															t472 := v4
-															t473 := t471 + t472
-															v7 = t473
-															t474 := v3
-															if uint32(t473) <= uint32(t474) {
-																goto l26
-															}
-															t476 := v1
-															t477 := v7
-															if uint32(t476) < uint32(t477) {
-																goto l26
-															}
-														}
-														t479 := v4
-														t480 := m._sbrk(t479)
-														v1 = t480
-														t481 := v2
-														if t480 != t481 {
-															goto l27
-														}
-														goto l28
-													}
-												l24:
-													t483 := v4
-													t484 := v2
-													t485 := t483 - t484
-													t486 := v3
-													t487 := t485 & t486
-													v4 = t487
-													if uint32(t487) > uint32(i32_const(0x7ffffffe)) {
-														goto l26
-													}
-													t489 := v4
-													t490 := m._sbrk(t489)
-													v2 = t490
-													t491 := v1
-													t492 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t491):])))
-													t493 := v1
-													t494 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t493))+4:])))
-													t495 := t492 + t494
-													if t490 == t495 {
-														goto l29
-													}
-													t497 := v2
-													v1 = t497
-												}
-											l27:
-												{
-													t498 := v4
-													t499 := v6
-													t500 := t499 + int32(72)
-													if uint32(t498) >= uint32(t500) {
-														goto l30
-													}
-													t502 := v1
-													if t502 == i32_const(-1) {
-														goto l30
-													}
-													t504 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13356)):])))
-													v2 = t504
-													t505 := v5
-													t506 := v4
-													t507 := t505 - t506
-													t508 := t504 + t507
-													t509 := v2
-													t510 := i32_const(0) - t509
-													t511 := t508 & t510
-													v2 = t511
-													if uint32(t511) > uint32(i32_const(0x7ffffffe)) {
-														t513 := v1
-														v2 = t513
-														goto l28
-													}
-													t514 := v2
-													t515 := m._sbrk(t514)
-													if t515 != i32_const(-1) {
-														t517 := v2
-														t518 := v4
-														t519 := t517 + t518
-														v4 = t519
-														t520 := v1
-														v2 = t520
-														goto l28
-													}
-													t521 := v4
-													t522 := i32_const(0) - t521
-													t523 := m._sbrk(t522)
-													_ = t523
-													goto l26
-												}
-											l30:
-												t524 := v1
-												v2 = t524
-												if t524 != i32_const(-1) {
-													goto l28
-												}
-												goto l26
-											}
-										l9:
-											v1 = i32_const(0)
-											goto l8
-										}
-									l18:
-										v1 = i32_const(0)
-										goto l17
-									}
-								l29:
-									t526 := v2
-									if t526 != i32_const(-1) {
-										goto l28
-									}
-								}
-							l26:
-								t528 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13320)):])))
-								t529 := t528 | int32(4)
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13320)):]))) = int32(t529)
-							}
-						l23:
-							t530 := v0
-							if uint32(t530) > uint32(i32_const(0x7ffffffe)) {
-								goto l31
-							}
-							t532 := v0
-							t533 := m._sbrk(t532)
-							v2 = t533
-							t534 := m._sbrk(i32_const(0))
-							v0 = t534
-							t535 := v2
-							if t535 == i32_const(-1) {
-								goto l31
-							}
-							t537 := v0
-							if t537 == i32_const(-1) {
-								goto l31
-							}
-							t539 := v0
-							t540 := v2
-							if uint32(t539) <= uint32(t540) {
-								goto l31
-							}
-							t542 := v0
-							t543 := v2
-							t544 := t542 - t543
-							v4 = t544
-							t545 := v6
-							t546 := t545 + int32(56)
-							if uint32(t544) <= uint32(t546) {
-								goto l31
-							}
-						}
-					l28:
-						t548 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13308)):])))
-						t549 := v4
-						t550 := t548 + t549
-						v0 = t550
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13308)):]))) = int32(t550)
-						t551 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13312)):])))
-						t552 := v0
-						if uint32(t551) < uint32(t552) {
-							t554 := v0
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13312)):]))) = int32(t554)
-						}
-						{
-							{
-								{
-									t555 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):])))
-									v3 = t555
-									if t555 != 0 {
-										v1 = i32_const(13324)
-									l33:
-										{
-											t556 := v2
-											t557 := v1
-											t558 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t557):])))
-											v0 = t558
-											t559 := v1
-											t560 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t559))+4:])))
-											v5 = t560
-											t561 := t558 + t560
-											if t556 == t561 {
-												goto l32
-											}
-											t563 := v1
-											t564 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t563))+8:])))
-											v1 = t564
-											if t564 != 0 {
-												goto l33
-											}
-										}
-										goto l34
-									}
-									t565 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12892)):])))
-									v0 = t565
-									t566 := v0
-									t567 := v2
-									t569 := i32_const(0)
-									if uint32(t566) <= uint32(t567) {
-										t569 = t565
-									}
-									if t569 == 0 {
-										t571 := v2
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12892)):]))) = int32(t571)
-									}
-									v1 = i32_const(0)
-									t572 := v4
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13328)):]))) = int32(t572)
-									t573 := v2
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13324)):]))) = int32(t573)
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12908)):]))) = int32(i32_const(-1))
-									t574 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13348)):])))
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12912)):]))) = int32(t574)
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13336)):]))) = int32(i32_const(0))
-								l35:
-									{
-										t575 := v1
-										t576 := t575 + i32_const(12936)
-										t577 := v1
-										t578 := t577 + i32_const(12924)
-										v0 = t578
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t576):]))) = int32(t578)
-										t579 := v0
-										t580 := v1
-										t581 := t580 + i32_const(12916)
-										v5 = t581
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t579):]))) = int32(t581)
-										t582 := v1
-										t583 := t582 + i32_const(12928)
-										t584 := v5
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t583):]))) = int32(t584)
-										t585 := v1
-										t586 := t585 + i32_const(12944)
-										t587 := v1
-										t588 := t587 + i32_const(12932)
-										v5 = t588
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t586):]))) = int32(t588)
-										t589 := v5
-										t590 := v0
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t589):]))) = int32(t590)
-										t591 := v1
-										t592 := t591 + i32_const(12952)
-										t593 := v1
-										t594 := t593 + i32_const(12940)
-										v0 = t594
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t592):]))) = int32(t594)
-										t595 := v0
-										t596 := v5
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t595):]))) = int32(t596)
-										t597 := v1
-										t598 := t597 + i32_const(12948)
-										t599 := v0
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t598):]))) = int32(t599)
-										t600 := v1
-										t601 := t600 + int32(32)
-										v1 = t601
-										if t601 != i32_const(256) {
-											goto l35
-										}
-									}
-									t603 := v2
-									t604 := v2
-									t605 := i32_const(-8) - t604
-									t606 := t605 & int32(15)
-									v0 = t606
-									t607 := t603 + t606
-									v1 = t607
-									t608 := v4
-									t609 := t608 - int32(56)
-									v5 = t609
-									t610 := v0
-									t611 := t609 - t610
-									v0 = t611
-									t612 := t611 | int32(1)
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t607))+4:]))) = int32(t612)
-									t613 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13364)):])))
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12904)):]))) = int32(t613)
-									t614 := v0
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(t614)
-									t615 := v1
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(t615)
-									t616 := v2
-									t617 := v5
-									t618 := t616 + t617
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t618))+4:]))) = int32(int32(56))
-									goto l36
-								}
-							l32:
-								t619 := v2
-								t620 := v3
-								if uint32(t619) <= uint32(t620) {
-									goto l34
-								}
-								t622 := v0
-								t623 := v3
-								if uint32(t622) > uint32(t623) {
-									goto l34
-								}
-								t625 := v1
-								t626 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t625))+12:])))
-								t627 := t626 & int32(8)
-								if t627 != 0 {
-									goto l34
-								}
-								t628 := v3
-								t629 := v3
-								t630 := i32_const(-8) - t629
-								t631 := t630 & int32(15)
-								v0 = t631
-								t632 := t628 + t631
-								v2 = t632
-								t633 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):])))
-								t634 := v4
-								t635 := t633 + t634
-								v7 = t635
-								t636 := v0
-								t637 := t635 - t636
-								v0 = t637
-								t638 := t637 | int32(1)
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t632))+4:]))) = int32(t638)
-								t639 := v1
-								t640 := v4
-								t641 := v5
-								t642 := t640 + t641
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t639))+4:]))) = int32(t642)
-								t643 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13364)):])))
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12904)):]))) = int32(t643)
-								t644 := v0
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(t644)
-								t645 := v2
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(t645)
-								t646 := v3
-								t647 := v7
-								t648 := t646 + t647
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t648))+4:]))) = int32(int32(56))
-								goto l36
-							}
-						l34:
-							t649 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12892)):])))
-							t650 := v2
-							if uint32(t649) > uint32(t650) {
-								t652 := v2
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12892)):]))) = int32(t652)
-							}
-							t653 := v2
-							t654 := v4
-							t655 := t653 + t654
-							v5 = t655
-							v1 = i32_const(13324)
-							{
-								{
-								l38:
-									{
-										t656 := v1
-										t657 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t656):])))
-										v0 = t657
-										t658 := v5
-										if t657 == t658 {
-											goto l37
-										}
-										t660 := v1
-										t661 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t660))+8:])))
-										v1 = t661
-										if t661 != 0 {
-											goto l38
-										}
-									}
-									goto l39
-								}
-							l37:
-								t662 := v1
-								t663 := int32((*m.memory)[int64(uint32(t662))+12])
-								t664 := t663 & int32(8)
-								if t664 == 0 {
-									goto l40
-								}
-							}
-						l39:
-							v1 = i32_const(13324)
-						l42:
-							{
-								{
-									t666 := v1
-									t667 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t666):])))
-									v0 = t667
-									t668 := v3
-									if uint32(t667) <= uint32(t668) {
-										t670 := v3
-										t671 := v0
-										t672 := v1
-										t673 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t672))+4:])))
-										t674 := t671 + t673
-										v5 = t674
-										if uint32(t670) < uint32(t674) {
-											goto l41
-										}
-									}
-									t676 := v1
-									t677 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t676))+8:])))
-									v1 = t677
-									goto l42
-								}
-							l41:
-							}
-							t678 := v2
-							t679 := v2
-							t680 := i32_const(-8) - t679
-							t681 := t680 & int32(15)
-							v0 = t681
-							t682 := t678 + t681
-							v1 = t682
-							t683 := v4
-							t684 := t683 - int32(56)
-							v7 = t684
-							t685 := v0
-							t686 := t684 - t685
-							v8 = t686
-							t687 := t686 | int32(1)
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t682))+4:]))) = int32(t687)
-							t688 := v2
-							t689 := v7
-							t690 := t688 + t689
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t690))+4:]))) = int32(int32(56))
-							t691 := v3
-							t692 := v5
-							t693 := v5
-							t694 := int32(55) - t693
-							t695 := t694 & int32(15)
-							t696 := t692 + t695
-							t697 := t696 - int32(63)
-							v0 = t697
-							t698 := v0
-							t699 := v3
-							t700 := t699 + int32(16)
-							t702 := t697
-							if uint32(t698) < uint32(t700) {
-								t702 = t691
-							}
-							v0 = t702
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t702))+4:]))) = int32(int32(35))
-							t703 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13364)):])))
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12904)):]))) = int32(t703)
-							t704 := v8
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(t704)
-							t705 := v1
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(t705)
-							t706 := v0
-							t707 := *(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13332)):])))
-							*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t706))+16:]))) = int64(t707)
-							t708 := v0
-							t709 := *(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13324)):])))
-							*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t708))+8:]))) = int64(t709)
-							t710 := v0
-							t711 := t710 + int32(8)
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13332)):]))) = int32(t711)
-							t712 := v4
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13328)):]))) = int32(t712)
-							t713 := v2
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13324)):]))) = int32(t713)
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13336)):]))) = int32(i32_const(0))
-							t714 := v0
-							t715 := t714 + int32(36)
-							v1 = t715
-						l43:
-							{
-								t716 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t716):]))) = int32(int32(7))
-								t717 := v1
-								t718 := t717 + int32(4)
-								v1 = t718
-								t719 := v5
-								if uint32(t718) < uint32(t719) {
-									goto l43
-								}
-							}
-							t721 := v0
-							t722 := v3
-							if t721 == t722 {
-								goto l36
-							}
-							t724 := v0
-							t725 := v0
-							t726 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t725))+4:])))
-							t727 := t726 & i32_const(-2)
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t724))+4:]))) = int32(t727)
-							t728 := v0
-							t729 := v0
-							t730 := v3
-							t731 := t729 - t730
-							v2 = t731
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t728):]))) = int32(t731)
-							t732 := v3
-							t733 := v2
-							t734 := t733 | int32(1)
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t732))+4:]))) = int32(t734)
-							var t735 int32
-							_ = t735
-							{
-								t736 := v2
-								if uint32(t736) <= uint32(i32_const(255)) {
-									t738 := v2
-									t739 := t738 & i32_const(-8)
-									t740 := t739 + i32_const(12916)
-									v1 = t740
-									var t741 int32
-									_ = t741
-									{
-										t742 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-										v0 = t742
-										t743 := v2
-										t744 := i32_shr_u(t743, int32(3))
-										t745 := i32_shl(int32(1), t744)
-										v2 = t745
-										t746 := t742 & t745
-										if t746 == 0 {
-											t748 := v0
-											t749 := v2
-											t750 := t748 | t749
-											*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t750)
-											t751 := v1
-											t741 = t751
-											goto l44
-										}
-										t752 := v1
-										t753 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t752))+8:])))
-										t741 = t753
-									}
-								l44:
-									v0 = t741
-									t754 := v3
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t741))+12:]))) = int32(t754)
-									t755 := v1
-									t756 := v3
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t755))+8:]))) = int32(t756)
-									v5 = int32(8)
-									t735 = int32(12)
-									goto l45
-								}
-								v1 = int32(31)
-								t757 := v2
-								if uint32(t757) <= uint32(i32_const(0xffffff)) {
-									t759 := v2
-									t760 := v2
-									t761 := i32_shr_u(t760, int32(8))
-									t762 := int32(bits.LeadingZeros32(uint32(t761)))
-									v0 = t762
-									t763 := int32(38) - t762
-									t764 := i32_shr_u(t759, t763)
-									t765 := t764 & int32(1)
-									t766 := v0
-									t767 := i32_shl(t766, int32(1))
-									t768 := t765 - t767
-									t769 := t768 + int32(62)
-									v1 = t769
-								}
-								t770 := v3
-								t771 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t770))+28:]))) = int32(t771)
-								t772 := v3
-								*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t772))+16:]))) = int64(i64_const(0))
-								t773 := v1
-								t774 := i32_shl(t773, int32(2))
-								t775 := t774 + i32_const(13180)
-								v0 = t775
-								{
-									{
-										t776 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-										v5 = t776
-										t777 := v1
-										t778 := i32_shl(int32(1), t777)
-										v4 = t778
-										t779 := t776 & t778
-										if t779 == 0 {
-											t781 := v0
-											t782 := v3
-											*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t781):]))) = int32(t782)
-											t783 := v4
-											t784 := v5
-											t785 := t783 | t784
-											*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t785)
-											goto l46
-										}
-										t786 := v2
-										t787 := v1
-										t788 := i32_shr_u(t787, int32(1))
-										t789 := int32(25) - t788
-										t790 := v1
-										t792 := i32_const(0)
-										if t790 != int32(31) {
-											t792 = t789
-										}
-										t793 := i32_shl(t786, t792)
-										v1 = t793
-										t794 := v0
-										t795 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t794):])))
-										v5 = t795
-									l48:
-										{
-											t796 := v5
-											v0 = t796
-											t797 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t796))+4:])))
-											t798 := t797 & i32_const(-8)
-											t799 := v2
-											if t798 == t799 {
-												goto l47
-											}
-											t801 := v1
-											t802 := i32_shr_u(t801, int32(29))
-											v5 = t802
-											t803 := v1
-											t804 := i32_shl(t803, int32(1))
-											v1 = t804
-											t805 := v0
-											t806 := v5
-											t807 := t806 & int32(4)
-											t808 := t805 + t807
-											v4 = t808
-											t809 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t808))+16:])))
-											v5 = t809
-											if t809 != 0 {
-												goto l48
-											}
-										}
-										t810 := v4
-										t811 := v3
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t810))+16:]))) = int32(t811)
-									}
-								l46:
-									t812 := v3
-									t813 := v0
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t812))+24:]))) = int32(t813)
-									v5 = int32(12)
-									t814 := v3
-									v0 = t814
-									v1 = t814
-									t735 = int32(8)
-									goto l45
-								}
-							l47:
-								t815 := v0
-								t816 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t815))+8:])))
-								v1 = t816
-								t817 := v0
-								t818 := v3
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t817))+8:]))) = int32(t818)
-								t819 := v1
-								t820 := v3
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t819))+12:]))) = int32(t820)
-								t821 := v3
-								t822 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t821))+8:]))) = int32(t822)
-								v1 = i32_const(0)
-								v5 = int32(12)
-								t735 = int32(24)
-							}
-						l45:
-							t823 := v3
-							t824 := v5
-							t825 := t823 + t824
-							t826 := v0
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t825):]))) = int32(t826)
-							t827 := v3
-							t828 := t735 + t827
-							t829 := v1
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t828):]))) = int32(t829)
-						}
-					l36:
-						t830 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):])))
-						v1 = t830
-						t831 := v6
-						if uint32(t830) <= uint32(t831) {
-							goto l31
-						}
-						t833 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):])))
-						v0 = t833
-						t834 := v6
-						t835 := t833 + t834
-						v2 = t835
-						t836 := v1
-						t837 := v6
-						t838 := t836 - t837
-						v1 = t838
-						t839 := t838 | int32(1)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t835))+4:]))) = int32(t839)
-						t840 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(t840)
-						t841 := v2
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(t841)
-						t842 := v0
-						t843 := v6
-						t844 := t843 | int32(3)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t842))+4:]))) = int32(t844)
-						t845 := v0
-						t846 := t845 + int32(8)
-						v1 = t846
-						goto l2
-					}
-				l31:
-					v1 = i32_const(0)
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13372)):]))) = int32(int32(48))
-					goto l2
-				}
-			l40:
-				t847 := v1
-				t848 := v2
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t847):]))) = int32(t848)
-				t849 := v1
-				t850 := v1
-				t851 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t850))+4:])))
-				t852 := v4
-				t853 := t851 + t852
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t849))+4:]))) = int32(t853)
-				t854 := v2
-				t855 := v2
-				t856 := i32_const(-8) - t855
-				t857 := t856 & int32(15)
-				t858 := t854 + t857
-				v8 = t858
-				t859 := v6
-				t860 := t859 | int32(3)
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t858))+4:]))) = int32(t860)
-				t861 := v0
-				t862 := v0
-				t863 := i32_const(-8) - t862
-				t864 := t863 & int32(15)
-				t865 := t861 + t864
-				v4 = t865
-				t866 := v6
-				t867 := v8
-				t868 := t866 + t867
-				v3 = t868
-				t869 := t865 - t868
-				v7 = t869
-				{
-					t870 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):])))
-					t871 := v4
-					if t870 == t871 {
-						t873 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(t873)
-						t874 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):])))
-						t875 := v7
-						t876 := t874 + t875
-						v0 = t876
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(t876)
-						t877 := v3
-						t878 := v0
-						t879 := t878 | int32(1)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t877))+4:]))) = int32(t879)
-						goto l49
-					}
-					t880 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-					t881 := v4
-					if t880 == t881 {
-						t883 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):]))) = int32(t883)
-						t884 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):])))
-						t885 := v7
-						t886 := t884 + t885
-						v0 = t886
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t886)
-						t887 := v3
-						t888 := v0
-						t889 := t888 | int32(1)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t887))+4:]))) = int32(t889)
-						t890 := v0
-						t891 := v3
-						t892 := t890 + t891
-						t893 := v0
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t892):]))) = int32(t893)
-						goto l49
-					}
-					t894 := v4
-					t895 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t894))+4:])))
-					v2 = t895
-					t896 := t895 & int32(3)
-					if t896 == int32(1) {
-						t898 := v2
-						t899 := t898 & i32_const(-8)
-						v9 = t899
-						t900 := v4
-						t901 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t900))+12:])))
-						v1 = t901
-						{
-							t902 := v2
-							if uint32(t902) <= uint32(i32_const(255)) {
-								t904 := v4
-								t905 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t904))+8:])))
-								v0 = t905
-								t906 := v1
-								if t905 == t906 {
-									t908 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-									t909 := v2
-									t910 := i32_shr_u(t909, int32(3))
-									t911 := i32_rotl(i32_const(-2), t910)
-									t912 := t908 & t911
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t912)
-									goto l50
-								}
-								t913 := v1
-								t914 := v0
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t913))+8:]))) = int32(t914)
-								t915 := v0
-								t916 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t915))+12:]))) = int32(t916)
-								goto l50
-							}
-							t917 := v4
-							t918 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t917))+24:])))
-							v6 = t918
-							{
-								t919 := v1
-								t920 := v4
-								if t919 != t920 {
-									t922 := v4
-									t923 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t922))+8:])))
-									v0 = t923
-									t924 := v1
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t923))+12:]))) = int32(t924)
-									t925 := v1
-									t926 := v0
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t925))+8:]))) = int32(t926)
-									goto l51
-								}
-								{
-									t927 := v4
-									t928 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t927))+20:])))
-									v2 = t928
-									var t929 int32
-									_ = t929
-									if t928 != 0 {
-										t930 := v4
-										t931 := t930 + int32(20)
-										t929 = t931
-									} else {
-										t932 := v4
-										t933 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t932))+16:])))
-										v2 = t933
-										if t933 == 0 {
-											goto l52
-										}
-										t935 := v4
-										t936 := t935 + int32(16)
-										t929 = t936
-									}
-									v0 = t929
-								l53:
-									{
-										t937 := v0
-										v5 = t937
-										t938 := v2
-										v1 = t938
-										t939 := t938 + int32(20)
-										v0 = t939
-										t940 := v1
-										t941 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t940))+20:])))
-										v2 = t941
-										if t941 != 0 {
-											goto l53
-										}
-										t942 := v1
-										t943 := t942 + int32(16)
-										v0 = t943
-										t944 := v1
-										t945 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t944))+16:])))
-										v2 = t945
-										if t945 != 0 {
-											goto l53
-										}
-									}
-									t946 := v5
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t946):]))) = int32(i32_const(0))
-									goto l51
-								}
-							l52:
-								v1 = i32_const(0)
-							}
-						l51:
-							t947 := v6
-							if t947 == 0 {
-								goto l50
-							}
-							{
-								t949 := v4
-								t950 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t949))+28:])))
-								v0 = t950
-								t951 := i32_shl(t950, int32(2))
-								v2 = t951
-								t952 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t951))+13180:])))
-								t953 := v4
-								if t952 == t953 {
-									t955 := v2
-									t956 := t955 + i32_const(13180)
-									t957 := v1
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t956):]))) = int32(t957)
-									t958 := v1
-									if t958 != 0 {
-										goto l54
-									}
-									t959 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-									t960 := v0
-									t961 := i32_rotl(i32_const(-2), t960)
-									t962 := t959 & t961
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t962)
-									goto l50
-								}
-								{
-									t963 := v4
-									t964 := v6
-									t965 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t964))+16:])))
-									if t963 == t965 {
-										t967 := v6
-										t968 := v1
-										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t967))+16:]))) = int32(t968)
-										goto l55
-									}
-									t969 := v6
-									t970 := v1
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t969))+20:]))) = int32(t970)
-								}
-							l55:
-								t971 := v1
-								if t971 == 0 {
-									goto l50
-								}
-							}
-						l54:
-							t973 := v1
-							t974 := v6
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t973))+24:]))) = int32(t974)
-							t975 := v4
-							t976 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t975))+16:])))
-							v0 = t976
-							if t976 != 0 {
-								t977 := v1
-								t978 := v0
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t977))+16:]))) = int32(t978)
-								t979 := v0
-								t980 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t979))+24:]))) = int32(t980)
-							}
-							t981 := v4
-							t982 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t981))+20:])))
-							v0 = t982
-							if t982 == 0 {
-								goto l50
-							}
-							t984 := v1
-							t985 := v0
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t984))+20:]))) = int32(t985)
-							t986 := v0
-							t987 := v1
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t986))+24:]))) = int32(t987)
-						}
-					l50:
-						t988 := v7
-						t989 := v9
-						t990 := t988 + t989
-						v7 = t990
-						t991 := v4
-						t992 := v9
-						t993 := t991 + t992
-						v4 = t993
-						t994 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t993))+4:])))
-						v2 = t994
-					}
-					t995 := v4
-					t996 := v2
-					t997 := t996 & i32_const(-2)
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t995))+4:]))) = int32(t997)
-					t998 := v3
-					t999 := v7
-					t1000 := t998 + t999
-					t1001 := v7
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1000):]))) = int32(t1001)
-					t1002 := v3
-					t1003 := v7
-					t1004 := t1003 | int32(1)
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1002))+4:]))) = int32(t1004)
-					t1005 := v7
-					if uint32(t1005) <= uint32(i32_const(255)) {
-						t1007 := v7
-						t1008 := t1007 & i32_const(-8)
-						t1009 := t1008 + i32_const(12916)
-						v0 = t1009
-						var t1010 int32
-						_ = t1010
-						{
-							t1011 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-							v1 = t1011
-							t1012 := v7
-							t1013 := i32_shr_u(t1012, int32(3))
-							t1014 := i32_shl(int32(1), t1013)
-							v2 = t1014
-							t1015 := t1011 & t1014
-							if t1015 == 0 {
-								t1017 := v1
-								t1018 := v2
-								t1019 := t1017 | t1018
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t1019)
-								t1020 := v0
-								t1010 = t1020
-								goto l56
-							}
-							t1021 := v0
-							t1022 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1021))+8:])))
-							t1010 = t1022
-						}
-					l56:
-						v1 = t1010
-						t1023 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1010))+12:]))) = int32(t1023)
-						t1024 := v0
-						t1025 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1024))+8:]))) = int32(t1025)
-						t1026 := v3
-						t1027 := v0
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1026))+12:]))) = int32(t1027)
-						t1028 := v3
-						t1029 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1028))+8:]))) = int32(t1029)
-						goto l49
-					}
-					v1 = int32(31)
-					t1030 := v7
-					if uint32(t1030) <= uint32(i32_const(0xffffff)) {
-						t1032 := v7
-						t1033 := v7
-						t1034 := i32_shr_u(t1033, int32(8))
-						t1035 := int32(bits.LeadingZeros32(uint32(t1034)))
-						v0 = t1035
-						t1036 := int32(38) - t1035
-						t1037 := i32_shr_u(t1032, t1036)
-						t1038 := t1037 & int32(1)
-						t1039 := v0
-						t1040 := i32_shl(t1039, int32(1))
-						t1041 := t1038 - t1040
-						t1042 := t1041 + int32(62)
-						v1 = t1042
-					}
-					t1043 := v3
-					t1044 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1043))+28:]))) = int32(t1044)
-					t1045 := v3
-					*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t1045))+16:]))) = int64(i64_const(0))
-					t1046 := v1
-					t1047 := i32_shl(t1046, int32(2))
-					t1048 := t1047 + i32_const(13180)
-					v0 = t1048
-					t1049 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-					v2 = t1049
-					t1050 := v1
-					t1051 := i32_shl(int32(1), t1050)
-					v5 = t1051
-					t1052 := t1049 & t1051
-					if t1052 == 0 {
-						t1054 := v0
-						t1055 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1054):]))) = int32(t1055)
-						t1056 := v2
-						t1057 := v5
-						t1058 := t1056 | t1057
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t1058)
-						t1059 := v3
-						t1060 := v0
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1059))+24:]))) = int32(t1060)
-						t1061 := v3
-						t1062 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1061))+8:]))) = int32(t1062)
-						t1063 := v3
-						t1064 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1063))+12:]))) = int32(t1064)
-						goto l49
-					}
-					t1065 := v7
-					t1066 := v1
-					t1067 := i32_shr_u(t1066, int32(1))
-					t1068 := int32(25) - t1067
-					t1069 := v1
-					t1071 := i32_const(0)
-					if t1069 != int32(31) {
-						t1071 = t1068
-					}
-					t1072 := i32_shl(t1065, t1071)
-					v1 = t1072
-					t1073 := v0
-					t1074 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1073):])))
-					v0 = t1074
-					{
-					l58:
-						{
-							t1075 := v0
-							v2 = t1075
-							t1076 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1075))+4:])))
-							t1077 := t1076 & i32_const(-8)
-							t1078 := v7
-							if t1077 == t1078 {
-								goto l57
-							}
-							t1080 := v1
-							t1081 := i32_shr_u(t1080, int32(29))
-							v0 = t1081
-							t1082 := v1
-							t1083 := i32_shl(t1082, int32(1))
-							v1 = t1083
-							t1084 := v2
-							t1085 := v0
-							t1086 := t1085 & int32(4)
-							t1087 := t1084 + t1086
-							v5 = t1087
-							t1088 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1087))+16:])))
-							v0 = t1088
-							if t1088 != 0 {
-								goto l58
-							}
-						}
-						t1089 := v5
-						t1090 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1089))+16:]))) = int32(t1090)
-						t1091 := v3
-						t1092 := v2
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1091))+24:]))) = int32(t1092)
-						t1093 := v3
-						t1094 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1093))+12:]))) = int32(t1094)
-						t1095 := v3
-						t1096 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1095))+8:]))) = int32(t1096)
-						goto l49
-					}
-				l57:
-					t1097 := v2
-					t1098 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1097))+8:])))
-					v0 = t1098
-					t1099 := v3
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1098))+12:]))) = int32(t1099)
-					t1100 := v2
-					t1101 := v3
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1100))+8:]))) = int32(t1101)
-					t1102 := v3
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1102))+24:]))) = int32(i32_const(0))
-					t1103 := v3
-					t1104 := v2
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1103))+12:]))) = int32(t1104)
-					t1105 := v3
-					t1106 := v0
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1105))+8:]))) = int32(t1106)
-				}
-			l49:
-				t1107 := v8
-				t1108 := t1107 + int32(8)
-				v1 = t1108
-				goto l2
-			}
-		l17:
-			{
-				t1109 := v7
-				if t1109 == 0 {
-					goto l59
-				}
-				{
-					t1111 := v5
-					t1112 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1111))+28:])))
-					v0 = t1112
-					t1113 := i32_shl(t1112, int32(2))
-					v2 = t1113
-					t1114 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1113))+13180:])))
-					t1115 := v5
-					if t1114 == t1115 {
-						t1117 := v2
-						t1118 := t1117 + i32_const(13180)
-						t1119 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1118):]))) = int32(t1119)
-						t1120 := v1
-						if t1120 != 0 {
-							goto l60
-						}
-						t1121 := v8
-						t1122 := v0
-						t1123 := i32_rotl(i32_const(-2), t1122)
-						t1124 := t1121 & t1123
-						v8 = t1124
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t1124)
-						goto l59
-					}
-					{
-						t1125 := v5
-						t1126 := v7
-						t1127 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1126))+16:])))
-						if t1125 == t1127 {
-							t1129 := v7
-							t1130 := v1
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1129))+16:]))) = int32(t1130)
-							goto l61
-						}
-						t1131 := v7
-						t1132 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1131))+20:]))) = int32(t1132)
-					}
-				l61:
-					t1133 := v1
-					if t1133 == 0 {
-						goto l59
-					}
-				}
-			l60:
-				t1135 := v1
-				t1136 := v7
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1135))+24:]))) = int32(t1136)
-				t1137 := v5
-				t1138 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1137))+16:])))
-				v0 = t1138
-				if t1138 != 0 {
-					t1139 := v1
-					t1140 := v0
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1139))+16:]))) = int32(t1140)
-					t1141 := v0
-					t1142 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1141))+24:]))) = int32(t1142)
-				}
-				t1143 := v5
-				t1144 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1143))+20:])))
-				v0 = t1144
-				if t1144 == 0 {
-					goto l59
-				}
-				t1146 := v1
-				t1147 := v0
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1146))+20:]))) = int32(t1147)
-				t1148 := v0
-				t1149 := v1
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1148))+24:]))) = int32(t1149)
-			}
-		l59:
-			{
-				t1150 := v3
-				if uint32(t1150) <= uint32(int32(15)) {
-					t1152 := v5
-					t1153 := v3
-					t1154 := v6
-					t1155 := t1153 | t1154
-					v0 = t1155
-					t1156 := t1155 | int32(3)
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1152))+4:]))) = int32(t1156)
-					t1157 := v0
-					t1158 := v5
-					t1159 := t1157 + t1158
-					v0 = t1159
-					t1160 := v0
-					t1161 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1160))+4:])))
-					t1162 := t1161 | int32(1)
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1159))+4:]))) = int32(t1162)
-					goto l62
-				}
-				t1163 := v5
-				t1164 := v6
-				t1165 := t1163 + t1164
-				v4 = t1165
-				t1166 := v3
-				t1167 := t1166 | int32(1)
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1165))+4:]))) = int32(t1167)
-				t1168 := v5
-				t1169 := v6
-				t1170 := t1169 | int32(3)
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1168))+4:]))) = int32(t1170)
-				t1171 := v3
-				t1172 := v4
-				t1173 := t1171 + t1172
-				t1174 := v3
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1173):]))) = int32(t1174)
-				t1175 := v3
-				if uint32(t1175) <= uint32(i32_const(255)) {
-					t1177 := v3
-					t1178 := t1177 & i32_const(-8)
-					t1179 := t1178 + i32_const(12916)
-					v0 = t1179
-					var t1180 int32
-					_ = t1180
-					{
-						t1181 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-						v1 = t1181
-						t1182 := v3
-						t1183 := i32_shr_u(t1182, int32(3))
-						t1184 := i32_shl(int32(1), t1183)
-						v2 = t1184
-						t1185 := t1181 & t1184
-						if t1185 == 0 {
-							t1187 := v1
-							t1188 := v2
-							t1189 := t1187 | t1188
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t1189)
-							t1190 := v0
-							t1180 = t1190
-							goto l63
-						}
-						t1191 := v0
-						t1192 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1191))+8:])))
-						t1180 = t1192
-					}
-				l63:
-					v1 = t1180
-					t1193 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1180))+12:]))) = int32(t1193)
-					t1194 := v0
-					t1195 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1194))+8:]))) = int32(t1195)
-					t1196 := v4
-					t1197 := v0
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1196))+12:]))) = int32(t1197)
-					t1198 := v4
-					t1199 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1198))+8:]))) = int32(t1199)
-					goto l62
-				}
-				v1 = int32(31)
-				t1200 := v3
-				if uint32(t1200) <= uint32(i32_const(0xffffff)) {
-					t1202 := v3
-					t1203 := v3
-					t1204 := i32_shr_u(t1203, int32(8))
-					t1205 := int32(bits.LeadingZeros32(uint32(t1204)))
-					v0 = t1205
-					t1206 := int32(38) - t1205
-					t1207 := i32_shr_u(t1202, t1206)
-					t1208 := t1207 & int32(1)
-					t1209 := v0
-					t1210 := i32_shl(t1209, int32(1))
-					t1211 := t1208 - t1210
-					t1212 := t1211 + int32(62)
-					v1 = t1212
-				}
-				t1213 := v4
-				t1214 := v1
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1213))+28:]))) = int32(t1214)
-				t1215 := v4
-				*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t1215))+16:]))) = int64(i64_const(0))
-				t1216 := v1
-				t1217 := i32_shl(t1216, int32(2))
-				t1218 := t1217 + i32_const(13180)
-				v0 = t1218
-				t1219 := v8
-				t1220 := v1
-				t1221 := i32_shl(int32(1), t1220)
-				v2 = t1221
-				t1222 := t1219 & t1221
-				if t1222 == 0 {
-					t1224 := v0
-					t1225 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1224):]))) = int32(t1225)
-					t1226 := v2
-					t1227 := v8
-					t1228 := t1226 | t1227
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t1228)
-					t1229 := v4
-					t1230 := v0
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1229))+24:]))) = int32(t1230)
-					t1231 := v4
-					t1232 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1231))+8:]))) = int32(t1232)
-					t1233 := v4
-					t1234 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1233))+12:]))) = int32(t1234)
-					goto l62
-				}
-				t1235 := v3
-				t1236 := v1
-				t1237 := i32_shr_u(t1236, int32(1))
-				t1238 := int32(25) - t1237
-				t1239 := v1
-				t1241 := i32_const(0)
-				if t1239 != int32(31) {
-					t1241 = t1238
-				}
-				t1242 := i32_shl(t1235, t1241)
-				v1 = t1242
-				t1243 := v0
-				t1244 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1243):])))
-				v0 = t1244
-				{
-				l65:
-					{
-						t1245 := v0
-						v2 = t1245
-						t1246 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1245))+4:])))
-						t1247 := t1246 & i32_const(-8)
-						t1248 := v3
-						if t1247 == t1248 {
-							goto l64
-						}
-						t1250 := v1
-						t1251 := i32_shr_u(t1250, int32(29))
-						v0 = t1251
-						t1252 := v1
-						t1253 := i32_shl(t1252, int32(1))
-						v1 = t1253
-						t1254 := v2
-						t1255 := v0
-						t1256 := t1255 & int32(4)
-						t1257 := t1254 + t1256
-						v7 = t1257
-						t1258 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1257))+16:])))
-						v0 = t1258
-						if t1258 != 0 {
-							goto l65
-						}
-					}
-					t1259 := v7
-					t1260 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1259))+16:]))) = int32(t1260)
-					t1261 := v4
-					t1262 := v2
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1261))+24:]))) = int32(t1262)
-					t1263 := v4
-					t1264 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1263))+12:]))) = int32(t1264)
-					t1265 := v4
-					t1266 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1265))+8:]))) = int32(t1266)
-					goto l62
-				}
-			l64:
-				t1267 := v2
-				t1268 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1267))+8:])))
-				v0 = t1268
-				t1269 := v4
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1268))+12:]))) = int32(t1269)
-				t1270 := v2
-				t1271 := v4
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1270))+8:]))) = int32(t1271)
-				t1272 := v4
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1272))+24:]))) = int32(i32_const(0))
-				t1273 := v4
-				t1274 := v2
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1273))+12:]))) = int32(t1274)
-				t1275 := v4
-				t1276 := v0
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1275))+8:]))) = int32(t1276)
-			}
-		l62:
-			t1277 := v5
-			t1278 := t1277 + int32(8)
-			v1 = t1278
-			goto l2
-		}
-	l8:
-		{
-			t1279 := v9
-			if t1279 == 0 {
-				goto l66
-			}
-			{
-				t1281 := v2
-				t1282 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1281))+28:])))
-				v0 = t1282
-				t1283 := i32_shl(t1282, int32(2))
-				v5 = t1283
-				t1284 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1283))+13180:])))
-				t1285 := v2
-				if t1284 == t1285 {
-					t1287 := v5
-					t1288 := t1287 + i32_const(13180)
-					t1289 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1288):]))) = int32(t1289)
-					t1290 := v1
-					if t1290 != 0 {
-						goto l67
-					}
-					t1291 := v11
-					t1292 := v0
-					t1293 := i32_rotl(i32_const(-2), t1292)
-					t1294 := t1291 & t1293
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t1294)
-					goto l66
-				}
-				{
-					t1295 := v2
-					t1296 := v9
-					t1297 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1296))+16:])))
-					if t1295 == t1297 {
-						t1299 := v9
-						t1300 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1299))+16:]))) = int32(t1300)
-						goto l68
-					}
-					t1301 := v9
-					t1302 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1301))+20:]))) = int32(t1302)
-				}
-			l68:
-				t1303 := v1
-				if t1303 == 0 {
-					goto l66
-				}
-			}
-		l67:
-			t1305 := v1
-			t1306 := v9
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1305))+24:]))) = int32(t1306)
-			t1307 := v2
-			t1308 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1307))+16:])))
-			v0 = t1308
-			if t1308 != 0 {
-				t1309 := v1
-				t1310 := v0
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1309))+16:]))) = int32(t1310)
-				t1311 := v0
-				t1312 := v1
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1311))+24:]))) = int32(t1312)
-			}
-			t1313 := v2
-			t1314 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1313))+20:])))
-			v0 = t1314
-			if t1314 == 0 {
-				goto l66
-			}
-			t1316 := v1
-			t1317 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1316))+20:]))) = int32(t1317)
-			t1318 := v0
-			t1319 := v1
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1318))+24:]))) = int32(t1319)
-		}
-	l66:
-		{
-			t1320 := v3
-			if uint32(t1320) <= uint32(int32(15)) {
-				t1322 := v2
-				t1323 := v3
-				t1324 := v6
-				t1325 := t1323 | t1324
-				v0 = t1325
-				t1326 := t1325 | int32(3)
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1322))+4:]))) = int32(t1326)
-				t1327 := v0
-				t1328 := v2
-				t1329 := t1327 + t1328
-				v0 = t1329
-				t1330 := v0
-				t1331 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1330))+4:])))
-				t1332 := t1331 | int32(1)
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1329))+4:]))) = int32(t1332)
-				goto l69
-			}
-			t1333 := v2
-			t1334 := v6
-			t1335 := t1333 + t1334
-			v5 = t1335
-			t1336 := v3
-			t1337 := t1336 | int32(1)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1335))+4:]))) = int32(t1337)
-			t1338 := v2
-			t1339 := v6
-			t1340 := t1339 | int32(3)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1338))+4:]))) = int32(t1340)
-			t1341 := v3
-			t1342 := v5
-			t1343 := t1341 + t1342
-			t1344 := v3
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1343):]))) = int32(t1344)
-			t1345 := v8
-			if t1345 != 0 {
-				t1346 := v8
-				t1347 := t1346 & i32_const(-8)
-				t1348 := t1347 + i32_const(12916)
-				v0 = t1348
-				t1349 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-				v1 = t1349
-				var t1350 int32
-				_ = t1350
-				{
-					t1351 := v8
-					t1352 := i32_shr_u(t1351, int32(3))
-					t1353 := i32_shl(int32(1), t1352)
-					v7 = t1353
-					t1354 := v4
-					t1355 := t1353 & t1354
-					if t1355 == 0 {
-						t1357 := v4
-						t1358 := v7
-						t1359 := t1357 | t1358
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t1359)
-						t1360 := v0
-						t1350 = t1360
-						goto l70
-					}
-					t1361 := v0
-					t1362 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1361))+8:])))
-					t1350 = t1362
-				}
-			l70:
-				v4 = t1350
-				t1363 := v1
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1350))+12:]))) = int32(t1363)
-				t1364 := v0
-				t1365 := v1
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1364))+8:]))) = int32(t1365)
-				t1366 := v1
-				t1367 := v0
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1366))+12:]))) = int32(t1367)
-				t1368 := v1
-				t1369 := v4
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1368))+8:]))) = int32(t1369)
-			}
-			t1370 := v5
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):]))) = int32(t1370)
-			t1371 := v3
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t1371)
-		}
-	l69:
-		t1372 := v2
-		t1373 := t1372 + int32(8)
-		v1 = t1373
-	}
-l2:
-	t1374 := v10
-	t1375 := t1374 + int32(16)
-	m.___stack_pointer = t1375
-	t1376 := v1
-	return t1376
-}
-func (m *Module) Xfree(v0 int32) {
-	var v1, v2, v3, v4, v5, v6, v7, v8 int32
-	_, _, _, _, _, _, _, _ = v1, v2, v3, v4, v5, v6, v7, v8
-	{
-		t0 := v0
-		if t0 == 0 {
-			goto l0
-		}
-		t2 := v0
-		t3 := t2 - int32(8)
-		v2 = t3
-		t4 := v0
-		t5 := t4 - int32(4)
-		t6 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t5):])))
-		v0 = t6
-		t7 := t6 & i32_const(-8)
-		v4 = t7
-		t8 := t3 + t7
-		v5 = t8
-		{
-			t9 := v0
-			t10 := t9 & int32(1)
-			if t10 != 0 {
-				goto l1
-			}
-			t11 := v0
-			t12 := t11 & int32(2)
-			if t12 == 0 {
-				goto l0
-			}
-			t14 := v2
-			t15 := v2
-			t16 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t15):])))
-			v0 = t16
-			t17 := t14 - t16
-			v2 = t17
-			t18 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12892)):])))
-			if uint32(t17) < uint32(t18) {
-				goto l0
-			}
-			t20 := v0
-			t21 := v4
-			t22 := t20 + t21
-			v4 = t22
-			{
-				{
-					{
-						t23 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-						t24 := v2
-						if t23 != t24 {
-							t26 := v2
-							t27 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t26))+12:])))
-							v1 = t27
-							t28 := v0
-							if uint32(t28) <= uint32(i32_const(255)) {
-								t30 := v1
-								t31 := v2
-								t32 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t31))+8:])))
-								v3 = t32
-								if t30 != t32 {
-									goto l2
-								}
-								t34 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-								t35 := v0
-								t36 := i32_shr_u(t35, int32(3))
-								t37 := i32_rotl(i32_const(-2), t36)
-								t38 := t34 & t37
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t38)
-								goto l1
-							}
-							t39 := v2
-							t40 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t39))+24:])))
-							v6 = t40
-							t41 := v1
-							t42 := v2
-							if t41 != t42 {
-								t44 := v2
-								t45 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t44))+8:])))
-								v0 = t45
-								t46 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t45))+12:]))) = int32(t46)
-								t47 := v1
-								t48 := v0
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t47))+8:]))) = int32(t48)
-								goto l3
-							}
-							t49 := v2
-							t50 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t49))+20:])))
-							v0 = t50
-							var t51 int32
-							_ = t51
-							if t50 != 0 {
-								t52 := v2
-								t53 := t52 + int32(20)
-								t51 = t53
-							} else {
-								t54 := v2
-								t55 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t54))+16:])))
-								v0 = t55
-								if t55 == 0 {
-									goto l4
-								}
-								t57 := v2
-								t58 := t57 + int32(16)
-								t51 = t58
-							}
-							v3 = t51
-						l5:
-							{
-								t59 := v3
-								v7 = t59
-								t60 := v0
-								v1 = t60
-								t61 := t60 + int32(20)
-								v3 = t61
-								t62 := v1
-								t63 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t62))+20:])))
-								v0 = t63
-								if t63 != 0 {
-									goto l5
-								}
-								t64 := v1
-								t65 := t64 + int32(16)
-								v3 = t65
-								t66 := v1
-								t67 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t66))+16:])))
-								v0 = t67
-								if t67 != 0 {
-									goto l5
-								}
-							}
-							t68 := v7
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t68):]))) = int32(i32_const(0))
-							goto l3
-						}
-						t69 := v5
-						t70 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t69))+4:])))
-						v0 = t70
-						t71 := t70 & int32(3)
-						if t71 != int32(3) {
-							goto l1
-						}
-						t73 := v5
-						t74 := v0
-						t75 := t74 & i32_const(-2)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t73))+4:]))) = int32(t75)
-						t76 := v4
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t76)
-						t77 := v5
-						t78 := v4
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t77):]))) = int32(t78)
-						t79 := v2
-						t80 := v4
-						t81 := t80 | int32(1)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t79))+4:]))) = int32(t81)
-						goto l0
-					}
-				l2:
-					t82 := v1
-					t83 := v3
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t82))+8:]))) = int32(t83)
-					t84 := v3
-					t85 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t84))+12:]))) = int32(t85)
-					goto l1
-				}
-			l4:
-				v1 = i32_const(0)
-			}
-		l3:
-			t86 := v6
-			if t86 == 0 {
-				goto l1
-			}
-			{
-				t88 := v2
-				t89 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t88))+28:])))
-				v0 = t89
-				t90 := i32_shl(t89, int32(2))
-				v3 = t90
-				t91 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t90))+13180:])))
-				t92 := v2
-				if t91 == t92 {
-					t94 := v3
-					t95 := t94 + i32_const(13180)
-					t96 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t95):]))) = int32(t96)
-					t97 := v1
-					if t97 != 0 {
-						goto l6
-					}
-					t98 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-					t99 := v0
-					t100 := i32_rotl(i32_const(-2), t99)
-					t101 := t98 & t100
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t101)
-					goto l1
-				}
-				{
-					t102 := v2
-					t103 := v6
-					t104 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t103))+16:])))
-					if t102 == t104 {
-						t106 := v6
-						t107 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t106))+16:]))) = int32(t107)
-						goto l7
-					}
-					t108 := v6
-					t109 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t108))+20:]))) = int32(t109)
-				}
-			l7:
-				t110 := v1
-				if t110 == 0 {
-					goto l1
-				}
-			}
-		l6:
-			t112 := v1
-			t113 := v6
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t112))+24:]))) = int32(t113)
-			t114 := v2
-			t115 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t114))+16:])))
-			v0 = t115
-			if t115 != 0 {
-				t116 := v1
-				t117 := v0
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t116))+16:]))) = int32(t117)
-				t118 := v0
-				t119 := v1
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t118))+24:]))) = int32(t119)
-			}
-			t120 := v2
-			t121 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t120))+20:])))
-			v0 = t121
-			if t121 == 0 {
-				goto l1
-			}
-			t123 := v1
-			t124 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t123))+20:]))) = int32(t124)
-			t125 := v0
-			t126 := v1
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t125))+24:]))) = int32(t126)
-		}
-	l1:
-		t127 := v2
-		t128 := v5
-		if uint32(t127) >= uint32(t128) {
-			goto l0
-		}
-		t130 := v5
-		t131 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t130))+4:])))
-		v0 = t131
-		t132 := t131 & int32(1)
-		if t132 == 0 {
-			goto l0
-		}
-		{
-			{
-				{
-					{
-						t134 := v0
-						t135 := t134 & int32(2)
-						if t135 == 0 {
-							t137 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):])))
-							t138 := v5
-							if t137 == t138 {
-								t140 := v2
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(t140)
-								t141 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):])))
-								t142 := v4
-								t143 := t141 + t142
-								v0 = t143
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(t143)
-								t144 := v2
-								t145 := v0
-								t146 := t145 | int32(1)
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t144))+4:]))) = int32(t146)
-								t147 := v2
-								t148 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-								if t147 != t148 {
-									goto l0
-								}
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(i32_const(0))
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):]))) = int32(i32_const(0))
-								goto l0
-							}
-							t150 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-							v8 = t150
-							t151 := v5
-							if t150 == t151 {
-								t153 := v2
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):]))) = int32(t153)
-								t154 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):])))
-								t155 := v4
-								t156 := t154 + t155
-								v0 = t156
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t156)
-								t157 := v2
-								t158 := v0
-								t159 := t158 | int32(1)
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t157))+4:]))) = int32(t159)
-								t160 := v0
-								t161 := v2
-								t162 := t160 + t161
-								t163 := v0
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t162):]))) = int32(t163)
-								goto l0
-							}
-							t164 := v0
-							t165 := t164 & i32_const(-8)
-							t166 := v4
-							t167 := t165 + t166
-							v4 = t167
-							t168 := v5
-							t169 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t168))+12:])))
-							v1 = t169
-							t170 := v0
-							if uint32(t170) <= uint32(i32_const(255)) {
-								t172 := v5
-								t173 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t172))+8:])))
-								v3 = t173
-								t174 := v1
-								if t173 == t174 {
-									t176 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-									t177 := v0
-									t178 := i32_shr_u(t177, int32(3))
-									t179 := i32_rotl(i32_const(-2), t178)
-									t180 := t176 & t179
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t180)
-									goto l8
-								}
-								t181 := v1
-								t182 := v3
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t181))+8:]))) = int32(t182)
-								t183 := v3
-								t184 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t183))+12:]))) = int32(t184)
-								goto l8
-							}
-							t185 := v5
-							t186 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t185))+24:])))
-							v6 = t186
-							t187 := v1
-							t188 := v5
-							if t187 != t188 {
-								t190 := v5
-								t191 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t190))+8:])))
-								v0 = t191
-								t192 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t191))+12:]))) = int32(t192)
-								t193 := v1
-								t194 := v0
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t193))+8:]))) = int32(t194)
-								goto l9
-							}
-							t195 := v5
-							t196 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t195))+20:])))
-							v0 = t196
-							var t197 int32
-							_ = t197
-							if t196 != 0 {
-								t198 := v5
-								t199 := t198 + int32(20)
-								t197 = t199
-							} else {
-								t200 := v5
-								t201 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t200))+16:])))
-								v0 = t201
-								if t201 == 0 {
-									goto l10
-								}
-								t203 := v5
-								t204 := t203 + int32(16)
-								t197 = t204
-							}
-							v3 = t197
-						l11:
-							{
-								t205 := v3
-								v7 = t205
-								t206 := v0
-								v1 = t206
-								t207 := t206 + int32(20)
-								v3 = t207
-								t208 := v1
-								t209 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t208))+20:])))
-								v0 = t209
-								if t209 != 0 {
-									goto l11
-								}
-								t210 := v1
-								t211 := t210 + int32(16)
-								v3 = t211
-								t212 := v1
-								t213 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t212))+16:])))
-								v0 = t213
-								if t213 != 0 {
-									goto l11
-								}
-							}
-							t214 := v7
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t214):]))) = int32(i32_const(0))
-							goto l9
-						}
-						t215 := v5
-						t216 := v0
-						t217 := t216 & i32_const(-2)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t215))+4:]))) = int32(t217)
-						t218 := v2
-						t219 := v4
-						t220 := t218 + t219
-						t221 := v4
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t220):]))) = int32(t221)
-						t222 := v2
-						t223 := v4
-						t224 := t223 | int32(1)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t222))+4:]))) = int32(t224)
-						goto l12
-					}
-				l10:
-					v1 = i32_const(0)
-				}
-			l9:
-				t225 := v6
-				if t225 == 0 {
-					goto l8
-				}
-				{
-					t227 := v5
-					t228 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t227))+28:])))
-					v0 = t228
-					t229 := i32_shl(t228, int32(2))
-					v3 = t229
-					t230 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t229))+13180:])))
-					t231 := v5
-					if t230 == t231 {
-						t233 := v3
-						t234 := t233 + i32_const(13180)
-						t235 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t234):]))) = int32(t235)
-						t236 := v1
-						if t236 != 0 {
-							goto l13
-						}
-						t237 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-						t238 := v0
-						t239 := i32_rotl(i32_const(-2), t238)
-						t240 := t237 & t239
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t240)
-						goto l8
-					}
-					{
-						t241 := v5
-						t242 := v6
-						t243 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t242))+16:])))
-						if t241 == t243 {
-							t245 := v6
-							t246 := v1
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t245))+16:]))) = int32(t246)
-							goto l14
-						}
-						t247 := v6
-						t248 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t247))+20:]))) = int32(t248)
-					}
-				l14:
-					t249 := v1
-					if t249 == 0 {
-						goto l8
-					}
-				}
-			l13:
-				t251 := v1
-				t252 := v6
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t251))+24:]))) = int32(t252)
-				t253 := v5
-				t254 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t253))+16:])))
-				v0 = t254
-				if t254 != 0 {
-					t255 := v1
-					t256 := v0
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t255))+16:]))) = int32(t256)
-					t257 := v0
-					t258 := v1
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t257))+24:]))) = int32(t258)
-				}
-				t259 := v5
-				t260 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t259))+20:])))
-				v0 = t260
-				if t260 == 0 {
-					goto l8
-				}
-				t262 := v1
-				t263 := v0
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t262))+20:]))) = int32(t263)
-				t264 := v0
-				t265 := v1
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t264))+24:]))) = int32(t265)
-			}
-		l8:
-			t266 := v2
-			t267 := v4
-			t268 := t266 + t267
-			t269 := v4
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t268):]))) = int32(t269)
-			t270 := v2
-			t271 := v4
-			t272 := t271 | int32(1)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t270))+4:]))) = int32(t272)
-			t273 := v2
-			t274 := v8
-			if t273 != t274 {
-				goto l12
-			}
-			t276 := v4
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t276)
-			goto l0
-		}
-	l12:
-		t277 := v4
-		if uint32(t277) <= uint32(i32_const(255)) {
-			t279 := v4
-			t280 := t279 & i32_const(-8)
-			t281 := t280 + i32_const(12916)
-			v0 = t281
-			var t282 int32
-			_ = t282
-			{
-				t283 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-				v3 = t283
-				t284 := v4
-				t285 := i32_shr_u(t284, int32(3))
-				t286 := i32_shl(int32(1), t285)
-				v1 = t286
-				t287 := t283 & t286
-				if t287 == 0 {
-					t289 := v1
-					t290 := v3
-					t291 := t289 | t290
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t291)
-					t292 := v0
-					t282 = t292
-					goto l15
-				}
-				t293 := v0
-				t294 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t293))+8:])))
-				t282 = t294
-			}
-		l15:
-			v3 = t282
-			t295 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t282))+12:]))) = int32(t295)
-			t296 := v0
-			t297 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t296))+8:]))) = int32(t297)
-			t298 := v2
-			t299 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t298))+12:]))) = int32(t299)
-			t300 := v2
-			t301 := v3
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t300))+8:]))) = int32(t301)
-			goto l0
-		}
-		v1 = int32(31)
-		t302 := v4
-		if uint32(t302) <= uint32(i32_const(0xffffff)) {
-			t304 := v4
-			t305 := v4
-			t306 := i32_shr_u(t305, int32(8))
-			t307 := int32(bits.LeadingZeros32(uint32(t306)))
-			v0 = t307
-			t308 := int32(38) - t307
-			t309 := i32_shr_u(t304, t308)
-			t310 := t309 & int32(1)
-			t311 := v0
-			t312 := i32_shl(t311, int32(1))
-			t313 := t310 - t312
-			t314 := t313 + int32(62)
-			v1 = t314
-		}
-		t315 := v2
-		t316 := v1
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t315))+28:]))) = int32(t316)
-		t317 := v2
-		*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t317))+16:]))) = int64(i64_const(0))
-		t318 := v1
-		t319 := i32_shl(t318, int32(2))
-		t320 := t319 + i32_const(13180)
-		v3 = t320
-		var t321 int32
-		_ = t321
-		{
-			{
-				{
-					t322 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-					v0 = t322
-					t323 := v1
-					t324 := i32_shl(int32(1), t323)
-					v7 = t324
-					t325 := t322 & t324
-					if t325 == 0 {
-						t327 := v3
-						t328 := v2
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t327):]))) = int32(t328)
-						t329 := v0
-						t330 := v7
-						t331 := t329 | t330
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t331)
-						goto l16
-					}
-					t332 := v4
-					t333 := v1
-					t334 := i32_shr_u(t333, int32(1))
-					t335 := int32(25) - t334
-					t336 := v1
-					t338 := i32_const(0)
-					if t336 != int32(31) {
-						t338 = t335
-					}
-					t339 := i32_shl(t332, t338)
-					v1 = t339
-					t340 := v3
-					t341 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t340):])))
-					v3 = t341
-				l18:
-					{
-						t342 := v3
-						v0 = t342
-						t343 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t342))+4:])))
-						t344 := t343 & i32_const(-8)
-						t345 := v4
-						if t344 == t345 {
-							goto l17
-						}
-						t347 := v1
-						t348 := i32_shr_u(t347, int32(29))
-						v3 = t348
-						t349 := v1
-						t350 := i32_shl(t349, int32(1))
-						v1 = t350
-						t351 := v0
-						t352 := v3
-						t353 := t352 & int32(4)
-						t354 := t351 + t353
-						v7 = t354
-						t355 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t354))+16:])))
-						v3 = t355
-						if t355 != 0 {
-							goto l18
-						}
-					}
-					t356 := v7
-					t357 := v2
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t356))+16:]))) = int32(t357)
-					t358 := v0
-					v3 = t358
-				}
-			l16:
-				v1 = int32(24)
-				v4 = int32(8)
-				t359 := v2
-				v0 = t359
-				t360 := v2
-				t321 = t360
-				goto l19
-			}
-		l17:
-			t361 := v0
-			t362 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t361))+8:])))
-			v3 = t362
-			t363 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t362))+12:]))) = int32(t363)
-			t364 := v0
-			t365 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t364))+8:]))) = int32(t365)
-			v4 = int32(24)
-			v1 = int32(8)
-			t321 = i32_const(0)
-		}
-	l19:
-		v7 = t321
-		t366 := v1
-		t367 := v2
-		t368 := t366 + t367
-		t369 := v3
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t368):]))) = int32(t369)
-		t370 := v2
-		t371 := v0
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t370))+12:]))) = int32(t371)
-		t372 := v2
-		t373 := v4
-		t374 := t372 + t373
-		t375 := v7
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t374):]))) = int32(t375)
-		t376 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12908)):])))
-		t377 := t376 - int32(1)
-		v0 = t377
-		t378 := v0
-		t379 := i32_const(-1)
-		if t378 != 0 {
-			t379 = t377
-		}
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12908)):]))) = int32(t379)
-	}
-l0:
-}
-func (m *Module) _dispose_chunk(v0 int32, v1 int32) {
-	var v2, v3, v4, v5, v6, v7, v8 int32
-	_, _, _, _, _, _, _ = v2, v3, v4, v5, v6, v7, v8
-	t0 := v0
-	t1 := v1
-	t2 := t0 + t1
-	v5 = t2
-	{
-		{
-			t3 := v0
-			t4 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t3))+4:])))
-			v2 = t4
-			t5 := t4 & int32(1)
-			if t5 != 0 {
-				goto l0
-			}
-			t6 := v2
-			t7 := t6 & int32(2)
-			if t7 == 0 {
-				goto l1
-			}
-			t9 := v0
-			t10 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t9):])))
-			v2 = t10
-			t11 := v1
-			t12 := t10 + t11
-			v1 = t12
-			{
-				{
-					{
-						t13 := v0
-						t14 := v2
-						t15 := t13 - t14
-						v0 = t15
-						t16 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-						if t15 != t16 {
-							t18 := v0
-							t19 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t18))+12:])))
-							v3 = t19
-							t20 := v2
-							if uint32(t20) <= uint32(i32_const(255)) {
-								t22 := v3
-								t23 := v0
-								t24 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t23))+8:])))
-								v4 = t24
-								if t22 != t24 {
-									goto l2
-								}
-								t26 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-								t27 := v2
-								t28 := i32_shr_u(t27, int32(3))
-								t29 := i32_rotl(i32_const(-2), t28)
-								t30 := t26 & t29
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t30)
-								goto l0
-							}
-							t31 := v0
-							t32 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t31))+24:])))
-							v6 = t32
-							t33 := v0
-							t34 := v3
-							if t33 != t34 {
-								t36 := v0
-								t37 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t36))+8:])))
-								v2 = t37
-								t38 := v3
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t37))+12:]))) = int32(t38)
-								t39 := v3
-								t40 := v2
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t39))+8:]))) = int32(t40)
-								goto l3
-							}
-							t41 := v0
-							t42 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t41))+20:])))
-							v4 = t42
-							var t43 int32
-							_ = t43
-							if t42 != 0 {
-								t44 := v0
-								t45 := t44 + int32(20)
-								t43 = t45
-							} else {
-								t46 := v0
-								t47 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t46))+16:])))
-								v4 = t47
-								if t47 == 0 {
-									goto l4
-								}
-								t49 := v0
-								t50 := t49 + int32(16)
-								t43 = t50
-							}
-							v2 = t43
-						l5:
-							{
-								t51 := v2
-								v7 = t51
-								t52 := v4
-								v3 = t52
-								t53 := t52 + int32(20)
-								v2 = t53
-								t54 := v3
-								t55 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t54))+20:])))
-								v4 = t55
-								if t55 != 0 {
-									goto l5
-								}
-								t56 := v3
-								t57 := t56 + int32(16)
-								v2 = t57
-								t58 := v3
-								t59 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t58))+16:])))
-								v4 = t59
-								if t59 != 0 {
-									goto l5
-								}
-							}
-							t60 := v7
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t60):]))) = int32(i32_const(0))
-							goto l3
-						}
-						t61 := v5
-						t62 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t61))+4:])))
-						v2 = t62
-						t63 := t62 & int32(3)
-						if t63 != int32(3) {
-							goto l0
-						}
-						t65 := v5
-						t66 := v2
-						t67 := t66 & i32_const(-2)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t65))+4:]))) = int32(t67)
-						t68 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t68)
-						t69 := v5
-						t70 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t69):]))) = int32(t70)
-						t71 := v0
-						t72 := v1
-						t73 := t72 | int32(1)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t71))+4:]))) = int32(t73)
-						return
-					}
-				l2:
-					t74 := v3
-					t75 := v4
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t74))+8:]))) = int32(t75)
-					t76 := v4
-					t77 := v3
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t76))+12:]))) = int32(t77)
-					goto l0
-				}
-			l4:
-				v3 = i32_const(0)
-			}
-		l3:
-			t78 := v6
-			if t78 == 0 {
-				goto l0
-			}
-			{
-				t80 := v0
-				t81 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t80))+28:])))
-				v2 = t81
-				t82 := i32_shl(t81, int32(2))
-				v4 = t82
-				t83 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t82))+13180:])))
-				t84 := v0
-				if t83 == t84 {
-					t86 := v4
-					t87 := t86 + i32_const(13180)
-					t88 := v3
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t87):]))) = int32(t88)
-					t89 := v3
-					if t89 != 0 {
-						goto l6
-					}
-					t90 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-					t91 := v2
-					t92 := i32_rotl(i32_const(-2), t91)
-					t93 := t90 & t92
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t93)
-					goto l0
-				}
-				{
-					t94 := v0
-					t95 := v6
-					t96 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t95))+16:])))
-					if t94 == t96 {
-						t98 := v6
-						t99 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t98))+16:]))) = int32(t99)
-						goto l7
-					}
-					t100 := v6
-					t101 := v3
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t100))+20:]))) = int32(t101)
-				}
-			l7:
-				t102 := v3
-				if t102 == 0 {
-					goto l0
-				}
-			}
-		l6:
-			t104 := v3
-			t105 := v6
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t104))+24:]))) = int32(t105)
-			t106 := v0
-			t107 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t106))+16:])))
-			v2 = t107
-			if t107 != 0 {
-				t108 := v3
-				t109 := v2
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t108))+16:]))) = int32(t109)
-				t110 := v2
-				t111 := v3
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t110))+24:]))) = int32(t111)
-			}
-			t112 := v0
-			t113 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t112))+20:])))
-			v2 = t113
-			if t113 == 0 {
-				goto l0
-			}
-			t115 := v3
-			t116 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t115))+20:]))) = int32(t116)
-			t117 := v2
-			t118 := v3
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t117))+24:]))) = int32(t118)
-		}
-	l0:
-		{
-			{
-				{
-					{
-						t119 := v5
-						t120 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t119))+4:])))
-						v2 = t120
-						t121 := t120 & int32(2)
-						if t121 == 0 {
-							t123 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):])))
-							t124 := v5
-							if t123 == t124 {
-								t126 := v0
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12900)):]))) = int32(t126)
-								t127 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):])))
-								t128 := v1
-								t129 := t127 + t128
-								v1 = t129
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12888)):]))) = int32(t129)
-								t130 := v0
-								t131 := v1
-								t132 := t131 | int32(1)
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t130))+4:]))) = int32(t132)
-								t133 := v0
-								t134 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-								if t133 != t134 {
-									goto l1
-								}
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(i32_const(0))
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):]))) = int32(i32_const(0))
-								return
-							}
-							t136 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):])))
-							v8 = t136
-							t137 := v5
-							if t136 == t137 {
-								t139 := v0
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12896)):]))) = int32(t139)
-								t140 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):])))
-								t141 := v1
-								t142 := t140 + t141
-								v1 = t142
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t142)
-								t143 := v0
-								t144 := v1
-								t145 := t144 | int32(1)
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t143))+4:]))) = int32(t145)
-								t146 := v0
-								t147 := v1
-								t148 := t146 + t147
-								t149 := v1
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t148):]))) = int32(t149)
-								return
-							}
-							t150 := v2
-							t151 := t150 & i32_const(-8)
-							t152 := v1
-							t153 := t151 + t152
-							v1 = t153
-							t154 := v5
-							t155 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t154))+12:])))
-							v3 = t155
-							t156 := v2
-							if uint32(t156) <= uint32(i32_const(255)) {
-								t158 := v5
-								t159 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t158))+8:])))
-								v4 = t159
-								t160 := v3
-								if t159 == t160 {
-									t162 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-									t163 := v2
-									t164 := i32_shr_u(t163, int32(3))
-									t165 := i32_rotl(i32_const(-2), t164)
-									t166 := t162 & t165
-									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t166)
-									goto l8
-								}
-								t167 := v3
-								t168 := v4
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t167))+8:]))) = int32(t168)
-								t169 := v4
-								t170 := v3
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t169))+12:]))) = int32(t170)
-								goto l8
-							}
-							t171 := v5
-							t172 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t171))+24:])))
-							v6 = t172
-							t173 := v3
-							t174 := v5
-							if t173 != t174 {
-								t176 := v5
-								t177 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t176))+8:])))
-								v2 = t177
-								t178 := v3
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t177))+12:]))) = int32(t178)
-								t179 := v3
-								t180 := v2
-								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t179))+8:]))) = int32(t180)
-								goto l9
-							}
-							t181 := v5
-							t182 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t181))+20:])))
-							v4 = t182
-							var t183 int32
-							_ = t183
-							if t182 != 0 {
-								t184 := v5
-								t185 := t184 + int32(20)
-								t183 = t185
-							} else {
-								t186 := v5
-								t187 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t186))+16:])))
-								v4 = t187
-								if t187 == 0 {
-									goto l10
-								}
-								t189 := v5
-								t190 := t189 + int32(16)
-								t183 = t190
-							}
-							v2 = t183
-						l11:
-							{
-								t191 := v2
-								v7 = t191
-								t192 := v4
-								v3 = t192
-								t193 := t192 + int32(20)
-								v2 = t193
-								t194 := v3
-								t195 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t194))+20:])))
-								v4 = t195
-								if t195 != 0 {
-									goto l11
-								}
-								t196 := v3
-								t197 := t196 + int32(16)
-								v2 = t197
-								t198 := v3
-								t199 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t198))+16:])))
-								v4 = t199
-								if t199 != 0 {
-									goto l11
-								}
-							}
-							t200 := v7
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t200):]))) = int32(i32_const(0))
-							goto l9
-						}
-						t201 := v5
-						t202 := v2
-						t203 := t202 & i32_const(-2)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t201))+4:]))) = int32(t203)
-						t204 := v0
-						t205 := v1
-						t206 := t204 + t205
-						t207 := v1
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t206):]))) = int32(t207)
-						t208 := v0
-						t209 := v1
-						t210 := t209 | int32(1)
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t208))+4:]))) = int32(t210)
-						goto l12
-					}
-				l10:
-					v3 = i32_const(0)
-				}
-			l9:
-				t211 := v6
-				if t211 == 0 {
-					goto l8
-				}
-				{
-					t213 := v5
-					t214 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t213))+28:])))
-					v2 = t214
-					t215 := i32_shl(t214, int32(2))
-					v4 = t215
-					t216 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t215))+13180:])))
-					t217 := v5
-					if t216 == t217 {
-						t219 := v4
-						t220 := t219 + i32_const(13180)
-						t221 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t220):]))) = int32(t221)
-						t222 := v3
-						if t222 != 0 {
-							goto l13
-						}
-						t223 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-						t224 := v2
-						t225 := i32_rotl(i32_const(-2), t224)
-						t226 := t223 & t225
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t226)
-						goto l8
-					}
-					{
-						t227 := v5
-						t228 := v6
-						t229 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t228))+16:])))
-						if t227 == t229 {
-							t231 := v6
-							t232 := v3
-							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t231))+16:]))) = int32(t232)
-							goto l14
-						}
-						t233 := v6
-						t234 := v3
-						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t233))+20:]))) = int32(t234)
-					}
-				l14:
-					t235 := v3
-					if t235 == 0 {
-						goto l8
-					}
-				}
-			l13:
-				t237 := v3
-				t238 := v6
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t237))+24:]))) = int32(t238)
-				t239 := v5
-				t240 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t239))+16:])))
-				v2 = t240
-				if t240 != 0 {
-					t241 := v3
-					t242 := v2
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t241))+16:]))) = int32(t242)
-					t243 := v2
-					t244 := v3
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t243))+24:]))) = int32(t244)
-				}
-				t245 := v5
-				t246 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t245))+20:])))
-				v2 = t246
-				if t246 == 0 {
-					goto l8
-				}
-				t248 := v3
-				t249 := v2
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t248))+20:]))) = int32(t249)
-				t250 := v2
-				t251 := v3
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t250))+24:]))) = int32(t251)
-			}
-		l8:
-			t252 := v0
-			t253 := v1
-			t254 := t252 + t253
-			t255 := v1
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t254):]))) = int32(t255)
-			t256 := v0
-			t257 := v1
-			t258 := t257 | int32(1)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t256))+4:]))) = int32(t258)
-			t259 := v0
-			t260 := v8
-			if t259 != t260 {
-				goto l12
-			}
-			t262 := v1
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t262)
-			return
-		}
-	l12:
-		t263 := v1
-		if uint32(t263) <= uint32(i32_const(255)) {
-			t265 := v1
-			t266 := t265 & i32_const(-8)
-			t267 := t266 + i32_const(12916)
-			v2 = t267
-			var t268 int32
-			_ = t268
-			{
-				t269 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):])))
-				v3 = t269
-				t270 := v1
-				t271 := i32_shr_u(t270, int32(3))
-				t272 := i32_shl(int32(1), t271)
-				v1 = t272
-				t273 := t269 & t272
-				if t273 == 0 {
-					t275 := v1
-					t276 := v3
-					t277 := t275 | t276
-					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(t277)
-					t278 := v2
-					t268 = t278
-					goto l15
-				}
-				t279 := v2
-				t280 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t279))+8:])))
-				t268 = t280
-			}
-		l15:
-			v1 = t268
-			t281 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t268))+12:]))) = int32(t281)
-			t282 := v2
-			t283 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t282))+8:]))) = int32(t283)
-			t284 := v0
-			t285 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t284))+12:]))) = int32(t285)
-			t286 := v0
-			t287 := v1
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t286))+8:]))) = int32(t287)
-			return
-		}
-		v3 = int32(31)
-		t288 := v1
-		if uint32(t288) <= uint32(i32_const(0xffffff)) {
-			t290 := v1
-			t291 := v1
-			t292 := i32_shr_u(t291, int32(8))
-			t293 := int32(bits.LeadingZeros32(uint32(t292)))
-			v2 = t293
-			t294 := int32(38) - t293
-			t295 := i32_shr_u(t290, t294)
-			t296 := t295 & int32(1)
-			t297 := v2
-			t298 := i32_shl(t297, int32(1))
-			t299 := t296 - t298
-			t300 := t299 + int32(62)
-			v3 = t300
-		}
-		t301 := v0
-		t302 := v3
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t301))+28:]))) = int32(t302)
-		t303 := v0
-		*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t303))+16:]))) = int64(i64_const(0))
-		t304 := v3
-		t305 := i32_shl(t304, int32(2))
-		t306 := t305 + i32_const(13180)
-		v2 = t306
-		t307 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
-		v4 = t307
-		t308 := v3
-		t309 := i32_shl(int32(1), t308)
-		v7 = t309
-		t310 := t307 & t309
-		if t310 == 0 {
-			t312 := v2
-			t313 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t312):]))) = int32(t313)
-			t314 := v4
-			t315 := v7
-			t316 := t314 | t315
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t316)
-			t317 := v0
-			t318 := v2
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t317))+24:]))) = int32(t318)
-			t319 := v0
-			t320 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t319))+8:]))) = int32(t320)
-			t321 := v0
-			t322 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t321))+12:]))) = int32(t322)
-			return
-		}
-		t323 := v1
-		t324 := v3
-		t325 := i32_shr_u(t324, int32(1))
-		t326 := int32(25) - t325
-		t327 := v3
-		t329 := i32_const(0)
-		if t327 != int32(31) {
-			t329 = t326
-		}
-		t330 := i32_shl(t323, t329)
-		v3 = t330
-		t331 := v2
-		t332 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t331):])))
-		v2 = t332
-		{
-		l17:
-			{
-				t333 := v2
-				v4 = t333
-				t334 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t333))+4:])))
-				t335 := t334 & i32_const(-8)
-				t336 := v1
-				if t335 == t336 {
-					goto l16
-				}
-				t338 := v3
-				t339 := i32_shr_u(t338, int32(29))
-				v2 = t339
-				t340 := v3
-				t341 := i32_shl(t340, int32(1))
-				v3 = t341
-				t342 := v4
-				t343 := v2
-				t344 := t343 & int32(4)
-				t345 := t342 + t344
-				v7 = t345
-				t346 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t345))+16:])))
-				v2 = t346
-				if t346 != 0 {
-					goto l17
-				}
-			}
-			t347 := v7
-			t348 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t347))+16:]))) = int32(t348)
-			t349 := v0
-			t350 := v4
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t349))+24:]))) = int32(t350)
-			t351 := v0
-			t352 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t351))+12:]))) = int32(t352)
-			t353 := v0
-			t354 := v0
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t353))+8:]))) = int32(t354)
-			return
-		}
-	l16:
-		t355 := v4
-		t356 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t355))+8:])))
-		v1 = t356
-		t357 := v0
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t356))+12:]))) = int32(t357)
-		t358 := v4
-		t359 := v0
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t358))+8:]))) = int32(t359)
-		t360 := v0
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t360))+24:]))) = int32(i32_const(0))
-		t361 := v0
-		t362 := v4
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t361))+12:]))) = int32(t362)
-		t363 := v0
-		t364 := v1
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t363))+8:]))) = int32(t364)
-	}
-l1:
-}
-func (m *Module) Xaligned_alloc(v0 int32, v1 int32) int32 {
-	var v2, v3, v4, v5, v6 int32
-	_, _, _, _, _ = v2, v3, v4, v5, v6
-	t0 := v0
-	if uint32(t0) <= uint32(int32(16)) {
-		t2 := v1
-		t3 := m._dlmalloc(t2)
-		return t3
-	}
-	var t4 int32
-	_ = t4
-	{
-		{
-			t5 := v0
-			t6 := v0
-			t8 := t5
-			if uint32(t6) <= uint32(int32(16)) {
-				t8 = int32(16)
-			}
-			v3 = t8
-			t9 := v3
-			t10 := t9 - int32(1)
-			t11 := t8 & t10
-			if t11 == 0 {
-				t13 := v3
-				v0 = t13
-				goto l0
-			}
-			v2 = int32(32)
-		l1:
-			{
-				t14 := v2
-				v0 = t14
-				t15 := i32_shl(t14, int32(1))
-				v2 = t15
-				t16 := v0
-				t17 := v3
-				if uint32(t16) < uint32(t17) {
-					goto l1
-				}
-			}
-		}
-	l0:
-		t19 := v0
-		t20 := i32_const(-64) - t19
-		t21 := v1
-		if uint32(t20) <= uint32(t21) {
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13372)):]))) = int32(int32(48))
-			t4 = i32_const(0)
-			goto l2
-		}
-		t23 := v0
-		t24 := v1
-		t25 := t24 + int32(19)
-		t26 := t25 & i32_const(-16)
-		t27 := v1
-		t29 := t26
-		if uint32(t27) < uint32(int32(11)) {
-			t29 = int32(16)
-		}
-		v3 = t29
-		t30 := t23 + t29
-		t31 := t30 + int32(12)
-		t32 := m._dlmalloc(t31)
-		v2 = t32
-		t4 = i32_const(0)
-		if t32 == 0 {
-			goto l2
-		}
-		_ = i32_const(0)
-		_ = i32_const(0)
-		t34 := v2
-		t35 := t34 - int32(8)
-		v1 = t35
-		{
-			t36 := v0
-			t37 := t36 - int32(1)
-			t38 := v2
-			t39 := t37 & t38
-			if t39 == 0 {
-				t41 := v1
-				v0 = t41
-				goto l3
-			}
-			t42 := v2
-			t43 := t42 - int32(4)
-			v5 = t43
-			t44 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t43):])))
-			v6 = t44
-			t45 := t44 & i32_const(-8)
-			t46 := v0
-			t47 := v2
-			t48 := t46 + t47
-			t49 := t48 - int32(1)
-			t50 := v0
-			t51 := i32_const(0) - t50
-			t52 := t49 & t51
-			t53 := t52 - int32(8)
-			v2 = t53
-			t54 := v0
-			t55 := v2
-			t56 := v1
-			t57 := t55 - t56
-			t59 := i32_const(0)
-			if uint32(t57) <= uint32(int32(15)) {
-				t59 = t54
-			}
-			t60 := t53 + t59
-			v0 = t60
-			t61 := v1
-			t62 := t60 - t61
-			v2 = t62
-			t63 := t45 - t62
-			v4 = t63
-			t64 := v6
-			t65 := t64 & int32(3)
-			if t65 == 0 {
-				t67 := v0
-				t68 := v4
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t67))+4:]))) = int32(t68)
-				t69 := v0
-				t70 := v1
-				t71 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t70):])))
-				t72 := v2
-				t73 := t71 + t72
-				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t69):]))) = int32(t73)
-				goto l3
-			}
-			t74 := v0
-			t75 := v4
-			t76 := v0
-			t77 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t76))+4:])))
-			t78 := t77 & int32(1)
-			t79 := t75 | t78
-			t80 := t79 | int32(2)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t74))+4:]))) = int32(t80)
-			t81 := v0
-			t82 := v4
-			t83 := t81 + t82
-			v4 = t83
-			t84 := v4
-			t85 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t84))+4:])))
-			t86 := t85 | int32(1)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t83))+4:]))) = int32(t86)
-			t87 := v5
-			t88 := v2
-			t89 := v5
-			t90 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t89):])))
-			t91 := t90 & int32(1)
-			t92 := t88 | t91
-			t93 := t92 | int32(2)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t87):]))) = int32(t93)
-			t94 := v1
-			t95 := v2
-			t96 := t94 + t95
-			v4 = t96
-			t97 := v4
-			t98 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t97))+4:])))
-			t99 := t98 | int32(1)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t96))+4:]))) = int32(t99)
-			t100 := v1
-			t101 := v2
-			m._dispose_chunk(t100, t101)
-		}
-	l3:
-		{
-			t102 := v0
-			t103 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t102))+4:])))
-			v1 = t103
-			t104 := t103 & int32(3)
-			if t104 == 0 {
-				goto l4
-			}
-			t106 := v1
-			t107 := t106 & i32_const(-8)
-			v2 = t107
-			t108 := v3
-			t109 := t108 + int32(16)
-			if uint32(t107) <= uint32(t109) {
-				goto l4
-			}
-			t111 := v0
-			t112 := v3
-			t113 := v1
-			t114 := t113 & int32(1)
-			t115 := t112 | t114
-			t116 := t115 | int32(2)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t111))+4:]))) = int32(t116)
-			t117 := v0
-			t118 := v3
-			t119 := t117 + t118
-			v1 = t119
-			t120 := v2
-			t121 := v3
-			t122 := t120 - t121
-			v3 = t122
-			t123 := t122 | int32(3)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t119))+4:]))) = int32(t123)
-			t124 := v0
-			t125 := v2
-			t126 := t124 + t125
-			v2 = t126
-			t127 := v2
-			t128 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t127))+4:])))
-			t129 := t128 | int32(1)
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t126))+4:]))) = int32(t129)
-			t130 := v1
-			t131 := v3
-			m._dispose_chunk(t130, t131)
-		}
-	l4:
-		t132 := v0
-		t133 := t132 + int32(8)
-		t4 = t133
-	}
-l2:
-	return t4
-}
-func (m *Module) _sbrk(v0 int32) int32 {
-	t0 := v0
-	if t0 == 0 {
-		t2 := int32(len(*m.memory) >> 16)
-		t3 := i32_shl(t2, int32(16))
-		return t3
-	}
-	{
-		t4 := v0
-		t5 := t4 & i32_const(0xffff)
-		if t5 != 0 {
-			goto l0
-		}
-		t6 := v0
-		if t6 < i32_const(0) {
-			goto l0
-		}
-		t8 := v0
-		t9 := i32_shr_u(t8, int32(16))
-		t10 := m.Memory.Grow(t9, m.maxMem)
-		v0 = t10
-		if t10 == i32_const(-1) {
-			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13372)):]))) = int32(int32(48))
-			return i32_const(-1)
-		}
-		t12 := v0
-		t13 := i32_shl(t12, int32(16))
-		return t13
-	}
-l0:
-	m._abort()
-	panic("unreachable")
-}
 func (m *Module) ___cxa_atexit(v0 int32) {
 	var v1, v2 int32
 	_, _ = v1, v2
-	t0 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13376)):])))
+	t0 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
 	v1 = t0
 	if t0 == 0 {
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13376)):]))) = int32(i32_const(13384))
-		v1 = i32_const(13384)
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(i32_const(12888))
+		v1 = i32_const(12888)
 	}
-	t2 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13380)):])))
+	t2 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):])))
 	v2 = t2
 	if t2 == int32(32) {
 		{
@@ -36408,15 +32238,15 @@ func (m *Module) ___cxa_atexit(v0 int32) {
 			return
 		}
 		t14 := v1
-		t15 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13376)):])))
+		t15 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):])))
 		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t14):]))) = int32(t15)
 		t16 := v1
-		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13376)):]))) = int32(t16)
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12880)):]))) = int32(t16)
 		v2 = i32_const(0)
 	}
 	t17 := v2
 	t18 := t17 + int32(1)
-	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13380)):]))) = int32(t18)
+	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12884)):]))) = int32(t18)
 	t19 := v1
 	t20 := v2
 	t21 := i32_shl(t20, int32(2))
@@ -36586,6 +32416,4176 @@ l1:
 	t51 := v0
 	t52 := t50 - t51
 	return t52
+}
+func (m *Module) _sbrk(v0 int32) int32 {
+	t0 := v0
+	if t0 == 0 {
+		t2 := int32(len(*m.memory) >> 16)
+		t3 := i32_shl(t2, int32(16))
+		return t3
+	}
+	{
+		t4 := v0
+		t5 := t4 & i32_const(0xffff)
+		if t5 != 0 {
+			goto l0
+		}
+		t6 := v0
+		if t6 < i32_const(0) {
+			goto l0
+		}
+		t8 := v0
+		t9 := i32_shr_u(t8, int32(16))
+		t10 := m.Memory.Grow(t9, m.maxMem)
+		v0 = t10
+		if t10 == i32_const(-1) {
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(int32(48))
+			return i32_const(-1)
+		}
+		t12 := v0
+		t13 := i32_shl(t12, int32(16))
+		return t13
+	}
+l0:
+	m._abort()
+	panic("unreachable")
+}
+func (m *Module) Xmalloc(v0 int32) int32 {
+	t0 := v0
+	t1 := m._dlmalloc(t0)
+	return t1
+}
+func (m *Module) _dlmalloc(v0 int32) int32 {
+	var v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11 int32
+	_, _, _, _, _, _, _, _, _, _, _ = v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11
+	t0 := m.___stack_pointer
+	t1 := t0 - int32(16)
+	v10 = t1
+	m.___stack_pointer = t1
+	t2 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):])))
+	v7 = t2
+	if t2 == 0 {
+		t4 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13732)):])))
+		v3 = t4
+		if t4 == 0 {
+			*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13744)):]))) = int64(i64_const(-1))
+			*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13736)):]))) = int64(i64_const(0x1000000010000))
+			t6 := v10
+			t7 := t6 + int32(8)
+			t8 := t7 & i32_const(-16)
+			t9 := t8 ^ i32_const(0x55555558)
+			v3 = t9
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13732)):]))) = int32(t9)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13752)):]))) = int32(i32_const(0))
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13704)):]))) = int32(i32_const(0))
+		}
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13708)):]))) = int32(i32_const(79296))
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13276)):]))) = int32(i32_const(79296))
+		t10 := v3
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13296)):]))) = int32(t10)
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13292)):]))) = int32(i32_const(-1))
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13712)):]))) = int32(i32_const(51776))
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13696)):]))) = int32(i32_const(51776))
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13692)):]))) = int32(i32_const(51776))
+	l0:
+		{
+			t11 := v1
+			t12 := t11 + i32_const(13320)
+			t13 := v1
+			t14 := t13 + i32_const(13308)
+			v2 = t14
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t12):]))) = int32(t14)
+			t15 := v2
+			t16 := v1
+			t17 := t16 + i32_const(13300)
+			v4 = t17
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t15):]))) = int32(t17)
+			t18 := v1
+			t19 := t18 + i32_const(13312)
+			t20 := v4
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t19):]))) = int32(t20)
+			t21 := v1
+			t22 := t21 + i32_const(13328)
+			t23 := v1
+			t24 := t23 + i32_const(13316)
+			v4 = t24
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t22):]))) = int32(t24)
+			t25 := v4
+			t26 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t25):]))) = int32(t26)
+			t27 := v1
+			t28 := t27 + i32_const(13336)
+			t29 := v1
+			t30 := t29 + i32_const(13324)
+			v2 = t30
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t28):]))) = int32(t30)
+			t31 := v2
+			t32 := v4
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t31):]))) = int32(t32)
+			t33 := v1
+			t34 := t33 + i32_const(13332)
+			t35 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t34):]))) = int32(t35)
+			t36 := v1
+			t37 := t36 + int32(32)
+			v1 = t37
+			if t37 != i32_const(256) {
+				goto l0
+			}
+		}
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x1ffcc)):]))) = int32(int32(56))
+		t39 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13748)):])))
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13288)):]))) = int32(t39)
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(i32_const(79304))
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(i32_const(51712))
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(79308)):]))) = int32(i32_const(51713))
+		v7 = i32_const(79304)
+	}
+	{
+		{
+			{
+				{
+					{
+						{
+							{
+								{
+									{
+										{
+											{
+												{
+													t40 := v0
+													if uint32(t40) <= uint32(i32_const(236)) {
+														t42 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+														v4 = t42
+														t43 := v0
+														t44 := t43 + int32(19)
+														t45 := t44 & i32_const(496)
+														t46 := v0
+														t48 := t45
+														if uint32(t46) < uint32(int32(11)) {
+															t48 = int32(16)
+														}
+														v6 = t48
+														t49 := i32_shr_u(t48, int32(3))
+														v0 = t49
+														t50 := i32_shr_u(t42, t49)
+														v1 = t50
+														t51 := t50 & int32(3)
+														if t51 != 0 {
+															{
+																t52 := v1
+																t53 := t52 & int32(1)
+																t54 := v0
+																t55 := t53 | t54
+																t56 := t55 ^ int32(1)
+																v2 = t56
+																t57 := i32_shl(t56, int32(3))
+																v0 = t57
+																t58 := t57 + i32_const(13300)
+																v1 = t58
+																t59 := v0
+																t60 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t59))+13308:])))
+																v0 = t60
+																t61 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t60))+8:])))
+																v5 = t61
+																if t58 == t61 {
+																	t63 := v4
+																	t64 := v2
+																	t65 := i32_rotl(i32_const(-2), t64)
+																	t66 := t63 & t65
+																	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t66)
+																	goto l1
+																}
+																t67 := v1
+																t68 := v5
+																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t67))+8:]))) = int32(t68)
+																t69 := v5
+																t70 := v1
+																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t69))+12:]))) = int32(t70)
+															}
+														l1:
+															t71 := v0
+															t72 := t71 + int32(8)
+															v1 = t72
+															t73 := v0
+															t74 := v2
+															t75 := i32_shl(t74, int32(3))
+															v2 = t75
+															t76 := t75 | int32(3)
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t73))+4:]))) = int32(t76)
+															t77 := v0
+															t78 := v2
+															t79 := t77 + t78
+															v0 = t79
+															t80 := v0
+															t81 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t80))+4:])))
+															t82 := t81 | int32(1)
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t79))+4:]))) = int32(t82)
+															goto l2
+														}
+														t83 := v6
+														t84 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):])))
+														v8 = t84
+														if uint32(t83) <= uint32(t84) {
+															goto l3
+														}
+														t86 := v1
+														if t86 != 0 {
+															{
+																t87 := v0
+																t88 := i32_shl(int32(2), t87)
+																v2 = t88
+																t89 := v2
+																t90 := i32_const(0) - t89
+																t91 := t88 | t90
+																t92 := v1
+																t93 := v0
+																t94 := i32_shl(t92, t93)
+																t95 := t91 & t94
+																t96 := int32(bits.TrailingZeros32(uint32(t95)))
+																v1 = t96
+																t97 := i32_shl(t96, int32(3))
+																v0 = t97
+																t98 := t97 + i32_const(13300)
+																v2 = t98
+																t99 := v0
+																t100 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t99))+13308:])))
+																v0 = t100
+																t101 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t100))+8:])))
+																v5 = t101
+																if t98 == t101 {
+																	t103 := v4
+																	t104 := v1
+																	t105 := i32_rotl(i32_const(-2), t104)
+																	t106 := t103 & t105
+																	v4 = t106
+																	*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t106)
+																	goto l4
+																}
+																t107 := v2
+																t108 := v5
+																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t107))+8:]))) = int32(t108)
+																t109 := v5
+																t110 := v2
+																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t109))+12:]))) = int32(t110)
+															}
+														l4:
+															t111 := v0
+															t112 := v6
+															t113 := t112 | int32(3)
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t111))+4:]))) = int32(t113)
+															t114 := v0
+															t115 := v1
+															t116 := i32_shl(t115, int32(3))
+															v1 = t116
+															t117 := t114 + t116
+															t118 := v1
+															t119 := v6
+															t120 := t118 - t119
+															v5 = t120
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t117):]))) = int32(t120)
+															t121 := v0
+															t122 := v6
+															t123 := t121 + t122
+															v3 = t123
+															t124 := v5
+															t125 := t124 | int32(1)
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t123))+4:]))) = int32(t125)
+															t126 := v8
+															if t126 != 0 {
+																t127 := v8
+																t128 := t127 & i32_const(-8)
+																t129 := t128 + i32_const(13300)
+																v1 = t129
+																t130 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+																v2 = t130
+																var t131 int32
+																_ = t131
+																{
+																	t132 := v4
+																	t133 := v8
+																	t134 := i32_shr_u(t133, int32(3))
+																	t135 := i32_shl(int32(1), t134)
+																	v7 = t135
+																	t136 := t132 & t135
+																	if t136 == 0 {
+																		t138 := v4
+																		t139 := v7
+																		t140 := t138 | t139
+																		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t140)
+																		t141 := v1
+																		t131 = t141
+																		goto l5
+																	}
+																	t142 := v1
+																	t143 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t142))+8:])))
+																	t131 = t143
+																}
+															l5:
+																v4 = t131
+																t144 := v2
+																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t131))+12:]))) = int32(t144)
+																t145 := v1
+																t146 := v2
+																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t145))+8:]))) = int32(t146)
+																t147 := v2
+																t148 := v1
+																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t147))+12:]))) = int32(t148)
+																t149 := v2
+																t150 := v4
+																*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t149))+8:]))) = int32(t150)
+															}
+															t151 := v0
+															t152 := t151 + int32(8)
+															v1 = t152
+															t153 := v3
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):]))) = int32(t153)
+															t154 := v5
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t154)
+															goto l2
+														}
+														t155 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+														v11 = t155
+														if t155 == 0 {
+															goto l3
+														}
+														t157 := v11
+														t158 := int32(bits.TrailingZeros32(uint32(t157)))
+														t159 := i32_shl(t158, int32(2))
+														t160 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t159))+13564:])))
+														v2 = t160
+														t161 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t160))+4:])))
+														t162 := t161 & i32_const(-8)
+														t163 := v6
+														t164 := t162 - t163
+														v3 = t164
+														t165 := v2
+														v0 = t165
+													l7:
+														{
+															{
+																t166 := v0
+																t167 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t166))+16:])))
+																v1 = t167
+																if t167 == 0 {
+																	t169 := v0
+																	t170 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t169))+20:])))
+																	v1 = t170
+																	if t170 == 0 {
+																		goto l6
+																	}
+																}
+																t172 := v1
+																t173 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t172))+4:])))
+																t174 := t173 & i32_const(-8)
+																t175 := v6
+																t176 := t174 - t175
+																v0 = t176
+																t177 := v3
+																t178 := v0
+																t179 := v3
+																var t180 int32
+																if uint32(t178) < uint32(t179) {
+																	t180 = 1
+																}
+																v0 = t180
+																t181 := t177
+																if t180 != 0 {
+																	t181 = t176
+																}
+																v3 = t181
+																t182 := v1
+																t183 := v2
+																t184 := v0
+																t185 := t183
+																if t184 != 0 {
+																	t185 = t182
+																}
+																v2 = t185
+																t186 := v1
+																v0 = t186
+																goto l7
+															}
+														l6:
+														}
+														t187 := v2
+														t188 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t187))+24:])))
+														v9 = t188
+														t189 := v2
+														t190 := v2
+														t191 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t190))+12:])))
+														v1 = t191
+														if t189 != t191 {
+															t193 := v2
+															t194 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t193))+8:])))
+															v0 = t194
+															t195 := v1
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t194))+12:]))) = int32(t195)
+															t196 := v1
+															t197 := v0
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t196))+8:]))) = int32(t197)
+															goto l8
+														}
+														t198 := v2
+														t199 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t198))+20:])))
+														v0 = t199
+														var t200 int32
+														_ = t200
+														if t199 != 0 {
+															t201 := v2
+															t202 := t201 + int32(20)
+															t200 = t202
+														} else {
+															t203 := v2
+															t204 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t203))+16:])))
+															v0 = t204
+															if t204 == 0 {
+																goto l9
+															}
+															t206 := v2
+															t207 := t206 + int32(16)
+															t200 = t207
+														}
+														v5 = t200
+													l10:
+														{
+															t208 := v5
+															v7 = t208
+															t209 := v0
+															v1 = t209
+															t210 := t209 + int32(20)
+															v5 = t210
+															t211 := v1
+															t212 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t211))+20:])))
+															v0 = t212
+															if t212 != 0 {
+																goto l10
+															}
+															t213 := v1
+															t214 := t213 + int32(16)
+															v5 = t214
+															t215 := v1
+															t216 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t215))+16:])))
+															v0 = t216
+															if t216 != 0 {
+																goto l10
+															}
+														}
+														t217 := v7
+														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t217):]))) = int32(i32_const(0))
+														goto l8
+													}
+													v6 = i32_const(-1)
+													t218 := v0
+													if uint32(t218) > uint32(i32_const(-65)) {
+														goto l3
+													}
+													t220 := v0
+													t221 := t220 + int32(19)
+													v1 = t221
+													t222 := t221 & i32_const(-16)
+													v6 = t222
+													t223 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+													v8 = t223
+													if t223 == 0 {
+														goto l3
+													}
+													v9 = int32(31)
+													t225 := v6
+													t226 := i32_const(0) - t225
+													v3 = t226
+													t227 := v0
+													if uint32(t227) <= uint32(i32_const(0xffffec)) {
+														t229 := v6
+														t230 := v1
+														t231 := i32_shr_u(t230, int32(8))
+														t232 := int32(bits.LeadingZeros32(uint32(t231)))
+														v0 = t232
+														t233 := int32(38) - t232
+														t234 := i32_shr_u(t229, t233)
+														t235 := t234 & int32(1)
+														t236 := v0
+														t237 := i32_shl(t236, int32(1))
+														t238 := t235 - t237
+														t239 := t238 + int32(62)
+														v9 = t239
+													}
+													{
+														{
+															{
+																t240 := v9
+																t241 := i32_shl(t240, int32(2))
+																t242 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t241))+13564:])))
+																v0 = t242
+																if t242 == 0 {
+																	v1 = i32_const(0)
+																	goto l11
+																}
+																v1 = i32_const(0)
+																t244 := v6
+																t245 := v9
+																t246 := i32_shr_u(t245, int32(1))
+																t247 := int32(25) - t246
+																t248 := v9
+																t250 := i32_const(0)
+																if t248 != int32(31) {
+																	t250 = t247
+																}
+																t251 := i32_shl(t244, t250)
+																v2 = t251
+															l14:
+																{
+																	{
+																		t252 := v0
+																		t253 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t252))+4:])))
+																		t254 := t253 & i32_const(-8)
+																		t255 := v6
+																		t256 := t254 - t255
+																		v4 = t256
+																		t257 := v3
+																		if uint32(t256) >= uint32(t257) {
+																			goto l12
+																		}
+																		t259 := v0
+																		v5 = t259
+																		t260 := v4
+																		v3 = t260
+																		if t260 != 0 {
+																			goto l12
+																		}
+																		v3 = i32_const(0)
+																		t261 := v0
+																		v1 = t261
+																		goto l16
+																	}
+																l12:
+																	t262 := v1
+																	t263 := v0
+																	t264 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t263))+20:])))
+																	v4 = t264
+																	t265 := v4
+																	t266 := v0
+																	t267 := v2
+																	t268 := i32_shr_u(t267, int32(29))
+																	t269 := t268 & int32(4)
+																	t270 := t266 + t269
+																	t271 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t270))+16:])))
+																	v0 = t271
+																	t273 := t264
+																	if t265 == t271 {
+																		t273 = t262
+																	}
+																	t274 := v1
+																	t275 := v4
+																	t276 := t274
+																	if t275 != 0 {
+																		t276 = t273
+																	}
+																	v1 = t276
+																	t277 := v2
+																	t278 := i32_shl(t277, int32(1))
+																	v2 = t278
+																	t279 := v0
+																	if t279 != 0 {
+																		goto l14
+																	}
+																}
+															}
+														l11:
+															t280 := v1
+															t281 := v5
+															t282 := t280 | t281
+															if t282 == 0 {
+																v5 = i32_const(0)
+																t284 := v9
+																t285 := i32_shl(int32(2), t284)
+																v0 = t285
+																t286 := v0
+																t287 := i32_const(0) - t286
+																t288 := t285 | t287
+																t289 := v8
+																t290 := t288 & t289
+																v0 = t290
+																if t290 == 0 {
+																	goto l3
+																}
+																t292 := v0
+																t293 := int32(bits.TrailingZeros32(uint32(t292)))
+																t294 := i32_shl(t293, int32(2))
+																t295 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t294))+13564:])))
+																v1 = t295
+															}
+															t296 := v1
+															if t296 == 0 {
+																goto l15
+															}
+														}
+													l16:
+														{
+															t298 := v1
+															t299 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t298))+4:])))
+															t300 := t299 & i32_const(-8)
+															t301 := v6
+															t302 := t300 - t301
+															v2 = t302
+															t303 := v3
+															var t304 int32
+															if uint32(t302) < uint32(t303) {
+																t304 = 1
+															}
+															v0 = t304
+															t305 := v2
+															t306 := v3
+															t307 := v0
+															t308 := t306
+															if t307 != 0 {
+																t308 = t305
+															}
+															v3 = t308
+															t309 := v1
+															t310 := v5
+															t311 := v0
+															t312 := t310
+															if t311 != 0 {
+																t312 = t309
+															}
+															v5 = t312
+															t313 := v1
+															t314 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t313))+16:])))
+															v0 = t314
+															var t315 int32
+															_ = t315
+															if t314 != 0 {
+																t316 := v0
+																t315 = t316
+															} else {
+																t317 := v1
+																t318 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t317))+20:])))
+																t315 = t318
+															}
+															v1 = t315
+															if t315 != 0 {
+																goto l16
+															}
+														}
+													}
+												l15:
+													t319 := v5
+													if t319 == 0 {
+														goto l3
+													}
+													t321 := v3
+													t322 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):])))
+													t323 := v6
+													t324 := t322 - t323
+													if uint32(t321) >= uint32(t324) {
+														goto l3
+													}
+													t326 := v5
+													t327 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t326))+24:])))
+													v7 = t327
+													t328 := v5
+													t329 := v5
+													t330 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t329))+12:])))
+													v1 = t330
+													if t328 != t330 {
+														t332 := v5
+														t333 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t332))+8:])))
+														v0 = t333
+														t334 := v1
+														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t333))+12:]))) = int32(t334)
+														t335 := v1
+														t336 := v0
+														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t335))+8:]))) = int32(t336)
+														goto l17
+													}
+													t337 := v5
+													t338 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t337))+20:])))
+													v0 = t338
+													var t339 int32
+													_ = t339
+													if t338 != 0 {
+														t340 := v5
+														t341 := t340 + int32(20)
+														t339 = t341
+													} else {
+														t342 := v5
+														t343 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t342))+16:])))
+														v0 = t343
+														if t343 == 0 {
+															goto l18
+														}
+														t345 := v5
+														t346 := t345 + int32(16)
+														t339 = t346
+													}
+													v2 = t339
+												l19:
+													{
+														t347 := v2
+														v4 = t347
+														t348 := v0
+														v1 = t348
+														t349 := t348 + int32(20)
+														v2 = t349
+														t350 := v1
+														t351 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t350))+20:])))
+														v0 = t351
+														if t351 != 0 {
+															goto l19
+														}
+														t352 := v1
+														t353 := t352 + int32(16)
+														v2 = t353
+														t354 := v1
+														t355 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t354))+16:])))
+														v0 = t355
+														if t355 != 0 {
+															goto l19
+														}
+													}
+													t356 := v4
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t356):]))) = int32(i32_const(0))
+													goto l17
+												}
+											l3:
+												t357 := v6
+												t358 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):])))
+												v5 = t358
+												if uint32(t357) <= uint32(t358) {
+													t360 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+													v1 = t360
+													{
+														t361 := v5
+														t362 := v6
+														t363 := t361 - t362
+														v0 = t363
+														if uint32(t363) >= uint32(int32(16)) {
+															t365 := v1
+															t366 := v6
+															t367 := t365 + t366
+															v2 = t367
+															t368 := v0
+															t369 := t368 | int32(1)
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t367))+4:]))) = int32(t369)
+															t370 := v1
+															t371 := v5
+															t372 := t370 + t371
+															t373 := v0
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t372):]))) = int32(t373)
+															t374 := v1
+															t375 := v6
+															t376 := t375 | int32(3)
+															*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t374))+4:]))) = int32(t376)
+															goto l20
+														}
+														t377 := v1
+														t378 := v5
+														t379 := t378 | int32(3)
+														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t377))+4:]))) = int32(t379)
+														t380 := v1
+														t381 := v5
+														t382 := t380 + t381
+														v0 = t382
+														t383 := v0
+														t384 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t383))+4:])))
+														t385 := t384 | int32(1)
+														*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t382))+4:]))) = int32(t385)
+														v2 = i32_const(0)
+														v0 = i32_const(0)
+													}
+												l20:
+													t386 := v0
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t386)
+													t387 := v2
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):]))) = int32(t387)
+													t388 := v1
+													t389 := t388 + int32(8)
+													v1 = t389
+													goto l2
+												}
+												t390 := v6
+												t391 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):])))
+												v2 = t391
+												if uint32(t390) < uint32(t391) {
+													t393 := v6
+													t394 := v7
+													t395 := t393 + t394
+													v0 = t395
+													t396 := v2
+													t397 := v6
+													t398 := t396 - t397
+													v1 = t398
+													t399 := t398 | int32(1)
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t395))+4:]))) = int32(t399)
+													t400 := v0
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(t400)
+													t401 := v1
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(t401)
+													t402 := v7
+													t403 := v6
+													t404 := t403 | int32(3)
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t402))+4:]))) = int32(t404)
+													t405 := v7
+													t406 := t405 + int32(8)
+													v1 = t406
+													goto l2
+												}
+												v1 = i32_const(0)
+												t407 := v6
+												t408 := v6
+												t409 := t408 + int32(71)
+												v5 = t409
+												var t410 int32
+												_ = t410
+												{
+													t411 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13732)):])))
+													if t411 != 0 {
+														t412 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13740)):])))
+														t410 = t412
+														goto l21
+													}
+													*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13744)):]))) = int64(i64_const(-1))
+													*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13736)):]))) = int64(i64_const(0x1000000010000))
+													t413 := v10
+													t414 := t413 + int32(12)
+													t415 := t414 & i32_const(-16)
+													t416 := t415 ^ i32_const(0x55555558)
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13732)):]))) = int32(t416)
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13752)):]))) = int32(i32_const(0))
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13704)):]))) = int32(i32_const(0))
+													t410 = i32_const(65536)
+												}
+											l21:
+												v0 = t410
+												t417 := t409 + t410
+												v4 = t417
+												t418 := v0
+												t419 := i32_const(0) - t418
+												v3 = t419
+												t420 := t417 & t419
+												v0 = t420
+												if uint32(t407) >= uint32(t420) {
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(int32(48))
+													goto l2
+												}
+												{
+													t422 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13700)):])))
+													v1 = t422
+													if t422 == 0 {
+														goto l22
+													}
+													t424 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13692)):])))
+													v8 = t424
+													t425 := v0
+													t426 := t424 + t425
+													v9 = t426
+													t427 := v8
+													var t428 int32
+													if uint32(t426) > uint32(t427) {
+														t428 = 1
+													}
+													t429 := v1
+													t430 := v9
+													var t431 int32
+													if uint32(t429) >= uint32(t430) {
+														t431 = 1
+													}
+													t432 := t428 & t431
+													if t432 != 0 {
+														goto l22
+													}
+													v1 = i32_const(0)
+													*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(int32(48))
+													goto l2
+												}
+											l22:
+												t433 := int32((*m.memory)[uint32(i32_const(13704))])
+												t434 := t433 & int32(4)
+												if t434 != 0 {
+													goto l23
+												}
+												{
+													{
+														t435 := v7
+														if t435 != 0 {
+															v1 = i32_const(13708)
+														l25:
+															{
+																t436 := v1
+																t437 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t436):])))
+																v8 = t437
+																t438 := v7
+																if uint32(t437) <= uint32(t438) {
+																	t440 := v7
+																	t441 := v8
+																	t442 := v1
+																	t443 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t442))+4:])))
+																	t444 := t441 + t443
+																	if uint32(t440) < uint32(t444) {
+																		goto l24
+																	}
+																}
+																t446 := v1
+																t447 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t446))+8:])))
+																v1 = t447
+																if t447 != 0 {
+																	goto l25
+																}
+															}
+														}
+														t448 := m._sbrk(i32_const(0))
+														v2 = t448
+														if t448 == i32_const(-1) {
+															goto l26
+														}
+														t450 := v0
+														v4 = t450
+														t451 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13736)):])))
+														v1 = t451
+														t452 := t451 - int32(1)
+														v3 = t452
+														t453 := v2
+														t454 := t452 & t453
+														if t454 != 0 {
+															t455 := v0
+															t456 := v2
+															t457 := t455 - t456
+															t458 := v2
+															t459 := v3
+															t460 := t458 + t459
+															t461 := v1
+															t462 := i32_const(0) - t461
+															t463 := t460 & t462
+															t464 := t457 + t463
+															v4 = t464
+														}
+														t465 := v4
+														t466 := v6
+														if uint32(t465) <= uint32(t466) {
+															goto l26
+														}
+														t468 := v4
+														if uint32(t468) > uint32(i32_const(0x7ffffffe)) {
+															goto l26
+														}
+														t470 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13700)):])))
+														v1 = t470
+														if t470 != 0 {
+															t471 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13692)):])))
+															v3 = t471
+															t472 := v4
+															t473 := t471 + t472
+															v7 = t473
+															t474 := v3
+															if uint32(t473) <= uint32(t474) {
+																goto l26
+															}
+															t476 := v1
+															t477 := v7
+															if uint32(t476) < uint32(t477) {
+																goto l26
+															}
+														}
+														t479 := v4
+														t480 := m._sbrk(t479)
+														v1 = t480
+														t481 := v2
+														if t480 != t481 {
+															goto l27
+														}
+														goto l28
+													}
+												l24:
+													t483 := v4
+													t484 := v2
+													t485 := t483 - t484
+													t486 := v3
+													t487 := t485 & t486
+													v4 = t487
+													if uint32(t487) > uint32(i32_const(0x7ffffffe)) {
+														goto l26
+													}
+													t489 := v4
+													t490 := m._sbrk(t489)
+													v2 = t490
+													t491 := v1
+													t492 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t491):])))
+													t493 := v1
+													t494 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t493))+4:])))
+													t495 := t492 + t494
+													if t490 == t495 {
+														goto l29
+													}
+													t497 := v2
+													v1 = t497
+												}
+											l27:
+												{
+													t498 := v4
+													t499 := v6
+													t500 := t499 + int32(72)
+													if uint32(t498) >= uint32(t500) {
+														goto l30
+													}
+													t502 := v1
+													if t502 == i32_const(-1) {
+														goto l30
+													}
+													t504 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13740)):])))
+													v2 = t504
+													t505 := v5
+													t506 := v4
+													t507 := t505 - t506
+													t508 := t504 + t507
+													t509 := v2
+													t510 := i32_const(0) - t509
+													t511 := t508 & t510
+													v2 = t511
+													if uint32(t511) > uint32(i32_const(0x7ffffffe)) {
+														t513 := v1
+														v2 = t513
+														goto l28
+													}
+													t514 := v2
+													t515 := m._sbrk(t514)
+													if t515 != i32_const(-1) {
+														t517 := v2
+														t518 := v4
+														t519 := t517 + t518
+														v4 = t519
+														t520 := v1
+														v2 = t520
+														goto l28
+													}
+													t521 := v4
+													t522 := i32_const(0) - t521
+													t523 := m._sbrk(t522)
+													_ = t523
+													goto l26
+												}
+											l30:
+												t524 := v1
+												v2 = t524
+												if t524 != i32_const(-1) {
+													goto l28
+												}
+												goto l26
+											}
+										l9:
+											v1 = i32_const(0)
+											goto l8
+										}
+									l18:
+										v1 = i32_const(0)
+										goto l17
+									}
+								l29:
+									t526 := v2
+									if t526 != i32_const(-1) {
+										goto l28
+									}
+								}
+							l26:
+								t528 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13704)):])))
+								t529 := t528 | int32(4)
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13704)):]))) = int32(t529)
+							}
+						l23:
+							t530 := v0
+							if uint32(t530) > uint32(i32_const(0x7ffffffe)) {
+								goto l31
+							}
+							t532 := v0
+							t533 := m._sbrk(t532)
+							v2 = t533
+							t534 := m._sbrk(i32_const(0))
+							v0 = t534
+							t535 := v2
+							if t535 == i32_const(-1) {
+								goto l31
+							}
+							t537 := v0
+							if t537 == i32_const(-1) {
+								goto l31
+							}
+							t539 := v0
+							t540 := v2
+							if uint32(t539) <= uint32(t540) {
+								goto l31
+							}
+							t542 := v0
+							t543 := v2
+							t544 := t542 - t543
+							v4 = t544
+							t545 := v6
+							t546 := t545 + int32(56)
+							if uint32(t544) <= uint32(t546) {
+								goto l31
+							}
+						}
+					l28:
+						t548 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13692)):])))
+						t549 := v4
+						t550 := t548 + t549
+						v0 = t550
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13692)):]))) = int32(t550)
+						t551 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13696)):])))
+						t552 := v0
+						if uint32(t551) < uint32(t552) {
+							t554 := v0
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13696)):]))) = int32(t554)
+						}
+						{
+							{
+								{
+									t555 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):])))
+									v3 = t555
+									if t555 != 0 {
+										v1 = i32_const(13708)
+									l33:
+										{
+											t556 := v2
+											t557 := v1
+											t558 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t557):])))
+											v0 = t558
+											t559 := v1
+											t560 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t559))+4:])))
+											v5 = t560
+											t561 := t558 + t560
+											if t556 == t561 {
+												goto l32
+											}
+											t563 := v1
+											t564 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t563))+8:])))
+											v1 = t564
+											if t564 != 0 {
+												goto l33
+											}
+										}
+										goto l34
+									}
+									t565 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13276)):])))
+									v0 = t565
+									t566 := v0
+									t567 := v2
+									t569 := i32_const(0)
+									if uint32(t566) <= uint32(t567) {
+										t569 = t565
+									}
+									if t569 == 0 {
+										t571 := v2
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13276)):]))) = int32(t571)
+									}
+									v1 = i32_const(0)
+									t572 := v4
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13712)):]))) = int32(t572)
+									t573 := v2
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13708)):]))) = int32(t573)
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13292)):]))) = int32(i32_const(-1))
+									t574 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13732)):])))
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13296)):]))) = int32(t574)
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13720)):]))) = int32(i32_const(0))
+								l35:
+									{
+										t575 := v1
+										t576 := t575 + i32_const(13320)
+										t577 := v1
+										t578 := t577 + i32_const(13308)
+										v0 = t578
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t576):]))) = int32(t578)
+										t579 := v0
+										t580 := v1
+										t581 := t580 + i32_const(13300)
+										v5 = t581
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t579):]))) = int32(t581)
+										t582 := v1
+										t583 := t582 + i32_const(13312)
+										t584 := v5
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t583):]))) = int32(t584)
+										t585 := v1
+										t586 := t585 + i32_const(13328)
+										t587 := v1
+										t588 := t587 + i32_const(13316)
+										v5 = t588
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t586):]))) = int32(t588)
+										t589 := v5
+										t590 := v0
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t589):]))) = int32(t590)
+										t591 := v1
+										t592 := t591 + i32_const(13336)
+										t593 := v1
+										t594 := t593 + i32_const(13324)
+										v0 = t594
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t592):]))) = int32(t594)
+										t595 := v0
+										t596 := v5
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t595):]))) = int32(t596)
+										t597 := v1
+										t598 := t597 + i32_const(13332)
+										t599 := v0
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t598):]))) = int32(t599)
+										t600 := v1
+										t601 := t600 + int32(32)
+										v1 = t601
+										if t601 != i32_const(256) {
+											goto l35
+										}
+									}
+									t603 := v2
+									t604 := v2
+									t605 := i32_const(-8) - t604
+									t606 := t605 & int32(15)
+									v0 = t606
+									t607 := t603 + t606
+									v1 = t607
+									t608 := v4
+									t609 := t608 - int32(56)
+									v5 = t609
+									t610 := v0
+									t611 := t609 - t610
+									v0 = t611
+									t612 := t611 | int32(1)
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t607))+4:]))) = int32(t612)
+									t613 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13748)):])))
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13288)):]))) = int32(t613)
+									t614 := v0
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(t614)
+									t615 := v1
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(t615)
+									t616 := v2
+									t617 := v5
+									t618 := t616 + t617
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t618))+4:]))) = int32(int32(56))
+									goto l36
+								}
+							l32:
+								t619 := v2
+								t620 := v3
+								if uint32(t619) <= uint32(t620) {
+									goto l34
+								}
+								t622 := v0
+								t623 := v3
+								if uint32(t622) > uint32(t623) {
+									goto l34
+								}
+								t625 := v1
+								t626 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t625))+12:])))
+								t627 := t626 & int32(8)
+								if t627 != 0 {
+									goto l34
+								}
+								t628 := v3
+								t629 := v3
+								t630 := i32_const(-8) - t629
+								t631 := t630 & int32(15)
+								v0 = t631
+								t632 := t628 + t631
+								v2 = t632
+								t633 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):])))
+								t634 := v4
+								t635 := t633 + t634
+								v7 = t635
+								t636 := v0
+								t637 := t635 - t636
+								v0 = t637
+								t638 := t637 | int32(1)
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t632))+4:]))) = int32(t638)
+								t639 := v1
+								t640 := v4
+								t641 := v5
+								t642 := t640 + t641
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t639))+4:]))) = int32(t642)
+								t643 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13748)):])))
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13288)):]))) = int32(t643)
+								t644 := v0
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(t644)
+								t645 := v2
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(t645)
+								t646 := v3
+								t647 := v7
+								t648 := t646 + t647
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t648))+4:]))) = int32(int32(56))
+								goto l36
+							}
+						l34:
+							t649 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13276)):])))
+							t650 := v2
+							if uint32(t649) > uint32(t650) {
+								t652 := v2
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13276)):]))) = int32(t652)
+							}
+							t653 := v2
+							t654 := v4
+							t655 := t653 + t654
+							v5 = t655
+							v1 = i32_const(13708)
+							{
+								{
+								l38:
+									{
+										t656 := v1
+										t657 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t656):])))
+										v0 = t657
+										t658 := v5
+										if t657 == t658 {
+											goto l37
+										}
+										t660 := v1
+										t661 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t660))+8:])))
+										v1 = t661
+										if t661 != 0 {
+											goto l38
+										}
+									}
+									goto l39
+								}
+							l37:
+								t662 := v1
+								t663 := int32((*m.memory)[int64(uint32(t662))+12])
+								t664 := t663 & int32(8)
+								if t664 == 0 {
+									goto l40
+								}
+							}
+						l39:
+							v1 = i32_const(13708)
+						l42:
+							{
+								{
+									t666 := v1
+									t667 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t666):])))
+									v0 = t667
+									t668 := v3
+									if uint32(t667) <= uint32(t668) {
+										t670 := v3
+										t671 := v0
+										t672 := v1
+										t673 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t672))+4:])))
+										t674 := t671 + t673
+										v5 = t674
+										if uint32(t670) < uint32(t674) {
+											goto l41
+										}
+									}
+									t676 := v1
+									t677 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t676))+8:])))
+									v1 = t677
+									goto l42
+								}
+							l41:
+							}
+							t678 := v2
+							t679 := v2
+							t680 := i32_const(-8) - t679
+							t681 := t680 & int32(15)
+							v0 = t681
+							t682 := t678 + t681
+							v1 = t682
+							t683 := v4
+							t684 := t683 - int32(56)
+							v7 = t684
+							t685 := v0
+							t686 := t684 - t685
+							v8 = t686
+							t687 := t686 | int32(1)
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t682))+4:]))) = int32(t687)
+							t688 := v2
+							t689 := v7
+							t690 := t688 + t689
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t690))+4:]))) = int32(int32(56))
+							t691 := v3
+							t692 := v5
+							t693 := v5
+							t694 := int32(55) - t693
+							t695 := t694 & int32(15)
+							t696 := t692 + t695
+							t697 := t696 - int32(63)
+							v0 = t697
+							t698 := v0
+							t699 := v3
+							t700 := t699 + int32(16)
+							t702 := t697
+							if uint32(t698) < uint32(t700) {
+								t702 = t691
+							}
+							v0 = t702
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t702))+4:]))) = int32(int32(35))
+							t703 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13748)):])))
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13288)):]))) = int32(t703)
+							t704 := v8
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(t704)
+							t705 := v1
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(t705)
+							t706 := v0
+							t707 := *(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13716)):])))
+							*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t706))+16:]))) = int64(t707)
+							t708 := v0
+							t709 := *(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[uint32(i32_const(13708)):])))
+							*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t708))+8:]))) = int64(t709)
+							t710 := v0
+							t711 := t710 + int32(8)
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13716)):]))) = int32(t711)
+							t712 := v4
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13712)):]))) = int32(t712)
+							t713 := v2
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13708)):]))) = int32(t713)
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13720)):]))) = int32(i32_const(0))
+							t714 := v0
+							t715 := t714 + int32(36)
+							v1 = t715
+						l43:
+							{
+								t716 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t716):]))) = int32(int32(7))
+								t717 := v1
+								t718 := t717 + int32(4)
+								v1 = t718
+								t719 := v5
+								if uint32(t718) < uint32(t719) {
+									goto l43
+								}
+							}
+							t721 := v0
+							t722 := v3
+							if t721 == t722 {
+								goto l36
+							}
+							t724 := v0
+							t725 := v0
+							t726 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t725))+4:])))
+							t727 := t726 & i32_const(-2)
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t724))+4:]))) = int32(t727)
+							t728 := v0
+							t729 := v0
+							t730 := v3
+							t731 := t729 - t730
+							v2 = t731
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t728):]))) = int32(t731)
+							t732 := v3
+							t733 := v2
+							t734 := t733 | int32(1)
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t732))+4:]))) = int32(t734)
+							var t735 int32
+							_ = t735
+							{
+								t736 := v2
+								if uint32(t736) <= uint32(i32_const(255)) {
+									t738 := v2
+									t739 := t738 & i32_const(-8)
+									t740 := t739 + i32_const(13300)
+									v1 = t740
+									var t741 int32
+									_ = t741
+									{
+										t742 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+										v0 = t742
+										t743 := v2
+										t744 := i32_shr_u(t743, int32(3))
+										t745 := i32_shl(int32(1), t744)
+										v2 = t745
+										t746 := t742 & t745
+										if t746 == 0 {
+											t748 := v0
+											t749 := v2
+											t750 := t748 | t749
+											*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t750)
+											t751 := v1
+											t741 = t751
+											goto l44
+										}
+										t752 := v1
+										t753 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t752))+8:])))
+										t741 = t753
+									}
+								l44:
+									v0 = t741
+									t754 := v3
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t741))+12:]))) = int32(t754)
+									t755 := v1
+									t756 := v3
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t755))+8:]))) = int32(t756)
+									v5 = int32(8)
+									t735 = int32(12)
+									goto l45
+								}
+								v1 = int32(31)
+								t757 := v2
+								if uint32(t757) <= uint32(i32_const(0xffffff)) {
+									t759 := v2
+									t760 := v2
+									t761 := i32_shr_u(t760, int32(8))
+									t762 := int32(bits.LeadingZeros32(uint32(t761)))
+									v0 = t762
+									t763 := int32(38) - t762
+									t764 := i32_shr_u(t759, t763)
+									t765 := t764 & int32(1)
+									t766 := v0
+									t767 := i32_shl(t766, int32(1))
+									t768 := t765 - t767
+									t769 := t768 + int32(62)
+									v1 = t769
+								}
+								t770 := v3
+								t771 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t770))+28:]))) = int32(t771)
+								t772 := v3
+								*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t772))+16:]))) = int64(i64_const(0))
+								t773 := v1
+								t774 := i32_shl(t773, int32(2))
+								t775 := t774 + i32_const(13564)
+								v0 = t775
+								{
+									{
+										t776 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+										v5 = t776
+										t777 := v1
+										t778 := i32_shl(int32(1), t777)
+										v4 = t778
+										t779 := t776 & t778
+										if t779 == 0 {
+											t781 := v0
+											t782 := v3
+											*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t781):]))) = int32(t782)
+											t783 := v4
+											t784 := v5
+											t785 := t783 | t784
+											*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t785)
+											goto l46
+										}
+										t786 := v2
+										t787 := v1
+										t788 := i32_shr_u(t787, int32(1))
+										t789 := int32(25) - t788
+										t790 := v1
+										t792 := i32_const(0)
+										if t790 != int32(31) {
+											t792 = t789
+										}
+										t793 := i32_shl(t786, t792)
+										v1 = t793
+										t794 := v0
+										t795 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t794):])))
+										v5 = t795
+									l48:
+										{
+											t796 := v5
+											v0 = t796
+											t797 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t796))+4:])))
+											t798 := t797 & i32_const(-8)
+											t799 := v2
+											if t798 == t799 {
+												goto l47
+											}
+											t801 := v1
+											t802 := i32_shr_u(t801, int32(29))
+											v5 = t802
+											t803 := v1
+											t804 := i32_shl(t803, int32(1))
+											v1 = t804
+											t805 := v0
+											t806 := v5
+											t807 := t806 & int32(4)
+											t808 := t805 + t807
+											v4 = t808
+											t809 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t808))+16:])))
+											v5 = t809
+											if t809 != 0 {
+												goto l48
+											}
+										}
+										t810 := v4
+										t811 := v3
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t810))+16:]))) = int32(t811)
+									}
+								l46:
+									t812 := v3
+									t813 := v0
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t812))+24:]))) = int32(t813)
+									v5 = int32(12)
+									t814 := v3
+									v0 = t814
+									v1 = t814
+									t735 = int32(8)
+									goto l45
+								}
+							l47:
+								t815 := v0
+								t816 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t815))+8:])))
+								v1 = t816
+								t817 := v0
+								t818 := v3
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t817))+8:]))) = int32(t818)
+								t819 := v1
+								t820 := v3
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t819))+12:]))) = int32(t820)
+								t821 := v3
+								t822 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t821))+8:]))) = int32(t822)
+								v1 = i32_const(0)
+								v5 = int32(12)
+								t735 = int32(24)
+							}
+						l45:
+							t823 := v3
+							t824 := v5
+							t825 := t823 + t824
+							t826 := v0
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t825):]))) = int32(t826)
+							t827 := v3
+							t828 := t735 + t827
+							t829 := v1
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t828):]))) = int32(t829)
+						}
+					l36:
+						t830 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):])))
+						v1 = t830
+						t831 := v6
+						if uint32(t830) <= uint32(t831) {
+							goto l31
+						}
+						t833 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):])))
+						v0 = t833
+						t834 := v6
+						t835 := t833 + t834
+						v2 = t835
+						t836 := v1
+						t837 := v6
+						t838 := t836 - t837
+						v1 = t838
+						t839 := t838 | int32(1)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t835))+4:]))) = int32(t839)
+						t840 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(t840)
+						t841 := v2
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(t841)
+						t842 := v0
+						t843 := v6
+						t844 := t843 | int32(3)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t842))+4:]))) = int32(t844)
+						t845 := v0
+						t846 := t845 + int32(8)
+						v1 = t846
+						goto l2
+					}
+				l31:
+					v1 = i32_const(0)
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(int32(48))
+					goto l2
+				}
+			l40:
+				t847 := v1
+				t848 := v2
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t847):]))) = int32(t848)
+				t849 := v1
+				t850 := v1
+				t851 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t850))+4:])))
+				t852 := v4
+				t853 := t851 + t852
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t849))+4:]))) = int32(t853)
+				t854 := v2
+				t855 := v2
+				t856 := i32_const(-8) - t855
+				t857 := t856 & int32(15)
+				t858 := t854 + t857
+				v8 = t858
+				t859 := v6
+				t860 := t859 | int32(3)
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t858))+4:]))) = int32(t860)
+				t861 := v0
+				t862 := v0
+				t863 := i32_const(-8) - t862
+				t864 := t863 & int32(15)
+				t865 := t861 + t864
+				v4 = t865
+				t866 := v6
+				t867 := v8
+				t868 := t866 + t867
+				v3 = t868
+				t869 := t865 - t868
+				v7 = t869
+				{
+					t870 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):])))
+					t871 := v4
+					if t870 == t871 {
+						t873 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(t873)
+						t874 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):])))
+						t875 := v7
+						t876 := t874 + t875
+						v0 = t876
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(t876)
+						t877 := v3
+						t878 := v0
+						t879 := t878 | int32(1)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t877))+4:]))) = int32(t879)
+						goto l49
+					}
+					t880 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+					t881 := v4
+					if t880 == t881 {
+						t883 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):]))) = int32(t883)
+						t884 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):])))
+						t885 := v7
+						t886 := t884 + t885
+						v0 = t886
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t886)
+						t887 := v3
+						t888 := v0
+						t889 := t888 | int32(1)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t887))+4:]))) = int32(t889)
+						t890 := v0
+						t891 := v3
+						t892 := t890 + t891
+						t893 := v0
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t892):]))) = int32(t893)
+						goto l49
+					}
+					t894 := v4
+					t895 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t894))+4:])))
+					v2 = t895
+					t896 := t895 & int32(3)
+					if t896 == int32(1) {
+						t898 := v2
+						t899 := t898 & i32_const(-8)
+						v9 = t899
+						t900 := v4
+						t901 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t900))+12:])))
+						v1 = t901
+						{
+							t902 := v2
+							if uint32(t902) <= uint32(i32_const(255)) {
+								t904 := v4
+								t905 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t904))+8:])))
+								v0 = t905
+								t906 := v1
+								if t905 == t906 {
+									t908 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+									t909 := v2
+									t910 := i32_shr_u(t909, int32(3))
+									t911 := i32_rotl(i32_const(-2), t910)
+									t912 := t908 & t911
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t912)
+									goto l50
+								}
+								t913 := v1
+								t914 := v0
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t913))+8:]))) = int32(t914)
+								t915 := v0
+								t916 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t915))+12:]))) = int32(t916)
+								goto l50
+							}
+							t917 := v4
+							t918 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t917))+24:])))
+							v6 = t918
+							{
+								t919 := v1
+								t920 := v4
+								if t919 != t920 {
+									t922 := v4
+									t923 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t922))+8:])))
+									v0 = t923
+									t924 := v1
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t923))+12:]))) = int32(t924)
+									t925 := v1
+									t926 := v0
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t925))+8:]))) = int32(t926)
+									goto l51
+								}
+								{
+									t927 := v4
+									t928 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t927))+20:])))
+									v2 = t928
+									var t929 int32
+									_ = t929
+									if t928 != 0 {
+										t930 := v4
+										t931 := t930 + int32(20)
+										t929 = t931
+									} else {
+										t932 := v4
+										t933 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t932))+16:])))
+										v2 = t933
+										if t933 == 0 {
+											goto l52
+										}
+										t935 := v4
+										t936 := t935 + int32(16)
+										t929 = t936
+									}
+									v0 = t929
+								l53:
+									{
+										t937 := v0
+										v5 = t937
+										t938 := v2
+										v1 = t938
+										t939 := t938 + int32(20)
+										v0 = t939
+										t940 := v1
+										t941 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t940))+20:])))
+										v2 = t941
+										if t941 != 0 {
+											goto l53
+										}
+										t942 := v1
+										t943 := t942 + int32(16)
+										v0 = t943
+										t944 := v1
+										t945 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t944))+16:])))
+										v2 = t945
+										if t945 != 0 {
+											goto l53
+										}
+									}
+									t946 := v5
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t946):]))) = int32(i32_const(0))
+									goto l51
+								}
+							l52:
+								v1 = i32_const(0)
+							}
+						l51:
+							t947 := v6
+							if t947 == 0 {
+								goto l50
+							}
+							{
+								t949 := v4
+								t950 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t949))+28:])))
+								v0 = t950
+								t951 := i32_shl(t950, int32(2))
+								v2 = t951
+								t952 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t951))+13564:])))
+								t953 := v4
+								if t952 == t953 {
+									t955 := v2
+									t956 := t955 + i32_const(13564)
+									t957 := v1
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t956):]))) = int32(t957)
+									t958 := v1
+									if t958 != 0 {
+										goto l54
+									}
+									t959 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+									t960 := v0
+									t961 := i32_rotl(i32_const(-2), t960)
+									t962 := t959 & t961
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t962)
+									goto l50
+								}
+								{
+									t963 := v4
+									t964 := v6
+									t965 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t964))+16:])))
+									if t963 == t965 {
+										t967 := v6
+										t968 := v1
+										*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t967))+16:]))) = int32(t968)
+										goto l55
+									}
+									t969 := v6
+									t970 := v1
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t969))+20:]))) = int32(t970)
+								}
+							l55:
+								t971 := v1
+								if t971 == 0 {
+									goto l50
+								}
+							}
+						l54:
+							t973 := v1
+							t974 := v6
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t973))+24:]))) = int32(t974)
+							t975 := v4
+							t976 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t975))+16:])))
+							v0 = t976
+							if t976 != 0 {
+								t977 := v1
+								t978 := v0
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t977))+16:]))) = int32(t978)
+								t979 := v0
+								t980 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t979))+24:]))) = int32(t980)
+							}
+							t981 := v4
+							t982 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t981))+20:])))
+							v0 = t982
+							if t982 == 0 {
+								goto l50
+							}
+							t984 := v1
+							t985 := v0
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t984))+20:]))) = int32(t985)
+							t986 := v0
+							t987 := v1
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t986))+24:]))) = int32(t987)
+						}
+					l50:
+						t988 := v7
+						t989 := v9
+						t990 := t988 + t989
+						v7 = t990
+						t991 := v4
+						t992 := v9
+						t993 := t991 + t992
+						v4 = t993
+						t994 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t993))+4:])))
+						v2 = t994
+					}
+					t995 := v4
+					t996 := v2
+					t997 := t996 & i32_const(-2)
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t995))+4:]))) = int32(t997)
+					t998 := v3
+					t999 := v7
+					t1000 := t998 + t999
+					t1001 := v7
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1000):]))) = int32(t1001)
+					t1002 := v3
+					t1003 := v7
+					t1004 := t1003 | int32(1)
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1002))+4:]))) = int32(t1004)
+					t1005 := v7
+					if uint32(t1005) <= uint32(i32_const(255)) {
+						t1007 := v7
+						t1008 := t1007 & i32_const(-8)
+						t1009 := t1008 + i32_const(13300)
+						v0 = t1009
+						var t1010 int32
+						_ = t1010
+						{
+							t1011 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+							v1 = t1011
+							t1012 := v7
+							t1013 := i32_shr_u(t1012, int32(3))
+							t1014 := i32_shl(int32(1), t1013)
+							v2 = t1014
+							t1015 := t1011 & t1014
+							if t1015 == 0 {
+								t1017 := v1
+								t1018 := v2
+								t1019 := t1017 | t1018
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t1019)
+								t1020 := v0
+								t1010 = t1020
+								goto l56
+							}
+							t1021 := v0
+							t1022 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1021))+8:])))
+							t1010 = t1022
+						}
+					l56:
+						v1 = t1010
+						t1023 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1010))+12:]))) = int32(t1023)
+						t1024 := v0
+						t1025 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1024))+8:]))) = int32(t1025)
+						t1026 := v3
+						t1027 := v0
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1026))+12:]))) = int32(t1027)
+						t1028 := v3
+						t1029 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1028))+8:]))) = int32(t1029)
+						goto l49
+					}
+					v1 = int32(31)
+					t1030 := v7
+					if uint32(t1030) <= uint32(i32_const(0xffffff)) {
+						t1032 := v7
+						t1033 := v7
+						t1034 := i32_shr_u(t1033, int32(8))
+						t1035 := int32(bits.LeadingZeros32(uint32(t1034)))
+						v0 = t1035
+						t1036 := int32(38) - t1035
+						t1037 := i32_shr_u(t1032, t1036)
+						t1038 := t1037 & int32(1)
+						t1039 := v0
+						t1040 := i32_shl(t1039, int32(1))
+						t1041 := t1038 - t1040
+						t1042 := t1041 + int32(62)
+						v1 = t1042
+					}
+					t1043 := v3
+					t1044 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1043))+28:]))) = int32(t1044)
+					t1045 := v3
+					*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t1045))+16:]))) = int64(i64_const(0))
+					t1046 := v1
+					t1047 := i32_shl(t1046, int32(2))
+					t1048 := t1047 + i32_const(13564)
+					v0 = t1048
+					t1049 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+					v2 = t1049
+					t1050 := v1
+					t1051 := i32_shl(int32(1), t1050)
+					v5 = t1051
+					t1052 := t1049 & t1051
+					if t1052 == 0 {
+						t1054 := v0
+						t1055 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1054):]))) = int32(t1055)
+						t1056 := v2
+						t1057 := v5
+						t1058 := t1056 | t1057
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t1058)
+						t1059 := v3
+						t1060 := v0
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1059))+24:]))) = int32(t1060)
+						t1061 := v3
+						t1062 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1061))+8:]))) = int32(t1062)
+						t1063 := v3
+						t1064 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1063))+12:]))) = int32(t1064)
+						goto l49
+					}
+					t1065 := v7
+					t1066 := v1
+					t1067 := i32_shr_u(t1066, int32(1))
+					t1068 := int32(25) - t1067
+					t1069 := v1
+					t1071 := i32_const(0)
+					if t1069 != int32(31) {
+						t1071 = t1068
+					}
+					t1072 := i32_shl(t1065, t1071)
+					v1 = t1072
+					t1073 := v0
+					t1074 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1073):])))
+					v0 = t1074
+					{
+					l58:
+						{
+							t1075 := v0
+							v2 = t1075
+							t1076 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1075))+4:])))
+							t1077 := t1076 & i32_const(-8)
+							t1078 := v7
+							if t1077 == t1078 {
+								goto l57
+							}
+							t1080 := v1
+							t1081 := i32_shr_u(t1080, int32(29))
+							v0 = t1081
+							t1082 := v1
+							t1083 := i32_shl(t1082, int32(1))
+							v1 = t1083
+							t1084 := v2
+							t1085 := v0
+							t1086 := t1085 & int32(4)
+							t1087 := t1084 + t1086
+							v5 = t1087
+							t1088 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1087))+16:])))
+							v0 = t1088
+							if t1088 != 0 {
+								goto l58
+							}
+						}
+						t1089 := v5
+						t1090 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1089))+16:]))) = int32(t1090)
+						t1091 := v3
+						t1092 := v2
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1091))+24:]))) = int32(t1092)
+						t1093 := v3
+						t1094 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1093))+12:]))) = int32(t1094)
+						t1095 := v3
+						t1096 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1095))+8:]))) = int32(t1096)
+						goto l49
+					}
+				l57:
+					t1097 := v2
+					t1098 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1097))+8:])))
+					v0 = t1098
+					t1099 := v3
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1098))+12:]))) = int32(t1099)
+					t1100 := v2
+					t1101 := v3
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1100))+8:]))) = int32(t1101)
+					t1102 := v3
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1102))+24:]))) = int32(i32_const(0))
+					t1103 := v3
+					t1104 := v2
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1103))+12:]))) = int32(t1104)
+					t1105 := v3
+					t1106 := v0
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1105))+8:]))) = int32(t1106)
+				}
+			l49:
+				t1107 := v8
+				t1108 := t1107 + int32(8)
+				v1 = t1108
+				goto l2
+			}
+		l17:
+			{
+				t1109 := v7
+				if t1109 == 0 {
+					goto l59
+				}
+				{
+					t1111 := v5
+					t1112 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1111))+28:])))
+					v0 = t1112
+					t1113 := i32_shl(t1112, int32(2))
+					v2 = t1113
+					t1114 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1113))+13564:])))
+					t1115 := v5
+					if t1114 == t1115 {
+						t1117 := v2
+						t1118 := t1117 + i32_const(13564)
+						t1119 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1118):]))) = int32(t1119)
+						t1120 := v1
+						if t1120 != 0 {
+							goto l60
+						}
+						t1121 := v8
+						t1122 := v0
+						t1123 := i32_rotl(i32_const(-2), t1122)
+						t1124 := t1121 & t1123
+						v8 = t1124
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t1124)
+						goto l59
+					}
+					{
+						t1125 := v5
+						t1126 := v7
+						t1127 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1126))+16:])))
+						if t1125 == t1127 {
+							t1129 := v7
+							t1130 := v1
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1129))+16:]))) = int32(t1130)
+							goto l61
+						}
+						t1131 := v7
+						t1132 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1131))+20:]))) = int32(t1132)
+					}
+				l61:
+					t1133 := v1
+					if t1133 == 0 {
+						goto l59
+					}
+				}
+			l60:
+				t1135 := v1
+				t1136 := v7
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1135))+24:]))) = int32(t1136)
+				t1137 := v5
+				t1138 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1137))+16:])))
+				v0 = t1138
+				if t1138 != 0 {
+					t1139 := v1
+					t1140 := v0
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1139))+16:]))) = int32(t1140)
+					t1141 := v0
+					t1142 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1141))+24:]))) = int32(t1142)
+				}
+				t1143 := v5
+				t1144 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1143))+20:])))
+				v0 = t1144
+				if t1144 == 0 {
+					goto l59
+				}
+				t1146 := v1
+				t1147 := v0
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1146))+20:]))) = int32(t1147)
+				t1148 := v0
+				t1149 := v1
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1148))+24:]))) = int32(t1149)
+			}
+		l59:
+			{
+				t1150 := v3
+				if uint32(t1150) <= uint32(int32(15)) {
+					t1152 := v5
+					t1153 := v3
+					t1154 := v6
+					t1155 := t1153 | t1154
+					v0 = t1155
+					t1156 := t1155 | int32(3)
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1152))+4:]))) = int32(t1156)
+					t1157 := v0
+					t1158 := v5
+					t1159 := t1157 + t1158
+					v0 = t1159
+					t1160 := v0
+					t1161 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1160))+4:])))
+					t1162 := t1161 | int32(1)
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1159))+4:]))) = int32(t1162)
+					goto l62
+				}
+				t1163 := v5
+				t1164 := v6
+				t1165 := t1163 + t1164
+				v4 = t1165
+				t1166 := v3
+				t1167 := t1166 | int32(1)
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1165))+4:]))) = int32(t1167)
+				t1168 := v5
+				t1169 := v6
+				t1170 := t1169 | int32(3)
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1168))+4:]))) = int32(t1170)
+				t1171 := v3
+				t1172 := v4
+				t1173 := t1171 + t1172
+				t1174 := v3
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1173):]))) = int32(t1174)
+				t1175 := v3
+				if uint32(t1175) <= uint32(i32_const(255)) {
+					t1177 := v3
+					t1178 := t1177 & i32_const(-8)
+					t1179 := t1178 + i32_const(13300)
+					v0 = t1179
+					var t1180 int32
+					_ = t1180
+					{
+						t1181 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+						v1 = t1181
+						t1182 := v3
+						t1183 := i32_shr_u(t1182, int32(3))
+						t1184 := i32_shl(int32(1), t1183)
+						v2 = t1184
+						t1185 := t1181 & t1184
+						if t1185 == 0 {
+							t1187 := v1
+							t1188 := v2
+							t1189 := t1187 | t1188
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t1189)
+							t1190 := v0
+							t1180 = t1190
+							goto l63
+						}
+						t1191 := v0
+						t1192 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1191))+8:])))
+						t1180 = t1192
+					}
+				l63:
+					v1 = t1180
+					t1193 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1180))+12:]))) = int32(t1193)
+					t1194 := v0
+					t1195 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1194))+8:]))) = int32(t1195)
+					t1196 := v4
+					t1197 := v0
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1196))+12:]))) = int32(t1197)
+					t1198 := v4
+					t1199 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1198))+8:]))) = int32(t1199)
+					goto l62
+				}
+				v1 = int32(31)
+				t1200 := v3
+				if uint32(t1200) <= uint32(i32_const(0xffffff)) {
+					t1202 := v3
+					t1203 := v3
+					t1204 := i32_shr_u(t1203, int32(8))
+					t1205 := int32(bits.LeadingZeros32(uint32(t1204)))
+					v0 = t1205
+					t1206 := int32(38) - t1205
+					t1207 := i32_shr_u(t1202, t1206)
+					t1208 := t1207 & int32(1)
+					t1209 := v0
+					t1210 := i32_shl(t1209, int32(1))
+					t1211 := t1208 - t1210
+					t1212 := t1211 + int32(62)
+					v1 = t1212
+				}
+				t1213 := v4
+				t1214 := v1
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1213))+28:]))) = int32(t1214)
+				t1215 := v4
+				*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t1215))+16:]))) = int64(i64_const(0))
+				t1216 := v1
+				t1217 := i32_shl(t1216, int32(2))
+				t1218 := t1217 + i32_const(13564)
+				v0 = t1218
+				t1219 := v8
+				t1220 := v1
+				t1221 := i32_shl(int32(1), t1220)
+				v2 = t1221
+				t1222 := t1219 & t1221
+				if t1222 == 0 {
+					t1224 := v0
+					t1225 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1224):]))) = int32(t1225)
+					t1226 := v2
+					t1227 := v8
+					t1228 := t1226 | t1227
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t1228)
+					t1229 := v4
+					t1230 := v0
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1229))+24:]))) = int32(t1230)
+					t1231 := v4
+					t1232 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1231))+8:]))) = int32(t1232)
+					t1233 := v4
+					t1234 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1233))+12:]))) = int32(t1234)
+					goto l62
+				}
+				t1235 := v3
+				t1236 := v1
+				t1237 := i32_shr_u(t1236, int32(1))
+				t1238 := int32(25) - t1237
+				t1239 := v1
+				t1241 := i32_const(0)
+				if t1239 != int32(31) {
+					t1241 = t1238
+				}
+				t1242 := i32_shl(t1235, t1241)
+				v1 = t1242
+				t1243 := v0
+				t1244 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1243):])))
+				v0 = t1244
+				{
+				l65:
+					{
+						t1245 := v0
+						v2 = t1245
+						t1246 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1245))+4:])))
+						t1247 := t1246 & i32_const(-8)
+						t1248 := v3
+						if t1247 == t1248 {
+							goto l64
+						}
+						t1250 := v1
+						t1251 := i32_shr_u(t1250, int32(29))
+						v0 = t1251
+						t1252 := v1
+						t1253 := i32_shl(t1252, int32(1))
+						v1 = t1253
+						t1254 := v2
+						t1255 := v0
+						t1256 := t1255 & int32(4)
+						t1257 := t1254 + t1256
+						v7 = t1257
+						t1258 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1257))+16:])))
+						v0 = t1258
+						if t1258 != 0 {
+							goto l65
+						}
+					}
+					t1259 := v7
+					t1260 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1259))+16:]))) = int32(t1260)
+					t1261 := v4
+					t1262 := v2
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1261))+24:]))) = int32(t1262)
+					t1263 := v4
+					t1264 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1263))+12:]))) = int32(t1264)
+					t1265 := v4
+					t1266 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1265))+8:]))) = int32(t1266)
+					goto l62
+				}
+			l64:
+				t1267 := v2
+				t1268 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1267))+8:])))
+				v0 = t1268
+				t1269 := v4
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1268))+12:]))) = int32(t1269)
+				t1270 := v2
+				t1271 := v4
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1270))+8:]))) = int32(t1271)
+				t1272 := v4
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1272))+24:]))) = int32(i32_const(0))
+				t1273 := v4
+				t1274 := v2
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1273))+12:]))) = int32(t1274)
+				t1275 := v4
+				t1276 := v0
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1275))+8:]))) = int32(t1276)
+			}
+		l62:
+			t1277 := v5
+			t1278 := t1277 + int32(8)
+			v1 = t1278
+			goto l2
+		}
+	l8:
+		{
+			t1279 := v9
+			if t1279 == 0 {
+				goto l66
+			}
+			{
+				t1281 := v2
+				t1282 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1281))+28:])))
+				v0 = t1282
+				t1283 := i32_shl(t1282, int32(2))
+				v5 = t1283
+				t1284 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1283))+13564:])))
+				t1285 := v2
+				if t1284 == t1285 {
+					t1287 := v5
+					t1288 := t1287 + i32_const(13564)
+					t1289 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1288):]))) = int32(t1289)
+					t1290 := v1
+					if t1290 != 0 {
+						goto l67
+					}
+					t1291 := v11
+					t1292 := v0
+					t1293 := i32_rotl(i32_const(-2), t1292)
+					t1294 := t1291 & t1293
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t1294)
+					goto l66
+				}
+				{
+					t1295 := v2
+					t1296 := v9
+					t1297 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1296))+16:])))
+					if t1295 == t1297 {
+						t1299 := v9
+						t1300 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1299))+16:]))) = int32(t1300)
+						goto l68
+					}
+					t1301 := v9
+					t1302 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1301))+20:]))) = int32(t1302)
+				}
+			l68:
+				t1303 := v1
+				if t1303 == 0 {
+					goto l66
+				}
+			}
+		l67:
+			t1305 := v1
+			t1306 := v9
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1305))+24:]))) = int32(t1306)
+			t1307 := v2
+			t1308 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1307))+16:])))
+			v0 = t1308
+			if t1308 != 0 {
+				t1309 := v1
+				t1310 := v0
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1309))+16:]))) = int32(t1310)
+				t1311 := v0
+				t1312 := v1
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1311))+24:]))) = int32(t1312)
+			}
+			t1313 := v2
+			t1314 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1313))+20:])))
+			v0 = t1314
+			if t1314 == 0 {
+				goto l66
+			}
+			t1316 := v1
+			t1317 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1316))+20:]))) = int32(t1317)
+			t1318 := v0
+			t1319 := v1
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1318))+24:]))) = int32(t1319)
+		}
+	l66:
+		{
+			t1320 := v3
+			if uint32(t1320) <= uint32(int32(15)) {
+				t1322 := v2
+				t1323 := v3
+				t1324 := v6
+				t1325 := t1323 | t1324
+				v0 = t1325
+				t1326 := t1325 | int32(3)
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1322))+4:]))) = int32(t1326)
+				t1327 := v0
+				t1328 := v2
+				t1329 := t1327 + t1328
+				v0 = t1329
+				t1330 := v0
+				t1331 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1330))+4:])))
+				t1332 := t1331 | int32(1)
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1329))+4:]))) = int32(t1332)
+				goto l69
+			}
+			t1333 := v2
+			t1334 := v6
+			t1335 := t1333 + t1334
+			v5 = t1335
+			t1336 := v3
+			t1337 := t1336 | int32(1)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1335))+4:]))) = int32(t1337)
+			t1338 := v2
+			t1339 := v6
+			t1340 := t1339 | int32(3)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1338))+4:]))) = int32(t1340)
+			t1341 := v3
+			t1342 := v5
+			t1343 := t1341 + t1342
+			t1344 := v3
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t1343):]))) = int32(t1344)
+			t1345 := v8
+			if t1345 != 0 {
+				t1346 := v8
+				t1347 := t1346 & i32_const(-8)
+				t1348 := t1347 + i32_const(13300)
+				v0 = t1348
+				t1349 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+				v1 = t1349
+				var t1350 int32
+				_ = t1350
+				{
+					t1351 := v8
+					t1352 := i32_shr_u(t1351, int32(3))
+					t1353 := i32_shl(int32(1), t1352)
+					v7 = t1353
+					t1354 := v4
+					t1355 := t1353 & t1354
+					if t1355 == 0 {
+						t1357 := v4
+						t1358 := v7
+						t1359 := t1357 | t1358
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t1359)
+						t1360 := v0
+						t1350 = t1360
+						goto l70
+					}
+					t1361 := v0
+					t1362 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1361))+8:])))
+					t1350 = t1362
+				}
+			l70:
+				v4 = t1350
+				t1363 := v1
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1350))+12:]))) = int32(t1363)
+				t1364 := v0
+				t1365 := v1
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1364))+8:]))) = int32(t1365)
+				t1366 := v1
+				t1367 := v0
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1366))+12:]))) = int32(t1367)
+				t1368 := v1
+				t1369 := v4
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t1368))+8:]))) = int32(t1369)
+			}
+			t1370 := v5
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):]))) = int32(t1370)
+			t1371 := v3
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t1371)
+		}
+	l69:
+		t1372 := v2
+		t1373 := t1372 + int32(8)
+		v1 = t1373
+	}
+l2:
+	t1374 := v10
+	t1375 := t1374 + int32(16)
+	m.___stack_pointer = t1375
+	t1376 := v1
+	return t1376
+}
+func (m *Module) Xfree(v0 int32) {
+	var v1, v2, v3, v4, v5, v6, v7, v8 int32
+	_, _, _, _, _, _, _, _ = v1, v2, v3, v4, v5, v6, v7, v8
+	{
+		t0 := v0
+		if t0 == 0 {
+			goto l0
+		}
+		t2 := v0
+		t3 := t2 - int32(8)
+		v2 = t3
+		t4 := v0
+		t5 := t4 - int32(4)
+		t6 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t5):])))
+		v0 = t6
+		t7 := t6 & i32_const(-8)
+		v4 = t7
+		t8 := t3 + t7
+		v5 = t8
+		{
+			t9 := v0
+			t10 := t9 & int32(1)
+			if t10 != 0 {
+				goto l1
+			}
+			t11 := v0
+			t12 := t11 & int32(2)
+			if t12 == 0 {
+				goto l0
+			}
+			t14 := v2
+			t15 := v2
+			t16 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t15):])))
+			v0 = t16
+			t17 := t14 - t16
+			v2 = t17
+			t18 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13276)):])))
+			if uint32(t17) < uint32(t18) {
+				goto l0
+			}
+			t20 := v0
+			t21 := v4
+			t22 := t20 + t21
+			v4 = t22
+			{
+				{
+					{
+						t23 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+						t24 := v2
+						if t23 != t24 {
+							t26 := v2
+							t27 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t26))+12:])))
+							v1 = t27
+							t28 := v0
+							if uint32(t28) <= uint32(i32_const(255)) {
+								t30 := v1
+								t31 := v2
+								t32 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t31))+8:])))
+								v3 = t32
+								if t30 != t32 {
+									goto l2
+								}
+								t34 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+								t35 := v0
+								t36 := i32_shr_u(t35, int32(3))
+								t37 := i32_rotl(i32_const(-2), t36)
+								t38 := t34 & t37
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t38)
+								goto l1
+							}
+							t39 := v2
+							t40 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t39))+24:])))
+							v6 = t40
+							t41 := v1
+							t42 := v2
+							if t41 != t42 {
+								t44 := v2
+								t45 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t44))+8:])))
+								v0 = t45
+								t46 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t45))+12:]))) = int32(t46)
+								t47 := v1
+								t48 := v0
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t47))+8:]))) = int32(t48)
+								goto l3
+							}
+							t49 := v2
+							t50 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t49))+20:])))
+							v0 = t50
+							var t51 int32
+							_ = t51
+							if t50 != 0 {
+								t52 := v2
+								t53 := t52 + int32(20)
+								t51 = t53
+							} else {
+								t54 := v2
+								t55 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t54))+16:])))
+								v0 = t55
+								if t55 == 0 {
+									goto l4
+								}
+								t57 := v2
+								t58 := t57 + int32(16)
+								t51 = t58
+							}
+							v3 = t51
+						l5:
+							{
+								t59 := v3
+								v7 = t59
+								t60 := v0
+								v1 = t60
+								t61 := t60 + int32(20)
+								v3 = t61
+								t62 := v1
+								t63 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t62))+20:])))
+								v0 = t63
+								if t63 != 0 {
+									goto l5
+								}
+								t64 := v1
+								t65 := t64 + int32(16)
+								v3 = t65
+								t66 := v1
+								t67 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t66))+16:])))
+								v0 = t67
+								if t67 != 0 {
+									goto l5
+								}
+							}
+							t68 := v7
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t68):]))) = int32(i32_const(0))
+							goto l3
+						}
+						t69 := v5
+						t70 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t69))+4:])))
+						v0 = t70
+						t71 := t70 & int32(3)
+						if t71 != int32(3) {
+							goto l1
+						}
+						t73 := v5
+						t74 := v0
+						t75 := t74 & i32_const(-2)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t73))+4:]))) = int32(t75)
+						t76 := v4
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t76)
+						t77 := v5
+						t78 := v4
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t77):]))) = int32(t78)
+						t79 := v2
+						t80 := v4
+						t81 := t80 | int32(1)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t79))+4:]))) = int32(t81)
+						goto l0
+					}
+				l2:
+					t82 := v1
+					t83 := v3
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t82))+8:]))) = int32(t83)
+					t84 := v3
+					t85 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t84))+12:]))) = int32(t85)
+					goto l1
+				}
+			l4:
+				v1 = i32_const(0)
+			}
+		l3:
+			t86 := v6
+			if t86 == 0 {
+				goto l1
+			}
+			{
+				t88 := v2
+				t89 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t88))+28:])))
+				v0 = t89
+				t90 := i32_shl(t89, int32(2))
+				v3 = t90
+				t91 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t90))+13564:])))
+				t92 := v2
+				if t91 == t92 {
+					t94 := v3
+					t95 := t94 + i32_const(13564)
+					t96 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t95):]))) = int32(t96)
+					t97 := v1
+					if t97 != 0 {
+						goto l6
+					}
+					t98 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+					t99 := v0
+					t100 := i32_rotl(i32_const(-2), t99)
+					t101 := t98 & t100
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t101)
+					goto l1
+				}
+				{
+					t102 := v2
+					t103 := v6
+					t104 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t103))+16:])))
+					if t102 == t104 {
+						t106 := v6
+						t107 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t106))+16:]))) = int32(t107)
+						goto l7
+					}
+					t108 := v6
+					t109 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t108))+20:]))) = int32(t109)
+				}
+			l7:
+				t110 := v1
+				if t110 == 0 {
+					goto l1
+				}
+			}
+		l6:
+			t112 := v1
+			t113 := v6
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t112))+24:]))) = int32(t113)
+			t114 := v2
+			t115 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t114))+16:])))
+			v0 = t115
+			if t115 != 0 {
+				t116 := v1
+				t117 := v0
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t116))+16:]))) = int32(t117)
+				t118 := v0
+				t119 := v1
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t118))+24:]))) = int32(t119)
+			}
+			t120 := v2
+			t121 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t120))+20:])))
+			v0 = t121
+			if t121 == 0 {
+				goto l1
+			}
+			t123 := v1
+			t124 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t123))+20:]))) = int32(t124)
+			t125 := v0
+			t126 := v1
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t125))+24:]))) = int32(t126)
+		}
+	l1:
+		t127 := v2
+		t128 := v5
+		if uint32(t127) >= uint32(t128) {
+			goto l0
+		}
+		t130 := v5
+		t131 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t130))+4:])))
+		v0 = t131
+		t132 := t131 & int32(1)
+		if t132 == 0 {
+			goto l0
+		}
+		{
+			{
+				{
+					{
+						t134 := v0
+						t135 := t134 & int32(2)
+						if t135 == 0 {
+							t137 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):])))
+							t138 := v5
+							if t137 == t138 {
+								t140 := v2
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(t140)
+								t141 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):])))
+								t142 := v4
+								t143 := t141 + t142
+								v0 = t143
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(t143)
+								t144 := v2
+								t145 := v0
+								t146 := t145 | int32(1)
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t144))+4:]))) = int32(t146)
+								t147 := v2
+								t148 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+								if t147 != t148 {
+									goto l0
+								}
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(i32_const(0))
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):]))) = int32(i32_const(0))
+								goto l0
+							}
+							t150 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+							v8 = t150
+							t151 := v5
+							if t150 == t151 {
+								t153 := v2
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):]))) = int32(t153)
+								t154 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):])))
+								t155 := v4
+								t156 := t154 + t155
+								v0 = t156
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t156)
+								t157 := v2
+								t158 := v0
+								t159 := t158 | int32(1)
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t157))+4:]))) = int32(t159)
+								t160 := v0
+								t161 := v2
+								t162 := t160 + t161
+								t163 := v0
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t162):]))) = int32(t163)
+								goto l0
+							}
+							t164 := v0
+							t165 := t164 & i32_const(-8)
+							t166 := v4
+							t167 := t165 + t166
+							v4 = t167
+							t168 := v5
+							t169 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t168))+12:])))
+							v1 = t169
+							t170 := v0
+							if uint32(t170) <= uint32(i32_const(255)) {
+								t172 := v5
+								t173 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t172))+8:])))
+								v3 = t173
+								t174 := v1
+								if t173 == t174 {
+									t176 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+									t177 := v0
+									t178 := i32_shr_u(t177, int32(3))
+									t179 := i32_rotl(i32_const(-2), t178)
+									t180 := t176 & t179
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t180)
+									goto l8
+								}
+								t181 := v1
+								t182 := v3
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t181))+8:]))) = int32(t182)
+								t183 := v3
+								t184 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t183))+12:]))) = int32(t184)
+								goto l8
+							}
+							t185 := v5
+							t186 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t185))+24:])))
+							v6 = t186
+							t187 := v1
+							t188 := v5
+							if t187 != t188 {
+								t190 := v5
+								t191 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t190))+8:])))
+								v0 = t191
+								t192 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t191))+12:]))) = int32(t192)
+								t193 := v1
+								t194 := v0
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t193))+8:]))) = int32(t194)
+								goto l9
+							}
+							t195 := v5
+							t196 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t195))+20:])))
+							v0 = t196
+							var t197 int32
+							_ = t197
+							if t196 != 0 {
+								t198 := v5
+								t199 := t198 + int32(20)
+								t197 = t199
+							} else {
+								t200 := v5
+								t201 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t200))+16:])))
+								v0 = t201
+								if t201 == 0 {
+									goto l10
+								}
+								t203 := v5
+								t204 := t203 + int32(16)
+								t197 = t204
+							}
+							v3 = t197
+						l11:
+							{
+								t205 := v3
+								v7 = t205
+								t206 := v0
+								v1 = t206
+								t207 := t206 + int32(20)
+								v3 = t207
+								t208 := v1
+								t209 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t208))+20:])))
+								v0 = t209
+								if t209 != 0 {
+									goto l11
+								}
+								t210 := v1
+								t211 := t210 + int32(16)
+								v3 = t211
+								t212 := v1
+								t213 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t212))+16:])))
+								v0 = t213
+								if t213 != 0 {
+									goto l11
+								}
+							}
+							t214 := v7
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t214):]))) = int32(i32_const(0))
+							goto l9
+						}
+						t215 := v5
+						t216 := v0
+						t217 := t216 & i32_const(-2)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t215))+4:]))) = int32(t217)
+						t218 := v2
+						t219 := v4
+						t220 := t218 + t219
+						t221 := v4
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t220):]))) = int32(t221)
+						t222 := v2
+						t223 := v4
+						t224 := t223 | int32(1)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t222))+4:]))) = int32(t224)
+						goto l12
+					}
+				l10:
+					v1 = i32_const(0)
+				}
+			l9:
+				t225 := v6
+				if t225 == 0 {
+					goto l8
+				}
+				{
+					t227 := v5
+					t228 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t227))+28:])))
+					v0 = t228
+					t229 := i32_shl(t228, int32(2))
+					v3 = t229
+					t230 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t229))+13564:])))
+					t231 := v5
+					if t230 == t231 {
+						t233 := v3
+						t234 := t233 + i32_const(13564)
+						t235 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t234):]))) = int32(t235)
+						t236 := v1
+						if t236 != 0 {
+							goto l13
+						}
+						t237 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+						t238 := v0
+						t239 := i32_rotl(i32_const(-2), t238)
+						t240 := t237 & t239
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t240)
+						goto l8
+					}
+					{
+						t241 := v5
+						t242 := v6
+						t243 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t242))+16:])))
+						if t241 == t243 {
+							t245 := v6
+							t246 := v1
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t245))+16:]))) = int32(t246)
+							goto l14
+						}
+						t247 := v6
+						t248 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t247))+20:]))) = int32(t248)
+					}
+				l14:
+					t249 := v1
+					if t249 == 0 {
+						goto l8
+					}
+				}
+			l13:
+				t251 := v1
+				t252 := v6
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t251))+24:]))) = int32(t252)
+				t253 := v5
+				t254 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t253))+16:])))
+				v0 = t254
+				if t254 != 0 {
+					t255 := v1
+					t256 := v0
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t255))+16:]))) = int32(t256)
+					t257 := v0
+					t258 := v1
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t257))+24:]))) = int32(t258)
+				}
+				t259 := v5
+				t260 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t259))+20:])))
+				v0 = t260
+				if t260 == 0 {
+					goto l8
+				}
+				t262 := v1
+				t263 := v0
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t262))+20:]))) = int32(t263)
+				t264 := v0
+				t265 := v1
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t264))+24:]))) = int32(t265)
+			}
+		l8:
+			t266 := v2
+			t267 := v4
+			t268 := t266 + t267
+			t269 := v4
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t268):]))) = int32(t269)
+			t270 := v2
+			t271 := v4
+			t272 := t271 | int32(1)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t270))+4:]))) = int32(t272)
+			t273 := v2
+			t274 := v8
+			if t273 != t274 {
+				goto l12
+			}
+			t276 := v4
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t276)
+			goto l0
+		}
+	l12:
+		t277 := v4
+		if uint32(t277) <= uint32(i32_const(255)) {
+			t279 := v4
+			t280 := t279 & i32_const(-8)
+			t281 := t280 + i32_const(13300)
+			v0 = t281
+			var t282 int32
+			_ = t282
+			{
+				t283 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+				v3 = t283
+				t284 := v4
+				t285 := i32_shr_u(t284, int32(3))
+				t286 := i32_shl(int32(1), t285)
+				v1 = t286
+				t287 := t283 & t286
+				if t287 == 0 {
+					t289 := v1
+					t290 := v3
+					t291 := t289 | t290
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t291)
+					t292 := v0
+					t282 = t292
+					goto l15
+				}
+				t293 := v0
+				t294 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t293))+8:])))
+				t282 = t294
+			}
+		l15:
+			v3 = t282
+			t295 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t282))+12:]))) = int32(t295)
+			t296 := v0
+			t297 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t296))+8:]))) = int32(t297)
+			t298 := v2
+			t299 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t298))+12:]))) = int32(t299)
+			t300 := v2
+			t301 := v3
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t300))+8:]))) = int32(t301)
+			goto l0
+		}
+		v1 = int32(31)
+		t302 := v4
+		if uint32(t302) <= uint32(i32_const(0xffffff)) {
+			t304 := v4
+			t305 := v4
+			t306 := i32_shr_u(t305, int32(8))
+			t307 := int32(bits.LeadingZeros32(uint32(t306)))
+			v0 = t307
+			t308 := int32(38) - t307
+			t309 := i32_shr_u(t304, t308)
+			t310 := t309 & int32(1)
+			t311 := v0
+			t312 := i32_shl(t311, int32(1))
+			t313 := t310 - t312
+			t314 := t313 + int32(62)
+			v1 = t314
+		}
+		t315 := v2
+		t316 := v1
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t315))+28:]))) = int32(t316)
+		t317 := v2
+		*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t317))+16:]))) = int64(i64_const(0))
+		t318 := v1
+		t319 := i32_shl(t318, int32(2))
+		t320 := t319 + i32_const(13564)
+		v3 = t320
+		var t321 int32
+		_ = t321
+		{
+			{
+				{
+					t322 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+					v0 = t322
+					t323 := v1
+					t324 := i32_shl(int32(1), t323)
+					v7 = t324
+					t325 := t322 & t324
+					if t325 == 0 {
+						t327 := v3
+						t328 := v2
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t327):]))) = int32(t328)
+						t329 := v0
+						t330 := v7
+						t331 := t329 | t330
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t331)
+						goto l16
+					}
+					t332 := v4
+					t333 := v1
+					t334 := i32_shr_u(t333, int32(1))
+					t335 := int32(25) - t334
+					t336 := v1
+					t338 := i32_const(0)
+					if t336 != int32(31) {
+						t338 = t335
+					}
+					t339 := i32_shl(t332, t338)
+					v1 = t339
+					t340 := v3
+					t341 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t340):])))
+					v3 = t341
+				l18:
+					{
+						t342 := v3
+						v0 = t342
+						t343 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t342))+4:])))
+						t344 := t343 & i32_const(-8)
+						t345 := v4
+						if t344 == t345 {
+							goto l17
+						}
+						t347 := v1
+						t348 := i32_shr_u(t347, int32(29))
+						v3 = t348
+						t349 := v1
+						t350 := i32_shl(t349, int32(1))
+						v1 = t350
+						t351 := v0
+						t352 := v3
+						t353 := t352 & int32(4)
+						t354 := t351 + t353
+						v7 = t354
+						t355 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t354))+16:])))
+						v3 = t355
+						if t355 != 0 {
+							goto l18
+						}
+					}
+					t356 := v7
+					t357 := v2
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t356))+16:]))) = int32(t357)
+					t358 := v0
+					v3 = t358
+				}
+			l16:
+				v1 = int32(24)
+				v4 = int32(8)
+				t359 := v2
+				v0 = t359
+				t360 := v2
+				t321 = t360
+				goto l19
+			}
+		l17:
+			t361 := v0
+			t362 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t361))+8:])))
+			v3 = t362
+			t363 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t362))+12:]))) = int32(t363)
+			t364 := v0
+			t365 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t364))+8:]))) = int32(t365)
+			v4 = int32(24)
+			v1 = int32(8)
+			t321 = i32_const(0)
+		}
+	l19:
+		v7 = t321
+		t366 := v1
+		t367 := v2
+		t368 := t366 + t367
+		t369 := v3
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t368):]))) = int32(t369)
+		t370 := v2
+		t371 := v0
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t370))+12:]))) = int32(t371)
+		t372 := v2
+		t373 := v4
+		t374 := t372 + t373
+		t375 := v7
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t374):]))) = int32(t375)
+		t376 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13292)):])))
+		t377 := t376 - int32(1)
+		v0 = t377
+		t378 := v0
+		t379 := i32_const(-1)
+		if t378 != 0 {
+			t379 = t377
+		}
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13292)):]))) = int32(t379)
+	}
+l0:
+}
+func (m *Module) _dispose_chunk(v0 int32, v1 int32) {
+	var v2, v3, v4, v5, v6, v7, v8 int32
+	_, _, _, _, _, _, _ = v2, v3, v4, v5, v6, v7, v8
+	t0 := v0
+	t1 := v1
+	t2 := t0 + t1
+	v5 = t2
+	{
+		{
+			t3 := v0
+			t4 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t3))+4:])))
+			v2 = t4
+			t5 := t4 & int32(1)
+			if t5 != 0 {
+				goto l0
+			}
+			t6 := v2
+			t7 := t6 & int32(2)
+			if t7 == 0 {
+				goto l1
+			}
+			t9 := v0
+			t10 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t9):])))
+			v2 = t10
+			t11 := v1
+			t12 := t10 + t11
+			v1 = t12
+			{
+				{
+					{
+						t13 := v0
+						t14 := v2
+						t15 := t13 - t14
+						v0 = t15
+						t16 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+						if t15 != t16 {
+							t18 := v0
+							t19 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t18))+12:])))
+							v3 = t19
+							t20 := v2
+							if uint32(t20) <= uint32(i32_const(255)) {
+								t22 := v3
+								t23 := v0
+								t24 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t23))+8:])))
+								v4 = t24
+								if t22 != t24 {
+									goto l2
+								}
+								t26 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+								t27 := v2
+								t28 := i32_shr_u(t27, int32(3))
+								t29 := i32_rotl(i32_const(-2), t28)
+								t30 := t26 & t29
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t30)
+								goto l0
+							}
+							t31 := v0
+							t32 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t31))+24:])))
+							v6 = t32
+							t33 := v0
+							t34 := v3
+							if t33 != t34 {
+								t36 := v0
+								t37 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t36))+8:])))
+								v2 = t37
+								t38 := v3
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t37))+12:]))) = int32(t38)
+								t39 := v3
+								t40 := v2
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t39))+8:]))) = int32(t40)
+								goto l3
+							}
+							t41 := v0
+							t42 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t41))+20:])))
+							v4 = t42
+							var t43 int32
+							_ = t43
+							if t42 != 0 {
+								t44 := v0
+								t45 := t44 + int32(20)
+								t43 = t45
+							} else {
+								t46 := v0
+								t47 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t46))+16:])))
+								v4 = t47
+								if t47 == 0 {
+									goto l4
+								}
+								t49 := v0
+								t50 := t49 + int32(16)
+								t43 = t50
+							}
+							v2 = t43
+						l5:
+							{
+								t51 := v2
+								v7 = t51
+								t52 := v4
+								v3 = t52
+								t53 := t52 + int32(20)
+								v2 = t53
+								t54 := v3
+								t55 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t54))+20:])))
+								v4 = t55
+								if t55 != 0 {
+									goto l5
+								}
+								t56 := v3
+								t57 := t56 + int32(16)
+								v2 = t57
+								t58 := v3
+								t59 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t58))+16:])))
+								v4 = t59
+								if t59 != 0 {
+									goto l5
+								}
+							}
+							t60 := v7
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t60):]))) = int32(i32_const(0))
+							goto l3
+						}
+						t61 := v5
+						t62 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t61))+4:])))
+						v2 = t62
+						t63 := t62 & int32(3)
+						if t63 != int32(3) {
+							goto l0
+						}
+						t65 := v5
+						t66 := v2
+						t67 := t66 & i32_const(-2)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t65))+4:]))) = int32(t67)
+						t68 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t68)
+						t69 := v5
+						t70 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t69):]))) = int32(t70)
+						t71 := v0
+						t72 := v1
+						t73 := t72 | int32(1)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t71))+4:]))) = int32(t73)
+						return
+					}
+				l2:
+					t74 := v3
+					t75 := v4
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t74))+8:]))) = int32(t75)
+					t76 := v4
+					t77 := v3
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t76))+12:]))) = int32(t77)
+					goto l0
+				}
+			l4:
+				v3 = i32_const(0)
+			}
+		l3:
+			t78 := v6
+			if t78 == 0 {
+				goto l0
+			}
+			{
+				t80 := v0
+				t81 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t80))+28:])))
+				v2 = t81
+				t82 := i32_shl(t81, int32(2))
+				v4 = t82
+				t83 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t82))+13564:])))
+				t84 := v0
+				if t83 == t84 {
+					t86 := v4
+					t87 := t86 + i32_const(13564)
+					t88 := v3
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t87):]))) = int32(t88)
+					t89 := v3
+					if t89 != 0 {
+						goto l6
+					}
+					t90 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+					t91 := v2
+					t92 := i32_rotl(i32_const(-2), t91)
+					t93 := t90 & t92
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t93)
+					goto l0
+				}
+				{
+					t94 := v0
+					t95 := v6
+					t96 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t95))+16:])))
+					if t94 == t96 {
+						t98 := v6
+						t99 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t98))+16:]))) = int32(t99)
+						goto l7
+					}
+					t100 := v6
+					t101 := v3
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t100))+20:]))) = int32(t101)
+				}
+			l7:
+				t102 := v3
+				if t102 == 0 {
+					goto l0
+				}
+			}
+		l6:
+			t104 := v3
+			t105 := v6
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t104))+24:]))) = int32(t105)
+			t106 := v0
+			t107 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t106))+16:])))
+			v2 = t107
+			if t107 != 0 {
+				t108 := v3
+				t109 := v2
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t108))+16:]))) = int32(t109)
+				t110 := v2
+				t111 := v3
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t110))+24:]))) = int32(t111)
+			}
+			t112 := v0
+			t113 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t112))+20:])))
+			v2 = t113
+			if t113 == 0 {
+				goto l0
+			}
+			t115 := v3
+			t116 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t115))+20:]))) = int32(t116)
+			t117 := v2
+			t118 := v3
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t117))+24:]))) = int32(t118)
+		}
+	l0:
+		{
+			{
+				{
+					{
+						t119 := v5
+						t120 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t119))+4:])))
+						v2 = t120
+						t121 := t120 & int32(2)
+						if t121 == 0 {
+							t123 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):])))
+							t124 := v5
+							if t123 == t124 {
+								t126 := v0
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13284)):]))) = int32(t126)
+								t127 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):])))
+								t128 := v1
+								t129 := t127 + t128
+								v1 = t129
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13272)):]))) = int32(t129)
+								t130 := v0
+								t131 := v1
+								t132 := t131 | int32(1)
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t130))+4:]))) = int32(t132)
+								t133 := v0
+								t134 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+								if t133 != t134 {
+									goto l1
+								}
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(i32_const(0))
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):]))) = int32(i32_const(0))
+								return
+							}
+							t136 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):])))
+							v8 = t136
+							t137 := v5
+							if t136 == t137 {
+								t139 := v0
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13280)):]))) = int32(t139)
+								t140 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):])))
+								t141 := v1
+								t142 := t140 + t141
+								v1 = t142
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t142)
+								t143 := v0
+								t144 := v1
+								t145 := t144 | int32(1)
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t143))+4:]))) = int32(t145)
+								t146 := v0
+								t147 := v1
+								t148 := t146 + t147
+								t149 := v1
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t148):]))) = int32(t149)
+								return
+							}
+							t150 := v2
+							t151 := t150 & i32_const(-8)
+							t152 := v1
+							t153 := t151 + t152
+							v1 = t153
+							t154 := v5
+							t155 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t154))+12:])))
+							v3 = t155
+							t156 := v2
+							if uint32(t156) <= uint32(i32_const(255)) {
+								t158 := v5
+								t159 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t158))+8:])))
+								v4 = t159
+								t160 := v3
+								if t159 == t160 {
+									t162 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+									t163 := v2
+									t164 := i32_shr_u(t163, int32(3))
+									t165 := i32_rotl(i32_const(-2), t164)
+									t166 := t162 & t165
+									*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t166)
+									goto l8
+								}
+								t167 := v3
+								t168 := v4
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t167))+8:]))) = int32(t168)
+								t169 := v4
+								t170 := v3
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t169))+12:]))) = int32(t170)
+								goto l8
+							}
+							t171 := v5
+							t172 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t171))+24:])))
+							v6 = t172
+							t173 := v3
+							t174 := v5
+							if t173 != t174 {
+								t176 := v5
+								t177 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t176))+8:])))
+								v2 = t177
+								t178 := v3
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t177))+12:]))) = int32(t178)
+								t179 := v3
+								t180 := v2
+								*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t179))+8:]))) = int32(t180)
+								goto l9
+							}
+							t181 := v5
+							t182 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t181))+20:])))
+							v4 = t182
+							var t183 int32
+							_ = t183
+							if t182 != 0 {
+								t184 := v5
+								t185 := t184 + int32(20)
+								t183 = t185
+							} else {
+								t186 := v5
+								t187 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t186))+16:])))
+								v4 = t187
+								if t187 == 0 {
+									goto l10
+								}
+								t189 := v5
+								t190 := t189 + int32(16)
+								t183 = t190
+							}
+							v2 = t183
+						l11:
+							{
+								t191 := v2
+								v7 = t191
+								t192 := v4
+								v3 = t192
+								t193 := t192 + int32(20)
+								v2 = t193
+								t194 := v3
+								t195 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t194))+20:])))
+								v4 = t195
+								if t195 != 0 {
+									goto l11
+								}
+								t196 := v3
+								t197 := t196 + int32(16)
+								v2 = t197
+								t198 := v3
+								t199 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t198))+16:])))
+								v4 = t199
+								if t199 != 0 {
+									goto l11
+								}
+							}
+							t200 := v7
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t200):]))) = int32(i32_const(0))
+							goto l9
+						}
+						t201 := v5
+						t202 := v2
+						t203 := t202 & i32_const(-2)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t201))+4:]))) = int32(t203)
+						t204 := v0
+						t205 := v1
+						t206 := t204 + t205
+						t207 := v1
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t206):]))) = int32(t207)
+						t208 := v0
+						t209 := v1
+						t210 := t209 | int32(1)
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t208))+4:]))) = int32(t210)
+						goto l12
+					}
+				l10:
+					v3 = i32_const(0)
+				}
+			l9:
+				t211 := v6
+				if t211 == 0 {
+					goto l8
+				}
+				{
+					t213 := v5
+					t214 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t213))+28:])))
+					v2 = t214
+					t215 := i32_shl(t214, int32(2))
+					v4 = t215
+					t216 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t215))+13564:])))
+					t217 := v5
+					if t216 == t217 {
+						t219 := v4
+						t220 := t219 + i32_const(13564)
+						t221 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t220):]))) = int32(t221)
+						t222 := v3
+						if t222 != 0 {
+							goto l13
+						}
+						t223 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+						t224 := v2
+						t225 := i32_rotl(i32_const(-2), t224)
+						t226 := t223 & t225
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t226)
+						goto l8
+					}
+					{
+						t227 := v5
+						t228 := v6
+						t229 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t228))+16:])))
+						if t227 == t229 {
+							t231 := v6
+							t232 := v3
+							*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t231))+16:]))) = int32(t232)
+							goto l14
+						}
+						t233 := v6
+						t234 := v3
+						*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t233))+20:]))) = int32(t234)
+					}
+				l14:
+					t235 := v3
+					if t235 == 0 {
+						goto l8
+					}
+				}
+			l13:
+				t237 := v3
+				t238 := v6
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t237))+24:]))) = int32(t238)
+				t239 := v5
+				t240 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t239))+16:])))
+				v2 = t240
+				if t240 != 0 {
+					t241 := v3
+					t242 := v2
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t241))+16:]))) = int32(t242)
+					t243 := v2
+					t244 := v3
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t243))+24:]))) = int32(t244)
+				}
+				t245 := v5
+				t246 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t245))+20:])))
+				v2 = t246
+				if t246 == 0 {
+					goto l8
+				}
+				t248 := v3
+				t249 := v2
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t248))+20:]))) = int32(t249)
+				t250 := v2
+				t251 := v3
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t250))+24:]))) = int32(t251)
+			}
+		l8:
+			t252 := v0
+			t253 := v1
+			t254 := t252 + t253
+			t255 := v1
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t254):]))) = int32(t255)
+			t256 := v0
+			t257 := v1
+			t258 := t257 | int32(1)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t256))+4:]))) = int32(t258)
+			t259 := v0
+			t260 := v8
+			if t259 != t260 {
+				goto l12
+			}
+			t262 := v1
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13268)):]))) = int32(t262)
+			return
+		}
+	l12:
+		t263 := v1
+		if uint32(t263) <= uint32(i32_const(255)) {
+			t265 := v1
+			t266 := t265 & i32_const(-8)
+			t267 := t266 + i32_const(13300)
+			v2 = t267
+			var t268 int32
+			_ = t268
+			{
+				t269 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):])))
+				v3 = t269
+				t270 := v1
+				t271 := i32_shr_u(t270, int32(3))
+				t272 := i32_shl(int32(1), t271)
+				v1 = t272
+				t273 := t269 & t272
+				if t273 == 0 {
+					t275 := v1
+					t276 := v3
+					t277 := t275 | t276
+					*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(0x33cc)):]))) = int32(t277)
+					t278 := v2
+					t268 = t278
+					goto l15
+				}
+				t279 := v2
+				t280 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t279))+8:])))
+				t268 = t280
+			}
+		l15:
+			v1 = t268
+			t281 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t268))+12:]))) = int32(t281)
+			t282 := v2
+			t283 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t282))+8:]))) = int32(t283)
+			t284 := v0
+			t285 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t284))+12:]))) = int32(t285)
+			t286 := v0
+			t287 := v1
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t286))+8:]))) = int32(t287)
+			return
+		}
+		v3 = int32(31)
+		t288 := v1
+		if uint32(t288) <= uint32(i32_const(0xffffff)) {
+			t290 := v1
+			t291 := v1
+			t292 := i32_shr_u(t291, int32(8))
+			t293 := int32(bits.LeadingZeros32(uint32(t292)))
+			v2 = t293
+			t294 := int32(38) - t293
+			t295 := i32_shr_u(t290, t294)
+			t296 := t295 & int32(1)
+			t297 := v2
+			t298 := i32_shl(t297, int32(1))
+			t299 := t296 - t298
+			t300 := t299 + int32(62)
+			v3 = t300
+		}
+		t301 := v0
+		t302 := v3
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t301))+28:]))) = int32(t302)
+		t303 := v0
+		*(*int64)(unsafe.Pointer((*[8]byte)((*m.memory)[int64(uint32(t303))+16:]))) = int64(i64_const(0))
+		t304 := v3
+		t305 := i32_shl(t304, int32(2))
+		t306 := t305 + i32_const(13564)
+		v2 = t306
+		t307 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):])))
+		v4 = t307
+		t308 := v3
+		t309 := i32_shl(int32(1), t308)
+		v7 = t309
+		t310 := t307 & t309
+		if t310 == 0 {
+			t312 := v2
+			t313 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t312):]))) = int32(t313)
+			t314 := v4
+			t315 := v7
+			t316 := t314 | t315
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(13264)):]))) = int32(t316)
+			t317 := v0
+			t318 := v2
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t317))+24:]))) = int32(t318)
+			t319 := v0
+			t320 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t319))+8:]))) = int32(t320)
+			t321 := v0
+			t322 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t321))+12:]))) = int32(t322)
+			return
+		}
+		t323 := v1
+		t324 := v3
+		t325 := i32_shr_u(t324, int32(1))
+		t326 := int32(25) - t325
+		t327 := v3
+		t329 := i32_const(0)
+		if t327 != int32(31) {
+			t329 = t326
+		}
+		t330 := i32_shl(t323, t329)
+		v3 = t330
+		t331 := v2
+		t332 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t331):])))
+		v2 = t332
+		{
+		l17:
+			{
+				t333 := v2
+				v4 = t333
+				t334 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t333))+4:])))
+				t335 := t334 & i32_const(-8)
+				t336 := v1
+				if t335 == t336 {
+					goto l16
+				}
+				t338 := v3
+				t339 := i32_shr_u(t338, int32(29))
+				v2 = t339
+				t340 := v3
+				t341 := i32_shl(t340, int32(1))
+				v3 = t341
+				t342 := v4
+				t343 := v2
+				t344 := t343 & int32(4)
+				t345 := t342 + t344
+				v7 = t345
+				t346 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t345))+16:])))
+				v2 = t346
+				if t346 != 0 {
+					goto l17
+				}
+			}
+			t347 := v7
+			t348 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t347))+16:]))) = int32(t348)
+			t349 := v0
+			t350 := v4
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t349))+24:]))) = int32(t350)
+			t351 := v0
+			t352 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t351))+12:]))) = int32(t352)
+			t353 := v0
+			t354 := v0
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t353))+8:]))) = int32(t354)
+			return
+		}
+	l16:
+		t355 := v4
+		t356 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t355))+8:])))
+		v1 = t356
+		t357 := v0
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t356))+12:]))) = int32(t357)
+		t358 := v4
+		t359 := v0
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t358))+8:]))) = int32(t359)
+		t360 := v0
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t360))+24:]))) = int32(i32_const(0))
+		t361 := v0
+		t362 := v4
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t361))+12:]))) = int32(t362)
+		t363 := v0
+		t364 := v1
+		*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t363))+8:]))) = int32(t364)
+	}
+l1:
+}
+func (m *Module) Xaligned_alloc(v0 int32, v1 int32) int32 {
+	var v2, v3, v4, v5, v6 int32
+	_, _, _, _, _ = v2, v3, v4, v5, v6
+	t0 := v0
+	if uint32(t0) <= uint32(int32(16)) {
+		t2 := v1
+		t3 := m._dlmalloc(t2)
+		return t3
+	}
+	var t4 int32
+	_ = t4
+	{
+		{
+			t5 := v0
+			t6 := v0
+			t8 := t5
+			if uint32(t6) <= uint32(int32(16)) {
+				t8 = int32(16)
+			}
+			v3 = t8
+			t9 := v3
+			t10 := t9 - int32(1)
+			t11 := t8 & t10
+			if t11 == 0 {
+				t13 := v3
+				v0 = t13
+				goto l0
+			}
+			v2 = int32(32)
+		l1:
+			{
+				t14 := v2
+				v0 = t14
+				t15 := i32_shl(t14, int32(1))
+				v2 = t15
+				t16 := v0
+				t17 := v3
+				if uint32(t16) < uint32(t17) {
+					goto l1
+				}
+			}
+		}
+	l0:
+		t19 := v0
+		t20 := i32_const(-64) - t19
+		t21 := v1
+		if uint32(t20) <= uint32(t21) {
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(i32_const(12876)):]))) = int32(int32(48))
+			t4 = i32_const(0)
+			goto l2
+		}
+		t23 := v0
+		t24 := v1
+		t25 := t24 + int32(19)
+		t26 := t25 & i32_const(-16)
+		t27 := v1
+		t29 := t26
+		if uint32(t27) < uint32(int32(11)) {
+			t29 = int32(16)
+		}
+		v3 = t29
+		t30 := t23 + t29
+		t31 := t30 + int32(12)
+		t32 := m._dlmalloc(t31)
+		v2 = t32
+		t4 = i32_const(0)
+		if t32 == 0 {
+			goto l2
+		}
+		_ = i32_const(0)
+		_ = i32_const(0)
+		t34 := v2
+		t35 := t34 - int32(8)
+		v1 = t35
+		{
+			t36 := v0
+			t37 := t36 - int32(1)
+			t38 := v2
+			t39 := t37 & t38
+			if t39 == 0 {
+				t41 := v1
+				v0 = t41
+				goto l3
+			}
+			t42 := v2
+			t43 := t42 - int32(4)
+			v5 = t43
+			t44 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t43):])))
+			v6 = t44
+			t45 := t44 & i32_const(-8)
+			t46 := v0
+			t47 := v2
+			t48 := t46 + t47
+			t49 := t48 - int32(1)
+			t50 := v0
+			t51 := i32_const(0) - t50
+			t52 := t49 & t51
+			t53 := t52 - int32(8)
+			v2 = t53
+			t54 := v0
+			t55 := v2
+			t56 := v1
+			t57 := t55 - t56
+			t59 := i32_const(0)
+			if uint32(t57) <= uint32(int32(15)) {
+				t59 = t54
+			}
+			t60 := t53 + t59
+			v0 = t60
+			t61 := v1
+			t62 := t60 - t61
+			v2 = t62
+			t63 := t45 - t62
+			v4 = t63
+			t64 := v6
+			t65 := t64 & int32(3)
+			if t65 == 0 {
+				t67 := v0
+				t68 := v4
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t67))+4:]))) = int32(t68)
+				t69 := v0
+				t70 := v1
+				t71 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t70):])))
+				t72 := v2
+				t73 := t71 + t72
+				*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t69):]))) = int32(t73)
+				goto l3
+			}
+			t74 := v0
+			t75 := v4
+			t76 := v0
+			t77 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t76))+4:])))
+			t78 := t77 & int32(1)
+			t79 := t75 | t78
+			t80 := t79 | int32(2)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t74))+4:]))) = int32(t80)
+			t81 := v0
+			t82 := v4
+			t83 := t81 + t82
+			v4 = t83
+			t84 := v4
+			t85 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t84))+4:])))
+			t86 := t85 | int32(1)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t83))+4:]))) = int32(t86)
+			t87 := v5
+			t88 := v2
+			t89 := v5
+			t90 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t89):])))
+			t91 := t90 & int32(1)
+			t92 := t88 | t91
+			t93 := t92 | int32(2)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[uint32(t87):]))) = int32(t93)
+			t94 := v1
+			t95 := v2
+			t96 := t94 + t95
+			v4 = t96
+			t97 := v4
+			t98 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t97))+4:])))
+			t99 := t98 | int32(1)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t96))+4:]))) = int32(t99)
+			t100 := v1
+			t101 := v2
+			m._dispose_chunk(t100, t101)
+		}
+	l3:
+		{
+			t102 := v0
+			t103 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t102))+4:])))
+			v1 = t103
+			t104 := t103 & int32(3)
+			if t104 == 0 {
+				goto l4
+			}
+			t106 := v1
+			t107 := t106 & i32_const(-8)
+			v2 = t107
+			t108 := v3
+			t109 := t108 + int32(16)
+			if uint32(t107) <= uint32(t109) {
+				goto l4
+			}
+			t111 := v0
+			t112 := v3
+			t113 := v1
+			t114 := t113 & int32(1)
+			t115 := t112 | t114
+			t116 := t115 | int32(2)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t111))+4:]))) = int32(t116)
+			t117 := v0
+			t118 := v3
+			t119 := t117 + t118
+			v1 = t119
+			t120 := v2
+			t121 := v3
+			t122 := t120 - t121
+			v3 = t122
+			t123 := t122 | int32(3)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t119))+4:]))) = int32(t123)
+			t124 := v0
+			t125 := v2
+			t126 := t124 + t125
+			v2 = t126
+			t127 := v2
+			t128 := *(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t127))+4:])))
+			t129 := t128 | int32(1)
+			*(*int32)(unsafe.Pointer((*[4]byte)((*m.memory)[int64(uint32(t126))+4:]))) = int32(t129)
+			t130 := v1
+			t131 := v3
+			m._dispose_chunk(t130, t131)
+		}
+	l4:
+		t132 := v0
+		t133 := t132 + int32(8)
+		t4 = t133
+	}
+l2:
+	return t4
 }
 
 //go:nosplit
