@@ -1,6 +1,6 @@
 //go:build unix
 
-package walloc
+package wmem
 
 import (
 	"errors"
@@ -12,15 +12,17 @@ import (
 	"golang.org/x/sys/unix"
 )
 
+var _ mappableMemory = (*unixVirtualMemory)(nil)
+
 type unixVirtualMemory struct {
 	buf []byte // [:committed:reserved]
 }
 
 func init() {
-	newVirtualMemoryImpl = newUnixVirtualMemory
+	virtualMemoryImpl = virtualMemoryUnix
 }
 
-func newUnixVirtualMemory(cap, max uint64) (virtualMemoryImpl, error) {
+func virtualMemoryUnix(cap, max uint64) (Memory, error) {
 	var (
 		rnd  = uint64(unix.Getpagesize() - 1)
 		res  = (max + rnd) &^ rnd // round up to the page size
@@ -52,17 +54,28 @@ func newUnixVirtualMemory(cap, max uint64) (virtualMemoryImpl, error) {
 	return &unixVirtualMemory{buf: b[:com:len(b)]}, nil
 }
 
-func (m *unixVirtualMemory) Reallocate(size uint64) []byte {
+func (m *unixVirtualMemory) Data() *[]byte {
+	return &m.buf
+}
+
+func (m *unixVirtualMemory) Grow(delta, _ int32) int32 {
 	var (
 		com = uint64(len(m.buf)) // committed memory
 		res = uint64(cap(m.buf)) // address space
 	)
 
-	// grow the memory if required
-	if size > res {
-		return nil // failure
+	old := int32(com >> PageBits)
+	if delta == 0 {
+		return old
 	}
-	if com < size && size <= res {
+
+	size := uint64(old+delta) << PageBits
+	if size > res {
+		return -1
+	}
+
+	// grow the memory if required
+	if com < size {
 		// geometrically grow the memory, rounded up to the page size
 		rnd := uint64(unix.Getpagesize() - 1)
 		new := com + com>>3
@@ -72,13 +85,11 @@ func (m *unixVirtualMemory) Reallocate(size uint64) []byte {
 		// commit the memory
 		err := unix.Mprotect(m.buf[com:new], unix.PROT_READ|unix.PROT_WRITE)
 		if err != nil {
-			return nil // failure
+			return -1 // failure
 		}
 		m.buf = m.buf[:new]
 	}
-
-	// return a slice of memory limited to the committed amount
-	return m.buf[:size:len(m.buf)]
+	return old
 }
 
 func (m *unixVirtualMemory) Free() {
@@ -91,10 +102,6 @@ func (m *unixVirtualMemory) Free() {
 		panic(fmt.Errorf("walloc: failed to unmap memory: %w", err))
 	}
 	m.buf = nil
-}
-
-func (m *unixVirtualMemory) backing() []byte {
-	return m.buf
 }
 
 func (m *unixVirtualMemory) pageSize() int {

@@ -19,10 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: docker build --platform amd64 --pull --no-cache --progress plain --output . src
-      - run: git diff --exit-code lib # ensure the build was reproducible
+      - run: git diff --exit-code internal/marisa_wasm # ensure the build was reproducible
       - uses: actions/attest-build-provenance@v3
         with:
           subject-path: |
-            lib/marisa.wasm
-            lib/marisa.cc
-            lib/marisa.h
+            internal/marisa_wasm/marisa.go
+            internal/marisa_wasm/marisa_big.go

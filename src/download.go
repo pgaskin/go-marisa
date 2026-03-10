@@ -33,10 +33,9 @@ var (
 		"lib",
 	}
 	Replace = map[string]string{
-		"include/marisa/iostream.h":    "",
-		"include/marisa/stdio.h":       "",
-		"lib/marisa/grimoire/intrin.h": "../src/intrin.h",
-		"lib/marisa/grimoire/io.h":     "../src/io.h",
+		"include/marisa/iostream.h": "",
+		"include/marisa/stdio.h":    "",
+		"lib/marisa/grimoire/io.h":  "../src/io.h",
 	}
 	Headers = []string{
 		"include/marisa.h",
@@ -57,8 +56,8 @@ var (
 		"-Wno-unused-function",
 		"-Wno-unused-const-variable",
 	}
-	Source = "../lib/marisa.cc"
-	Header = "../lib/marisa.h"
+	Source = "../src/marisa.cc"
+	Header = "../src/marisa.h"
 )
 
 func patch(files map[string][]byte) error {
@@ -110,6 +109,18 @@ func patch(files map[string][]byte) error {
 			src = bytes.ReplaceAll(src, []byte(`void write(Writer`), []byte(`__attribute__((noinline)) void write(Writer`))
 			files[name] = src
 		}
+	}
+	{
+		slog.Info("cleaning up include/marisa/base.h")
+		src := files["include/marisa/base.h"]
+		buf := src[:0]
+		for line := range bytes.Lines(src) {
+			if bytes.HasPrefix(line, []byte(`[[deprecated]] constexpr auto MARISA_`)) {
+				continue
+			}
+			buf = append(buf, line...)
+		}
+		files["include/marisa/base.h"] = buf
 	}
 	return nil
 }

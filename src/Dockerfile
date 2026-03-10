@@ -25,38 +25,45 @@ ENV PATH="/opt/wasi-sdk/bin:/opt/binaryen/bin:$PATH"
 FROM golang:1.25 AS download
 WORKDIR /build/src
 COPY --link download.go /build/src/
-RUN mkdir /build/lib
 RUN go run download.go
+
+FROM golang:1.25 AS wasm2go
+RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@ecc45fd41abc75bace101eb275d9cb7c72aa76c4
 
 FROM sdk AS build
 WORKDIR /build/
 
-COPY --from=download /build/lib/ /build/lib/
-COPY --link io.h intrin.h /build/src/
+COPY --from=download /build/src/marisa.cc /build/src/marisa.h /build/src/
+COPY --link io.h /build/src/
 
 RUN wasm32-wasi-clang++ -c -O3 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 \
+ -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext \
  -std=c++20 -DNDEBUG \
- lib/marisa.cc
+ src/marisa.cc
 
 COPY --link io.cc wexcept.cc wrapper.cc /build/src/
 
 RUN wasm32-wasi-clang++ -c -O3 \
- -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -msimd128 -Xclang -target-abi -Xclang experimental-mv \
+ -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -Xclang -target-abi -Xclang experimental-mv \
  -std=c++20 -DNDEBUG -Wall -Wextra -Wconversion \
  src/io.cc src/wexcept.cc src/wrapper.cc
 
 COPY --link exports.txt /build/src/
 
-RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--global-base=1024 $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
+RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--import-memory -Wl,--global-base=1024 $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
 RUN wasm-ctor-eval -g -c _initialize marisa.wasm -o marisa.tmp
 RUN wasm-opt -g marisa.tmp -o marisa.wasm -O3 \
- --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext --enable-simd \
+ --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext \
  --low-memory-unused --strip-debug --strip-dwarf --gufa --converge
-RUN install -m644 marisa.wasm lib/marisa.wasm
 
 RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-std=c++20' > src/compile_flags.txt
 
+COPY --link --from=wasm2go /wasm2go /usr/local/bin/
+RUN mkdir -p internal/marisa_wasm
+RUN wasm2go -endian=little < marisa.wasm > internal/marisa_wasm/marisa.go
+RUN wasm2go -endian=big < marisa.wasm > internal/marisa_wasm/marisa_big.go
+
 FROM scratch
 COPY --link --from=build /build/src/compile_flags.txt /src/
-COPY --link --from=build /build/lib/ /lib/
+COPY --link --from=build /build/internal/ /internal/
+COPY --link --from=build /build/src/marisa.cc /build/src/marisa.h /src/

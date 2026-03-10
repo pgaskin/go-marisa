@@ -3,9 +3,9 @@ package marisa
 import (
 	"errors"
 	"iter"
-	"math"
 
-	"github.com/pgaskin/go-marisa/internal/walloc"
+	"github.com/pgaskin/go-marisa/internal/wexcept"
+	"github.com/pgaskin/go-marisa/internal/wmem"
 )
 
 // Config specifies options for a dictionary. Any unspecified options will be
@@ -61,9 +61,7 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 		return errors.New("invalid config")
 	}
 
-	sa := &walloc.SliceAllocator{
-		OverrideMax: maxAlloc,
-	}
+	sa := wmem.SliceMemory(0, maxAlloc)
 	mod, err := instantiate(sa)
 	if err != nil {
 		return err
@@ -92,17 +90,25 @@ func (t *Trie) BuildWeights(keys iter.Seq2[string, float32], cfg Config) error {
 				return err
 			}
 		}
-		buf, ok := mod.Module().Memory().Read(ptr, uint32(len(key)))
+		buf, ok := wmem.Bytes(mod.mem, ptr, uint32(len(key)))
 		if !ok {
 			panic("bad allocation")
 		}
 		copy(buf, key)
 
-		if _, err := mod.Call("marisa_build_push", uint64(ptr), uint64(n), uint64(math.Float32bits(weight))); err != nil {
+		if err := func() (err error) {
+			defer wexcept.Catch(&err)
+			mod.marisa.XBuildPush(int32(ptr), int32(uint32(n)), weight)
+			return
+		}(); err != nil {
 			return err
 		}
 	}
-	if _, err := mod.Call("marisa_build", uint64(flag)); err != nil {
+	if err := func() (err error) {
+		defer wexcept.Catch(&err)
+		mod.marisa.XBuild(int32(uint32(flag)))
+		return
+	}(); err != nil {
 		return err
 	}
 	return t.swap(mod)
