@@ -3,18 +3,23 @@ package wexcept
 
 import (
 	"bytes"
-	"context"
-	"errors"
-	"fmt"
 
 	"github.com/pgaskin/go-marisa/internal/cxxerr"
-	"github.com/pgaskin/go-marisa/internal/wexport"
-	"github.com/tetratelabs/wazero"
-	"github.com/tetratelabs/wazero/api"
 )
 
-func Instantiate(ctx context.Context, runtime wazero.Runtime) (api.Module, error) {
-	return wexport.Instantiate(ctx, runtime, "wexcept", cxxThrow)
+type Imports interface {
+	Xwexcept_cxx_throw_destroy()
+}
+
+type Exports interface {
+	Xcxx_throw(typ, std, what int32)
+}
+
+type Module struct {
+	Memory interface {
+		Data() *[]byte
+	}
+	Imports Imports
 }
 
 // thrownError represents an opaque error thrown from within a host function.
@@ -34,39 +39,37 @@ func Throw(err error) {
 	panic(&thrownError{err})
 }
 
-// Catch returns the error from [Throw] in the returned error from a
-// [api.Function] call, if any.
-func Catch(err error) (error, bool) {
-	if err != nil {
-		var throw *thrownError
-		if errors.As(err, &throw) {
-			return throw.err, true
+// Catch should be called in a defer statement to catch a thrown error, setting
+// err to it if *err is nil. It re-throws other kinds of panics. It returns true
+// if a thrown error was caught.
+func Catch(err *error) bool {
+	if *err == nil {
+		x := recover()
+		if x != nil {
+			if x, ok := x.(*thrownError); ok {
+				*err = x
+				return true
+			}
 		}
+		panic(x)
 	}
-	return err, false
+	return false
 }
 
-var cxxThrow = wexport.VIII("cxx_throw", func(ctx context.Context, mod api.Module, typ, std, what uint32) {
-	type nestedThrowKey struct{}
-	if ctx.Value(nestedThrowKey{}) == true {
-		panic(fmt.Errorf("wexcept: post-throw callback threw"))
-	}
-	typStr, _ := cString(mod.Memory(), typ, 256)
-	stdStr, _ := cString(mod.Memory(), std, 256)
-	whatStr, _ := cString(mod.Memory(), what, 8192)
+func (m *Module) Xcxx_throw(typ int32, std int32, what int32) {
+	mem := *m.Memory.Data()
+	typStr, _ := cString(mem, typ)
+	stdStr, _ := cString(mem, std)
+	whatStr, _ := cString(mem, what)
 	exc := cxxerr.Wrap(typStr, stdStr, whatStr)
-	if _, err := mod.ExportedFunction("wexcept_cxx_throw_destroy").Call(context.WithValue(ctx, nestedThrowKey{}, true)); err != nil {
-		panic(fmt.Errorf("wexcept: failed to call post-throw callback: %w", err))
-	}
+	m.Imports.Xwexcept_cxx_throw_destroy()
 	Throw(exc)
-}, "cxx_throw", "typ", "std", "what")
+}
 
-func cString(memory api.Memory, ptr, maxLen uint32) (string, bool) {
-	if ptr != 0 {
-		if buf, ok := memory.Read(ptr, min(maxLen, memory.Size()-ptr)); ok {
-			if i := bytes.IndexByte(buf, 0); i != -1 {
-				return string(buf[:i]), true
-			}
+func cString(buf []byte, ptr int32) (string, bool) {
+	if ptr != 0 && int(uint32(ptr)) < len(buf) {
+		if buf, _, ok := bytes.Cut(buf[uint32(ptr):], []byte{0}); ok {
+			return string(buf), true
 		}
 	}
 	return "", false

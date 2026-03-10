@@ -1,8 +1,6 @@
 package marisa
 
 import (
-	"context"
-	"encoding/hex"
 	"errors"
 	"io"
 	"math"
@@ -15,8 +13,6 @@ import (
 	"github.com/pgaskin/go-marisa/internal/cxxerr"
 	"github.com/pgaskin/go-marisa/internal/walloc"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
-	"github.com/pgaskin/go-marisa/internal/wexport"
-	"github.com/tetratelabs/wazero/api"
 )
 
 // Open opens a dictionary from a file.
@@ -90,11 +86,15 @@ func (t *Trie) MapFile(f *os.File, offset int64, length int64) error {
 	if err := va.Err(); err != nil {
 		return err
 	}
-	ptr, err := va.MapFile(context.Background(), mod.Module(), f, offset, length, false)
+	ptr, err := va.MapFile(mod.marisa, f, offset, length, false)
 	if err != nil {
 		return err
 	}
-	if _, err := mod.Call("marisa_new", uint64(ptr), uint64(length)); err != nil {
+	if err := func() (err error) {
+		defer wexcept.Catch(&err)
+		mod.marisa.Xmarisa_new(int32(ptr), int32(length))
+		return
+	}(); err != nil {
 		var ex *cxxerr.Exception
 		if errors.As(err, &ex) {
 			if errors.Is(ex, cxxerr.Std("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
@@ -124,12 +124,16 @@ func (t *Trie) UnmarshalBinary(b []byte) error {
 	if err != nil {
 		return err
 	}
-	if buf, ok := mod.Module().Memory().Read(ptr, uint32(len(b))); !ok {
+	if buf, ok := mod.Memory(ptr, int32(len(b))); !ok {
 		panic("bad allocation")
 	} else {
 		copy(buf, b)
 	}
-	if _, err := mod.Call("marisa_new", uint64(ptr), uint64(len(b))); err != nil {
+	if err := func() (err error) {
+		defer wexcept.Catch(&err)
+		mod.marisa.Xmarisa_new(int32(ptr), int32(uint32(len(b))))
+		return
+	}(); err != nil {
 		var ex *cxxerr.Exception
 		if errors.As(err, &ex) {
 			if errors.Is(ex, cxxerr.Std("runtime_error")) && strings.Contains(ex.What(), "size > avail_") {
@@ -155,7 +159,13 @@ func (t *Trie) ReadFrom(r io.Reader) (int64, error) {
 		return 0, err
 	}
 	c := &countReader{R: r}
-	if _, err := mod.CallContext(withReader(context.Background(), c), "marisa_load"); err != nil {
+	if err := func() (err error) {
+		defer wexcept.Catch(&err)
+		mod.io.Reader = r
+		defer func() { mod.io.Reader = nil }()
+		mod.marisa.Xmarisa_load()
+		return
+	}(); err != nil {
 		var ex *cxxerr.Exception
 		if errors.As(err, &ex) {
 			if errors.Is(ex, cxxerr.Std("runtime_error")) && strings.Contains(ex.What(), "!stream_->read") {
@@ -175,40 +185,6 @@ func (z zeroReader) Read(p []byte) (n int, err error) {
 	}
 	return len(p), nil
 }
-
-type readKey struct{}
-
-func withReader(ctx context.Context, r io.Reader) context.Context {
-	return context.WithValue(ctx, readKey{}, r)
-}
-
-var read = wexport.VII("read", func(ctx context.Context, m api.Module, p, n uint32) {
-	r, ok := ctx.Value(readKey{}).(io.Reader)
-	if !ok {
-		panic("no active reader")
-	}
-	if n != 0 {
-		if p != 0 {
-			b, ok := m.Memory().Read(p, n)
-			if !ok {
-				panic("invalid pointer")
-			}
-			if _, err := io.ReadFull(r, b); err != nil {
-				if err == io.EOF {
-					err = io.ErrUnexpectedEOF
-				}
-				wexcept.Throw(err)
-			}
-		} else {
-			if _, err := io.CopyN(io.Discard, r, int64(n)); err != nil {
-				if err == io.EOF {
-					err = io.ErrUnexpectedEOF
-				}
-				wexcept.Throw(err)
-			}
-		}
-	}
-}, "read", "buf", "n")
 
 type countReader struct {
 	N int64
@@ -231,7 +207,13 @@ func (t *Trie) AppendBinary(b []byte) ([]byte, error) {
 		return nil, errors.New("dictionary not initialized")
 	}
 	b = slices.Grow(b, int(t.ioSize))
-	_, err := t.mod.CallContext(withWriteBuffer(context.Background(), &b), "marisa_save")
+	err := func() (err error) {
+		defer wexcept.Catch(&err)
+		t.mod.io.WriteBuffer = b
+		defer func() { t.mod.io.WriteBuffer = nil }()
+		t.mod.marisa.Xmarisa_save()
+		return
+	}()
 	return b, err
 }
 
@@ -241,61 +223,15 @@ func (t *Trie) WriteTo(w io.Writer) (int64, error) {
 		return 0, errors.New("dictionary not initialized")
 	}
 	c := &countWriter{W: w}
-	_, err := t.mod.CallContext(withWriter(context.Background(), c), "marisa_save")
+	err := func() (err error) {
+		defer wexcept.Catch(&err)
+		t.mod.io.Writer = w
+		defer func() { t.mod.io.Writer = nil }()
+		t.mod.marisa.Xmarisa_save()
+		return
+	}()
 	return c.N, err
 }
-
-type writeKey string
-
-func withWriter(ctx context.Context, w io.Writer) context.Context {
-	return context.WithValue(ctx, writeKey("writer"), w)
-}
-
-func withWriteBuffer(ctx context.Context, b *[]byte) context.Context {
-	return context.WithValue(ctx, writeKey("buffer"), b)
-}
-
-var write = wexport.VII("write", func(ctx context.Context, m api.Module, p, n uint32) {
-	if w, ok := ctx.Value(writeKey("writer")).(io.Writer); ok {
-		if n != 0 {
-			if p != 0 {
-				b, ok := m.Memory().Read(p, n)
-				if !ok {
-					panic("invalid pointer")
-				}
-				maybePanicAtOffset(w, n, b)
-				n, err := w.Write(b)
-				if err != nil {
-					wexcept.Throw(err)
-				}
-				if n != len(b) {
-					wexcept.Throw(io.ErrShortWrite)
-				}
-			} else {
-				maybePanicAtOffset(w, n, nil)
-				if _, err := io.CopyN(w, zeroReader{}, int64(n)); err != nil {
-					wexcept.Throw(err)
-				}
-			}
-		}
-		return
-	}
-	if b, ok := ctx.Value(writeKey("buffer")).(*[]byte); ok {
-		if n != 0 {
-			if p != 0 {
-				x, ok := m.Memory().Read(p, n)
-				if !ok {
-					panic("invalid pointer")
-				}
-				*b = append(*b, x...)
-			} else {
-				*b = append(*b, make([]byte, n)...)
-			}
-		}
-		return
-	}
-	panic("no active writer")
-}, "write", "buf", "n")
 
 type countWriter struct {
 	N int64
@@ -321,39 +257,76 @@ func init() {
 	}
 }
 
-func maybePanicAtOffset(a any, n uint32, b []byte) {
-	if debugPanicAtOffset == math.MaxUint32 {
-		return
+type marisaIOImpl struct {
+	Memory interface {
+		Data() *[]byte
 	}
-	var o uint32
-	switch a := a.(type) {
-	case *countWriter:
-		o = uint32(a.N)
-	default:
-		return
+	Reader      io.Reader
+	Writer      io.Writer
+	WriteBuffer *[]byte
+}
+
+func (m *marisaIOImpl) mem(p, n int32) []byte {
+	if int(uint32(p)+uint32(n)) >= len(*m.Memory.Data()) {
+		panic("invalid pointer")
 	}
-	if o <= debugPanicAtOffset && debugPanicAtOffset-o < n {
-		var s strings.Builder
-		s.WriteString("write (MARISA_DEBUG_PANIC_AT_OFFSET)")
-		s.WriteString("\nmatch: ")
-		s.WriteString(strconv.FormatUint(uint64(o), 10))
-		s.WriteString(" <= ")
-		s.WriteString(strconv.FormatUint(uint64(debugPanicAtOffset), 10))
-		s.WriteString(" < ")
-		s.WriteString(strconv.FormatUint(uint64(o+n), 10))
-		s.WriteString(" (")
-		s.WriteString(strconv.FormatUint(uint64(n), 10))
-		s.WriteString(")")
-		s.WriteString("\ndata:")
-		if b != nil {
-			for _, l := range strings.Split(hex.Dump(b), "\n") {
-				s.WriteString("\n\t")
-				s.WriteString(l)
+	return (*m.Memory.Data())[uint32(p) : uint32(p)+uint32(n)]
+}
+
+func (m *marisaIOImpl) Xread(p, n int32) {
+	if m.Reader == nil {
+		panic("no active reader")
+	}
+	if n != 0 {
+		if p != 0 {
+			b := m.mem(p, n)
+			if _, err := io.ReadFull(m.Reader, b); err != nil {
+				if err == io.EOF {
+					err = io.ErrUnexpectedEOF
+				}
+				wexcept.Throw(err)
 			}
 		} else {
-			s.WriteString("zeros")
+			if _, err := io.CopyN(io.Discard, m.Reader, int64(n)); err != nil {
+				if err == io.EOF {
+					err = io.ErrUnexpectedEOF
+				}
+				wexcept.Throw(err)
+			}
 		}
-		s.WriteString("\n")
-		panic(s.String())
 	}
+}
+
+func (m *marisaIOImpl) Xwrite(p, n int32) {
+	if w := m.Writer; w != nil {
+		if n != 0 {
+			if p != 0 {
+				b := m.mem(p, n)
+				n, err := w.Write(b)
+				if err != nil {
+					wexcept.Throw(err)
+				}
+				if n != len(b) {
+					wexcept.Throw(io.ErrShortWrite)
+				}
+			} else {
+				if _, err := io.CopyN(w, zeroReader{}, int64(n)); err != nil {
+					wexcept.Throw(err)
+				}
+			}
+		}
+		return
+	}
+	if b := m.WriteBuffer; b != nil {
+		if n != 0 {
+			if p != 0 {
+				x := m.mem(p, n)
+				*b = append(*b, x...)
+			} else {
+				*b = append(*b, make([]byte, n)...)
+			}
+		}
+		return
+	}
+	panic("no active writer")
 }

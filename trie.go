@@ -2,73 +2,27 @@
 package marisa
 
 import (
-	"context"
 	_ "embed"
 	"encoding"
 	"fmt"
 	"io"
 	"math"
 	"reflect"
-	"runtime"
 	"strconv"
 	"strings"
-	"sync"
 
-	"github.com/pgaskin/go-marisa/internal"
+	"github.com/pgaskin/go-marisa/internal/cxxerr"
+	marisa_wasm "github.com/pgaskin/go-marisa/internal/marisa"
 	"github.com/pgaskin/go-marisa/internal/wexcept"
-	"github.com/pgaskin/go-marisa/internal/wexport"
-	"github.com/pgaskin/go-marisa/internal/wwrap"
-	"github.com/tetratelabs/wazero"
-	"github.com/tetratelabs/wazero/api"
-	"github.com/tetratelabs/wazero/experimental"
 )
 
 //go:generate docker build --platform amd64 --progress plain --output . src
 
-var instance struct {
-	runtime  wazero.Runtime
-	compiled wazero.CompiledModule
-	err      error
-	once     sync.Once
-}
-
-// Initialize compiles the wasm binary.
+// Initialize was previously used to compile the wasm binary.
 //
-// This is called implicitly when [Trie] is used for the first time.
+// Deprecated: This is no longer required.
 func Initialize() error {
-	instance.once.Do(initialize)
-	return instance.err
-}
-
-// initialize compiles the module and instantiates the host modules.
-func initialize() {
-	ctx := context.Background()
-	cfg := wazero.NewRuntimeConfig()
-	if internal.NoJIT {
-		cfg = wazero.NewRuntimeConfigInterpreter()
-	}
-
-	cfg = cfg.WithCoreFeatures(
-		api.CoreFeatureMutableGlobal |
-			api.CoreFeatureBulkMemoryOperations |
-			api.CoreFeatureMultiValue |
-			api.CoreFeatureNonTrappingFloatToIntConversion |
-			api.CoreFeatureSignExtensionOps |
-			api.CoreFeatureSIMD)
-
-	instance.runtime = wazero.NewRuntimeWithConfig(ctx, cfg)
-
-	_, instance.err = wexcept.Instantiate(ctx, instance.runtime)
-	if instance.err != nil {
-		return
-	}
-
-	_, instance.err = wexport.Instantiate(ctx, instance.runtime, "marisa", read, write)
-	if instance.err != nil {
-		return
-	}
-
-	instance.compiled, instance.err = instance.runtime.CompileModule(ctx, wasm)
+	return nil
 }
 
 // Trie is a read-only in-memory little-endian MARISA dictionary.
@@ -82,7 +36,7 @@ func initialize() {
 // trie twice, it needs twice the amount of memory since it swaps it at the end.
 type Trie struct {
 	noCopy    noCopy // can't be copied since it's essentialy a handle
-	mod       *wwrap.Module
+	mod       *module
 	qry       *query // cache the last query (we'll usually only have one at a time unless someone is nesting iterators)
 	size      uint32
 	ioSize    uint32
@@ -110,39 +64,64 @@ var (
 const scratchSpace = 32 * 1024 * 1024             // scratch space to allocate when the size is known in advance
 const maxAlloc = min(math.MaxUint32, math.MaxInt) // on 32-bit platforms, limit to 2GiB, on others, limit to 4GiB
 
+type module struct {
+	mem     marisa_wasm.Memory
+	io      *marisaIOImpl
+	wexcept *wexcept.Module
+	marisa  *marisa_wasm.Module
+}
+
 // instantiate creates a new instance of the module.
-func instantiate(alloc experimental.MemoryAllocator) (*wwrap.Module, error) {
-	if err := Initialize(); err != nil {
-		return nil, err
+func instantiate(mem marisa_wasm.Memory) (*module, error) {
+	mod := &module{}
+	mod.mem = mem
+	mod.io = &marisaIOImpl{Memory: mod.mem}
+	mod.wexcept = &wexcept.Module{Memory: mod.mem}
+	mod.marisa = marisa_wasm.New(mod.mem, mod.io, mod.wexcept)
+	mod.wexcept.Imports = mod.wexcept.Imports
+	return mod, nil
+}
+
+func (m *module) Memory(ptr, n int32) ([]byte, bool) {
+	mem := *m.mem.Data()
+	if int(uint32(ptr)+uint32(n)) >= len(mem) {
+		return nil, false
 	}
-	mod, err := instance.runtime.InstantiateModule(experimental.WithMemoryAllocator(context.Background(), alloc), instance.compiled, wazero.NewModuleConfig().WithName(""))
-	if err != nil {
-		return nil, err
+	return mem[uint32(ptr) : uint32(ptr)+uint32(n)], true
+}
+
+func (m *module) Alloc(n int) (addr int32, err error) {
+	if n != 0 {
+		defer wexcept.Catch(&err)
+		if n < 0 || int64(n) >= math.MaxInt32 {
+			return 0, cxxerr.Error(cxxerr.BadAlloc, "size out of range")
+		}
+		addr = m.marisa.Xmalloc(int32(n))
 	}
-	w := wwrap.New(mod)
-	runtime.SetFinalizer(w, func(w *wwrap.Module) {
-		w.Module().Close(context.Background())
-	})
-	return w, nil
+	return
+}
+
+func (m *module) Free(addr int32) {
+	if addr != 0 {
+		m.marisa.Xfree(addr)
+	}
 }
 
 // swap sets the dictionary to use the specified mod containing an initialized
 // dictionary, and updates the stats.
-func (t *Trie) swap(mod *wwrap.Module) error {
-	res, err := mod.Call("marisa_stat")
-	if err != nil {
-		return err
-	}
+func (t *Trie) swap(mod *module) (err error) {
+	defer wexcept.Catch(&err)
+	size, ioSize, totalSize, numTries, numNodes, tailMode, nodeOrder := mod.marisa.Xmarisa_stat()
 	*t = Trie{
 		mod:       mod,
 		qry:       nil,
-		size:      uint32(res[0]),
-		ioSize:    uint32(res[1]),
-		totalSize: uint32(res[2]),
-		numTries:  uint32(res[3]),
-		numNodes:  uint32(res[4]),
-		tailMode:  flagTailMode(configFlag(res[5])),
-		nodeOrder: flagNodeOrder(configFlag(res[6])),
+		size:      uint32(size),
+		ioSize:    uint32(ioSize),
+		totalSize: uint32(totalSize),
+		numTries:  uint32(numTries),
+		numNodes:  uint32(numNodes),
+		tailMode:  flagTailMode(configFlag(tailMode)),
+		nodeOrder: flagNodeOrder(configFlag(nodeOrder)),
 	}
 	return nil
 }

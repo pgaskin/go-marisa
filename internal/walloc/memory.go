@@ -11,9 +11,15 @@ import (
 	"github.com/tetratelabs/wazero/experimental"
 )
 
+// Memory is wasm2go's interface for imported memories.
+type Memory interface {
+	Data() *[]byte
+	Grow(delta, max int32) int32
+}
+
 // SliceMemory allocates a movable slice-backed memory. If allocation fails,
 // it panics.
-func SliceMemory(cap, max uint64) experimental.LinearMemory {
+func SliceMemory(cap, max uint64) Memory {
 	return &sliceMemory{make([]byte, 0, cap), max}
 }
 
@@ -27,6 +33,10 @@ func (m *sliceMemory) String() string {
 }
 
 func (m *sliceMemory) Free() {}
+
+func (m *sliceMemory) Data() *[]byte {
+	return &m.buf
+}
 
 func (m *sliceMemory) Reallocate(size uint64) []byte {
 	if size > m.max {
@@ -42,7 +52,7 @@ func (m *sliceMemory) Reallocate(size uint64) []byte {
 // VirtualMemory reserves a non-movable region of virtual memory. An error
 // matching [errors.ErrUnsupported] is returned if it is not supported for the
 // current platform.
-func VirtualMemory(cap, max uint64) (experimental.LinearMemory, error) {
+func VirtualMemory(cap, max uint64) (Memory, error) {
 	if newVirtualMemoryImpl == nil {
 		return nil, fmt.Errorf("%w: virtual memory not supported for %s/%s", errors.ErrUnsupported, runtime.GOOS, runtime.GOARCH)
 	}

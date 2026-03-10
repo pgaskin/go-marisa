@@ -2,7 +2,6 @@
 package walloc
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"math"
@@ -134,21 +133,12 @@ func (a *VirtualAllocator) virtualMemory(mem api.Memory) *virtualMemory {
 // aligned_alloc, an error matching [errors.ErrUnsupported] will be returned. If
 // free isn't also exported, errors will cause memory to leak. The offset will
 // be aligned as required.
-func (a *VirtualAllocator) MapFile(ctx context.Context, mod api.Module, f *os.File, offset, length int64, write bool) (uint32, error) {
+func (a *VirtualAllocator) MapFile(mod interface {
+	Xaligned_alloc(int32, int32) int32
+}, f *os.File, offset, length int64, write bool) (uint32, error) {
 	m := a.virtualMemory(mod.Memory())
 	if m == nil {
 		return 0, fmt.Errorf("%w: module memory does not support mmap", errors.ErrUnsupported)
-	}
-
-	fn := mod.ExportedFunction("aligned_alloc")
-	if fn == nil {
-		return 0, fmt.Errorf("%w: no libc support for aligned_alloc", errors.ErrUnsupported)
-	}
-	if t := fn.Definition().ParamTypes(); len(t) != 2 || t[0] != api.ValueTypeI32 || t[1] != api.ValueTypeI32 {
-		return 0, fmt.Errorf("%w: wrong function signature for aligned_alloc", errors.ErrUnsupported)
-	}
-	if t := fn.Definition().ResultTypes(); len(t) != 1 || t[0] != api.ValueTypeI32 {
-		return 0, fmt.Errorf("%w: wrong function signature for aligned_alloc", errors.ErrUnsupported)
 	}
 
 	if offset < 0 || length <= 0 {
@@ -167,13 +157,7 @@ func (a *VirtualAllocator) MapFile(ctx context.Context, mod api.Module, f *os.Fi
 	}
 
 	var ptr uint32
-	if res, err := fn.Call(ctx, psz, msz); err != nil {
-		return 0, err
-	} else if res[0] == 0 {
-		return 0, errors.New("memory allocation failed")
-	} else {
-		ptr = uint32(res[0])
-	}
+	ptr = uint32(mod.Xaligned_alloc(int32(uint32(psz)), int32(uint32(msz))))
 	if _, ok := mod.Memory().Read(ptr, uint32(msz)); !ok {
 		return 0, errors.New("aligned_alloc returned bad pointer")
 	}

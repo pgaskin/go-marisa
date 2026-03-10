@@ -5,16 +5,17 @@ import (
 	"iter"
 
 	"github.com/pgaskin/go-marisa/internal"
-	"github.com/pgaskin/go-marisa/internal/wwrap"
+	marisa_wasm "github.com/pgaskin/go-marisa/internal/marisa"
+	"github.com/pgaskin/go-marisa/internal/wexcept"
 )
 
 // query is a MARISA agent.
 type query struct {
 	noCopy   noCopy
-	mod      *wwrap.Module
-	ptr      uint32
-	shortStr uint32 // pre-allocated shortQueryLen
-	longStr  uint32
+	mod      *module
+	ptr      int32
+	shortStr int32 // pre-allocated shortQueryLen
+	longStr  int32
 	res      [3]uint64
 }
 
@@ -29,13 +30,17 @@ func (t *Trie) query() (*query, error) {
 	if !internal.NoCacheQuery && t.qry != nil {
 		q, t.qry = t.qry, nil
 	} else {
-		res, err := t.mod.Call("marisa_query_new")
+		ptr, err := func() (ptr int32, err error) {
+			defer wexcept.Catch(&err)
+			ptr = t.mod.marisa.Xmarisa_query_new()
+			return
+		}()
 		if err != nil {
 			return nil, err
 		}
 		q = &query{
 			mod: t.mod,
-			ptr: uint32(res[0]),
+			ptr: ptr,
 		}
 	}
 	return q, nil
@@ -52,7 +57,7 @@ func (t *Trie) queryString(s string) (*query, error) {
 		return nil, err
 	}
 
-	var str uint32
+	var str int32
 	if !internal.NoCacheQuery && len(s) < shortQueryLen {
 		if q.shortStr == 0 {
 			q.shortStr, err = t.mod.Alloc(shortQueryLen)
@@ -70,13 +75,17 @@ func (t *Trie) queryString(s string) (*query, error) {
 		}
 		q.longStr = str
 	}
-	if buf, ok := t.mod.Module().Memory().Read(str, uint32(len(s))); !ok {
+	if buf, ok := t.mod.Memory(str, int32(len(s))); !ok {
 		panic("bad allocation")
 	} else {
 		copy(buf, s)
 	}
 
-	if _, err := t.mod.Call("marisa_query_set_str", uint64(q.ptr), uint64(str), uint64(len(s))); err != nil {
+	if err := func() (err error) {
+		defer wexcept.Catch(&err)
+		t.mod.marisa.Xmarisa_query_set_str(q.ptr, str, int32(len(s)))
+		return
+	}(); err != nil {
 		t.queryDone(q)
 		return nil, err
 	}
@@ -94,7 +103,11 @@ func (t *Trie) queryID(id uint32) (*query, error) {
 		return nil, err
 	}
 
-	if _, err := t.mod.Call("marisa_query_set_id", uint64(q.ptr), uint64(id)); err != nil {
+	if err := func() (err error) {
+		defer wexcept.Catch(&err)
+		t.mod.marisa.Xmarisa_query_set_id(q.ptr, int32(id))
+		return
+	}(); err != nil {
 		t.queryDone(q)
 		return nil, err
 	}
@@ -108,7 +121,11 @@ func (t *Trie) queryDone(q *query) {
 	if q.ptr == 0 {
 		panic("double-free of query")
 	}
-	if _, err := q.mod.Call("marisa_query_clear", uint64(q.ptr)); err != nil {
+	if err := func() (err error) {
+		defer wexcept.Catch(&err)
+		t.mod.marisa.Xmarisa_query_clear(q.ptr)
+		return
+	}(); err != nil {
 		panic(fmt.Errorf("marisa: failed to free query: %w", err))
 	}
 	if q.longStr != 0 {
@@ -123,7 +140,11 @@ func (t *Trie) queryDone(q *query) {
 		q.mod.Free(q.shortStr)
 		q.shortStr = 0
 	}
-	if _, err := q.mod.Call("marisa_query_free", uint64(q.ptr)); err != nil {
+	if err := func() (err error) {
+		defer wexcept.Catch(&err)
+		t.mod.marisa.Xmarisa_query_free(q.ptr)
+		return
+	}(); err != nil {
 		panic(fmt.Errorf("marisa: failed to free query: %w", err))
 	}
 	q.ptr = 0
@@ -131,19 +152,28 @@ func (t *Trie) queryDone(q *query) {
 
 // Next gets the next result for a query, returning true if a result is
 // available. If q is nil, this always returns false.
-func (q *query) Next(name string) (bool, error) {
+func (q *query) Next(fn func(*marisa_wasm.Module, int32) int32) (bool, error) {
 	if q == nil {
 		return false, nil
 	}
 
 	var ok bool
-	if res, err := q.mod.Call(name, uint64(q.ptr)); err != nil {
+	if res, err := func() (res int32, err error) {
+		defer wexcept.Catch(&err)
+		res = fn(q.mod.marisa, q.ptr)
+		return
+	}(); err != nil {
 		return false, err
 	} else {
-		ok = res[0] != 0
+		ok = res != 0
 	}
 	if ok {
-		res, err := q.mod.Call("marisa_query_result", uint64(q.ptr))
+		res, err := func() (res [3]uint64, err error) {
+			defer wexcept.Catch(&err)
+			r0, r1, r2 := q.mod.marisa.Xmarisa_query_result(q.ptr)
+			res = [3]uint64{uint64(r0), uint64(r1), uint64(r2)}
+			return
+		}()
 		if err != nil {
 			return false, err
 		}
@@ -159,7 +189,7 @@ func (q *query) ID() uint32 {
 
 // Key returns the key. It must only be called after Next returns true.
 func (q *query) Key() string {
-	b, ok := q.mod.Module().Memory().Read(uint32(q.res[1]), uint32(q.res[2]))
+	b, ok := q.mod.Memory(int32(q.res[1]), int32(q.res[2]))
 	if !ok {
 		panic("bad pointer")
 	}
@@ -174,7 +204,7 @@ func (t *Trie) Lookup(key string) (uint32, bool, error) {
 	}
 	defer t.queryDone(q)
 
-	ok, err := q.Next("marisa_query_lookup")
+	ok, err := q.Next((*marisa_wasm.Module).Xmarisa_query_lookup)
 	if err != nil {
 		return 0, false, err
 	}
@@ -196,7 +226,7 @@ func (t *Trie) ReverseLookup(id uint32) (string, bool, error) {
 	}
 	defer t.queryDone(q)
 
-	ok, err := q.Next("marisa_query_reverse_lookup")
+	ok, err := q.Next((*marisa_wasm.Module).Xmarisa_query_reverse_lookup)
 	if err != nil {
 		return "", false, err
 	}
@@ -214,13 +244,13 @@ func (t *Trie) Dump(limit int) ([]Key, error) {
 // PredictiveSearch returns keys starting with a query string. If the limit is
 // -1, all keys are returned.
 func (t *Trie) PredictiveSearch(query string, limit int) ([]Key, error) {
-	return collectKeys(limit, t.search("marisa_query_predictive_search", query))
+	return collectKeys(limit, t.search((*marisa_wasm.Module).Xmarisa_query_predictive_search, query))
 }
 
 // CommonPrefixSearchSeq returns keys which equal any prefix of the query
 // string. If the limit is -1, all keys are returned.
 func (t *Trie) CommonPrefixSearch(query string, limit int) ([]Key, error) {
-	return collectKeys(limit, t.search("marisa_query_common_prefix_search", query))
+	return collectKeys(limit, t.search((*marisa_wasm.Module).Xmarisa_query_common_prefix_search, query))
 }
 
 type Key struct {
@@ -246,21 +276,21 @@ func collectKeys(limit int, seq func(*error) iter.Seq2[uint32, string]) (res []K
 
 // DumpSeq dumps all keys.
 func (t *Trie) DumpSeq() func(*error) iter.Seq2[uint32, string] {
-	return t.search("marisa_query_predictive_search", "")
+	return t.search((*marisa_wasm.Module).Xmarisa_query_predictive_search, "")
 }
 
 // PredictiveSearch returns keys starting with a query string.
 func (t *Trie) PredictiveSearchSeq(query string) func(*error) iter.Seq2[uint32, string] {
-	return t.search("marisa_query_predictive_search", query)
+	return t.search((*marisa_wasm.Module).Xmarisa_query_predictive_search, query)
 }
 
 // CommonPrefixSearchSeq returns keys which equal any prefix of the query string.
 func (t *Trie) CommonPrefixSearchSeq(query string) func(*error) iter.Seq2[uint32, string] {
-	return t.search("marisa_query_common_prefix_search", query)
+	return t.search((*marisa_wasm.Module).Xmarisa_query_common_prefix_search, query)
 }
 
 // search iterates over results for the specified query function.
-func (t *Trie) search(name, query string) func(*error) iter.Seq2[uint32, string] {
+func (t *Trie) search(fn func(*marisa_wasm.Module, int32) int32, query string) func(*error) iter.Seq2[uint32, string] {
 	return func(err *error) iter.Seq2[uint32, string] {
 		return func(yield func(uint32, string) bool) {
 			*err = func() error {
@@ -275,7 +305,7 @@ func (t *Trie) search(name, query string) func(*error) iter.Seq2[uint32, string]
 				defer t.queryDone(q)
 
 				for {
-					ok, err := q.Next(name)
+					ok, err := q.Next(fn)
 					if err != nil {
 						return err
 					}
