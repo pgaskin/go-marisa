@@ -14,7 +14,7 @@ func SliceMemory(cap, max uint64) Memory {
 	}
 }
 
-func (m *sliceMemory) Slice() *[]byte {
+func (m *sliceMemory) Data() *[]byte {
 	return &m.buf
 }
 

@@ -11,7 +11,7 @@ const (
 
 // Memory is the imported memory interface for wasm2go.
 type Memory interface {
-	Slice() *[]byte
+	Data() *[]byte
 	Grow(delta, max int32) int32
 }
 
@@ -22,7 +22,7 @@ type FreeableMemory interface {
 }
 
 func Bytes(m Memory, ptr, n uint32) ([]byte, bool) {
-	d := m.Slice()
+	d := m.Data()
 	if d == nil {
 		return nil, false
 	}
@@ -41,7 +41,7 @@ func CString(m Memory, ptr uint32) (string, bool) {
 	if ptr == 0 {
 		return "", false
 	}
-	d := m.Slice()
+	d := m.Data()
 	if d == nil {
 		return "", false
 	}

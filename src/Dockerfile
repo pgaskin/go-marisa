@@ -28,7 +28,7 @@ COPY --link download.go /build/src/
 RUN go run download.go
 
 FROM golang:1.25 AS wasm2go
-RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@278a5ce072bdf2bb1e90264cbc6132f281827f75
+RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@22561b34e2ce2f83cece46d06ba005ad7e981bda
 
 FROM sdk AS build
 WORKDIR /build/

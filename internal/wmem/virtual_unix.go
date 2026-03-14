@@ -54,7 +54,7 @@ func virtualMemoryUnix(cap, max uint64) (FreeableMemory, error) {
 	return &unixVirtualMemory{buf: b[:com:len(b)]}, nil
 }
 
-func (m *unixVirtualMemory) Slice() *[]byte {
+func (m *unixVirtualMemory) Data() *[]byte {
 	return &m.buf
 }
 
