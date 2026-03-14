@@ -22,7 +22,7 @@ func init() {
 	virtualMemoryImpl = virtualMemoryUnix
 }
 
-func virtualMemoryUnix(cap, max uint64) (Memory, error) {
+func virtualMemoryUnix(cap, max uint64) (FreeableMemory, error) {
 	var (
 		rnd  = uint64(unix.Getpagesize() - 1)
 		res  = (max + rnd) &^ rnd // round up to the page size
@@ -54,7 +54,7 @@ func virtualMemoryUnix(cap, max uint64) (Memory, error) {
 	return &unixVirtualMemory{buf: b[:com:len(b)]}, nil
 }
 
-func (m *unixVirtualMemory) Data() *[]byte {
+func (m *unixVirtualMemory) Slice() *[]byte {
 	return &m.buf
 }
 

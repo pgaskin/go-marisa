@@ -68,22 +68,32 @@ const maxAlloc = min(math.MaxUint32, math.MaxInt) // on 32-bit platforms, limit 
 
 type module struct {
 	mem     wmem.Memory
-	io      *marisaIOImpl
 	wexcept *wexcept.Module
 	marisa  *marisa_wasm.Module
+
+	io struct {
+		Reader      io.Reader
+		Writer      io.Writer
+		WriteBuffer *[]byte
+	}
+}
+
+func (m *module) Xmemory() marisa_wasm.Memory {
+	return m.mem
 }
 
 // instantiate creates a new instance of the module.
 func instantiate(mem wmem.Memory) (*module, error) {
 	mod := &module{}
 	mod.mem = mem
-	mod.io = &marisaIOImpl{Memory: mod.mem}
 	mod.wexcept = &wexcept.Module{Memory: mod.mem}
-	mod.marisa = marisa_wasm.New(mod.mem, mod.io, mod.wexcept)
+	mod.marisa = marisa_wasm.New(mod, mod.wexcept)
 	mod.wexcept.Imports = mod.marisa
-	runtime.SetFinalizer(mod, func(mod *module) {
-		mod.mem.Free()
-	})
+	if _, ok := mem.(wmem.FreeableMemory); ok {
+		runtime.SetFinalizer(mod, func(mod *module) {
+			mod.mem.(wmem.FreeableMemory).Free()
+		})
+	}
 	return mod, nil
 }
 

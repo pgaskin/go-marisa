@@ -6,11 +6,11 @@ namespace marisa::grimoire::io {
 
 namespace env {
 #ifdef __wasm__
-__attribute__((__import_module__("marisa"),__import_name__(("read"))))
+__attribute__((__import_module__("env"),__import_name__(("read"))))
 extern void read(void *buf, size_t n);
 void marisa_read([[maybe_unused]] uintptr_t handle, void *buf, size_t n) { read(buf, n); }
 
-__attribute__((__import_module__("marisa"),__import_name__(("write"))))
+__attribute__((__import_module__("env"),__import_name__(("write"))))
 extern void write(const void *buf, size_t n);
 void marisa_write([[maybe_unused]] uintptr_t handle, const void *buf, size_t n) { write(buf, n); }
 #else

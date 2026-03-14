@@ -14,7 +14,7 @@ func SliceMemory(cap, max uint64) Memory {
 	}
 }
 
-func (m *sliceMemory) Data() *[]byte {
+func (m *sliceMemory) Slice() *[]byte {
 	return &m.buf
 }
 
@@ -31,8 +31,4 @@ func (m *sliceMemory) Grow(delta, _ int32) int32 {
 	}
 	m.buf = append(m.buf, make([]byte, add)...)
 	return old
-}
-
-func (m *sliceMemory) Free() {
-	m.buf = nil
 }

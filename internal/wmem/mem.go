@@ -9,16 +9,20 @@ const (
 	PageSize = 1 << PageBits
 )
 
-// Memory is the imported memory interface for wasm2go, plus some additional
-// methods.
+// Memory is the imported memory interface for wasm2go.
 type Memory interface {
-	Data() *[]byte
+	Slice() *[]byte
 	Grow(delta, max int32) int32
+}
+
+// FreeableMemory is [Memory] with a method to free resources from it.
+type FreeableMemory interface {
+	Memory
 	Free()
 }
 
 func Bytes(m Memory, ptr, n uint32) ([]byte, bool) {
-	d := m.Data()
+	d := m.Slice()
 	if d == nil {
 		return nil, false
 	}
@@ -37,7 +41,7 @@ func CString(m Memory, ptr uint32) (string, bool) {
 	if ptr == 0 {
 		return "", false
 	}
-	d := m.Data()
+	d := m.Slice()
 	if d == nil {
 		return "", false
 	}

@@ -230,31 +230,24 @@ func (c *countWriter) Write(p []byte) (n int, err error) {
 	return
 }
 
-type marisaIOImpl struct {
-	Memory      wmem.Memory
-	Reader      io.Reader
-	Writer      io.Writer
-	WriteBuffer *[]byte
-}
-
-func (m *marisaIOImpl) Xread(p, n int32) {
-	if m.Reader == nil {
+func (m *module) Xread(p, n int32) {
+	if m.io.Reader == nil {
 		panic("no active reader")
 	}
 	if n != 0 {
 		if p != 0 {
-			b, ok := wmem.Bytes(m.Memory, uint32(p), uint32(n))
+			b, ok := wmem.Bytes(m.mem, uint32(p), uint32(n))
 			if !ok {
 				panic("invalid pointer")
 			}
-			if _, err := io.ReadFull(m.Reader, b); err != nil {
+			if _, err := io.ReadFull(m.io.Reader, b); err != nil {
 				if err == io.EOF {
 					err = io.ErrUnexpectedEOF
 				}
 				wexcept.Throw(err)
 			}
 		} else {
-			if _, err := io.CopyN(io.Discard, m.Reader, int64(n)); err != nil {
+			if _, err := io.CopyN(io.Discard, m.io.Reader, int64(n)); err != nil {
 				if err == io.EOF {
 					err = io.ErrUnexpectedEOF
 				}
@@ -264,11 +257,11 @@ func (m *marisaIOImpl) Xread(p, n int32) {
 	}
 }
 
-func (m *marisaIOImpl) Xwrite(p, n int32) {
-	if w := m.Writer; w != nil {
+func (m *module) Xwrite(p, n int32) {
+	if w := m.io.Writer; w != nil {
 		if n != 0 {
 			if p != 0 {
-				b, ok := wmem.Bytes(m.Memory, uint32(p), uint32(n))
+				b, ok := wmem.Bytes(m.mem, uint32(p), uint32(n))
 				if !ok {
 					panic("invalid pointer")
 				}
@@ -287,10 +280,10 @@ func (m *marisaIOImpl) Xwrite(p, n int32) {
 		}
 		return
 	}
-	if b := m.WriteBuffer; b != nil {
+	if b := m.io.WriteBuffer; b != nil {
 		if n != 0 {
 			if p != 0 {
-				x, ok := wmem.Bytes(m.Memory, uint32(p), uint32(n))
+				x, ok := wmem.Bytes(m.mem, uint32(p), uint32(n))
 				if !ok {
 					panic("invalid pointer")
 				}

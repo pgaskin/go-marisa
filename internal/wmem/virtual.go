@@ -11,14 +11,14 @@ import (
 // VirtualMemory reserves a non-movable region of virtual memory. An error
 // matching [errors.ErrUnsupported] is returned if it is not supported for the
 // current platform.
-func VirtualMemory(cap, max uint64) (Memory, error) {
+func VirtualMemory(cap, max uint64) (FreeableMemory, error) {
 	if virtualMemoryImpl == nil {
 		return nil, fmt.Errorf("%w: virtual memory not supported for %s/%s", errors.ErrUnsupported, runtime.GOOS, runtime.GOARCH)
 	}
 	return virtualMemoryImpl(cap, max)
 }
 
-var virtualMemoryImpl func(cap, max uint64) (Memory, error)
+var virtualMemoryImpl func(cap, max uint64) (FreeableMemory, error)
 
 type mappableMemory interface {
 	Memory
