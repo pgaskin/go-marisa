@@ -50,7 +50,7 @@ RUN wasm32-wasi-clang++ -c -O3 \
 
 COPY --link exports.txt /build/src/
 
-RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--global-base=1024 $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
+RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--import-memory -Wl,--global-base=1024 $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
 RUN wasm-ctor-eval -g -c _initialize marisa.wasm -o marisa.tmp
 RUN wasm-opt -g marisa.tmp -o marisa.wasm -O3 \
  --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext \
