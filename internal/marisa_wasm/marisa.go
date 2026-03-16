@@ -16,47 +16,47 @@ type Module struct {
 	memory           *[]byte
 	Memory           Memory
 	maxMem           int32
+	___stack_pointer int32
 	_env             Xenv
 	_wexcept         Xwexcept
-	___stack_pointer int32
 }
 
-func New(mem Memory, v0 Xenv, v2 Xwexcept) *Module {
+func New(v0 Xenv, v1 Xwexcept) *Module {
 	m := &Module{}
+	m._env = v0
+	m._wexcept = v1
 	m.t0 = make([]any, 29)
 	m.maxMem = 65536
-	m.Memory = mem
-	m.memory = mem.Data()
-	mem.Grow(2, m.maxMem)
-	m.elements = [][]any{[]any{m._std__logic_error___logic_error__, m._std__runtime_error___runtime_error__, m._std__exception___exception__, m._wexcept_new_handler_init______0____invoke__, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m._abort, m.___cxx_global_array_dtor, m._std__bad_array_new_length__what___const, m.___cxx_global_array_dtor, m._std__logic_error__what___const, m.___cxx_global_array_dtor, m._std__logic_error__what___const, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m._std__exception___exception__, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m.___cxxabiv1____class_type_info__can_catch___cxxabiv1____shim_type_info_const___void____const, m.___cxxabiv1____class_type_info__search_above_dst___cxxabiv1____dynamic_cast_info___void_const___void_const___int__bool__const, m.___cxxabiv1____class_type_info__search_below_dst___cxxabiv1____dynamic_cast_info___void_const___int__bool__const, m.___cxxabiv1____class_type_info__has_unambiguous_public_base___cxxabiv1____dynamic_cast_info___void___int__const, m.___cxx_global_array_dtor, m.___cxxabiv1____si_class_type_info__search_above_dst___cxxabiv1____dynamic_cast_info___void_const___void_const___int__bool__const, m.___cxxabiv1____si_class_type_info__search_below_dst___cxxabiv1____dynamic_cast_info___void_const___int__bool__const, m.___cxxabiv1____si_class_type_info__has_unambiguous_public_base___cxxabiv1____dynamic_cast_info___void___int__const}}
+	m.Memory = v0.Xmemory()
+	m.memory = m.Memory.Slice()
+	m.elements = [][]any{{m._std__logic_error___logic_error__, m._std__runtime_error___runtime_error__, m._std__exception___exception__, m._wexcept_new_handler_init______0____invoke__, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m._abort, m.___cxx_global_array_dtor, m._std__bad_array_new_length__what___const, m.___cxx_global_array_dtor, m._std__logic_error__what___const, m.___cxx_global_array_dtor, m._std__logic_error__what___const, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m._std__exception___exception__, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m.___cxx_global_array_dtor, m.___cxxabiv1____class_type_info__can_catch___cxxabiv1____shim_type_info_const___void____const, m.___cxxabiv1____class_type_info__search_above_dst___cxxabiv1____dynamic_cast_info___void_const___void_const___int__bool__const, m.___cxxabiv1____class_type_info__search_below_dst___cxxabiv1____dynamic_cast_info___void_const___int__bool__const, m.___cxxabiv1____class_type_info__has_unambiguous_public_base___cxxabiv1____dynamic_cast_info___void___int__const, m.___cxx_global_array_dtor, m.___cxxabiv1____si_class_type_info__search_above_dst___cxxabiv1____dynamic_cast_info___void_const___void_const___int__bool__const, m.___cxxabiv1____si_class_type_info__search_below_dst___cxxabiv1____dynamic_cast_info___void_const___int__bool__const, m.___cxxabiv1____si_class_type_info__has_unambiguous_public_base___cxxabiv1____dynamic_cast_info___void___int__const}}
 	copy(m.t0[1:], m.elements[0])
-	m.___stack_pointer = i32_const(79296)
 	copy((*m.memory)[0:], data0)
-	if i, ok := v0.(interface {
-		Init(*Module)
+	m.___stack_pointer = i32_const(79296)
+	if i, ok := any(v0).(interface {
+		Init(any)
 	}); ok {
 		i.Init(m)
 	}
-	m._env = v0
-	if i, ok := v2.(interface {
-		Init(*Module)
+	if i, ok := any(v1).(interface {
+		Init(any)
 	}); ok {
 		i.Init(m)
 	}
-	m._wexcept = v2
 	m.___wasm_init_memory()
 	return m
 }
 
-type Xenv interface {
+type Xenv = interface {
 	Xread(v0 int32, v1 int32)
 	Xwrite(v0 int32, v1 int32)
+	Xmemory() Memory
 }
-type Xwexcept interface {
+type Xwexcept = interface {
 	Xcxx_throw(v0 int32, v1 int32, v2 int32)
 }
-type Memory interface {
-	Data() *[]byte
+type Memory = interface {
+	Slice() *[]byte
 	Grow(delta, max int32) int32
 }
 
