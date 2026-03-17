@@ -21,16 +21,12 @@ import (
 )
 
 func init() {
-	flag.BoolVar(&internal.NoJIT, "marisa.nojit", false, "disable jit")
 	flag.BoolVar(&internal.NoCacheQuery, "marisa.nocachequery", false, "disable query agent caching")
 }
 
 func TestMain(m *testing.M) {
 	flag.Parse()
 
-	if internal.NoJIT {
-		fmt.Println("marisa: jit disabled by flag")
-	}
 	if internal.NoCacheQuery {
 		fmt.Println("marisa: query agent caching disabled by flag")
 	}
