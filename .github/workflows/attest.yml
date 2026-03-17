@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - lib/**
+      - internal/marisa_wasm/**
   workflow_dispatch:
 
 permissions:
