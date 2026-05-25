@@ -28,7 +28,10 @@ COPY --link download.go /build/src/
 RUN go run download.go
 
 FROM golang:1.25 AS wasm2go
-RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@5ba849a04570ead28a56dac4ee57b1acdab926ab
+COPY --link wasm2go-revert-lazy.patch /
+RUN cp --no-preserve=mode -r "$(go mod download -x -json github.com/ncruces/wasm2go@5ba849a04570ead28a56dac4ee57b1acdab926ab | grep '"Dir"' | cut -d'"' -f4)" /src && \
+    git -C /src apply --no-index -p1 < /wasm2go-revert-lazy.patch && \
+    GOBIN=/ go install -C /src -trimpath -v .
 
 FROM sdk AS build
 WORKDIR /build/
@@ -60,7 +63,7 @@ RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-s
 
 COPY --link --from=wasm2go /wasm2go /usr/local/bin/
 RUN mkdir -p internal/marisa_wasm
-RUN wasm2go -noopt -embed -o internal/marisa_wasm/marisa.go marisa.wasm
+RUN wasm2go -embed -o internal/marisa_wasm/marisa.go marisa.wasm
 
 FROM scratch
 COPY --link --from=build /build/src/compile_flags.txt /src/
