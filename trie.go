@@ -77,15 +77,20 @@ type module struct {
 func instantiate(mem wmem.Memory) (*module, error) {
 	mod := &module{}
 	mod.mem = mem
+	mod.mem.Grow(2, 65536) // pre-grow to the wasm binary's initial 2 pages before New copies data in
 	mod.io = &marisaIOImpl{Memory: mod.mem}
 	mod.wexcept = &wexcept.Module{Memory: mod.mem}
-	mod.marisa = marisa_wasm.New(mod.mem, mod.io, mod.wexcept)
-	mod.wexcept.Imports = mod.marisa
+	mod.marisa = marisa_wasm.New(mod.io, mod.wexcept, mod)
 	mod.marisa.X_initialize()
+	mod.wexcept.Imports = mod.marisa
 	runtime.SetFinalizer(mod, func(mod *module) {
 		mod.mem.Free()
 	})
 	return mod, nil
+}
+
+func (m *module) Xmemory() marisa_wasm.Memory {
+	return m.mem
 }
 
 func (m *module) Alloc(n int) (addr uint32, err error) {

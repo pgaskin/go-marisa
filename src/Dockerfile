@@ -1,8 +1,8 @@
 FROM debian:trixie AS base
- 
+
 ARG WASI_SDK_VERSION=33
 ARG BINARYEN_VERSION=129
- 
+
 ARG WASI_SDK_CHECKSUM=sha256:0ba8b5bfaeb2adf3f29bab5841d76cf5318ab8e1642ea195f88baba1abd47bce
 ARG BINARYEN_CHECKSUM=sha256:50b9fa62b9abea752da92ec57e0c555fee578760cd237c40107957715d2976ba
 
@@ -28,7 +28,7 @@ COPY --link download.go /build/src/
 RUN go run download.go
 
 FROM golang:1.25 AS wasm2go
-RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@ecc45fd41abc75bace101eb275d9cb7c72aa76c4
+RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@5ba849a04570ead28a56dac4ee57b1acdab926ab
 
 FROM sdk AS build
 WORKDIR /build/
@@ -36,21 +36,21 @@ WORKDIR /build/
 COPY --from=download /build/src/marisa.cc /build/src/marisa.h /build/src/
 COPY --link io.h /build/src/
 
-RUN wasm32-wasi-clang++ -c -O3 \
+RUN wasm32-wasip1-clang++ -c -O3 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext \
  -std=c++20 -DNDEBUG \
  src/marisa.cc
 
 COPY --link io.cc wexcept.cc wrapper.cc /build/src/
 
-RUN wasm32-wasi-clang++ -c -O3 \
+RUN wasm32-wasip1-clang++ -c -O3 \
  -mmutable-globals -mbulk-memory -mmultivalue -mnontrapping-fptoint -msign-ext -Xclang -target-abi -Xclang experimental-mv \
  -std=c++20 -DNDEBUG -Wall -Wextra -Wconversion \
  src/io.cc src/wexcept.cc src/wrapper.cc
 
 COPY --link exports.txt /build/src/
 
-RUN wasm32-wasi-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--import-memory $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
+RUN wasm32-wasip1-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--import-memory $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
 RUN wasm-ctor-eval -g -c _initialize marisa.wasm -o marisa.tmp
 RUN wasm-opt -g marisa.tmp -o marisa.wasm -O3 \
  --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext \
@@ -60,8 +60,7 @@ RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-s
 
 COPY --link --from=wasm2go /wasm2go /usr/local/bin/
 RUN mkdir -p internal/marisa_wasm
-RUN wasm2go -endian=little < marisa.wasm > internal/marisa_wasm/marisa.go
-RUN wasm2go -endian=big < marisa.wasm > internal/marisa_wasm/marisa_big.go
+RUN wasm2go -embed -o internal/marisa_wasm/marisa.go marisa.wasm
 
 FROM scratch
 COPY --link --from=build /build/src/compile_flags.txt /src/

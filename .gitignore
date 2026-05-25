@@ -1,4 +1,5 @@
 *.dat
+!internal/marisa_wasm/marisa.dat
 *.out
 .cache
 cover
