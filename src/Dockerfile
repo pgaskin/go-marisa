@@ -60,7 +60,7 @@ RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-s
 
 COPY --link --from=wasm2go /wasm2go /usr/local/bin/
 RUN mkdir -p internal/marisa_wasm
-RUN wasm2go -embed -o internal/marisa_wasm/marisa.go marisa.wasm
+RUN wasm2go -noopt -embed -o internal/marisa_wasm/marisa.go marisa.wasm
 
 FROM scratch
 COPY --link --from=build /build/src/compile_flags.txt /src/
