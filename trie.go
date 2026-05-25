@@ -81,6 +81,7 @@ func instantiate(mem wmem.Memory) (*module, error) {
 	mod.wexcept = &wexcept.Module{Memory: mod.mem}
 	mod.marisa = marisa_wasm.New(mod.mem, mod.io, mod.wexcept)
 	mod.wexcept.Imports = mod.marisa
+	mod.marisa.X_initialize()
 	runtime.SetFinalizer(mod, func(mod *module) {
 		mod.mem.Free()
 	})
