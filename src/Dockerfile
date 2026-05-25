@@ -28,10 +28,7 @@ COPY --link download.go /build/src/
 RUN go run download.go
 
 FROM golang:1.25 AS wasm2go
-COPY --link wasm2go-revert-lazy.patch /
-RUN cp --no-preserve=mode -r "$(go mod download -x -json github.com/ncruces/wasm2go@5ba849a04570ead28a56dac4ee57b1acdab926ab | grep '"Dir"' | cut -d'"' -f4)" /src && \
-    git -C /src apply --no-index -p1 < /wasm2go-revert-lazy.patch && \
-    GOBIN=/ go install -C /src -trimpath -v .
+RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@227474f205f5e9a2698f41bb3b819a1b758fc9cd
 
 FROM sdk AS build
 WORKDIR /build/
