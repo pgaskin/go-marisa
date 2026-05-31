@@ -4,6 +4,7 @@ package marisa
 import (
 	_ "embed"
 	"encoding"
+	"errors"
 	"fmt"
 	"io"
 	"math"
@@ -73,13 +74,22 @@ type module struct {
 	marisa  *marisa_wasm.Module
 }
 
+type impMem struct{ wmem.Memory }
+
+func (e impMem) Xmemory() marisa_wasm.Memory {
+	return e.Memory
+}
+
 // instantiate creates a new instance of the module.
 func instantiate(mem wmem.Memory) (*module, error) {
 	mod := &module{}
 	mod.mem = mem
+	if mod.mem.Grow(2, math.MaxInt64) < 0 { // initial memory requirement from the wasm module
+		return nil, errors.New("failed to initialize module memory")
+	}
 	mod.io = &marisaIOImpl{Memory: mod.mem}
 	mod.wexcept = &wexcept.Module{Memory: mod.mem}
-	mod.marisa = marisa_wasm.New(mod.mem, mod.io, mod.wexcept)
+	mod.marisa = marisa_wasm.New(mod.io, mod.wexcept, impMem{mod.mem})
 	mod.wexcept.Imports = mod.marisa
 	runtime.SetFinalizer(mod, func(mod *module) {
 		mod.mem.Free()

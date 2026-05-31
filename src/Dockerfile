@@ -28,7 +28,7 @@ COPY --link download.go /build/src/
 RUN go run download.go
 
 FROM golang:1.25 AS wasm2go
-RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@ecc45fd41abc75bace101eb275d9cb7c72aa76c4
+RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@e6aa75a04444ac3582e6752c79a5e806565f8c20
 
 FROM sdk AS build
 WORKDIR /build/
@@ -60,8 +60,7 @@ RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-s
 
 COPY --link --from=wasm2go /wasm2go /usr/local/bin/
 RUN mkdir -p internal/marisa_wasm
-RUN wasm2go -endian=little < marisa.wasm > internal/marisa_wasm/marisa.go
-RUN wasm2go -endian=big < marisa.wasm > internal/marisa_wasm/marisa_big.go
+RUN wasm2go -embed -o internal/marisa_wasm/marisa.go marisa.wasm
 
 FROM scratch
 COPY --link --from=build /build/src/compile_flags.txt /src/

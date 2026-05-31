@@ -24,4 +24,4 @@ jobs:
         with:
           subject-path: |
             internal/marisa_wasm/marisa.go
-            internal/marisa_wasm/marisa_big.go
+            internal/marisa_wasm/marisa.dat
