@@ -54,17 +54,17 @@ func virtualMemoryUnix(cap, max uint64) (Memory, error) {
 	return &unixVirtualMemory{buf: b[:com:len(b)]}, nil
 }
 
-func (m *unixVirtualMemory) Slice() *[]byte {
+func (m *unixVirtualMemory) Data() *[]byte {
 	return &m.buf
 }
 
-func (m *unixVirtualMemory) Grow(delta, _ int64) int64 {
+func (m *unixVirtualMemory) Grow(delta, _ int32) int32 {
 	var (
 		com = uint64(len(m.buf)) // committed memory
 		res = uint64(cap(m.buf)) // address space
 	)
 
-	old := int64(com >> PageBits)
+	old := int32(com >> PageBits)
 	if delta == 0 {
 		return old
 	}

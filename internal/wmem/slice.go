@@ -2,7 +2,7 @@ package wmem
 
 type sliceMemory struct {
 	buf []byte
-	max int64
+	max int32
 }
 
 // SliceMemory allocates a movable slice-backed memory. If allocation fails,
@@ -10,17 +10,17 @@ type sliceMemory struct {
 func SliceMemory(cap, max uint64) Memory {
 	return &sliceMemory{
 		buf: make([]byte, 0, cap),
-		max: int64((int64(max) + PageSize - 1) >> PageBits),
+		max: int32((int64(max) + PageSize - 1) >> PageBits),
 	}
 }
 
-func (m *sliceMemory) Slice() *[]byte {
+func (m *sliceMemory) Data() *[]byte {
 	return &m.buf
 }
 
-func (m *sliceMemory) Grow(delta, _ int64) int64 {
+func (m *sliceMemory) Grow(delta, _ int32) int32 {
 	len := len(m.buf)
-	old := int64(len >> PageBits)
+	old := int32(len >> PageBits)
 	if delta == 0 {
 		return old
 	}
