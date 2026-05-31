@@ -54,13 +54,13 @@ RUN wasm32-wasip1-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--import-memor
 RUN wasm-ctor-eval -g -c _initialize marisa.wasm -o marisa.tmp
 RUN wasm-opt -g marisa.tmp -o marisa.wasm -O3 \
  --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext \
- --low-memory-unused --gufa --converge
+ --low-memory-unused --strip-debug --strip-dwarf --gufa --converge
 
 RUN printf '%s\n' '-Wall' '-Wextra' '-Wconversion' '-isysteminclude' '-xc++' '-std=c++20' > src/compile_flags.txt
 
 COPY --link --from=wasm2go /wasm2go /usr/local/bin/
 RUN mkdir -p internal/marisa_wasm
-RUN wasm2go -dwarfline -embed -o internal/marisa_wasm/marisa.go marisa.wasm
+RUN wasm2go -embed -o internal/marisa_wasm/marisa.go marisa.wasm
 
 FROM scratch
 COPY --link --from=build /build/src/compile_flags.txt /src/
