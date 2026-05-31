@@ -65,7 +65,7 @@ In general, it is about 1.5-3x slower than the native library.
 
 The memory usage should be around the same other than a ~115K overhead per trie.
 
-Compared to v1.0.2 and older, which used wazero for bindings, the wasm2go-based bindings perform more consistently across platforms, and are slightly faster at querying, but are about 50% slower at building/reading/writing tries (though it alocates less while doing so).
+Compared to v1.0.2 and older, which used wazero for bindings, the wasm2go-based bindings perform more consistently across platforms, and are slightly faster at querying, but are about 50% slower at building/reading/writing tries (though it allocates less while doing so).
 
 <!--
 In the future, I might consider adding support for CGO-based bindings on 32/64-bit little-endian systems using a build tag.
