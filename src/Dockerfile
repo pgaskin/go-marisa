@@ -50,7 +50,7 @@ RUN wasm32-wasip1-clang++ -c -O3 \
 
 COPY --link exports.txt /build/src/
 
-RUN wasm32-wasip1-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--import-memory $(printf " -Wl,--export=%s" $(cat src/exports.txt)) *.o
+RUN wasm32-wasip1-clang++ -o marisa.wasm -mexec-model=reactor -Wl,--import-memory $(printf " -Wl,--export=%s" $(cat src/exports.txt)) -Wl,--no-stack-first *.o
 RUN wasm-ctor-eval -g -c _initialize marisa.wasm -o marisa.tmp
 RUN wasm-opt -g marisa.tmp -o marisa.wasm -O3 \
  --enable-mutable-globals --enable-bulk-memory --enable-multivalue --enable-nontrapping-float-to-int --enable-sign-ext \

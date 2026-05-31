@@ -33,8 +33,8 @@ func New(v0 Xmarisa, v1 Xwexcept, v2 Xenv) *Module {
 	m.elements = [][]any{{m._std__logic_error___logic_error___6i10iq, m._std__runtime_error___runtime_error___u051u8, _std__exception___exception___nkhhm7, m._wexcept_new_handler_init______0____invoke___6sptok, ___cxx_global_array_dtor, ___cxx_global_array_dtor, m._abort, ___cxx_global_array_dtor, _std__bad_array_new_length__what___const_selyki, ___cxx_global_array_dtor, m._std__logic_error__what___const_dl7fz7, ___cxx_global_array_dtor, m._std__logic_error__what___const_dl7fz7, ___cxx_global_array_dtor, ___cxx_global_array_dtor, ___cxx_global_array_dtor, _std__exception___exception___nkhhm7, ___cxx_global_array_dtor, ___cxx_global_array_dtor, ___cxx_global_array_dtor, m.___cxxabiv1____class_type_info__can_catch___cxxabiv1____shim_type_info_const___void____const_u1v6e9, m.___cxxabiv1____class_type_info__search_above_dst___cxxabiv1____dynamic_cast_info___void_const___void_const___int__bool__const_71frkw, m.___cxxabiv1____class_type_info__search_below_dst___cxxabiv1____dynamic_cast_info___void_const___int__bool__const_sgn223, m.___cxxabiv1____class_type_info__has_unambiguous_public_base___cxxabiv1____dynamic_cast_info___void___int__const_lvo0m7, ___cxx_global_array_dtor, m.___cxxabiv1____si_class_type_info__search_above_dst___cxxabiv1____dynamic_cast_info___void_const___void_const___int__bool__const_6xrj7y, m.___cxxabiv1____si_class_type_info__search_below_dst___cxxabiv1____dynamic_cast_info___void_const___int__bool__const_kp21sq, m.___cxxabiv1____si_class_type_info__has_unambiguous_public_base___cxxabiv1____dynamic_cast_info___void___int__const_hiyvun}}
 	copy(m.t0[i32(1):], m.elements[0])
 	m.elements[0] = nil
-	copy((*m.memory)[uint32(i32(0)):], data[0:73212])
-	m.___stack_pointer = i32(65536)
+	copy((*m.memory)[uint32(i32(0)):], data[0:8700])
+	m.___stack_pointer = i32(79296)
 	if i, ok := any(v0).(interface {
 		Init(any)
 	}); ok {
@@ -79,34 +79,34 @@ func (m *Module) _wexcept__env__cxx_throw_char_const___char_const___char_const__
 	m._wexcept.Xcxx_throw(v0, v1, v2)
 }
 func (m *Module) ___wasm_init_memory() {
-	memory_zero(*m.memory, uint32(i32(73216)), uint32(i32(5052)))
+	memory_zero(*m.memory, uint32(i32(8704)), uint32(i32(5052)))
 }
 func (m *Module) X_initialize() {
-	t0 := int32(load32((*m.memory)[uint32(i32(73216)):]))
+	t0 := int32(load32((*m.memory)[uint32(i32(8704)):]))
 	if t0 != 0 {
 		panic("unreachable")
 	}
-	store32((*m.memory)[uint32(i32(73216)):], uint32(i32(1)))
-	store32((*m.memory)[uint32(i32(77664)):], uint32(i32(77664)))
-	store32((*m.memory)[uint32(i32(77720)):], uint32(i32(0)))
-	store32((*m.memory)[uint32(i32(77716)):], uint32(i32(65536)))
-	store32((*m.memory)[uint32(i32(77712)):], uint32(i32(65536)))
-	store32((*m.memory)[uint32(i32(77672)):], uint32(i32(77664)))
-	store32((*m.memory)[uint32(i32(77668)):], uint32(i32(77664)))
-	t1 := int32(load32((*m.memory)[uint32(i32(77660)):]))
-	store32((*m.memory)[uint32(i32(77676)):], uint32(t1))
-	store32((*m.memory)[uint32(i32(73208)):], uint32(i32(65536)))
-	_ = int32(load32((*m.memory)[uint32(i32(77384)):]))
-	store32((*m.memory)[uint32(i32(77384)):], uint32(i32(4)))
-	store32((*m.memory)[uint32(i32(77328)):], uint32(i32(0)))
+	store32((*m.memory)[uint32(i32(8704)):], uint32(i32(1)))
+	store32((*m.memory)[uint32(i32(13152)):], uint32(i32(13152)))
+	store32((*m.memory)[uint32(i32(13208)):], uint32(i32(0)))
+	store32((*m.memory)[uint32(i32(13204)):], uint32(i32(65536)))
+	store32((*m.memory)[uint32(i32(13200)):], uint32(i32(79296)))
+	store32((*m.memory)[uint32(i32(13160)):], uint32(i32(13152)))
+	store32((*m.memory)[uint32(i32(13156)):], uint32(i32(13152)))
+	t1 := int32(load32((*m.memory)[uint32(i32(13148)):]))
+	store32((*m.memory)[uint32(i32(13164)):], uint32(t1))
+	store32((*m.memory)[uint32(i32(8696)):], uint32(i32(65536)))
+	_ = int32(load32((*m.memory)[uint32(i32(12872)):]))
+	store32((*m.memory)[uint32(i32(12872)):], uint32(i32(4)))
+	store32((*m.memory)[uint32(i32(12816)):], uint32(i32(0)))
 	m.___cxa_atexit(i32(5))
-	store32((*m.memory)[uint32(i32(77380)):], uint32(i32(0)))
-	store64((*m.memory)[uint32(i32(77372)):], uint64(i64(0)))
-	store64((*m.memory)[uint32(i32(77364)):], uint64(i64(0)))
-	store64((*m.memory)[uint32(i32(77356)):], uint64(i64(0)))
-	store64((*m.memory)[uint32(i32(77348)):], uint64(i64(0)))
-	store64((*m.memory)[uint32(i32(77340)):], uint64(i64(0)))
-	store64((*m.memory)[uint32(i32(77332)):], uint64(i64(0)))
+	store32((*m.memory)[uint32(i32(12868)):], uint32(i32(0)))
+	store64((*m.memory)[uint32(i32(12860)):], uint64(i64(0)))
+	store64((*m.memory)[uint32(i32(12852)):], uint64(i64(0)))
+	store64((*m.memory)[uint32(i32(12844)):], uint64(i64(0)))
+	store64((*m.memory)[uint32(i32(12836)):], uint64(i64(0)))
+	store64((*m.memory)[uint32(i32(12828)):], uint64(i64(0)))
+	store64((*m.memory)[uint32(i32(12820)):], uint64(i64(0)))
 	m.___cxa_atexit(i32(6))
 }
 func (m *Module) _marisa__grimoire__io__Reader__data_void___unsigned_long__wlt8rd(v0, v1 int32) {
@@ -118,8 +118,8 @@ func (m *Module) _marisa__grimoire__io__Reader__data_void___unsigned_long__wlt8r
 			goto l0
 		}
 		t0 := m.___cxa_allocate_exception(i32(8))
-		t1 := m._std__logic_error__logic_error_char_const___w3rrgk(t0, i32(65691))
-		m.___cxa_throw(t1, i32(72904), i32(1))
+		t1 := m._std__logic_error__logic_error_char_const___w3rrgk(t0, i32(1179))
+		m.___cxa_throw(t1, i32(8392), i32(1))
 		panic("unreachable")
 	}
 l0:
@@ -134,8 +134,8 @@ func (m *Module) _marisa__grimoire__io__Writer__data_void_const___unsigned_long_
 			goto l0
 		}
 		t0 := m.___cxa_allocate_exception(i32(8))
-		t1 := m._std__logic_error__logic_error_char_const___w3rrgk(t0, i32(65751))
-		m.___cxa_throw(t1, i32(72904), i32(1))
+		t1 := m._std__logic_error__logic_error_char_const___w3rrgk(t0, i32(1239))
+		m.___cxa_throw(t1, i32(8392), i32(1))
 		panic("unreachable")
 	}
 l0:
@@ -319,10 +319,10 @@ func (m *Module) _marisa__grimoire__trie__Tail__build_marisa__grimoire__vector__
 								goto l10
 							}
 							t21 := m.___cxa_allocate_exception(i32(8))
-							t22 := m._std__logic_error__logic_error_char_const___w3rrgk(t21, i32(68571))
+							t22 := m._std__logic_error__logic_error_char_const___w3rrgk(t21, i32(4059))
 							v0 = t22
-							store32((*m.memory)[uint32(v0):], uint32(i32(72988)))
-							m.___cxa_throw(v0, i32(73000), i32(1))
+							store32((*m.memory)[uint32(v0):], uint32(i32(8476)))
+							m.___cxa_throw(v0, i32(8488), i32(1))
 							panic("unreachable")
 						}
 					l8:
@@ -554,10 +554,10 @@ func (m *Module) _marisa__grimoire__trie__Tail__build_marisa__grimoire__vector__
 					goto l12
 				l19:
 					t70 := m.___cxa_allocate_exception(i32(8))
-					t71 := m._std__logic_error__logic_error_char_const___w3rrgk(t70, i32(68168))
+					t71 := m._std__logic_error__logic_error_char_const___w3rrgk(t70, i32(3656))
 					v0 = t71
-					store32((*m.memory)[uint32(v0):], uint32(i32(72956)))
-					m.___cxa_throw(v0, i32(72968), i32(1))
+					store32((*m.memory)[uint32(v0):], uint32(i32(8444)))
+					m.___cxa_throw(v0, i32(8456), i32(1))
 					panic("unreachable")
 				}
 			l12:
@@ -761,20 +761,20 @@ func (m *Module) _marisa__grimoire__trie__Tail__build_marisa__grimoire__vector__
 			return
 		}
 		t137 := m.___cxa_allocate_exception(i32(8))
-		t138 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t137, i32(65612))
-		m.___cxa_throw(t138, i32(72936), i32(1))
+		t138 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t137, i32(1100))
+		m.___cxa_throw(t138, i32(8424), i32(1))
 		panic("unreachable")
 	}
 l1:
 	t139 := m.___cxa_allocate_exception(i32(8))
-	t140 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t139, i32(67221))
-	m.___cxa_throw(t140, i32(72936), i32(1))
+	t140 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t139, i32(2709))
+	m.___cxa_throw(t140, i32(8424), i32(1))
 	panic("unreachable")
 }
 func (m *Module) _std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(v0, v1 int32) int32 {
 	t0 := m._std__logic_error__logic_error_char_const___w3rrgk(v0, v1)
 	v0 = t0
-	store32((*m.memory)[uint32(v0):], uint32(i32(72924)))
+	store32((*m.memory)[uint32(v0):], uint32(i32(8412)))
 	return v0
 }
 func (m *Module) _unsigned_long_marisa__grimoire__algorithm__details__sort_marisa__grimoire__trie__Entry___marisa__grimoire__trie__Entry___marisa__grimoire__trie__Entry___unsigned_long__l9vjmt(v0, v1, v2 int32) int32 {
@@ -1256,8 +1256,8 @@ func (m *Module) _marisa__grimoire__vector__BitVector__push_back_bool__fpa8rc(v0
 		return
 	}
 	t15 := m.___cxa_allocate_exception(i32(8))
-	t16 := m._std__length_error__length_error_abi_nqe220100__char_const___kab5q1(t15, i32(68168))
-	m.___cxa_throw(t16, i32(72968), i32(1))
+	t16 := m._std__length_error__length_error_abi_nqe220100__char_const___kab5q1(t15, i32(3656))
+	m.___cxa_throw(t16, i32(8456), i32(1))
 	panic("unreachable")
 }
 func (m *Module) _marisa__grimoire__vector__Vector_char___shrink___mrf0ol(v0 int32) {
@@ -1287,8 +1287,8 @@ func (m *Module) _marisa__grimoire__vector__Vector_char___shrink___mrf0ol(v0 int
 		return
 	}
 	t6 := m.___cxa_allocate_exception(i32(8))
-	t7 := m._std__logic_error__logic_error_char_const___w3rrgk(t6, i32(67696))
-	m.___cxa_throw(t7, i32(72904), i32(1))
+	t7 := m._std__logic_error__logic_error_char_const___w3rrgk(t6, i32(3184))
+	m.___cxa_throw(t7, i32(8392), i32(1))
 	panic("unreachable")
 }
 func (m *Module) _marisa__grimoire__vector__BitVector__swap_marisa__grimoire__vector__BitVector___k32z4k(v0, v1 int32) {
@@ -1484,20 +1484,20 @@ func (m *Module) _marisa__grimoire__vector__Vector_char___map_marisa__grimoire__
 				}
 			l0:
 				t11 := m.___cxa_allocate_exception(i32(8))
-				t12 := m._std__runtime_error__runtime_error_char_const___e56w1y(t11, i32(68002))
-				m.___cxa_throw(t12, i32(73024), i32(2))
+				t12 := m._std__runtime_error__runtime_error_char_const___e56w1y(t11, i32(3490))
+				m.___cxa_throw(t12, i32(8512), i32(2))
 				panic("unreachable")
 			}
 		l2:
 			t13 := m.___cxa_allocate_exception(i32(8))
-			t14 := m._std__logic_error__logic_error_char_const___w3rrgk(t13, i32(67762))
-			m.___cxa_throw(t14, i32(72904), i32(1))
+			t14 := m._std__logic_error__logic_error_char_const___w3rrgk(t13, i32(3250))
+			m.___cxa_throw(t14, i32(8392), i32(1))
 			panic("unreachable")
 		}
 	l1:
 		t15 := m.___cxa_allocate_exception(i32(8))
-		t16 := m._std__runtime_error__runtime_error_char_const___e56w1y(t15, i32(67472))
-		m.___cxa_throw(t16, i32(73024), i32(2))
+		t16 := m._std__runtime_error__runtime_error_char_const___e56w1y(t15, i32(2960))
+		m.___cxa_throw(t16, i32(8512), i32(2))
 		panic("unreachable")
 	}
 l3:
@@ -1584,14 +1584,14 @@ func (m *Module) _marisa__grimoire__vector__BitVector__map_marisa__grimoire__io_
 			}
 		l1:
 			t8 := m.___cxa_allocate_exception(i32(8))
-			t9 := m._std__runtime_error__runtime_error_char_const___e56w1y(t8, i32(67526))
-			m.___cxa_throw(t9, i32(73024), i32(2))
+			t9 := m._std__runtime_error__runtime_error_char_const___e56w1y(t8, i32(3014))
+			m.___cxa_throw(t9, i32(8512), i32(2))
 			panic("unreachable")
 		}
 	l0:
 		t10 := m.___cxa_allocate_exception(i32(8))
-		t11 := m._std__runtime_error__runtime_error_char_const___e56w1y(t10, i32(67472))
-		m.___cxa_throw(t11, i32(73024), i32(2))
+		t11 := m._std__runtime_error__runtime_error_char_const___e56w1y(t10, i32(2960))
+		m.___cxa_throw(t11, i32(8512), i32(2))
 		panic("unreachable")
 	}
 l2:
@@ -1812,14 +1812,14 @@ func (m *Module) _marisa__grimoire__vector__Vector_char___read_marisa__grimoire_
 				goto l2
 			}
 			t13 := m.___cxa_allocate_exception(i32(8))
-			t14 := m._std__runtime_error__runtime_error_char_const___e56w1y(t13, i32(68085))
-			m.___cxa_throw(t14, i32(73024), i32(2))
+			t14 := m._std__runtime_error__runtime_error_char_const___e56w1y(t13, i32(3573))
+			m.___cxa_throw(t14, i32(8512), i32(2))
 			panic("unreachable")
 		}
 	l1:
 		t15 := m.___cxa_allocate_exception(i32(8))
-		t16 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t15, i32(69167))
-		m.___cxa_throw(t16, i32(72936), i32(1))
+		t16 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t15, i32(4655))
+		m.___cxa_throw(t16, i32(8424), i32(1))
 		panic("unreachable")
 	}
 l2:
@@ -1881,8 +1881,8 @@ func (m *Module) _marisa__grimoire__vector__BitVector__read_marisa__grimoire__io
 	t4 := int32(load32((*m.memory)[int64(uint32(v3))+24:]))
 	if uint32(v2) > uint32(t4) {
 		t5 := m.___cxa_allocate_exception(i32(8))
-		t6 := m._std__runtime_error__runtime_error_char_const___e56w1y(t5, i32(67611))
-		m.___cxa_throw(t6, i32(73024), i32(2))
+		t6 := m._std__runtime_error__runtime_error_char_const___e56w1y(t5, i32(3099))
+		m.___cxa_throw(t6, i32(8512), i32(2))
 		panic("unreachable")
 	}
 	store32((*m.memory)[int64(uint32(v3))+28:], uint32(v2))
@@ -1966,14 +1966,14 @@ func (m *Module) _marisa__grimoire__vector__BitVector__read_marisa__grimoire__io
 				goto l2
 			}
 			t23 := m.___cxa_allocate_exception(i32(8))
-			t24 := m._std__runtime_error__runtime_error_char_const___e56w1y(t23, i32(68085))
-			m.___cxa_throw(t24, i32(73024), i32(2))
+			t24 := m._std__runtime_error__runtime_error_char_const___e56w1y(t23, i32(3573))
+			m.___cxa_throw(t24, i32(8512), i32(2))
 			panic("unreachable")
 		}
 	l0:
 		t25 := m.___cxa_allocate_exception(i32(8))
-		t26 := m._std__runtime_error__runtime_error_char_const___e56w1y(t25, i32(68753))
-		m.___cxa_throw(t26, i32(73024), i32(2))
+		t26 := m._std__runtime_error__runtime_error_char_const___e56w1y(t25, i32(4241))
+		m.___cxa_throw(t26, i32(8512), i32(2))
 		panic("unreachable")
 	}
 l2:
@@ -2529,7 +2529,7 @@ l0:
 func (m *Module) _std__length_error__length_error_abi_nqe220100__char_const___kab5q1(v0, v1 int32) int32 {
 	t0 := m._std__logic_error__logic_error_char_const___w3rrgk(v0, v1)
 	v0 = t0
-	store32((*m.memory)[uint32(v0):], uint32(i32(72956)))
+	store32((*m.memory)[uint32(v0):], uint32(i32(8444)))
 	return v0
 }
 func (m *Module) _marisa__grimoire__vector__Vector_char___write__marisa__grimoire__io__Writer___const_v1y8un(v0 int32) {
@@ -2552,8 +2552,8 @@ func (m *Module) _marisa__grimoire__vector__Vector_char___write__marisa__grimoir
 			goto l0
 		}
 		t4 := m.___cxa_allocate_exception(i32(8))
-		t5 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t4, i32(69247))
-		m.___cxa_throw(t5, i32(72936), i32(1))
+		t5 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t4, i32(4735))
+		m.___cxa_throw(t5, i32(8424), i32(1))
 		panic("unreachable")
 	}
 l0:
@@ -2589,14 +2589,14 @@ func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___write_marisa__
 				goto l1
 			}
 			t6 := m.___cxa_allocate_exception(i32(8))
-			t7 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t6, i32(69247))
-			m.___cxa_throw(t7, i32(72936), i32(1))
+			t7 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t6, i32(4735))
+			m.___cxa_throw(t7, i32(8424), i32(1))
 			panic("unreachable")
 		}
 	l0:
 		t8 := m.___cxa_allocate_exception(i32(8))
-		t9 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t8, i32(69723))
-		m.___cxa_throw(t9, i32(72936), i32(1))
+		t9 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t8, i32(5211))
+		m.___cxa_throw(t9, i32(8424), i32(1))
 		panic("unreachable")
 	}
 l1:
@@ -2631,14 +2631,14 @@ func (m *Module) _marisa__grimoire__vector__Vector_marisa__grimoire__vector__Ran
 				goto l1
 			}
 			t6 := m.___cxa_allocate_exception(i32(8))
-			t7 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t6, i32(69247))
-			m.___cxa_throw(t7, i32(72936), i32(1))
+			t7 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t6, i32(4735))
+			m.___cxa_throw(t7, i32(8424), i32(1))
 			panic("unreachable")
 		}
 	l0:
 		t8 := m.___cxa_allocate_exception(i32(8))
-		t9 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t8, i32(69723))
-		m.___cxa_throw(t9, i32(72936), i32(1))
+		t9 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t8, i32(5211))
+		m.___cxa_throw(t9, i32(8424), i32(1))
 		panic("unreachable")
 	}
 l1:
@@ -2849,26 +2849,26 @@ func (m *Module) _marisa__grimoire__trie__Config__parse__int__fdhjx6(v0, v1 int3
 					return
 				}
 				t0 := m.___cxa_allocate_exception(i32(8))
-				t1 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t0, i32(68650))
-				m.___cxa_throw(t1, i32(72936), i32(1))
+				t1 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t0, i32(4138))
+				m.___cxa_throw(t1, i32(8424), i32(1))
 				panic("unreachable")
 			}
 		l4:
 			t2 := m.___cxa_allocate_exception(i32(8))
-			t3 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t2, i32(67301))
-			m.___cxa_throw(t3, i32(72936), i32(1))
+			t3 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t2, i32(2789))
+			m.___cxa_throw(t3, i32(8424), i32(1))
 			panic("unreachable")
 		}
 	l6:
 		t4 := m.___cxa_allocate_exception(i32(8))
-		t5 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t4, i32(66809))
-		m.___cxa_throw(t5, i32(72936), i32(1))
+		t5 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t4, i32(2297))
+		m.___cxa_throw(t5, i32(8424), i32(1))
 		panic("unreachable")
 	}
 l2:
 	t6 := m.___cxa_allocate_exception(i32(8))
-	t7 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t6, i32(67006))
-	m.___cxa_throw(t7, i32(72936), i32(1))
+	t7 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t6, i32(2494))
+	m.___cxa_throw(t7, i32(8424), i32(1))
 	panic("unreachable")
 }
 func (m *Module) _marisa__grimoire__trie__LoudsTrie__swap_marisa__grimoire__trie__LoudsTrie___mu58io(v0, v1 int32) {
@@ -5057,7 +5057,7 @@ l0:
 						t33 := v3
 						v13 = v14 ^ i32(-1)
 						v7 = v13 & i32(255)
-						t34 := int32((*m.memory)[int64(uint32(v7))+69920])
+						t34 := int32((*m.memory)[int64(uint32(v7))+5408])
 						v15 = t34
 						if uint32(v15) > uint32(v6) {
 							p32 = t33
@@ -5067,7 +5067,7 @@ l0:
 						v6 = v6 - v15
 						t36 := v6
 						v7 = int32(uint32(v13)>>8) & i32(255)
-						t37 := int32((*m.memory)[int64(uint32(v7))+69920])
+						t37 := int32((*m.memory)[int64(uint32(v7))+5408])
 						v15 = t37
 						if uint32(t36) < uint32(v15) {
 							p32 = t35
@@ -5077,7 +5077,7 @@ l0:
 						v6 = v6 - v15
 						t39 := v6
 						v7 = int32(uint32(v13)>>16) & i32(255)
-						t40 := int32((*m.memory)[int64(uint32(v7))+69920])
+						t40 := int32((*m.memory)[int64(uint32(v7))+5408])
 						v15 = t40
 						if uint32(t39) < uint32(v15) {
 							p32 = t38
@@ -5087,7 +5087,7 @@ l0:
 						v6 = v6 - v15
 						t42 := v6
 						v7 = int32(uint32(v13) >> 24)
-						t43 := int32((*m.memory)[int64(uint32(v7))+69920])
+						t43 := int32((*m.memory)[int64(uint32(v7))+5408])
 						v13 = t43
 						if uint32(t42) < uint32(v13) {
 							p32 = t41
@@ -5098,7 +5098,7 @@ l0:
 						p32 = v3 + i32(56)
 					}
 				l10:
-					t44 := int32((*m.memory)[int64(uint32(v6<<8|v7))+70176])
+					t44 := int32((*m.memory)[int64(uint32(v6<<8|v7))+5664])
 					v22 = p32 + t44
 					{
 						t45 := int32(load32((*m.memory)[int64(uint32(v4))+68:]))
@@ -5163,7 +5163,7 @@ l0:
 				{
 					t56 := v6
 					v7 = v14 & i32(255)
-					t57 := int32((*m.memory)[int64(uint32(v7))+69920])
+					t57 := int32((*m.memory)[int64(uint32(v7))+5408])
 					v13 = t57
 					if uint32(t56) < uint32(v13) {
 						goto l13
@@ -5171,7 +5171,7 @@ l0:
 					v6 = v6 - v13
 					t58 := v6
 					v7 = int32(uint32(v14)>>8) & i32(255)
-					t59 := int32((*m.memory)[int64(uint32(v7))+69920])
+					t59 := int32((*m.memory)[int64(uint32(v7))+5408])
 					v13 = t59
 					if uint32(t58) < uint32(v13) {
 						v3 = v9
@@ -5180,7 +5180,7 @@ l0:
 					v6 = v6 - v13
 					t60 := v6
 					v7 = int32(uint32(v14)>>16) & i32(255)
-					t61 := int32((*m.memory)[int64(uint32(v7))+69920])
+					t61 := int32((*m.memory)[int64(uint32(v7))+5408])
 					v13 = t61
 					if uint32(t60) < uint32(v13) {
 						v3 = v3 | i32(16)
@@ -5189,7 +5189,7 @@ l0:
 					v6 = v6 - v13
 					t62 := v6
 					v7 = int32(uint32(v14) >> 24)
-					t63 := int32((*m.memory)[int64(uint32(v7))+69920])
+					t63 := int32((*m.memory)[int64(uint32(v7))+5408])
 					v14 = t63
 					if uint32(t62) < uint32(v14) {
 						v3 = v3 | i32(24)
@@ -5200,7 +5200,7 @@ l0:
 					v7 = i32(0)
 				}
 			l13:
-				t64 := int32((*m.memory)[int64(uint32(v6<<8|v7))+70176])
+				t64 := int32((*m.memory)[int64(uint32(v6<<8|v7))+5664])
 				v13 = v3 + t64
 				{
 					t65 := int32(load32((*m.memory)[int64(uint32(v4))+92:]))
@@ -5762,14 +5762,14 @@ func (m *Module) _marisa__grimoire__trie__LoudsTrie__map__marisa__grimoire__io__
 				}
 			l0:
 				t10 := m.___cxa_allocate_exception(i32(8))
-				t11 := m._std__runtime_error__runtime_error_char_const___e56w1y(t10, i32(68374))
-				m.___cxa_throw(t11, i32(73024), i32(2))
+				t11 := m._std__runtime_error__runtime_error_char_const___e56w1y(t10, i32(3862))
+				m.___cxa_throw(t11, i32(8512), i32(2))
 				panic("unreachable")
 			}
 		l2:
 			t12 := m.___cxa_allocate_exception(i32(8))
-			t13 := m._std__runtime_error__runtime_error_char_const___e56w1y(t12, i32(67915))
-			m.___cxa_throw(t13, i32(73024), i32(2))
+			t13 := m._std__runtime_error__runtime_error_char_const___e56w1y(t12, i32(3403))
+			m.___cxa_throw(t13, i32(8512), i32(2))
 			panic("unreachable")
 		}
 	l3:
@@ -6149,8 +6149,8 @@ func (m *Module) _marisa__grimoire__trie__LoudsTrie__map__marisa__grimoire__io__
 	}
 l1:
 	t110 := m.___cxa_allocate_exception(i32(8))
-	t111 := m._std__runtime_error__runtime_error_char_const___e56w1y(t110, i32(67472))
-	m.___cxa_throw(t111, i32(73024), i32(2))
+	t111 := m._std__runtime_error__runtime_error_char_const___e56w1y(t110, i32(2960))
+	m.___cxa_throw(t111, i32(8512), i32(2))
 	panic("unreachable")
 }
 func (m *Module) _marisa__grimoire__vector__Vector_marisa__grimoire__trie__Cache___map_marisa__grimoire__io__Mapper___r00z5z(v0, v1 int32) {
@@ -6214,14 +6214,14 @@ func (m *Module) _marisa__grimoire__vector__Vector_marisa__grimoire__trie__Cache
 										goto l4
 									}
 									t12 := m.___cxa_allocate_exception(i32(8))
-									t13 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t12, i32(69087))
-									m.___cxa_throw(t13, i32(72936), i32(1))
+									t13 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t12, i32(4575))
+									m.___cxa_throw(t13, i32(8424), i32(1))
 									panic("unreachable")
 								}
 							l2:
 								t14 := m.___cxa_allocate_exception(i32(8))
-								t15 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t14, i32(69569))
-								m.___cxa_throw(t15, i32(72936), i32(1))
+								t15 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t14, i32(5057))
+								m.___cxa_throw(t15, i32(8424), i32(1))
 								panic("unreachable")
 							}
 						l4:
@@ -6247,20 +6247,20 @@ func (m *Module) _marisa__grimoire__vector__Vector_marisa__grimoire__trie__Cache
 					}
 				l0:
 					t20 := m.___cxa_allocate_exception(i32(8))
-					t21 := m._std__runtime_error__runtime_error_char_const___e56w1y(t20, i32(68002))
-					m.___cxa_throw(t21, i32(73024), i32(2))
+					t21 := m._std__runtime_error__runtime_error_char_const___e56w1y(t20, i32(3490))
+					m.___cxa_throw(t21, i32(8512), i32(2))
 					panic("unreachable")
 				}
 			l1:
 				t22 := m.___cxa_allocate_exception(i32(8))
-				t23 := m._std__runtime_error__runtime_error_char_const___e56w1y(t22, i32(68844))
-				m.___cxa_throw(t23, i32(73024), i32(2))
+				t23 := m._std__runtime_error__runtime_error_char_const___e56w1y(t22, i32(4332))
+				m.___cxa_throw(t23, i32(8512), i32(2))
 				panic("unreachable")
 			}
 		l5:
 			t24 := m.___cxa_allocate_exception(i32(8))
-			t25 := m._std__logic_error__logic_error_char_const___w3rrgk(t24, i32(67762))
-			m.___cxa_throw(t25, i32(72904), i32(1))
+			t25 := m._std__logic_error__logic_error_char_const___w3rrgk(t24, i32(3250))
+			m.___cxa_throw(t25, i32(8392), i32(1))
 			panic("unreachable")
 		}
 	l6:
@@ -6292,8 +6292,8 @@ func (m *Module) _marisa__grimoire__vector__Vector_marisa__grimoire__trie__Cache
 	}
 l3:
 	t34 := m.___cxa_allocate_exception(i32(8))
-	t35 := m._std__runtime_error__runtime_error_char_const___e56w1y(t34, i32(67472))
-	m.___cxa_throw(t35, i32(73024), i32(2))
+	t35 := m._std__runtime_error__runtime_error_char_const___e56w1y(t34, i32(2960))
+	m.___cxa_throw(t35, i32(8512), i32(2))
 	panic("unreachable")
 }
 func (m *Module) _marisa__grimoire__trie__LoudsTrie__read__marisa__grimoire__io__Reader___56bh3q(v0, v1 int32) {
@@ -6340,14 +6340,14 @@ func (m *Module) _marisa__grimoire__trie__LoudsTrie__read__marisa__grimoire__io_
 				goto l1
 			}
 			t6 := m.___cxa_allocate_exception(i32(8))
-			t7 := m._std__runtime_error__runtime_error_char_const___e56w1y(t6, i32(68287))
-			m.___cxa_throw(t7, i32(73024), i32(2))
+			t7 := m._std__runtime_error__runtime_error_char_const___e56w1y(t6, i32(3775))
+			m.___cxa_throw(t7, i32(8512), i32(2))
 			panic("unreachable")
 		}
 	l0:
 		t8 := m.___cxa_allocate_exception(i32(8))
-		t9 := m._std__runtime_error__runtime_error_char_const___e56w1y(t8, i32(67828))
-		m.___cxa_throw(t9, i32(73024), i32(2))
+		t9 := m._std__runtime_error__runtime_error_char_const___e56w1y(t8, i32(3316))
+		m.___cxa_throw(t9, i32(8512), i32(2))
 		panic("unreachable")
 	}
 l1:
@@ -6810,14 +6810,14 @@ l2:
 				goto l7
 			}
 			t118 := m.___cxa_allocate_exception(i32(8))
-			t119 := m._std__runtime_error__runtime_error_char_const___e56w1y(t118, i32(68085))
-			m.___cxa_throw(t119, i32(73024), i32(2))
+			t119 := m._std__runtime_error__runtime_error_char_const___e56w1y(t118, i32(3573))
+			m.___cxa_throw(t119, i32(8512), i32(2))
 			panic("unreachable")
 		}
 	l3:
 		t120 := m.___cxa_allocate_exception(i32(8))
-		t121 := m._std__runtime_error__runtime_error_char_const___e56w1y(t120, i32(68753))
-		m.___cxa_throw(t121, i32(73024), i32(2))
+		t121 := m._std__runtime_error__runtime_error_char_const___e56w1y(t120, i32(4241))
+		m.___cxa_throw(t121, i32(8512), i32(2))
 		panic("unreachable")
 	}
 l7:
@@ -7564,7 +7564,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select0_unsigned_long__co
 			t22 := int32(load32((*m.memory)[uint32(v1):]))
 			v0 = t22 ^ i32(-1)
 			v3 = v0 & i32(255)
-			t23 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t23 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v5 = t23
 			if uint32(t21) < uint32(v5) {
 				goto l4
@@ -7572,7 +7572,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select0_unsigned_long__co
 			v2 = v2 - v5
 			t24 := v2
 			v3 = int32(uint32(v0)>>8) & i32(255)
-			t25 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t25 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v5 = t25
 			if uint32(t24) < uint32(v5) {
 				v4 = v4 | i32(8)
@@ -7581,7 +7581,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select0_unsigned_long__co
 			v2 = v2 - v5
 			t26 := v2
 			v3 = int32(uint32(v0)>>16) & i32(255)
-			t27 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t27 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v5 = t27
 			if uint32(t26) < uint32(v5) {
 				v4 = v4 | i32(16)
@@ -7590,7 +7590,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select0_unsigned_long__co
 			v2 = v2 - v5
 			t28 := v2
 			v3 = int32(uint32(v0) >> 24)
-			t29 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t29 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v0 = t29
 			if uint32(t28) < uint32(v0) {
 				v4 = v4 | i32(24)
@@ -7601,7 +7601,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select0_unsigned_long__co
 			t31 := v2
 			v0 = t30 ^ i32(-1)
 			v3 = v0 & i32(255)
-			t32 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t32 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v1 = t32
 			if uint32(t31) < uint32(v1) {
 				v4 = v4 + i32(32)
@@ -7610,7 +7610,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select0_unsigned_long__co
 			v2 = v2 - v1
 			t33 := v2
 			v3 = int32(uint32(v0)>>8) & i32(255)
-			t34 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t34 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v1 = t34
 			if uint32(t33) < uint32(v1) {
 				v4 = v4 + i32(40)
@@ -7619,7 +7619,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select0_unsigned_long__co
 			v2 = v2 - v1
 			t35 := v2
 			v3 = int32(uint32(v0)>>16) & i32(255)
-			t36 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t36 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v1 = t36
 			if uint32(t35) < uint32(v1) {
 				v4 = v4 + i32(48)
@@ -7630,7 +7630,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select0_unsigned_long__co
 			v2 = v2 - v1
 		}
 	l4:
-		t37 := int32((*m.memory)[int64(uint32(v2<<8|v3))+70176])
+		t37 := int32((*m.memory)[int64(uint32(v2<<8|v3))+5664])
 		p2 = v4 + t37
 	} else {
 		p2 = v2
@@ -7759,7 +7759,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select1_unsigned_long__co
 			t22 := int32(load32((*m.memory)[uint32(v4):]))
 			v0 = t22
 			v3 = v0 & i32(255)
-			t23 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t23 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v5 = t23
 			if uint32(t21) < uint32(v5) {
 				goto l4
@@ -7767,7 +7767,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select1_unsigned_long__co
 			v2 = v2 - v5
 			t24 := v2
 			v3 = int32(uint32(v0)>>8) & i32(255)
-			t25 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t25 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v5 = t25
 			if uint32(t24) < uint32(v5) {
 				v1 = v1 | i32(8)
@@ -7776,7 +7776,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select1_unsigned_long__co
 			v2 = v2 - v5
 			t26 := v2
 			v3 = int32(uint32(v0)>>16) & i32(255)
-			t27 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t27 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v5 = t27
 			if uint32(t26) < uint32(v5) {
 				v1 = v1 | i32(16)
@@ -7785,7 +7785,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select1_unsigned_long__co
 			v2 = v2 - v5
 			t28 := v2
 			v3 = int32(uint32(v0) >> 24)
-			t29 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t29 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v0 = t29
 			if uint32(t28) < uint32(v0) {
 				v1 = v1 | i32(24)
@@ -7796,7 +7796,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select1_unsigned_long__co
 			t31 := v2
 			v0 = t30
 			v3 = v0 & i32(255)
-			t32 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t32 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v4 = t32
 			if uint32(t31) < uint32(v4) {
 				v1 = v1 + i32(32)
@@ -7805,7 +7805,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select1_unsigned_long__co
 			v2 = v2 - v4
 			t33 := v2
 			v3 = int32(uint32(v0)>>8) & i32(255)
-			t34 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t34 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v4 = t34
 			if uint32(t33) < uint32(v4) {
 				v1 = v1 + i32(40)
@@ -7814,7 +7814,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select1_unsigned_long__co
 			v2 = v2 - v4
 			t35 := v2
 			v3 = int32(uint32(v0)>>16) & i32(255)
-			t36 := int32((*m.memory)[int64(uint32(v3))+69920])
+			t36 := int32((*m.memory)[int64(uint32(v3))+5408])
 			v4 = t36
 			if uint32(t35) < uint32(v4) {
 				v1 = v1 + i32(48)
@@ -7825,7 +7825,7 @@ func (m *Module) _marisa__grimoire__vector__BitVector__select1_unsigned_long__co
 			v2 = v2 - v4
 		}
 	l4:
-		t37 := int32((*m.memory)[int64(uint32(v2<<8|v3))+70176])
+		t37 := int32((*m.memory)[int64(uint32(v2<<8|v3))+5664])
 		p2 = v1 + t37
 	} else {
 		p2 = v2
@@ -8040,8 +8040,8 @@ l0:
 }
 func (m *Module) _std____2__vector_char__std____2__allocator_char______throw_length_error_abi_nqe220100____slegvr() {
 	t0 := m.___cxa_allocate_exception(i32(8))
-	t1 := m._std__length_error__length_error_abi_nqe220100__char_const___kab5q1(t0, i32(66654))
-	m.___cxa_throw(t1, i32(72968), i32(1))
+	t1 := m._std__length_error__length_error_abi_nqe220100__char_const___kab5q1(t0, i32(2142))
+	m.___cxa_throw(t1, i32(8456), i32(1))
 	panic("unreachable")
 }
 func (m *Module) _marisa__grimoire__trie__LoudsTrie__prefix_match__marisa__Agent___unsigned_long__const_873pzm(v0, v1, v2 int32) int32 {
@@ -8669,8 +8669,8 @@ func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___shrink___9b499
 		return
 	}
 	t6 := m.___cxa_allocate_exception(i32(8))
-	t7 := m._std__logic_error__logic_error_char_const___w3rrgk(t6, i32(67696))
-	m.___cxa_throw(t7, i32(72904), i32(1))
+	t7 := m._std__logic_error__logic_error_char_const___w3rrgk(t6, i32(3184))
+	m.___cxa_throw(t7, i32(8392), i32(1))
 	panic("unreachable")
 }
 func (m *Module) _void_marisa__grimoire__trie__LoudsTrie__build_trie_marisa__grimoire__trie__ReverseKey__marisa__grimoire__vector__Vector_marisa__grimoire__trie__ReverseKey____marisa__grimoire__vector__Vector_unsigned_int____marisa__grimoire__trie__Config_const___unsigned_long__mptyrj(v0, v1, v2, v3, v4 int32) {
@@ -9768,10 +9768,10 @@ l7:
 		}
 	l23:
 		t224 := m.___cxa_allocate_exception(i32(8))
-		t225 := m._std__logic_error__logic_error_char_const___w3rrgk(t224, i32(68168))
+		t225 := m._std__logic_error__logic_error_char_const___w3rrgk(t224, i32(3656))
 		v0 = t225
-		store32((*m.memory)[uint32(v0):], uint32(i32(72956)))
-		m.___cxa_throw(v0, i32(72968), i32(1))
+		store32((*m.memory)[uint32(v0):], uint32(i32(8444)))
+		m.___cxa_throw(v0, i32(8456), i32(1))
 		panic("unreachable")
 	}
 l39:
@@ -10041,8 +10041,8 @@ func (m *Module) _std____throw_bad_array_new_length_abi_nqe220100____6iy60i() {
 	var v0 int32
 	t0 := m.___cxa_allocate_exception(i32(4))
 	v0 = t0
-	store32((*m.memory)[uint32(v0):], uint32(i32(72796)))
-	m.___cxa_throw(v0, i32(72840), i32(3))
+	store32((*m.memory)[uint32(v0):], uint32(i32(8284)))
+	m.___cxa_throw(v0, i32(8328), i32(3))
 	panic("unreachable")
 }
 func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___map_marisa__grimoire__io__Mapper___feaei7(v0, v1 int32) {
@@ -10105,14 +10105,14 @@ func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___map_marisa__gr
 										goto l4
 									}
 									t11 := m.___cxa_allocate_exception(i32(8))
-									t12 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t11, i32(69087))
-									m.___cxa_throw(t12, i32(72936), i32(1))
+									t12 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t11, i32(4575))
+									m.___cxa_throw(t12, i32(8424), i32(1))
 									panic("unreachable")
 								}
 							l2:
 								t13 := m.___cxa_allocate_exception(i32(8))
-								t14 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t13, i32(69569))
-								m.___cxa_throw(t14, i32(72936), i32(1))
+								t14 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t13, i32(5057))
+								m.___cxa_throw(t14, i32(8424), i32(1))
 								panic("unreachable")
 							}
 						l4:
@@ -10138,20 +10138,20 @@ func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___map_marisa__gr
 					}
 				l0:
 					t19 := m.___cxa_allocate_exception(i32(8))
-					t20 := m._std__runtime_error__runtime_error_char_const___e56w1y(t19, i32(68002))
-					m.___cxa_throw(t20, i32(73024), i32(2))
+					t20 := m._std__runtime_error__runtime_error_char_const___e56w1y(t19, i32(3490))
+					m.___cxa_throw(t20, i32(8512), i32(2))
 					panic("unreachable")
 				}
 			l1:
 				t21 := m.___cxa_allocate_exception(i32(8))
-				t22 := m._std__runtime_error__runtime_error_char_const___e56w1y(t21, i32(68844))
-				m.___cxa_throw(t22, i32(73024), i32(2))
+				t22 := m._std__runtime_error__runtime_error_char_const___e56w1y(t21, i32(4332))
+				m.___cxa_throw(t22, i32(8512), i32(2))
 				panic("unreachable")
 			}
 		l5:
 			t23 := m.___cxa_allocate_exception(i32(8))
-			t24 := m._std__logic_error__logic_error_char_const___w3rrgk(t23, i32(67762))
-			m.___cxa_throw(t24, i32(72904), i32(1))
+			t24 := m._std__logic_error__logic_error_char_const___w3rrgk(t23, i32(3250))
+			m.___cxa_throw(t24, i32(8392), i32(1))
 			panic("unreachable")
 		}
 	l6:
@@ -10183,8 +10183,8 @@ func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___map_marisa__gr
 	}
 l3:
 	t33 := m.___cxa_allocate_exception(i32(8))
-	t34 := m._std__runtime_error__runtime_error_char_const___e56w1y(t33, i32(67472))
-	m.___cxa_throw(t34, i32(73024), i32(2))
+	t34 := m._std__runtime_error__runtime_error_char_const___e56w1y(t33, i32(2960))
+	m.___cxa_throw(t34, i32(8512), i32(2))
 	panic("unreachable")
 }
 func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___read_marisa__grimoire__io__Reader___ycab9(v0 int32) {
@@ -10265,14 +10265,14 @@ func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___read_marisa__g
 							goto l3
 						}
 						t13 := m.___cxa_allocate_exception(i32(8))
-						t14 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t13, i32(69167))
-						m.___cxa_throw(t14, i32(72936), i32(1))
+						t14 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t13, i32(4655))
+						m.___cxa_throw(t14, i32(8424), i32(1))
 						panic("unreachable")
 					}
 				l2:
 					t15 := m.___cxa_allocate_exception(i32(8))
-					t16 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t15, i32(69646))
-					m.___cxa_throw(t16, i32(72936), i32(1))
+					t16 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t15, i32(5134))
+					m.___cxa_throw(t16, i32(8424), i32(1))
 					panic("unreachable")
 				}
 			l3:
@@ -10282,14 +10282,14 @@ func (m *Module) _marisa__grimoire__vector__Vector_unsigned_int___read_marisa__g
 				goto l4
 			}
 			t18 := m.___cxa_allocate_exception(i32(8))
-			t19 := m._std__runtime_error__runtime_error_char_const___e56w1y(t18, i32(68085))
-			m.___cxa_throw(t19, i32(73024), i32(2))
+			t19 := m._std__runtime_error__runtime_error_char_const___e56w1y(t18, i32(3573))
+			m.___cxa_throw(t19, i32(8512), i32(2))
 			panic("unreachable")
 		}
 	l0:
 		t20 := m.___cxa_allocate_exception(i32(8))
-		t21 := m._std__runtime_error__runtime_error_char_const___e56w1y(t20, i32(68753))
-		m.___cxa_throw(t21, i32(73024), i32(2))
+		t21 := m._std__runtime_error__runtime_error_char_const___e56w1y(t20, i32(4241))
+		m.___cxa_throw(t21, i32(8512), i32(2))
 		panic("unreachable")
 	}
 l4:
@@ -10332,14 +10332,14 @@ func (m *Module) _void_marisa__grimoire__io__Reader__read_marisa__grimoire__vect
 			return
 		}
 		t1 := m.___cxa_allocate_exception(i32(8))
-		t2 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t1, i32(69167))
-		m.___cxa_throw(t2, i32(72936), i32(1))
+		t2 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t1, i32(4655))
+		m.___cxa_throw(t2, i32(8424), i32(1))
 		panic("unreachable")
 	}
 l0:
 	t3 := m.___cxa_allocate_exception(i32(8))
-	t4 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t3, i32(69646))
-	m.___cxa_throw(t4, i32(72936), i32(1))
+	t4 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t3, i32(5134))
+	m.___cxa_throw(t4, i32(8424), i32(1))
 	panic("unreachable")
 }
 func (m *Module) _void_std____2____sort4_abi_nqe220100__std____2___ClassicAlgPolicy__std____2____less_void__void____std____2__pair_unsigned_int__unsigned_int____0__std____2__pair_unsigned_int__unsigned_int____std____2__pair_unsigned_int__unsigned_int____std____2__pair_unsigned_int__unsigned_int____std____2__pair_unsigned_int__unsigned_int____std____2____less_void__void____bdkpbs(v0, v1, v2, v3 int32) {
@@ -13092,19 +13092,19 @@ func (m *Module) _unsigned_long_marisa__grimoire__algorithm__details__sort_maris
 func (m *Module) Xwexcept_cxx_throw_destroy() {
 	var v0, v1 int32
 	{
-		t0 := int32(load32((*m.memory)[uint32(i32(73220)):]))
+		t0 := int32(load32((*m.memory)[uint32(i32(8708)):]))
 		v0 = t0
 		if v0 == 0 {
 			return
 		}
-		t1 := int32(load32((*m.memory)[uint32(i32(73224)):]))
+		t1 := int32(load32((*m.memory)[uint32(i32(8712)):]))
 		v1 = t1
 		if v1 == 0 {
 			return
 		}
 		_ = m.t0[uint(v0)].(func(int32) int32)(v1)
-		store32((*m.memory)[uint32(i32(73224)):], uint32(i32(0)))
-		store32((*m.memory)[uint32(i32(73220)):], uint32(i32(0)))
+		store32((*m.memory)[uint32(i32(8712)):], uint32(i32(0)))
+		store32((*m.memory)[uint32(i32(8708)):], uint32(i32(0)))
 	}
 }
 func (m *Module) ___cxa_allocate_exception(v0 int32) int32 {
@@ -13113,7 +13113,7 @@ func (m *Module) ___cxa_allocate_exception(v0 int32) int32 {
 		t1 := m._operator_new_unsigned_long__tz8azg(v0)
 		p0 = t1
 	} else {
-		p0 = i32(73232)
+		p0 = i32(8720)
 	}
 	return p0
 }
@@ -13122,13 +13122,13 @@ func (m *Module) ___cxa_throw(v0, v1, v2 int32) {
 	t0 := m.___stack_pointer
 	v3 = t0 - i32(16)
 	m.___stack_pointer = v3
-	store32((*m.memory)[uint32(i32(73224)):], uint32(v0))
-	store32((*m.memory)[uint32(i32(73220)):], uint32(v2))
+	store32((*m.memory)[uint32(i32(8712)):], uint32(v0))
+	store32((*m.memory)[uint32(i32(8708)):], uint32(v2))
 	store32((*m.memory)[int64(uint32(v3))+12:], uint32(v0))
 	if v1 != 0 {
-		t1 := int32(load32((*m.memory)[uint32(i32(72808)):]))
+		t1 := int32(load32((*m.memory)[uint32(i32(8296)):]))
 		t2 := int32(load32((*m.memory)[int64(uint32(t1))+16:]))
-		t3 := m.t0[uint(t2)].(func(int32, int32, int32) int32)(i32(72808), v1, v3+i32(12))
+		t3 := m.t0[uint(t2)].(func(int32, int32, int32) int32)(i32(8296), v1, v3+i32(12))
 		if t3 != 0 {
 			t4 := int32(load32((*m.memory)[int64(uint32(v3))+12:]))
 			v0 = t4
@@ -13144,105 +13144,105 @@ func (m *Module) ___cxa_throw(v0, v1, v2 int32) {
 				if v0 == 0 {
 					goto l1
 				}
-				t9 := m.___dynamic_cast(v0, i32(72808), i32(72936))
+				t9 := m.___dynamic_cast(v0, i32(8296), i32(8424))
 				if t9 != 0 {
-					p8 = i32(65556)
+					p8 = i32(1044)
 					goto l2
 				}
-				t10 := m.___dynamic_cast(v0, i32(72808), i32(72892))
+				t10 := m.___dynamic_cast(v0, i32(8296), i32(8380))
 				if t10 != 0 {
-					p8 = i32(66702)
+					p8 = i32(2190)
 					goto l2
 				}
-				t11 := m.___dynamic_cast(v0, i32(72808), i32(72968))
+				t11 := m.___dynamic_cast(v0, i32(8296), i32(8456))
 				if t11 != 0 {
-					p8 = i32(66738)
+					p8 = i32(2226)
 					goto l2
 				}
-				t12 := m.___dynamic_cast(v0, i32(72808), i32(73000))
+				t12 := m.___dynamic_cast(v0, i32(8296), i32(8488))
 				if t12 != 0 {
-					p8 = i32(67158)
+					p8 = i32(2646)
 					goto l2
 				}
-				t13 := m.___dynamic_cast(v0, i32(72808), i32(72904))
+				t13 := m.___dynamic_cast(v0, i32(8296), i32(8392))
 				if t13 != 0 {
-					p8 = i32(66792)
+					p8 = i32(2280)
 					goto l2
 				}
-				t14 := m.___dynamic_cast(v0, i32(72808), i32(73012))
+				t14 := m.___dynamic_cast(v0, i32(8296), i32(8500))
 				if t14 != 0 {
-					p8 = i32(66775)
+					p8 = i32(2263)
 					goto l2
 				}
-				t15 := m.___dynamic_cast(v0, i32(72808), i32(73036))
+				t15 := m.___dynamic_cast(v0, i32(8296), i32(8524))
 				if t15 != 0 {
-					p8 = i32(66661)
+					p8 = i32(2149)
 					goto l2
 				}
-				t16 := m.___dynamic_cast(v0, i32(72808), i32(73048))
+				t16 := m.___dynamic_cast(v0, i32(8296), i32(8536))
 				if t16 != 0 {
-					p8 = i32(66681)
+					p8 = i32(2169)
 					goto l2
 				}
-				t17 := m.___dynamic_cast(v0, i32(72808), i32(72772))
+				t17 := m.___dynamic_cast(v0, i32(8296), i32(8260))
 				if t17 != 0 {
-					p8 = i32(67116)
+					p8 = i32(2604)
 					goto l2
 				}
-				t18 := m.___dynamic_cast(v0, i32(72808), i32(72748))
+				t18 := m.___dynamic_cast(v0, i32(8296), i32(8236))
 				if t18 != 0 {
-					p8 = i32(66720)
+					p8 = i32(2208)
 					goto l2
 				}
-				t19 := m.___dynamic_cast(v0, i32(72808), i32(73024))
+				t19 := m.___dynamic_cast(v0, i32(8296), i32(8512))
 				if t19 != 0 {
-					p8 = i32(66756)
+					p8 = i32(2244)
 					goto l2
 				}
-				t20 := m.___dynamic_cast(v0, i32(72808), i32(73080))
+				t20 := m.___dynamic_cast(v0, i32(8296), i32(8568))
 				if t20 != 0 {
-					p8 = i32(67383)
+					p8 = i32(2871)
 					goto l2
 				}
-				t21 := m.___dynamic_cast(v0, i32(72808), i32(73068))
+				t21 := m.___dynamic_cast(v0, i32(8296), i32(8556))
 				if t21 != 0 {
-					p8 = i32(65536)
+					p8 = i32(1024)
 					goto l2
 				}
-				t22 := m.___dynamic_cast(v0, i32(72808), i32(72760))
+				t22 := m.___dynamic_cast(v0, i32(8296), i32(8248))
 				if t22 != 0 {
-					p8 = i32(65578)
+					p8 = i32(1066)
 					goto l2
 				}
-				t23 := m.___dynamic_cast(v0, i32(72808), i32(72736))
+				t23 := m.___dynamic_cast(v0, i32(8296), i32(8224))
 				if t23 != 0 {
-					p8 = i32(66636)
+					p8 = i32(2124)
 					goto l2
 				}
-				t24 := m.___dynamic_cast(v0, i32(72808), i32(72724))
+				t24 := m.___dynamic_cast(v0, i32(8296), i32(8212))
 				if t24 != 0 {
-					p8 = i32(66983)
+					p8 = i32(2471)
 					goto l2
 				}
-				t25 := m.___dynamic_cast(v0, i32(72808), i32(72840))
+				t25 := m.___dynamic_cast(v0, i32(8296), i32(8328))
 				if t25 != 0 {
-					p8 = i32(67090)
+					p8 = i32(2578)
 					goto l2
 				}
-				t26 := m.___dynamic_cast(v0, i32(72808), i32(72828))
+				t26 := m.___dynamic_cast(v0, i32(8296), i32(8316))
 				if t26 != 0 {
-					p8 = i32(67457)
+					p8 = i32(2945)
 					goto l2
 				}
-				t27 := m.___dynamic_cast(v0, i32(72808), i32(72816))
+				t27 := m.___dynamic_cast(v0, i32(8296), i32(8304))
 				if t27 == 0 {
 					goto l1
 				}
-				p8 = i32(66949)
+				p8 = i32(2437)
 				goto l2
 			}
 		l1:
-			p8 = i32(66968)
+			p8 = i32(2456)
 		l2:
 			t28 := int32(load32((*m.memory)[int64(uint32(v1))+8:]))
 			t29 := m.t0[uint(t28)].(func(int32) int32)(v0)
@@ -13250,28 +13250,28 @@ func (m *Module) ___cxa_throw(v0, v1, v2 int32) {
 			panic("unreachable")
 		}
 		t30 := int32(load32((*m.memory)[int64(uint32(v1))+4:]))
-		m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(t30, i32(0), i32(67139))
+		m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(t30, i32(0), i32(2627))
 		panic("unreachable")
 	}
-	m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(i32(0), i32(0), i32(67139))
+	m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(i32(0), i32(0), i32(2627))
 	panic("unreachable")
 l0:
-	t31 := int32(load32((*m.memory)[uint32(i32(72784)):]))
+	t31 := int32(load32((*m.memory)[uint32(i32(8272)):]))
 	m.t0[uint(t31)].(func())()
-	m.___abort_message(i32(67399))
+	m.___abort_message(i32(2887))
 	panic("unreachable")
 }
 func (m *Module) ___abort_message(v0 int32) {
-	m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(i32(65550), i32(0), v0)
+	m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(i32(1038), i32(0), v0)
 	panic("unreachable")
 }
 func (m *Module) _abort() {
-	m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(i32(65550), i32(0), i32(65550))
+	m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(i32(1038), i32(0), i32(1038))
 	panic("unreachable")
 }
 func (m *Module) _wexcept_new_handler_init______0____invoke___6sptok() {
-	t0 := int32(load32((*m.memory)[uint32(i32(72832)):]))
-	m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(t0, i32(67457), i32(67439))
+	t0 := int32(load32((*m.memory)[uint32(i32(8320)):]))
+	m._wexcept__env__cxx_throw_char_const___char_const___char_const___tb6uld(t0, i32(2945), i32(2927))
 	panic("unreachable")
 }
 func ___cxx_global_array_dtor(v0 int32) {
@@ -13446,14 +13446,14 @@ func (m *Module) XNew(v0, v1 int32) {
 						goto l1
 					}
 					t23 := m.___cxa_allocate_exception(i32(8))
-					t24 := m._std__runtime_error__runtime_error_char_const___e56w1y(t23, i32(67472))
-					m.___cxa_throw(t24, i32(73024), i32(2))
+					t24 := m._std__runtime_error__runtime_error_char_const___e56w1y(t23, i32(2960))
+					m.___cxa_throw(t24, i32(8512), i32(2))
 					panic("unreachable")
 				}
 			l0:
 				t25 := m.___cxa_allocate_exception(i32(8))
-				t26 := m._std__runtime_error__runtime_error_char_const___e56w1y(t25, i32(68935))
-				m.___cxa_throw(t26, i32(73024), i32(2))
+				t26 := m._std__runtime_error__runtime_error_char_const___e56w1y(t25, i32(4423))
+				m.___cxa_throw(t26, i32(8512), i32(2))
 				panic("unreachable")
 			}
 		l1:
@@ -13537,9 +13537,9 @@ func (m *Module) XNew(v0, v1 int32) {
 			m._marisa__grimoire__trie__LoudsTrie__swap_marisa__grimoire__trie__LoudsTrie___mu58io(v2, v0)
 			_ = m._marisa__grimoire__trie__LoudsTrie___LoudsTrie___9dxe8l(v0)
 			m.___stack_pointer = v0 + i32(560)
-			t30 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+			t30 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 			v0 = t30
-			store32((*m.memory)[uint32(i32(77328)):], uint32(v2))
+			store32((*m.memory)[uint32(i32(12816)):], uint32(v2))
 			if v0 != 0 {
 				t31 := m._marisa__grimoire__trie__LoudsTrie___LoudsTrie___9dxe8l(v0)
 				m.Xfree(t31)
@@ -13548,8 +13548,8 @@ func (m *Module) XNew(v0, v1 int32) {
 			return
 		}
 		t32 := m.___cxa_allocate_exception(i32(8))
-		t33 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t32, i32(69491))
-		m.___cxa_throw(t33, i32(72936), i32(1))
+		t33 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t32, i32(4979))
+		m.___cxa_throw(t33, i32(8424), i32(1))
 		panic("unreachable")
 	}
 }
@@ -13710,8 +13710,8 @@ func (m *Module) XLoad() {
 		}
 	l0:
 		t20 := m.___cxa_allocate_exception(i32(8))
-		t21 := m._std__runtime_error__runtime_error_char_const___e56w1y(t20, i32(69011))
-		m.___cxa_throw(t21, i32(73024), i32(2))
+		t21 := m._std__runtime_error__runtime_error_char_const___e56w1y(t20, i32(4499))
+		m.___cxa_throw(t21, i32(8512), i32(2))
 		panic("unreachable")
 	}
 l1:
@@ -13791,9 +13791,9 @@ l1:
 	m._marisa__grimoire__trie__LoudsTrie__swap_marisa__grimoire__trie__LoudsTrie___mu58io(v1, v0)
 	_ = m._marisa__grimoire__trie__LoudsTrie___LoudsTrie___9dxe8l(v0)
 	m.___stack_pointer = v0 + i32(560)
-	t23 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t23 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	v0 = t23
-	store32((*m.memory)[uint32(i32(77328)):], uint32(v1))
+	store32((*m.memory)[uint32(i32(12816)):], uint32(v1))
 	if v0 != 0 {
 		t24 := m._marisa__grimoire__trie__LoudsTrie___LoudsTrie___9dxe8l(v0)
 		m.Xfree(t24)
@@ -13806,22 +13806,22 @@ func (m *Module) XSave() {
 		t0 := m.___stack_pointer
 		v0 = t0 - i32(16)
 		m.___stack_pointer = v0
-		t1 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+		t1 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 		v1 = t1
 		if v1 != 0 {
 			store32((*m.memory)[int64(uint32(v0))+12:], uint32(i32(0)))
 			t2 := m.___stack_pointer
 			v2 = t2 - i32(16)
 			m.___stack_pointer = v2
-			m._marisa__grimoire__io__Writer__data_void_const___unsigned_long__9im9lm(i32(69904), i32(16))
+			m._marisa__grimoire__io__Writer__data_void_const___unsigned_long__9im9lm(i32(5392), i32(16))
 			m._marisa__grimoire__trie__LoudsTrie__write__marisa__grimoire__io__Writer___const_sfllpv(v1, v0+i32(12))
 			m.___stack_pointer = v2 + i32(16)
 			m.___stack_pointer = v0 + i32(16)
 			return
 		}
 		t3 := m.___cxa_allocate_exception(i32(8))
-		t4 := m._std__logic_error__logic_error_char_const___w3rrgk(t3, i32(66460))
-		m.___cxa_throw(t4, i32(72904), i32(1))
+		t4 := m._std__logic_error__logic_error_char_const___w3rrgk(t3, i32(1948))
+		m.___cxa_throw(t4, i32(8392), i32(1))
 		panic("unreachable")
 	}
 }
@@ -13833,12 +13833,12 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 			p0 = v0
 		}
 		if p0 != 0 {
-			t1 := int32(load32((*m.memory)[uint32(i32(77360)):]))
+			t1 := int32(load32((*m.memory)[uint32(i32(12848)):]))
 			v3 = t1
-			t2 := int32(load32((*m.memory)[uint32(i32(77376)):]))
+			t2 := int32(load32((*m.memory)[uint32(i32(12864)):]))
 			if v3 == int32(uint32(t2)>>8) {
 				{
-					t3 := int32(load32((*m.memory)[uint32(i32(77364)):]))
+					t3 := int32(load32((*m.memory)[uint32(i32(12852)):]))
 					if t3 != v3 {
 						goto l0
 					}
@@ -13870,7 +13870,7 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 					}
 					memory_zero(*m.memory, uint32(v11), uint32(v5))
 				l1:
-					t8 := int32(load32((*m.memory)[uint32(i32(77356)):]))
+					t8 := int32(load32((*m.memory)[uint32(i32(12844)):]))
 					v7 = t8
 					if v3 != 0 {
 						v6 = v3 & i32(3)
@@ -13933,12 +13933,12 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 							}
 						}
 					l3:
-						store32((*m.memory)[uint32(i32(77364)):], uint32(v13))
-						store32((*m.memory)[uint32(i32(77356)):], uint32(v11))
+						store32((*m.memory)[uint32(i32(12852)):], uint32(v13))
+						store32((*m.memory)[uint32(i32(12844)):], uint32(v11))
 						goto l5
 					}
-					store32((*m.memory)[uint32(i32(77364)):], uint32(i32(1)))
-					store32((*m.memory)[uint32(i32(77356)):], uint32(v11))
+					store32((*m.memory)[uint32(i32(12852)):], uint32(i32(1)))
+					store32((*m.memory)[uint32(i32(12844)):], uint32(v11))
 					if v7 != 0 {
 						goto l5
 					}
@@ -13966,15 +13966,15 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 						}
 					}
 					m.Xfree(v4)
-					t24 := int32(load32((*m.memory)[uint32(i32(77360)):]))
+					t24 := int32(load32((*m.memory)[uint32(i32(12848)):]))
 					v3 = t24
 				}
 			l0:
 				t25 := m._operator_new_unsigned_long__tz8azg(i32(3072))
 				v4 = t25
 				memory_zero(*m.memory, uint32(v4), uint32(i32(3072)))
-				store32((*m.memory)[uint32(i32(77360)):], uint32(v3+i32(1)))
-				t26 := int32(load32((*m.memory)[uint32(i32(77356)):]))
+				store32((*m.memory)[uint32(i32(12848)):], uint32(v3+i32(1)))
+				t26 := int32(load32((*m.memory)[uint32(i32(12844)):]))
 				v6 = t26 + v3<<2
 				t27 := int32(load32((*m.memory)[uint32(v6):]))
 				v3 = t27
@@ -13988,9 +13988,9 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 					v4 = i32(0)
 					v9 = i32(0)
 					{
-						t28 := int32(load32((*m.memory)[uint32(i32(77348)):]))
+						t28 := int32(load32((*m.memory)[uint32(i32(12836)):]))
 						v3 = t28
-						t29 := int32(load32((*m.memory)[uint32(i32(77352)):]))
+						t29 := int32(load32((*m.memory)[uint32(i32(12840)):]))
 						if v3 != t29 {
 							goto l7
 						}
@@ -14022,7 +14022,7 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 						}
 						memory_zero(*m.memory, uint32(v11), uint32(v5))
 					l8:
-						t34 := int32(load32((*m.memory)[uint32(i32(77344)):]))
+						t34 := int32(load32((*m.memory)[uint32(i32(12832)):]))
 						v7 = t34
 						if v3 != 0 {
 							v6 = v3 & i32(3)
@@ -14085,12 +14085,12 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 								}
 							}
 						l10:
-							store32((*m.memory)[uint32(i32(77352)):], uint32(v13))
-							store32((*m.memory)[uint32(i32(77344)):], uint32(v11))
+							store32((*m.memory)[uint32(i32(12840)):], uint32(v13))
+							store32((*m.memory)[uint32(i32(12832)):], uint32(v11))
 							goto l12
 						}
-						store32((*m.memory)[uint32(i32(77352)):], uint32(i32(1)))
-						store32((*m.memory)[uint32(i32(77344)):], uint32(v11))
+						store32((*m.memory)[uint32(i32(12840)):], uint32(i32(1)))
+						store32((*m.memory)[uint32(i32(12832)):], uint32(v11))
 						if v7 != 0 {
 							goto l12
 						}
@@ -14118,14 +14118,14 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 							}
 						}
 						m.Xfree(v4)
-						t50 := int32(load32((*m.memory)[uint32(i32(77348)):]))
+						t50 := int32(load32((*m.memory)[uint32(i32(12836)):]))
 						v3 = t50
 					}
 				l7:
 					t51 := m._operator_new_unsigned_long__tz8azg(v1)
 					v4 = t51
-					store32((*m.memory)[uint32(i32(77348)):], uint32(v3+i32(1)))
-					t52 := int32(load32((*m.memory)[uint32(i32(77344)):]))
+					store32((*m.memory)[uint32(i32(12836)):], uint32(v3+i32(1)))
+					t52 := int32(load32((*m.memory)[uint32(i32(12832)):]))
 					v6 = t52 + v3<<2
 					t53 := int32(load32((*m.memory)[uint32(v6):]))
 					v3 = t53
@@ -14133,22 +14133,22 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 					if v3 != 0 {
 						m.Xfree(v3)
 					}
-					t54 := int32(load32((*m.memory)[uint32(i32(77344)):]))
-					t55 := int32(load32((*m.memory)[uint32(i32(77348)):]))
+					t54 := int32(load32((*m.memory)[uint32(i32(12832)):]))
+					t55 := int32(load32((*m.memory)[uint32(i32(12836)):]))
 					t56 := int32(load32((*m.memory)[uint32(t54+t55<<2-i32(4)):]))
 					v3 = t56
 					goto l14
 				}
-				t57 := int32(load32((*m.memory)[uint32(i32(77372)):]))
+				t57 := int32(load32((*m.memory)[uint32(i32(12860)):]))
 				v3 = t57
 				var p58 int32
 				if uint32(v3) < uint32(v1) {
 					v4 = i32(0)
 					v10 = i32(0)
 					{
-						t59 := int32(load32((*m.memory)[uint32(i32(77336)):]))
+						t59 := int32(load32((*m.memory)[uint32(i32(12824)):]))
 						v5 = t59
-						t60 := int32(load32((*m.memory)[uint32(i32(77340)):]))
+						t60 := int32(load32((*m.memory)[uint32(i32(12828)):]))
 						if v5 != t60 {
 							goto l15
 						}
@@ -14184,7 +14184,7 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 								goto l17
 							}
 							v6 = v5 & i32(3)
-							t65 := int32(load32((*m.memory)[uint32(i32(77332)):]))
+							t65 := int32(load32((*m.memory)[uint32(i32(12820)):]))
 							v14 = t65
 							if uint32(v5) >= uint32(i32(4)) {
 								v8 = v5 & i32(-4)
@@ -14244,10 +14244,10 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 							}
 						}
 					l17:
-						store32((*m.memory)[uint32(i32(77340)):], uint32(v7))
-						t79 := int32(load32((*m.memory)[uint32(i32(77332)):]))
+						store32((*m.memory)[uint32(i32(12828)):], uint32(v7))
+						t79 := int32(load32((*m.memory)[uint32(i32(12820)):]))
 						v3 = t79
-						store32((*m.memory)[uint32(i32(77332)):], uint32(v13))
+						store32((*m.memory)[uint32(i32(12820)):], uint32(v13))
 						if v3 == 0 {
 							goto l15
 						}
@@ -14272,56 +14272,56 @@ func (m *Module) XBuildPush(v0, v1 int32, v2 float32) {
 							}
 						}
 						m.Xfree(v4)
-						t82 := int32(load32((*m.memory)[uint32(i32(77336)):]))
+						t82 := int32(load32((*m.memory)[uint32(i32(12824)):]))
 						v5 = t82
 					}
 				l15:
 					v4 = v5 << 2
-					t83 := int32(load32((*m.memory)[uint32(i32(77332)):]))
+					t83 := int32(load32((*m.memory)[uint32(i32(12820)):]))
 					v6 = v4 + t83
 					t84 := int32(load32((*m.memory)[uint32(v6):]))
 					v3 = t84
 					if v3 == 0 {
 						t85 := m._operator_new_unsigned_long__tz8azg(i32(4096))
 						store32((*m.memory)[uint32(v6):], uint32(t85))
-						t86 := int32(load32((*m.memory)[uint32(i32(77332)):]))
+						t86 := int32(load32((*m.memory)[uint32(i32(12820)):]))
 						t87 := int32(load32((*m.memory)[uint32(t86+v4):]))
 						v3 = t87
 					}
-					store32((*m.memory)[uint32(i32(77372)):], uint32(i32(4096)))
-					store32((*m.memory)[uint32(i32(77368)):], uint32(v3))
-					store32((*m.memory)[uint32(i32(77336)):], uint32(v5+i32(1)))
-					t88 := int32(load32((*m.memory)[uint32(i32(77372)):]))
+					store32((*m.memory)[uint32(i32(12860)):], uint32(i32(4096)))
+					store32((*m.memory)[uint32(i32(12856)):], uint32(v3))
+					store32((*m.memory)[uint32(i32(12824)):], uint32(v5+i32(1)))
+					t88 := int32(load32((*m.memory)[uint32(i32(12860)):]))
 					p58 = t88
 				} else {
 					p58 = v3
 				}
-				store32((*m.memory)[uint32(i32(77372)):], uint32(p58-v1))
-				t89 := int32(load32((*m.memory)[uint32(i32(77368)):]))
+				store32((*m.memory)[uint32(i32(12860)):], uint32(p58-v1))
+				t89 := int32(load32((*m.memory)[uint32(i32(12856)):]))
 				v3 = t89
-				store32((*m.memory)[uint32(i32(77368)):], uint32(v3+v1))
+				store32((*m.memory)[uint32(i32(12856)):], uint32(v3+v1))
 			}
 		l14:
 			if v1 != 0 {
 				memory_copy(*m.memory, uint32(v3), uint32(v0), uint32(v1))
 			}
-			t90 := int32(load32((*m.memory)[uint32(i32(77356)):]))
-			t91 := int32(load32((*m.memory)[uint32(i32(77376)):]))
+			t90 := int32(load32((*m.memory)[uint32(i32(12844)):]))
+			t91 := int32(load32((*m.memory)[uint32(i32(12864)):]))
 			v0 = t91
 			t92 := int32(load32((*m.memory)[uint32(t90+int32(uint32(v0)>>6)&i32(0x3fffffc)):]))
 			v0 = t92 + v0&i32(255)*i32(12)
 			store32((*m.memory)[int64(uint32(v0))+8:], math.Float32bits(v2))
 			store32((*m.memory)[int64(uint32(v0))+4:], uint32(v1))
 			store32((*m.memory)[uint32(v0):], uint32(v3))
-			t93 := int32(load32((*m.memory)[uint32(i32(77376)):]))
-			store32((*m.memory)[uint32(i32(77376)):], uint32(t93+i32(1)))
-			t94 := int32(load32((*m.memory)[uint32(i32(77380)):]))
-			store32((*m.memory)[uint32(i32(77380)):], uint32(t94+v1))
+			t93 := int32(load32((*m.memory)[uint32(i32(12864)):]))
+			store32((*m.memory)[uint32(i32(12864)):], uint32(t93+i32(1)))
+			t94 := int32(load32((*m.memory)[uint32(i32(12868)):]))
+			store32((*m.memory)[uint32(i32(12868)):], uint32(t94+v1))
 			return
 		}
 		t95 := m.___cxa_allocate_exception(i32(8))
-		t96 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t95, i32(69409))
-		m.___cxa_throw(t96, i32(72936), i32(1))
+		t96 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t95, i32(4897))
+		m.___cxa_throw(t96, i32(8424), i32(1))
 		panic("unreachable")
 	}
 }
@@ -14495,7 +14495,7 @@ func (m *Module) XBuild(v0 int32) {
 	store64((*m.memory)[int64(uint32(v8))+40:], uint64(i64(0)))
 	store64((*m.memory)[int64(uint32(v8))+32:], uint64(i64(0)))
 	{
-		t6 := int32(load32((*m.memory)[uint32(i32(77376)):]))
+		t6 := int32(load32((*m.memory)[uint32(i32(12864)):]))
 		v3 = t6
 		if v3 == 0 {
 			store32((*m.memory)[int64(uint32(v8))+44:], uint32(v3))
@@ -14525,7 +14525,7 @@ func (m *Module) XBuild(v0 int32) {
 		{
 			t9 := int32(load32((*m.memory)[int64(uint32(v8))+36:]))
 			v3 = t9 + v1
-			t10 := int32(load32((*m.memory)[uint32(i32(77356)):]))
+			t10 := int32(load32((*m.memory)[uint32(i32(12844)):]))
 			t11 := int32(load32((*m.memory)[uint32(t10+int32(uint32(v7)>>6)&i32(0x3fffffc)):]))
 			t12 := v3 - i32(8)
 			v0 = t11 + v7&i32(255)*i32(12)
@@ -14535,7 +14535,7 @@ func (m *Module) XBuild(v0 int32) {
 			store32((*m.memory)[uint32(v3):], math.Float32bits(t14))
 			v1 = v1 + i32(16)
 			v7 = v7 + i32(1)
-			t15 := int32(load32((*m.memory)[uint32(i32(77376)):]))
+			t15 := int32(load32((*m.memory)[uint32(i32(12864)):]))
 			if uint32(v7) < uint32(t15) {
 				goto l1
 			}
@@ -16182,12 +16182,12 @@ l9:
 			v4 = v2 + i32(104)
 			m._marisa__grimoire__vector__BitVector__push_back_bool__fpa8rc(v4, i32(0))
 			m._marisa__grimoire__vector__BitVector__build_bool__bool__bys6fh(v4, i32(0), i32(1))
-			t337 := int32(load32((*m.memory)[uint32(i32(77376)):]))
+			t337 := int32(load32((*m.memory)[uint32(i32(12864)):]))
 			if t337 != 0 {
 				v1 = v0
 			l58:
 				{
-					t338 := int32(load32((*m.memory)[uint32(i32(77356)):]))
+					t338 := int32(load32((*m.memory)[uint32(i32(12844)):]))
 					t339 := int32(load32((*m.memory)[int64(uint32(v1))+4:]))
 					v3 = t339
 					t340 := int32(load32((*m.memory)[uint32(t338+int32(uint32(v3)>>6)&i32(0x3fffffc)):]))
@@ -16196,7 +16196,7 @@ l9:
 					store32((*m.memory)[int64(uint32(t340+v3&i32(255)*i32(12)))+8:], uint32(t342))
 					v1 = v1 + i32(8)
 					v7 = v7 + i32(1)
-					t343 := int32(load32((*m.memory)[uint32(i32(77376)):]))
+					t343 := int32(load32((*m.memory)[uint32(i32(12864)):]))
 					if uint32(v7) < uint32(t343) {
 						goto l58
 					}
@@ -16223,16 +16223,16 @@ l9:
 		}
 	l25:
 		t347 := m.___cxa_allocate_exception(i32(8))
-		t348 := m._std__logic_error__logic_error_char_const___w3rrgk(t347, i32(68168))
+		t348 := m._std__logic_error__logic_error_char_const___w3rrgk(t347, i32(3656))
 		v0 = t348
-		store32((*m.memory)[uint32(v0):], uint32(i32(72956)))
-		m.___cxa_throw(v0, i32(72968), i32(1))
+		store32((*m.memory)[uint32(v0):], uint32(i32(8444)))
+		m.___cxa_throw(v0, i32(8456), i32(1))
 		panic("unreachable")
 	}
 l59:
-	t349 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t349 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	v0 = t349
-	store32((*m.memory)[uint32(i32(77328)):], uint32(v5))
+	store32((*m.memory)[uint32(i32(12816)):], uint32(v5))
 	if v0 != 0 {
 		t350 := m._marisa__grimoire__trie__LoudsTrie___LoudsTrie___9dxe8l(v0)
 		m.Xfree(t350)
@@ -16241,67 +16241,67 @@ l59:
 }
 func (m *Module) XStat() (int32, int32, int32, int32, int32, int32, int32) {
 	var v0 int32
-	t0 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t0 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	v0 = t0
 	if v0 == 0 {
 		t1 := m.___cxa_allocate_exception(i32(8))
-		t2 := m._std__logic_error__logic_error_char_const___w3rrgk(t1, i32(66224))
-		m.___cxa_throw(t2, i32(72904), i32(1))
+		t2 := m._std__logic_error__logic_error_char_const___w3rrgk(t1, i32(1712))
+		m.___cxa_throw(t2, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t3 := int32(load32((*m.memory)[int64(uint32(v0))+132:]))
-	t4 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t4 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	v0 = t4
 	if v0 == 0 {
 		t5 := m.___cxa_allocate_exception(i32(8))
-		t6 := m._std__logic_error__logic_error_char_const___w3rrgk(t5, i32(66165))
-		m.___cxa_throw(t6, i32(72904), i32(1))
+		t6 := m._std__logic_error__logic_error_char_const___w3rrgk(t5, i32(1653))
+		m.___cxa_throw(t6, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t7 := m._marisa__grimoire__trie__LoudsTrie__io_size___const_wpaqih(v0)
-	t8 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t8 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	v0 = t8
 	if v0 == 0 {
 		t9 := m.___cxa_allocate_exception(i32(8))
-		t10 := m._std__logic_error__logic_error_char_const___w3rrgk(t9, i32(65870))
-		m.___cxa_throw(t10, i32(72904), i32(1))
+		t10 := m._std__logic_error__logic_error_char_const___w3rrgk(t9, i32(1358))
+		m.___cxa_throw(t10, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t11 := m._marisa__grimoire__trie__LoudsTrie__total_size___const_6bvq31(v0)
-	t12 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t12 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	v0 = t12
 	if v0 == 0 {
 		t13 := m.___cxa_allocate_exception(i32(8))
-		t14 := m._std__logic_error__logic_error_char_const___w3rrgk(t13, i32(66401))
-		m.___cxa_throw(t14, i32(72904), i32(1))
+		t14 := m._std__logic_error__logic_error_char_const___w3rrgk(t13, i32(1889))
+		m.___cxa_throw(t14, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t15 := int32(load32((*m.memory)[int64(uint32(v0))+536:]))
-	t16 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t16 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	v0 = t16
 	if v0 == 0 {
 		t17 := m.___cxa_allocate_exception(i32(8))
-		t18 := m._std__logic_error__logic_error_char_const___w3rrgk(t17, i32(66342))
-		m.___cxa_throw(t18, i32(72904), i32(1))
+		t18 := m._std__logic_error__logic_error_char_const___w3rrgk(t17, i32(1830))
+		m.___cxa_throw(t18, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t19 := int32(load32((*m.memory)[int64(uint32(v0))+24:]))
-	t20 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t20 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	t21 := int32(uint32(t19)>>1) - i32(1)
 	v0 = t20
 	if v0 == 0 {
 		t22 := m.___cxa_allocate_exception(i32(8))
-		t23 := m._std__logic_error__logic_error_char_const___w3rrgk(t22, i32(65929))
-		m.___cxa_throw(t23, i32(72904), i32(1))
+		t23 := m._std__logic_error__logic_error_char_const___w3rrgk(t22, i32(1417))
+		m.___cxa_throw(t23, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t24 := int32(load32((*m.memory)[int64(uint32(v0))+544:]))
-	t25 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t25 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	v0 = t25
 	if v0 == 0 {
 		t26 := m.___cxa_allocate_exception(i32(8))
-		t27 := m._std__logic_error__logic_error_char_const___w3rrgk(t26, i32(66283))
-		m.___cxa_throw(t27, i32(72904), i32(1))
+		t27 := m._std__logic_error__logic_error_char_const___w3rrgk(t26, i32(1771))
+		m.___cxa_throw(t27, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t28 := int32(load32((*m.memory)[int64(uint32(v0))+548:]))
@@ -16318,8 +16318,8 @@ func (m *Module) XQueryNew() int32 {
 	t1 := int32(load32((*m.memory)[int64(uint32(v0))+24:]))
 	if t1 != 0 {
 		t2 := m.___cxa_allocate_exception(i32(8))
-		t3 := m._std__logic_error__logic_error_char_const___w3rrgk(t2, i32(66576))
-		m.___cxa_throw(t3, i32(72904), i32(1))
+		t3 := m._std__logic_error__logic_error_char_const___w3rrgk(t2, i32(2064))
+		m.___cxa_throw(t3, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t4 := m._operator_new_unsigned_long__tz8azg(i32(40))
@@ -16350,8 +16350,8 @@ func (m *Module) XQuerySetStr(v0, v1, v2 int32) {
 			return
 		}
 		t2 := m.___cxa_allocate_exception(i32(8))
-		t3 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t2, i32(69328))
-		m.___cxa_throw(t3, i32(72936), i32(1))
+		t3 := m._std__invalid_argument__invalid_argument_abi_nqe220100__char_const___fng85h(t2, i32(4816))
+		m.___cxa_throw(t3, i32(8424), i32(1))
 		panic("unreachable")
 	}
 }
@@ -16420,7 +16420,7 @@ func (m *Module) XQueryLookup(v0 int32) int32 {
 	var v1, v2, v3 int32
 	var p0 int32
 	{
-		t1 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+		t1 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 		v2 = t1
 		if v2 != 0 {
 			t2 := int32(load32((*m.memory)[int64(uint32(v0))+24:]))
@@ -16470,8 +16470,8 @@ func (m *Module) XQueryLookup(v0 int32) int32 {
 			goto l2
 		}
 		t12 := m.___cxa_allocate_exception(i32(8))
-		t13 := m._std__logic_error__logic_error_char_const___w3rrgk(t12, i32(66518))
-		m.___cxa_throw(t13, i32(72904), i32(1))
+		t13 := m._std__logic_error__logic_error_char_const___w3rrgk(t12, i32(2006))
+		m.___cxa_throw(t13, i32(8392), i32(1))
 		panic("unreachable")
 	}
 l2:
@@ -16481,20 +16481,20 @@ func (m *Module) XQueryReverseLookup(v0 int32) int32 {
 	var v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14 int32
 	t0 := int32(load32((*m.memory)[int64(uint32(v0))+8:]))
 	v9 = t0
-	t1 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+	t1 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 	t2 := v9
 	v4 = t1
 	if v4 == 0 {
 		t3 := m.___cxa_allocate_exception(i32(8))
-		t4 := m._std__logic_error__logic_error_char_const___w3rrgk(t3, i32(65988))
-		m.___cxa_throw(t4, i32(72904), i32(1))
+		t4 := m._std__logic_error__logic_error_char_const___w3rrgk(t3, i32(1476))
+		m.___cxa_throw(t4, i32(8392), i32(1))
 		panic("unreachable")
 	}
 	t5 := int32(load32((*m.memory)[int64(uint32(v4))+132:]))
 	v10 = t5
 	if uint32(t2) < uint32(v10) {
 		{
-			t6 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+			t6 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 			v1 = t6
 			if v1 != 0 {
 				t7 := int32(load32((*m.memory)[int64(uint32(v0))+24:]))
@@ -16731,18 +16731,18 @@ func (m *Module) XQueryReverseLookup(v0 int32) int32 {
 						goto l10
 					}
 					t71 := m.___cxa_allocate_exception(i32(8))
-					t72 := m._std__logic_error__logic_error_char_const___w3rrgk(t71, i32(69801))
+					t72 := m._std__logic_error__logic_error_char_const___w3rrgk(t71, i32(5289))
 					v0 = t72
-					store32((*m.memory)[uint32(v0):], uint32(i32(72988)))
-					m.___cxa_throw(v0, i32(73000), i32(1))
+					store32((*m.memory)[uint32(v0):], uint32(i32(8476)))
+					m.___cxa_throw(v0, i32(8488), i32(1))
 					panic("unreachable")
 				}
 			l10:
 				goto l11
 			}
 			t73 := m.___cxa_allocate_exception(i32(8))
-			t74 := m._std__logic_error__logic_error_char_const___w3rrgk(t73, i32(65812))
-			m.___cxa_throw(t74, i32(72904), i32(1))
+			t74 := m._std__logic_error__logic_error_char_const___w3rrgk(t73, i32(1300))
+			m.___cxa_throw(t74, i32(8392), i32(1))
 			panic("unreachable")
 		}
 	l11:
@@ -16757,7 +16757,7 @@ func (m *Module) XQueryCommonPrefixSearch(v0 int32) int32 {
 	var v1, v2, v3 int32
 	var p0 int32
 	{
-		t1 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+		t1 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 		v2 = t1
 		if v2 != 0 {
 			t2 := int32(load32((*m.memory)[int64(uint32(v0))+24:]))
@@ -16843,8 +16843,8 @@ func (m *Module) XQueryCommonPrefixSearch(v0 int32) int32 {
 			goto l6
 		}
 		t20 := m.___cxa_allocate_exception(i32(8))
-		t21 := m._std__logic_error__logic_error_char_const___w3rrgk(t20, i32(66047))
-		m.___cxa_throw(t21, i32(72904), i32(1))
+		t21 := m._std__logic_error__logic_error_char_const___w3rrgk(t20, i32(1535))
+		m.___cxa_throw(t21, i32(8392), i32(1))
 		panic("unreachable")
 	}
 l6:
@@ -16854,7 +16854,7 @@ func (m *Module) XQueryPredictiveSearch(v0 int32) int32 {
 	var v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17 int32
 	var p0 int32
 	{
-		t1 := int32(load32((*m.memory)[uint32(i32(77328)):]))
+		t1 := int32(load32((*m.memory)[uint32(i32(12816)):]))
 		v7 = t1
 		if v7 != 0 {
 			t2 := int32(load32((*m.memory)[int64(uint32(v0))+24:]))
@@ -17500,8 +17500,8 @@ func (m *Module) XQueryPredictiveSearch(v0 int32) int32 {
 			goto l27
 		}
 		t177 := m.___cxa_allocate_exception(i32(8))
-		t178 := m._std__logic_error__logic_error_char_const___w3rrgk(t177, i32(66106))
-		m.___cxa_throw(t178, i32(72904), i32(1))
+		t178 := m._std__logic_error__logic_error_char_const___w3rrgk(t177, i32(1594))
+		m.___cxa_throw(t178, i32(8392), i32(1))
 		panic("unreachable")
 	}
 l27:
@@ -17515,7 +17515,7 @@ func (m *Module) XQueryResult(v0 int32) (int32, int32, int32) {
 }
 func (m *Module) _std__logic_error__logic_error_char_const___w3rrgk(v0, v1 int32) int32 {
 	var v2, v3 int32
-	store32((*m.memory)[uint32(v0):], uint32(i32(72860)))
+	store32((*m.memory)[uint32(v0):], uint32(i32(8348)))
 	t0 := m._strlen(v1)
 	v3 = t0
 	t1 := m._operator_new_unsigned_long__tz8azg(v3 + i32(13))
@@ -17533,7 +17533,7 @@ func (m *Module) _std__logic_error__logic_error_char_const___w3rrgk(v0, v1 int32
 }
 func (m *Module) _std__runtime_error__runtime_error_char_const___e56w1y(v0, v1 int32) int32 {
 	var v2, v3 int32
-	store32((*m.memory)[uint32(v0):], uint32(i32(72880)))
+	store32((*m.memory)[uint32(v0):], uint32(i32(8368)))
 	t0 := m._strlen(v1)
 	v3 = t0
 	t1 := m._operator_new_unsigned_long__tz8azg(v3 + i32(13))
@@ -17553,11 +17553,11 @@ func _std__exception___exception___nkhhm7(v0 int32) int32 {
 	return v0
 }
 func _std__bad_array_new_length__what___const_selyki(v0 int32) int32 {
-	return i32(67095)
+	return i32(2583)
 }
 func (m *Module) _std__logic_error___logic_error___6i10iq(v0 int32) int32 {
 	var v1, v2 int32
-	store32((*m.memory)[uint32(v0):], uint32(i32(72860)))
+	store32((*m.memory)[uint32(v0):], uint32(i32(8348)))
 	t0 := int32(load32((*m.memory)[int64(uint32(v0))+4:]))
 	v2 = t0
 	v1 = v2 - i32(4)
@@ -17576,7 +17576,7 @@ func (m *Module) _std__logic_error__what___const_dl7fz7(v0 int32) int32 {
 }
 func (m *Module) _std__runtime_error___runtime_error___u051u8(v0 int32) int32 {
 	var v1, v2 int32
-	store32((*m.memory)[uint32(v0):], uint32(i32(72880)))
+	store32((*m.memory)[uint32(v0):], uint32(i32(8368)))
 	t0 := int32(load32((*m.memory)[int64(uint32(v0))+4:]))
 	v2 = t0
 	v1 = v2 - i32(4)
@@ -17603,7 +17603,7 @@ func (m *Module) ___cxxabiv1____class_type_info__can_catch___cxxabiv1____shim_ty
 				p1 = i32(1)
 				goto l0
 			}
-			t4 := m.___dynamic_cast(v1, i32(73092), i32(73104))
+			t4 := m.___dynamic_cast(v1, i32(8580), i32(8592))
 			v1 = t4
 			if v1 == 0 {
 				p1 = i32(0)
@@ -17647,9 +17647,9 @@ func (m *Module) ___cxxabiv1____class_type_info__can_catch___cxxabiv1____shim_ty
 	}
 l1:
 	store32((*m.memory)[int64(uint32(v3))+4:], uint32(i32(487)))
-	store32((*m.memory)[int64(uint32(v3))+8:], uint32(i32(68251)))
-	store32((*m.memory)[uint32(v3):], uint32(i32(66892)))
-	m.___abort_message(i32(65602))
+	store32((*m.memory)[int64(uint32(v3))+8:], uint32(i32(3739)))
+	store32((*m.memory)[uint32(v3):], uint32(i32(2380)))
+	m.___abort_message(i32(1090))
 	panic("unreachable")
 }
 func (m *Module) ___dynamic_cast(v0, v1, v2 int32) int32 {
@@ -18229,7 +18229,7 @@ l1:
 		t1 := m._dlmalloc(v0)
 		v1 = t1
 		if v1 == 0 {
-			t2 := int32(load32((*m.memory)[uint32(i32(77384)):]))
+			t2 := int32(load32((*m.memory)[uint32(i32(12872)):]))
 			v1 = t2
 			if v1 == 0 {
 				goto l0
@@ -18240,7 +18240,7 @@ l1:
 	}
 	return v1
 l0:
-	m.___abort_message(i32(67176))
+	m.___abort_message(i32(2664))
 	panic("unreachable")
 }
 func (m *Module) _operator_new_unsigned_long__std__nothrow_t_const___gk4gzn(v0 int32) int32 {
@@ -18258,7 +18258,7 @@ l1:
 		if v1 != 0 {
 			p2 = v1
 		} else {
-			t3 := int32(load32((*m.memory)[uint32(i32(77384)):]))
+			t3 := int32(load32((*m.memory)[uint32(i32(12872)):]))
 			v1 = t3
 			if v1 != 0 {
 				goto l0
@@ -18273,13 +18273,13 @@ l0:
 }
 func (m *Module) ___cxa_atexit(v0 int32) {
 	var v1, v2 int32
-	t0 := int32(load32((*m.memory)[uint32(i32(77392)):]))
+	t0 := int32(load32((*m.memory)[uint32(i32(12880)):]))
 	v1 = t0
 	if v1 == 0 {
-		store32((*m.memory)[uint32(i32(77392)):], uint32(i32(77400)))
-		v1 = i32(77400)
+		store32((*m.memory)[uint32(i32(12880)):], uint32(i32(12888)))
+		v1 = i32(12888)
 	}
-	t1 := int32(load32((*m.memory)[uint32(i32(77396)):]))
+	t1 := int32(load32((*m.memory)[uint32(i32(12884)):]))
 	v2 = t1
 	if v2 == i32(32) {
 		{
@@ -18298,12 +18298,12 @@ func (m *Module) ___cxa_atexit(v0 int32) {
 		if v1 == 0 {
 			return
 		}
-		t4 := int32(load32((*m.memory)[uint32(i32(77392)):]))
+		t4 := int32(load32((*m.memory)[uint32(i32(12880)):]))
 		store32((*m.memory)[uint32(v1):], uint32(t4))
-		store32((*m.memory)[uint32(i32(77392)):], uint32(v1))
+		store32((*m.memory)[uint32(i32(12880)):], uint32(v1))
 		v2 = i32(0)
 	}
-	store32((*m.memory)[uint32(i32(77396)):], uint32(v2+i32(1)))
+	store32((*m.memory)[uint32(i32(12884)):], uint32(v2+i32(1)))
 	v1 = v1 + v2<<2
 	store32((*m.memory)[int64(uint32(v1))+132:], uint32(i32(0)))
 	store32((*m.memory)[int64(uint32(v1))+4:], uint32(v0))
@@ -18425,7 +18425,7 @@ func (m *Module) _sbrk(v0 int32) int32 {
 		t2 := int32(m.memImp.Grow(int64(v1), m.maxMem))
 		v0 = t2
 		if v0 == i32(-1) {
-			store32((*m.memory)[uint32(i32(77388)):], uint32(i32(48)))
+			store32((*m.memory)[uint32(i32(12876)):], uint32(i32(48)))
 			return i32(-1)
 		}
 		return v0 << 16
@@ -18443,58 +18443,58 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 	t0 := m.___stack_pointer
 	v10 = t0 - i32(16)
 	m.___stack_pointer = v10
-	t1 := int32(load32((*m.memory)[uint32(i32(77796)):]))
+	t1 := int32(load32((*m.memory)[uint32(i32(13284)):]))
 	v7 = t1
 	if v7 == 0 {
-		t2 := int32(load32((*m.memory)[uint32(i32(78244)):]))
+		t2 := int32(load32((*m.memory)[uint32(i32(13732)):]))
 		v1 = t2
 		if v1 == 0 {
-			store32((*m.memory)[uint32(i32(78252)):], uint32(i32(65536)))
-			store64((*m.memory)[uint32(i32(78256)):], uint64(i64(-1)))
-			store32((*m.memory)[uint32(i32(78248)):], uint32(i32(65536)))
+			store32((*m.memory)[uint32(i32(13740)):], uint32(i32(65536)))
+			store64((*m.memory)[uint32(i32(13744)):], uint64(i64(-1)))
+			store32((*m.memory)[uint32(i32(13736)):], uint32(i32(65536)))
 			v1 = (v10+i32(8))&i32(-16) ^ i32(0x55555558)
-			store32((*m.memory)[uint32(i32(78244)):], uint32(v1))
-			store32((*m.memory)[uint32(i32(78264)):], uint32(i32(0)))
-			store32((*m.memory)[uint32(i32(78216)):], uint32(i32(0)))
+			store32((*m.memory)[uint32(i32(13732)):], uint32(v1))
+			store32((*m.memory)[uint32(i32(13752)):], uint32(i32(0)))
+			store32((*m.memory)[uint32(i32(13704)):], uint32(i32(0)))
 		}
-		store32((*m.memory)[uint32(i32(78220)):], uint32(i32(78272)))
-		store32((*m.memory)[uint32(i32(77788)):], uint32(i32(78272)))
-		store32((*m.memory)[uint32(i32(77808)):], uint32(v1))
-		store32((*m.memory)[uint32(i32(77804)):], uint32(i32(-1)))
-		store32((*m.memory)[uint32(i32(78224)):], uint32(i32(52800)))
-		store32((*m.memory)[uint32(i32(78208)):], uint32(i32(52800)))
-		store32((*m.memory)[uint32(i32(78204)):], uint32(i32(52800)))
+		store32((*m.memory)[uint32(i32(13708)):], uint32(i32(79296)))
+		store32((*m.memory)[uint32(i32(13276)):], uint32(i32(79296)))
+		store32((*m.memory)[uint32(i32(13296)):], uint32(v1))
+		store32((*m.memory)[uint32(i32(13292)):], uint32(i32(-1)))
+		store32((*m.memory)[uint32(i32(13712)):], uint32(i32(51776)))
+		store32((*m.memory)[uint32(i32(13696)):], uint32(i32(51776)))
+		store32((*m.memory)[uint32(i32(13692)):], uint32(i32(51776)))
 		v1 = i32(-256)
 	l0:
 		{
-			t3 := v1 + i32(78088)
-			v2 = v1 + i32(78076)
+			t3 := v1 + i32(13576)
+			v2 = v1 + i32(13564)
 			store32((*m.memory)[uint32(t3):], uint32(v2))
 			t4 := v2
-			v4 = v1 + i32(78068)
+			v4 = v1 + i32(13556)
 			store32((*m.memory)[uint32(t4):], uint32(v4))
-			store32((*m.memory)[uint32(v1+i32(78080)):], uint32(v4))
-			t5 := v1 + i32(78096)
-			v4 = v1 + i32(78084)
+			store32((*m.memory)[uint32(v1+i32(13568)):], uint32(v4))
+			t5 := v1 + i32(13584)
+			v4 = v1 + i32(13572)
 			store32((*m.memory)[uint32(t5):], uint32(v4))
 			store32((*m.memory)[uint32(v4):], uint32(v2))
-			t6 := v1 + i32(78104)
-			v2 = v1 + i32(78092)
+			t6 := v1 + i32(13592)
+			v2 = v1 + i32(13580)
 			store32((*m.memory)[uint32(t6):], uint32(v2))
 			store32((*m.memory)[uint32(v2):], uint32(v4))
-			store32((*m.memory)[uint32(v1+i32(78100)):], uint32(v2))
+			store32((*m.memory)[uint32(v1+i32(13588)):], uint32(v2))
 			v1 = v1 + i32(32)
 			if v1 != 0 {
 				goto l0
 			}
 		}
 		store32((*m.memory)[uint32(i32(0x1ffcc)):], uint32(i32(56)))
-		t7 := int32(load32((*m.memory)[uint32(i32(78260)):]))
-		store32((*m.memory)[uint32(i32(77800)):], uint32(t7))
-		store32((*m.memory)[uint32(i32(77796)):], uint32(i32(78280)))
-		store32((*m.memory)[uint32(i32(77784)):], uint32(i32(52736)))
-		store32((*m.memory)[uint32(i32(78284)):], uint32(i32(52737)))
-		v7 = i32(78280)
+		t7 := int32(load32((*m.memory)[uint32(i32(13748)):]))
+		store32((*m.memory)[uint32(i32(13288)):], uint32(t7))
+		store32((*m.memory)[uint32(i32(13284)):], uint32(i32(79304)))
+		store32((*m.memory)[uint32(i32(13272)):], uint32(i32(51712)))
+		store32((*m.memory)[uint32(i32(79308)):], uint32(i32(51713)))
+		v7 = i32(79304)
 	}
 	{
 		{
@@ -18503,7 +18503,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 					{
 						{
 							if uint32(v0) <= uint32(i32(236)) {
-								t8 := int32(load32((*m.memory)[uint32(i32(77772)):]))
+								t8 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
 								v3 = t8
 								t10 := v3
 								p9 := (v0 + i32(19)) & i32(496)
@@ -18517,14 +18517,14 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 									{
 										v4 = v1&i32(1) | v0 ^ i32(1)
 										v0 = v4 << 3
-										v1 = v0 + i32(77812)
-										t11 := int32(load32((*m.memory)[int64(uint32(v0))+77820:]))
+										v1 = v0 + i32(13300)
+										t11 := int32(load32((*m.memory)[int64(uint32(v0))+13308:]))
 										t12 := v1
 										v2 = t11
 										t13 := int32(load32((*m.memory)[int64(uint32(v2))+8:]))
 										v5 = t13
 										if t12 == v5 {
-											store32((*m.memory)[uint32(i32(77772)):], uint32(v3&i32_rotl(i32(-2), v4)))
+											store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v3&i32_rotl(i32(-2), v4)))
 											goto l1
 										}
 										store32((*m.memory)[int64(uint32(v1))+8:], uint32(v5))
@@ -18538,7 +18538,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 									store32((*m.memory)[int64(uint32(v0))+4:], uint32(t14|i32(1)))
 									goto l2
 								}
-								t15 := int32(load32((*m.memory)[uint32(i32(77780)):]))
+								t15 := int32(load32((*m.memory)[uint32(i32(13268)):]))
 								t16 := v6
 								v8 = t15
 								if uint32(t16) <= uint32(v8) {
@@ -18549,15 +18549,15 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 										v2 = i32_shl(i32(2), v0)
 										v4 = int32(bits.TrailingZeros32(uint32((v2 | (i32(0) - v2)) & i32_shl(v1, v0))))
 										v1 = v4 << 3
-										v2 = v1 + i32(77812)
-										t17 := int32(load32((*m.memory)[int64(uint32(v1))+77820:]))
+										v2 = v1 + i32(13300)
+										t17 := int32(load32((*m.memory)[int64(uint32(v1))+13308:]))
 										t18 := v2
 										v0 = t17
 										t19 := int32(load32((*m.memory)[int64(uint32(v0))+8:]))
 										v5 = t19
 										if t18 == v5 {
 											v3 = v3 & i32_rotl(i32(-2), v4)
-											store32((*m.memory)[uint32(i32(77772)):], uint32(v3))
+											store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v3))
 											goto l4
 										}
 										store32((*m.memory)[int64(uint32(v2))+8:], uint32(v5))
@@ -18571,15 +18571,15 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 									v4 = v0 + v6
 									store32((*m.memory)[int64(uint32(v4))+4:], uint32(v5|i32(1)))
 									if v8 != 0 {
-										v1 = v8&i32(-8) + i32(77812)
-										t21 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+										v1 = v8&i32(-8) + i32(13300)
+										t21 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 										v2 = t21
 										var p22 int32
 										{
 											t23 := v3
 											v7 = i32_shl(i32(1), int32(uint32(v8)>>3))
 											if t23&v7 == 0 {
-												store32((*m.memory)[uint32(i32(77772)):], uint32(v3|v7))
+												store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v3|v7))
 												t24 := v1
 												p22 = t24
 												goto l5
@@ -18595,16 +18595,16 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 										store32((*m.memory)[int64(uint32(v2))+8:], uint32(v3))
 									}
 									v1 = v0 + i32(8)
-									store32((*m.memory)[uint32(i32(77792)):], uint32(v4))
-									store32((*m.memory)[uint32(i32(77780)):], uint32(v5))
+									store32((*m.memory)[uint32(i32(13280)):], uint32(v4))
+									store32((*m.memory)[uint32(i32(13268)):], uint32(v5))
 									goto l2
 								}
-								t26 := int32(load32((*m.memory)[uint32(i32(77776)):]))
+								t26 := int32(load32((*m.memory)[uint32(i32(13264)):]))
 								v11 = t26
 								if v11 == 0 {
 									goto l3
 								}
-								t27 := int32(load32((*m.memory)[int64(uint32(int32(bits.TrailingZeros32(uint32(v11)))<<2))+78076:]))
+								t27 := int32(load32((*m.memory)[int64(uint32(int32(bits.TrailingZeros32(uint32(v11)))<<2))+13564:]))
 								v0 = t27
 								t28 := int32(load32((*m.memory)[int64(uint32(v0))+4:]))
 								v4 = t28&i32(-8) - v6
@@ -18695,7 +18695,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 							}
 							v1 = v0 + i32(19)
 							v6 = v1 & i32(-16)
-							t46 := int32(load32((*m.memory)[uint32(i32(77776)):]))
+							t46 := int32(load32((*m.memory)[uint32(i32(13264)):]))
 							v8 = t46
 							if v8 == 0 {
 								goto l3
@@ -18708,7 +18708,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 								v9 = i32_shr_u(t47, i32(38)-v0)&i32(1) - v0<<1 + i32(62)
 							}
 							{
-								t48 := int32(load32((*m.memory)[int64(uint32(v9<<2))+78076:]))
+								t48 := int32(load32((*m.memory)[int64(uint32(v9<<2))+13564:]))
 								v0 = t48
 								if v0 == 0 {
 									v1 = i32(0)
@@ -18769,7 +18769,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 								if v0 == 0 {
 									goto l3
 								}
-								t59 := int32(load32((*m.memory)[int64(uint32(int32(bits.TrailingZeros32(uint32(v0)))<<2))+78076:]))
+								t59 := int32(load32((*m.memory)[int64(uint32(int32(bits.TrailingZeros32(uint32(v0)))<<2))+13564:]))
 								v1 = t59
 							}
 							if v1 == 0 {
@@ -18812,7 +18812,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 							if v5 == 0 {
 								goto l3
 							}
-							t67 := int32(load32((*m.memory)[uint32(i32(77780)):]))
+							t67 := int32(load32((*m.memory)[uint32(i32(13268)):]))
 							if uint32(v4) >= uint32(t67-v6) {
 								goto l3
 							}
@@ -18863,11 +18863,11 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 							goto l17
 						}
 					l3:
-						t77 := int32(load32((*m.memory)[uint32(i32(77780)):]))
+						t77 := int32(load32((*m.memory)[uint32(i32(13268)):]))
 						t78 := v6
 						v5 = t77
 						if uint32(t78) <= uint32(v5) {
-							t79 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+							t79 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 							v1 = t79
 							{
 								v0 = v5 - v6
@@ -18886,12 +18886,12 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 								v2 = i32(0)
 							}
 						l20:
-							store32((*m.memory)[uint32(i32(77780)):], uint32(v0))
-							store32((*m.memory)[uint32(i32(77792)):], uint32(v2))
+							store32((*m.memory)[uint32(i32(13268)):], uint32(v0))
+							store32((*m.memory)[uint32(i32(13280)):], uint32(v2))
 							v1 = v1 + i32(8)
 							goto l2
 						}
-						t81 := int32(load32((*m.memory)[uint32(i32(77784)):]))
+						t81 := int32(load32((*m.memory)[uint32(i32(13272)):]))
 						t82 := v6
 						v2 = t81
 						if uint32(t82) < uint32(v2) {
@@ -18899,8 +18899,8 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 							t83 := v0
 							v1 = v2 - v6
 							store32((*m.memory)[int64(uint32(t83))+4:], uint32(v1|i32(1)))
-							store32((*m.memory)[uint32(i32(77796)):], uint32(v0))
-							store32((*m.memory)[uint32(i32(77784)):], uint32(v1))
+							store32((*m.memory)[uint32(i32(13284)):], uint32(v0))
+							store32((*m.memory)[uint32(i32(13272)):], uint32(v1))
 							store32((*m.memory)[int64(uint32(v7))+4:], uint32(v6|i32(3)))
 							v1 = v7 + i32(8)
 							goto l2
@@ -18911,18 +18911,18 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 						t86 := v5
 						var p85 int32
 						{
-							t87 := int32(load32((*m.memory)[uint32(i32(78244)):]))
+							t87 := int32(load32((*m.memory)[uint32(i32(13732)):]))
 							if t87 != 0 {
-								t88 := int32(load32((*m.memory)[uint32(i32(78252)):]))
+								t88 := int32(load32((*m.memory)[uint32(i32(13740)):]))
 								p85 = t88
 								goto l21
 							}
-							store32((*m.memory)[uint32(i32(78252)):], uint32(i32(65536)))
-							store64((*m.memory)[uint32(i32(78256)):], uint64(i64(-1)))
-							store32((*m.memory)[uint32(i32(78248)):], uint32(i32(65536)))
-							store32((*m.memory)[uint32(i32(78244)):], uint32((v10+i32(12))&i32(-16)^i32(0x55555558)))
-							store32((*m.memory)[uint32(i32(78264)):], uint32(i32(0)))
-							store32((*m.memory)[uint32(i32(78216)):], uint32(i32(0)))
+							store32((*m.memory)[uint32(i32(13740)):], uint32(i32(65536)))
+							store64((*m.memory)[uint32(i32(13744)):], uint64(i64(-1)))
+							store32((*m.memory)[uint32(i32(13736)):], uint32(i32(65536)))
+							store32((*m.memory)[uint32(i32(13732)):], uint32((v10+i32(12))&i32(-16)^i32(0x55555558)))
+							store32((*m.memory)[uint32(i32(13752)):], uint32(i32(0)))
+							store32((*m.memory)[uint32(i32(13704)):], uint32(i32(0)))
 							p85 = i32(65536)
 						}
 					l21:
@@ -18932,16 +18932,16 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 						v3 = i32(0) - v0
 						v0 = t89 & v3
 						if uint32(t84) >= uint32(v0) {
-							store32((*m.memory)[uint32(i32(77388)):], uint32(i32(48)))
+							store32((*m.memory)[uint32(i32(12876)):], uint32(i32(48)))
 							goto l2
 						}
 						{
-							t90 := int32(load32((*m.memory)[uint32(i32(78212)):]))
+							t90 := int32(load32((*m.memory)[uint32(i32(13700)):]))
 							v1 = t90
 							if v1 == 0 {
 								goto l22
 							}
-							t91 := int32(load32((*m.memory)[uint32(i32(78204)):]))
+							t91 := int32(load32((*m.memory)[uint32(i32(13692)):]))
 							v8 = t91
 							v9 = v8 + v0
 							var p92 int32
@@ -18956,18 +18956,18 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 								goto l22
 							}
 							v1 = i32(0)
-							store32((*m.memory)[uint32(i32(77388)):], uint32(i32(48)))
+							store32((*m.memory)[uint32(i32(12876)):], uint32(i32(48)))
 							goto l2
 						}
 					l22:
-						t94 := int32((*m.memory)[uint32(i32(78216))])
+						t94 := int32((*m.memory)[uint32(i32(13704))])
 						if t94&i32(4) != 0 {
 							goto l23
 						}
 						{
 							{
 								if v7 != 0 {
-									v1 = i32(78220)
+									v1 = i32(13708)
 								l25:
 									{
 										t95 := int32(load32((*m.memory)[uint32(v1):]))
@@ -18991,7 +18991,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 									goto l26
 								}
 								v3 = v0
-								t99 := int32(load32((*m.memory)[uint32(i32(78248)):]))
+								t99 := int32(load32((*m.memory)[uint32(i32(13736)):]))
 								v1 = t99
 								v4 = v1 - i32(1)
 								if v4&v2 != 0 {
@@ -19003,10 +19003,10 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 								if uint32(v3) > uint32(i32(0x7ffffffe)) {
 									goto l26
 								}
-								t100 := int32(load32((*m.memory)[uint32(i32(78212)):]))
+								t100 := int32(load32((*m.memory)[uint32(i32(13700)):]))
 								v1 = t100
 								if v1 != 0 {
-									t101 := int32(load32((*m.memory)[uint32(i32(78204)):]))
+									t101 := int32(load32((*m.memory)[uint32(i32(13692)):]))
 									v4 = t101
 									v7 = v4 + v3
 									if uint32(v7) <= uint32(v4) {
@@ -19045,7 +19045,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 							if v1 == i32(-1) {
 								goto l30
 							}
-							t106 := int32(load32((*m.memory)[uint32(i32(78252)):]))
+							t106 := int32(load32((*m.memory)[uint32(i32(13740)):]))
 							v2 = t106
 							v2 = (v2 + (v5 - v3)) & (i32(0) - v2)
 							if uint32(v2) > uint32(i32(0x7ffffffe)) {
@@ -19079,8 +19079,8 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 						goto l28
 					}
 				l26:
-					t109 := int32(load32((*m.memory)[uint32(i32(78216)):]))
-					store32((*m.memory)[uint32(i32(78216)):], uint32(t109|i32(4)))
+					t109 := int32(load32((*m.memory)[uint32(i32(13704)):]))
+					store32((*m.memory)[uint32(i32(13704)):], uint32(t109|i32(4)))
 				}
 			l23:
 				if uint32(v0) > uint32(i32(0x7ffffffe)) {
@@ -19105,20 +19105,20 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 				}
 			}
 		l28:
-			t112 := int32(load32((*m.memory)[uint32(i32(78204)):]))
+			t112 := int32(load32((*m.memory)[uint32(i32(13692)):]))
 			v0 = t112 + v3
-			store32((*m.memory)[uint32(i32(78204)):], uint32(v0))
-			t113 := int32(load32((*m.memory)[uint32(i32(78208)):]))
+			store32((*m.memory)[uint32(i32(13692)):], uint32(v0))
+			t113 := int32(load32((*m.memory)[uint32(i32(13696)):]))
 			if uint32(t113) < uint32(v0) {
-				store32((*m.memory)[uint32(i32(78208)):], uint32(v0))
+				store32((*m.memory)[uint32(i32(13696)):], uint32(v0))
 			}
 			{
 				{
 					{
-						t114 := int32(load32((*m.memory)[uint32(i32(77796)):]))
+						t114 := int32(load32((*m.memory)[uint32(i32(13284)):]))
 						v4 = t114
 						if v4 != 0 {
-							v1 = i32(78220)
+							v1 = i32(13708)
 						l33:
 							{
 								t115 := int32(load32((*m.memory)[uint32(v1):]))
@@ -19138,40 +19138,40 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 							}
 							goto l34
 						}
-						t120 := int32(load32((*m.memory)[uint32(i32(77788)):]))
+						t120 := int32(load32((*m.memory)[uint32(i32(13276)):]))
 						v0 = t120
 						p121 := i32(0)
 						if uint32(v0) <= uint32(v2) {
 							p121 = v0
 						}
 						if p121 == 0 {
-							store32((*m.memory)[uint32(i32(77788)):], uint32(v2))
+							store32((*m.memory)[uint32(i32(13276)):], uint32(v2))
 						}
-						store32((*m.memory)[uint32(i32(78224)):], uint32(v3))
-						store32((*m.memory)[uint32(i32(78220)):], uint32(v2))
-						store32((*m.memory)[uint32(i32(77804)):], uint32(i32(-1)))
-						t122 := int32(load32((*m.memory)[uint32(i32(78244)):]))
-						store32((*m.memory)[uint32(i32(77808)):], uint32(t122))
-						store32((*m.memory)[uint32(i32(78232)):], uint32(i32(0)))
+						store32((*m.memory)[uint32(i32(13712)):], uint32(v3))
+						store32((*m.memory)[uint32(i32(13708)):], uint32(v2))
+						store32((*m.memory)[uint32(i32(13292)):], uint32(i32(-1)))
+						t122 := int32(load32((*m.memory)[uint32(i32(13732)):]))
+						store32((*m.memory)[uint32(i32(13296)):], uint32(t122))
+						store32((*m.memory)[uint32(i32(13720)):], uint32(i32(0)))
 						v1 = i32(-256)
 					l35:
 						{
-							t123 := v1 + i32(78088)
-							v0 = v1 + i32(78076)
+							t123 := v1 + i32(13576)
+							v0 = v1 + i32(13564)
 							store32((*m.memory)[uint32(t123):], uint32(v0))
 							t124 := v0
-							v5 = v1 + i32(78068)
+							v5 = v1 + i32(13556)
 							store32((*m.memory)[uint32(t124):], uint32(v5))
-							store32((*m.memory)[uint32(v1+i32(78080)):], uint32(v5))
-							t125 := v1 + i32(78096)
-							v5 = v1 + i32(78084)
+							store32((*m.memory)[uint32(v1+i32(13568)):], uint32(v5))
+							t125 := v1 + i32(13584)
+							v5 = v1 + i32(13572)
 							store32((*m.memory)[uint32(t125):], uint32(v5))
 							store32((*m.memory)[uint32(v5):], uint32(v0))
-							t126 := v1 + i32(78104)
-							v0 = v1 + i32(78092)
+							t126 := v1 + i32(13592)
+							v0 = v1 + i32(13580)
 							store32((*m.memory)[uint32(t126):], uint32(v0))
 							store32((*m.memory)[uint32(v0):], uint32(v5))
-							store32((*m.memory)[uint32(v1+i32(78100)):], uint32(v0))
+							store32((*m.memory)[uint32(v1+i32(13588)):], uint32(v0))
 							v1 = v1 + i32(32)
 							if v1 != 0 {
 								goto l35
@@ -19184,10 +19184,10 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 						v5 = v3 - i32(56)
 						v0 = v5 - v0
 						store32((*m.memory)[int64(uint32(t128))+4:], uint32(v0|i32(1)))
-						t129 := int32(load32((*m.memory)[uint32(i32(78260)):]))
-						store32((*m.memory)[uint32(i32(77800)):], uint32(t129))
-						store32((*m.memory)[uint32(i32(77784)):], uint32(v0))
-						store32((*m.memory)[uint32(i32(77796)):], uint32(v1))
+						t129 := int32(load32((*m.memory)[uint32(i32(13748)):]))
+						store32((*m.memory)[uint32(i32(13288)):], uint32(t129))
+						store32((*m.memory)[uint32(i32(13272)):], uint32(v0))
+						store32((*m.memory)[uint32(i32(13284)):], uint32(v1))
 						store32((*m.memory)[int64(uint32(v2+v5))+4:], uint32(i32(56)))
 						goto l36
 					}
@@ -19205,26 +19205,26 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 					t131 := v4
 					v0 = (i32(-8) - v4) & i32(15)
 					v2 = t131 + v0
-					t132 := int32(load32((*m.memory)[uint32(i32(77784)):]))
+					t132 := int32(load32((*m.memory)[uint32(i32(13272)):]))
 					t133 := v2
 					v7 = t132 + v3
 					v0 = v7 - v0
 					store32((*m.memory)[int64(uint32(t133))+4:], uint32(v0|i32(1)))
 					store32((*m.memory)[int64(uint32(v1))+4:], uint32(v3+v5))
-					t134 := int32(load32((*m.memory)[uint32(i32(78260)):]))
-					store32((*m.memory)[uint32(i32(77800)):], uint32(t134))
-					store32((*m.memory)[uint32(i32(77784)):], uint32(v0))
-					store32((*m.memory)[uint32(i32(77796)):], uint32(v2))
+					t134 := int32(load32((*m.memory)[uint32(i32(13748)):]))
+					store32((*m.memory)[uint32(i32(13288)):], uint32(t134))
+					store32((*m.memory)[uint32(i32(13272)):], uint32(v0))
+					store32((*m.memory)[uint32(i32(13284)):], uint32(v2))
 					store32((*m.memory)[int64(uint32(v4+v7))+4:], uint32(i32(56)))
 					goto l36
 				}
 			l34:
-				t135 := int32(load32((*m.memory)[uint32(i32(77788)):]))
+				t135 := int32(load32((*m.memory)[uint32(i32(13276)):]))
 				if uint32(t135) > uint32(v2) {
-					store32((*m.memory)[uint32(i32(77788)):], uint32(v2))
+					store32((*m.memory)[uint32(i32(13276)):], uint32(v2))
 				}
 				v5 = v2 + v3
-				v1 = i32(78220)
+				v1 = i32(13708)
 				{
 				l38:
 					{
@@ -19247,7 +19247,7 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 					}
 				}
 			l39:
-				v1 = i32(78220)
+				v1 = i32(13708)
 			l42:
 				{
 					t139 := int32(load32((*m.memory)[uint32(v1):]))
@@ -19281,18 +19281,18 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 				}
 				v0 = p146
 				store32((*m.memory)[int64(uint32(v0))+4:], uint32(i32(35)))
-				t147 := int32(load32((*m.memory)[uint32(i32(78260)):]))
-				store32((*m.memory)[uint32(i32(77800)):], uint32(t147))
-				store32((*m.memory)[uint32(i32(77784)):], uint32(v8))
-				store32((*m.memory)[uint32(i32(77796)):], uint32(v1))
-				t148 := int64(load64((*m.memory)[uint32(i32(78228)):]))
+				t147 := int32(load32((*m.memory)[uint32(i32(13748)):]))
+				store32((*m.memory)[uint32(i32(13288)):], uint32(t147))
+				store32((*m.memory)[uint32(i32(13272)):], uint32(v8))
+				store32((*m.memory)[uint32(i32(13284)):], uint32(v1))
+				t148 := int64(load64((*m.memory)[uint32(i32(13716)):]))
 				store64((*m.memory)[int64(uint32(v0))+16:], uint64(t148))
-				t149 := int64(load64((*m.memory)[uint32(i32(78220)):]))
+				t149 := int64(load64((*m.memory)[uint32(i32(13708)):]))
 				store64((*m.memory)[int64(uint32(v0))+8:], uint64(t149))
-				store32((*m.memory)[uint32(i32(78228)):], uint32(v0+i32(8)))
-				store32((*m.memory)[uint32(i32(78224)):], uint32(v3))
-				store32((*m.memory)[uint32(i32(78220)):], uint32(v2))
-				store32((*m.memory)[uint32(i32(78232)):], uint32(i32(0)))
+				store32((*m.memory)[uint32(i32(13716)):], uint32(v0+i32(8)))
+				store32((*m.memory)[uint32(i32(13712)):], uint32(v3))
+				store32((*m.memory)[uint32(i32(13708)):], uint32(v2))
+				store32((*m.memory)[uint32(i32(13720)):], uint32(i32(0)))
 				v1 = v0 + i32(36)
 			l43:
 				store32((*m.memory)[uint32(v1):], uint32(i32(7)))
@@ -19312,15 +19312,15 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 				var p152 int32
 				{
 					if uint32(v2) <= uint32(i32(255)) {
-						v1 = v2&i32(248) + i32(77812)
+						v1 = v2&i32(248) + i32(13300)
 						var p153 int32
 						{
-							t154 := int32(load32((*m.memory)[uint32(i32(77772)):]))
+							t154 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
 							v0 = t154
 							t155 := v0
 							v2 = i32_shl(i32(1), int32(uint32(v2)>>3))
 							if t155&v2 == 0 {
-								store32((*m.memory)[uint32(i32(77772)):], uint32(v0|v2))
+								store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v0|v2))
 								t156 := v1
 								p153 = t156
 								goto l44
@@ -19344,15 +19344,15 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 					}
 					store32((*m.memory)[int64(uint32(v4))+28:], uint32(v1))
 					store64((*m.memory)[int64(uint32(v4))+16:], uint64(i64(0)))
-					v0 = v1<<2 + i32(78076)
+					v0 = v1<<2 + i32(13564)
 					{
-						t159 := int32(load32((*m.memory)[uint32(i32(77776)):]))
+						t159 := int32(load32((*m.memory)[uint32(i32(13264)):]))
 						v5 = t159
 						t160 := v5
 						v3 = i32_shl(i32(1), v1)
 						if t160&v3 == 0 {
 							store32((*m.memory)[uint32(v0):], uint32(v4))
-							store32((*m.memory)[uint32(i32(77776)):], uint32(v3|v5))
+							store32((*m.memory)[uint32(i32(13264)):], uint32(v3|v5))
 							goto l46
 						}
 						t162 := v2
@@ -19403,26 +19403,26 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 				store32((*m.memory)[uint32(p152+v4):], uint32(v1))
 			}
 		l36:
-			t167 := int32(load32((*m.memory)[uint32(i32(77784)):]))
+			t167 := int32(load32((*m.memory)[uint32(i32(13272)):]))
 			v1 = t167
 			if uint32(v1) <= uint32(v6) {
 				goto l31
 			}
-			t168 := int32(load32((*m.memory)[uint32(i32(77796)):]))
+			t168 := int32(load32((*m.memory)[uint32(i32(13284)):]))
 			v0 = t168
 			v2 = v0 + v6
 			t169 := v2
 			v1 = v1 - v6
 			store32((*m.memory)[int64(uint32(t169))+4:], uint32(v1|i32(1)))
-			store32((*m.memory)[uint32(i32(77784)):], uint32(v1))
-			store32((*m.memory)[uint32(i32(77796)):], uint32(v2))
+			store32((*m.memory)[uint32(i32(13272)):], uint32(v1))
+			store32((*m.memory)[uint32(i32(13284)):], uint32(v2))
 			store32((*m.memory)[int64(uint32(v0))+4:], uint32(v6|i32(3)))
 			v1 = v0 + i32(8)
 			goto l2
 		}
 	l31:
 		v1 = i32(0)
-		store32((*m.memory)[uint32(i32(77388)):], uint32(i32(48)))
+		store32((*m.memory)[uint32(i32(12876)):], uint32(i32(48)))
 		goto l2
 	l40:
 		store32((*m.memory)[uint32(v1):], uint32(v2))
@@ -19435,21 +19435,21 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 		v3 = v6 + v8
 		v7 = t171 - v3
 		{
-			t172 := int32(load32((*m.memory)[uint32(i32(77796)):]))
+			t172 := int32(load32((*m.memory)[uint32(i32(13284)):]))
 			if t172 == v4 {
-				store32((*m.memory)[uint32(i32(77796)):], uint32(v3))
-				t173 := int32(load32((*m.memory)[uint32(i32(77784)):]))
+				store32((*m.memory)[uint32(i32(13284)):], uint32(v3))
+				t173 := int32(load32((*m.memory)[uint32(i32(13272)):]))
 				v0 = t173 + v7
-				store32((*m.memory)[uint32(i32(77784)):], uint32(v0))
+				store32((*m.memory)[uint32(i32(13272)):], uint32(v0))
 				store32((*m.memory)[int64(uint32(v3))+4:], uint32(v0|i32(1)))
 				goto l49
 			}
-			t174 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+			t174 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 			if t174 == v4 {
-				store32((*m.memory)[uint32(i32(77792)):], uint32(v3))
-				t175 := int32(load32((*m.memory)[uint32(i32(77780)):]))
+				store32((*m.memory)[uint32(i32(13280)):], uint32(v3))
+				t175 := int32(load32((*m.memory)[uint32(i32(13268)):]))
 				v0 = t175 + v7
-				store32((*m.memory)[uint32(i32(77780)):], uint32(v0))
+				store32((*m.memory)[uint32(i32(13268)):], uint32(v0))
 				store32((*m.memory)[int64(uint32(v3))+4:], uint32(v0|i32(1)))
 				store32((*m.memory)[uint32(v0+v3):], uint32(v0))
 				goto l49
@@ -19465,8 +19465,8 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 						t178 := int32(load32((*m.memory)[int64(uint32(v4))+8:]))
 						v0 = t178
 						if v0 == v1 {
-							t179 := int32(load32((*m.memory)[uint32(i32(77772)):]))
-							store32((*m.memory)[uint32(i32(77772)):], uint32(t179&i32_rotl(i32(-2), int32(uint32(v2)>>3))))
+							t179 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
+							store32((*m.memory)[uint32(i32(0x33cc)):], uint32(t179&i32_rotl(i32(-2), int32(uint32(v2)>>3))))
 							goto l50
 						}
 						store32((*m.memory)[int64(uint32(v1))+8:], uint32(v0))
@@ -19527,14 +19527,14 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 						t187 := int32(load32((*m.memory)[int64(uint32(v4))+28:]))
 						v0 = t187
 						v2 = v0 << 2
-						t188 := int32(load32((*m.memory)[int64(uint32(v2))+78076:]))
+						t188 := int32(load32((*m.memory)[int64(uint32(v2))+13564:]))
 						if t188 == v4 {
-							store32((*m.memory)[uint32(v2+i32(78076)):], uint32(v1))
+							store32((*m.memory)[uint32(v2+i32(13564)):], uint32(v1))
 							if v1 != 0 {
 								goto l54
 							}
-							t189 := int32(load32((*m.memory)[uint32(i32(77776)):]))
-							store32((*m.memory)[uint32(i32(77776)):], uint32(t189&i32_rotl(i32(-2), v0)))
+							t189 := int32(load32((*m.memory)[uint32(i32(13264)):]))
+							store32((*m.memory)[uint32(i32(13264)):], uint32(t189&i32_rotl(i32(-2), v0)))
 							goto l50
 						}
 						{
@@ -19576,15 +19576,15 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 			store32((*m.memory)[uint32(v3+v7):], uint32(v7))
 			store32((*m.memory)[int64(uint32(v3))+4:], uint32(v7|i32(1)))
 			if uint32(v7) <= uint32(i32(255)) {
-				v0 = v7&i32(248) + i32(77812)
+				v0 = v7&i32(248) + i32(13300)
 				var p194 int32
 				{
-					t195 := int32(load32((*m.memory)[uint32(i32(77772)):]))
+					t195 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
 					v1 = t195
 					t196 := v1
 					v2 = i32_shl(i32(1), int32(uint32(v7)>>3))
 					if t196&v2 == 0 {
-						store32((*m.memory)[uint32(i32(77772)):], uint32(v1|v2))
+						store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v1|v2))
 						t197 := v0
 						p194 = t197
 						goto l56
@@ -19608,14 +19608,14 @@ func (m *Module) _dlmalloc(v0 int32) int32 {
 			}
 			store32((*m.memory)[int64(uint32(v3))+28:], uint32(v1))
 			store64((*m.memory)[int64(uint32(v3))+16:], uint64(i64(0)))
-			v0 = v1<<2 + i32(78076)
-			t200 := int32(load32((*m.memory)[uint32(i32(77776)):]))
+			v0 = v1<<2 + i32(13564)
+			t200 := int32(load32((*m.memory)[uint32(i32(13264)):]))
 			v2 = t200
 			t201 := v2
 			v5 = i32_shl(i32(1), v1)
 			if t201&v5 == 0 {
 				store32((*m.memory)[uint32(v0):], uint32(v3))
-				store32((*m.memory)[uint32(i32(77776)):], uint32(v2|v5))
+				store32((*m.memory)[uint32(i32(13264)):], uint32(v2|v5))
 				store32((*m.memory)[int64(uint32(v3))+24:], uint32(v0))
 				store32((*m.memory)[int64(uint32(v3))+8:], uint32(v3))
 				store32((*m.memory)[int64(uint32(v3))+12:], uint32(v3))
@@ -19672,14 +19672,14 @@ l17:
 			t208 := int32(load32((*m.memory)[int64(uint32(v5))+28:]))
 			v0 = t208
 			v2 = v0 << 2
-			t209 := int32(load32((*m.memory)[int64(uint32(v2))+78076:]))
+			t209 := int32(load32((*m.memory)[int64(uint32(v2))+13564:]))
 			if t209 == v5 {
-				store32((*m.memory)[uint32(v2+i32(78076)):], uint32(v1))
+				store32((*m.memory)[uint32(v2+i32(13564)):], uint32(v1))
 				if v1 != 0 {
 					goto l60
 				}
 				v8 = v8 & i32_rotl(i32(-2), v0)
-				store32((*m.memory)[uint32(i32(77776)):], uint32(v8))
+				store32((*m.memory)[uint32(i32(13264)):], uint32(v8))
 				goto l59
 			}
 			{
@@ -19727,15 +19727,15 @@ l59:
 		store32((*m.memory)[int64(uint32(v5))+4:], uint32(v6|i32(3)))
 		store32((*m.memory)[uint32(v3+v4):], uint32(v4))
 		if uint32(v4) <= uint32(i32(255)) {
-			v0 = v4&i32(248) + i32(77812)
+			v0 = v4&i32(248) + i32(13300)
 			var p215 int32
 			{
-				t216 := int32(load32((*m.memory)[uint32(i32(77772)):]))
+				t216 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
 				v1 = t216
 				t217 := v1
 				v2 = i32_shl(i32(1), int32(uint32(v4)>>3))
 				if t217&v2 == 0 {
-					store32((*m.memory)[uint32(i32(77772)):], uint32(v1|v2))
+					store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v1|v2))
 					t218 := v0
 					p215 = t218
 					goto l63
@@ -19759,12 +19759,12 @@ l59:
 		}
 		store32((*m.memory)[int64(uint32(v3))+28:], uint32(v1))
 		store64((*m.memory)[int64(uint32(v3))+16:], uint64(i64(0)))
-		v0 = v1<<2 + i32(78076)
+		v0 = v1<<2 + i32(13564)
 		t221 := v8
 		v2 = i32_shl(i32(1), v1)
 		if t221&v2 == 0 {
 			store32((*m.memory)[uint32(v0):], uint32(v3))
-			store32((*m.memory)[uint32(i32(77776)):], uint32(v2|v8))
+			store32((*m.memory)[uint32(i32(13264)):], uint32(v2|v8))
 			store32((*m.memory)[int64(uint32(v3))+24:], uint32(v0))
 			store32((*m.memory)[int64(uint32(v3))+8:], uint32(v3))
 			store32((*m.memory)[int64(uint32(v3))+12:], uint32(v3))
@@ -19820,13 +19820,13 @@ l8:
 			t228 := int32(load32((*m.memory)[int64(uint32(v2))+28:]))
 			v0 = t228
 			v5 = v0 << 2
-			t229 := int32(load32((*m.memory)[int64(uint32(v5))+78076:]))
+			t229 := int32(load32((*m.memory)[int64(uint32(v5))+13564:]))
 			if t229 == v2 {
-				store32((*m.memory)[uint32(v5+i32(78076)):], uint32(v1))
+				store32((*m.memory)[uint32(v5+i32(13564)):], uint32(v1))
 				if v1 != 0 {
 					goto l67
 				}
-				store32((*m.memory)[uint32(i32(77776)):], uint32(v11&i32_rotl(i32(-2), v0)))
+				store32((*m.memory)[uint32(i32(13264)):], uint32(v11&i32_rotl(i32(-2), v0)))
 				goto l66
 			}
 			{
@@ -19873,14 +19873,14 @@ l66:
 	store32((*m.memory)[int64(uint32(v2))+4:], uint32(v6|i32(3)))
 	store32((*m.memory)[uint32(v4+v5):], uint32(v4))
 	if v8 != 0 {
-		v0 = v8&i32(-8) + i32(77812)
-		t235 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+		v0 = v8&i32(-8) + i32(13300)
+		t235 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 		v1 = t235
 		var p236 int32
 		{
 			v7 = i32_shl(i32(1), int32(uint32(v8)>>3))
 			if v7&v3 == 0 {
-				store32((*m.memory)[uint32(i32(77772)):], uint32(v3|v7))
+				store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v3|v7))
 				t237 := v0
 				p236 = t237
 				goto l70
@@ -19895,8 +19895,8 @@ l66:
 		store32((*m.memory)[int64(uint32(v1))+12:], uint32(v0))
 		store32((*m.memory)[int64(uint32(v1))+8:], uint32(v3))
 	}
-	store32((*m.memory)[uint32(i32(77792)):], uint32(v5))
-	store32((*m.memory)[uint32(i32(77780)):], uint32(v4))
+	store32((*m.memory)[uint32(i32(13280)):], uint32(v5))
+	store32((*m.memory)[uint32(i32(13268)):], uint32(v4))
 l69:
 	v1 = v2 + i32(8)
 l2:
@@ -19926,13 +19926,13 @@ func (m *Module) Xfree(v0 int32) {
 			t3 := v2
 			v0 = t2
 			v2 = t3 - v0
-			t4 := int32(load32((*m.memory)[uint32(i32(77788)):]))
+			t4 := int32(load32((*m.memory)[uint32(i32(13276)):]))
 			if uint32(v2) < uint32(t4) {
 				return
 			}
 			v4 = v0 + v4
 			{
-				t5 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+				t5 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 				if t5 != v2 {
 					t6 := int32(load32((*m.memory)[int64(uint32(v2))+12:]))
 					v1 = t6
@@ -19943,8 +19943,8 @@ func (m *Module) Xfree(v0 int32) {
 						if t8 != v3 {
 							goto l2
 						}
-						t9 := int32(load32((*m.memory)[uint32(i32(77772)):]))
-						store32((*m.memory)[uint32(i32(77772)):], uint32(t9&i32_rotl(i32(-2), int32(uint32(v0)>>3))))
+						t9 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
+						store32((*m.memory)[uint32(i32(0x33cc)):], uint32(t9&i32_rotl(i32(-2), int32(uint32(v0)>>3))))
 						goto l1
 					}
 					t10 := int32(load32((*m.memory)[int64(uint32(v2))+24:]))
@@ -19996,7 +19996,7 @@ func (m *Module) Xfree(v0 int32) {
 					goto l1
 				}
 				store32((*m.memory)[int64(uint32(v5))+4:], uint32(v0&i32(-2)))
-				store32((*m.memory)[uint32(i32(77780)):], uint32(v4))
+				store32((*m.memory)[uint32(i32(13268)):], uint32(v4))
 				store32((*m.memory)[uint32(v5):], uint32(v4))
 				store32((*m.memory)[int64(uint32(v2))+4:], uint32(v4|i32(1)))
 				return
@@ -20015,14 +20015,14 @@ func (m *Module) Xfree(v0 int32) {
 				t18 := int32(load32((*m.memory)[int64(uint32(v2))+28:]))
 				v0 = t18
 				v3 = v0 << 2
-				t19 := int32(load32((*m.memory)[int64(uint32(v3))+78076:]))
+				t19 := int32(load32((*m.memory)[int64(uint32(v3))+13564:]))
 				if t19 == v2 {
-					store32((*m.memory)[uint32(v3+i32(78076)):], uint32(v1))
+					store32((*m.memory)[uint32(v3+i32(13564)):], uint32(v1))
 					if v1 != 0 {
 						goto l6
 					}
-					t20 := int32(load32((*m.memory)[uint32(i32(77776)):]))
-					store32((*m.memory)[uint32(i32(77776)):], uint32(t20&i32_rotl(i32(-2), v0)))
+					t20 := int32(load32((*m.memory)[uint32(i32(13264)):]))
+					store32((*m.memory)[uint32(i32(13264)):], uint32(t20&i32_rotl(i32(-2), v0)))
 					goto l1
 				}
 				{
@@ -20065,28 +20065,28 @@ func (m *Module) Xfree(v0 int32) {
 		}
 		{
 			if v0&i32(2) == 0 {
-				t25 := int32(load32((*m.memory)[uint32(i32(77796)):]))
+				t25 := int32(load32((*m.memory)[uint32(i32(13284)):]))
 				if t25 == v5 {
-					store32((*m.memory)[uint32(i32(77796)):], uint32(v2))
-					t26 := int32(load32((*m.memory)[uint32(i32(77784)):]))
+					store32((*m.memory)[uint32(i32(13284)):], uint32(v2))
+					t26 := int32(load32((*m.memory)[uint32(i32(13272)):]))
 					v0 = t26 + v4
-					store32((*m.memory)[uint32(i32(77784)):], uint32(v0))
+					store32((*m.memory)[uint32(i32(13272)):], uint32(v0))
 					store32((*m.memory)[int64(uint32(v2))+4:], uint32(v0|i32(1)))
-					t27 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+					t27 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 					if v2 != t27 {
 						return
 					}
-					store32((*m.memory)[uint32(i32(77780)):], uint32(i32(0)))
-					store32((*m.memory)[uint32(i32(77792)):], uint32(i32(0)))
+					store32((*m.memory)[uint32(i32(13268)):], uint32(i32(0)))
+					store32((*m.memory)[uint32(i32(13280)):], uint32(i32(0)))
 					return
 				}
-				t28 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+				t28 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 				v8 = t28
 				if v8 == v5 {
-					store32((*m.memory)[uint32(i32(77792)):], uint32(v2))
-					t29 := int32(load32((*m.memory)[uint32(i32(77780)):]))
+					store32((*m.memory)[uint32(i32(13280)):], uint32(v2))
+					t29 := int32(load32((*m.memory)[uint32(i32(13268)):]))
 					v0 = t29 + v4
-					store32((*m.memory)[uint32(i32(77780)):], uint32(v0))
+					store32((*m.memory)[uint32(i32(13268)):], uint32(v0))
 					store32((*m.memory)[int64(uint32(v2))+4:], uint32(v0|i32(1)))
 					store32((*m.memory)[uint32(v0+v2):], uint32(v0))
 					return
@@ -20098,8 +20098,8 @@ func (m *Module) Xfree(v0 int32) {
 					t31 := int32(load32((*m.memory)[int64(uint32(v5))+8:]))
 					v3 = t31
 					if v3 == v1 {
-						t32 := int32(load32((*m.memory)[uint32(i32(77772)):]))
-						store32((*m.memory)[uint32(i32(77772)):], uint32(t32&i32_rotl(i32(-2), int32(uint32(v0)>>3))))
+						t32 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
+						store32((*m.memory)[uint32(i32(0x33cc)):], uint32(t32&i32_rotl(i32(-2), int32(uint32(v0)>>3))))
 						goto l8
 					}
 					store32((*m.memory)[int64(uint32(v1))+8:], uint32(v3))
@@ -20163,14 +20163,14 @@ func (m *Module) Xfree(v0 int32) {
 				t40 := int32(load32((*m.memory)[int64(uint32(v5))+28:]))
 				v0 = t40
 				v3 = v0 << 2
-				t41 := int32(load32((*m.memory)[int64(uint32(v3))+78076:]))
+				t41 := int32(load32((*m.memory)[int64(uint32(v3))+13564:]))
 				if t41 == v5 {
-					store32((*m.memory)[uint32(v3+i32(78076)):], uint32(v1))
+					store32((*m.memory)[uint32(v3+i32(13564)):], uint32(v1))
 					if v1 != 0 {
 						goto l13
 					}
-					t42 := int32(load32((*m.memory)[uint32(i32(77776)):]))
-					store32((*m.memory)[uint32(i32(77776)):], uint32(t42&i32_rotl(i32(-2), v0)))
+					t42 := int32(load32((*m.memory)[uint32(i32(13264)):]))
+					store32((*m.memory)[uint32(i32(13264)):], uint32(t42&i32_rotl(i32(-2), v0)))
 					goto l8
 				}
 				{
@@ -20208,19 +20208,19 @@ func (m *Module) Xfree(v0 int32) {
 		if v2 != v8 {
 			goto l12
 		}
-		store32((*m.memory)[uint32(i32(77780)):], uint32(v4))
+		store32((*m.memory)[uint32(i32(13268)):], uint32(v4))
 		return
 	l12:
 		if uint32(v4) <= uint32(i32(255)) {
-			v0 = v4&i32(248) + i32(77812)
+			v0 = v4&i32(248) + i32(13300)
 			var p46 int32
 			{
-				t47 := int32(load32((*m.memory)[uint32(i32(77772)):]))
+				t47 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
 				v3 = t47
 				t48 := v3
 				v1 = i32_shl(i32(1), int32(uint32(v4)>>3))
 				if t48&v1 == 0 {
-					store32((*m.memory)[uint32(i32(77772)):], uint32(v1|v3))
+					store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v1|v3))
 					t49 := v0
 					p46 = t49
 					goto l15
@@ -20244,18 +20244,18 @@ func (m *Module) Xfree(v0 int32) {
 		}
 		store32((*m.memory)[int64(uint32(v2))+28:], uint32(v1))
 		store64((*m.memory)[int64(uint32(v2))+16:], uint64(i64(0)))
-		v3 = v1<<2 + i32(78076)
+		v3 = v1<<2 + i32(13564)
 		var p52 int32
 		{
 			{
 				{
-					t53 := int32(load32((*m.memory)[uint32(i32(77776)):]))
+					t53 := int32(load32((*m.memory)[uint32(i32(13264)):]))
 					v0 = t53
 					t54 := v0
 					v7 = i32_shl(i32(1), v1)
 					if t54&v7 == 0 {
 						store32((*m.memory)[uint32(v3):], uint32(v2))
-						store32((*m.memory)[uint32(i32(77776)):], uint32(v0|v7))
+						store32((*m.memory)[uint32(i32(13264)):], uint32(v0|v7))
 						goto l16
 					}
 					t56 := v4
@@ -20307,13 +20307,13 @@ func (m *Module) Xfree(v0 int32) {
 		store32((*m.memory)[uint32(v1+v2):], uint32(v3))
 		store32((*m.memory)[int64(uint32(v2))+12:], uint32(v0))
 		store32((*m.memory)[uint32(v2+v4):], uint32(v7))
-		t62 := int32(load32((*m.memory)[uint32(i32(77804)):]))
+		t62 := int32(load32((*m.memory)[uint32(i32(13292)):]))
 		v0 = t62 - i32(1)
 		p63 := i32(-1)
 		if v0 != 0 {
 			p63 = v0
 		}
-		store32((*m.memory)[uint32(i32(77804)):], uint32(p63))
+		store32((*m.memory)[uint32(i32(13292)):], uint32(p63))
 	}
 }
 func (m *Module) _dispose_chunk(v0, v1 int32) {
@@ -20334,7 +20334,7 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 			v1 = v2 + v1
 			{
 				v0 = v0 - v2
-				t2 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+				t2 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 				if v0 != t2 {
 					t3 := int32(load32((*m.memory)[int64(uint32(v0))+12:]))
 					v3 = t3
@@ -20345,8 +20345,8 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 						if t5 != v4 {
 							goto l2
 						}
-						t6 := int32(load32((*m.memory)[uint32(i32(77772)):]))
-						store32((*m.memory)[uint32(i32(77772)):], uint32(t6&i32_rotl(i32(-2), int32(uint32(v2)>>3))))
+						t6 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
+						store32((*m.memory)[uint32(i32(0x33cc)):], uint32(t6&i32_rotl(i32(-2), int32(uint32(v2)>>3))))
 						goto l0
 					}
 					t7 := int32(load32((*m.memory)[int64(uint32(v0))+24:]))
@@ -20398,7 +20398,7 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 					goto l0
 				}
 				store32((*m.memory)[int64(uint32(v5))+4:], uint32(v2&i32(-2)))
-				store32((*m.memory)[uint32(i32(77780)):], uint32(v1))
+				store32((*m.memory)[uint32(i32(13268)):], uint32(v1))
 				store32((*m.memory)[uint32(v5):], uint32(v1))
 				store32((*m.memory)[int64(uint32(v0))+4:], uint32(v1|i32(1)))
 				return
@@ -20417,14 +20417,14 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 				t15 := int32(load32((*m.memory)[int64(uint32(v0))+28:]))
 				v2 = t15
 				v4 = v2 << 2
-				t16 := int32(load32((*m.memory)[int64(uint32(v4))+78076:]))
+				t16 := int32(load32((*m.memory)[int64(uint32(v4))+13564:]))
 				if t16 == v0 {
-					store32((*m.memory)[uint32(v4+i32(78076)):], uint32(v3))
+					store32((*m.memory)[uint32(v4+i32(13564)):], uint32(v3))
 					if v3 != 0 {
 						goto l6
 					}
-					t17 := int32(load32((*m.memory)[uint32(i32(77776)):]))
-					store32((*m.memory)[uint32(i32(77776)):], uint32(t17&i32_rotl(i32(-2), v2)))
+					t17 := int32(load32((*m.memory)[uint32(i32(13264)):]))
+					store32((*m.memory)[uint32(i32(13264)):], uint32(t17&i32_rotl(i32(-2), v2)))
 					goto l0
 				}
 				{
@@ -20462,28 +20462,28 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 				t21 := int32(load32((*m.memory)[int64(uint32(v5))+4:]))
 				v2 = t21
 				if v2&i32(2) == 0 {
-					t22 := int32(load32((*m.memory)[uint32(i32(77796)):]))
+					t22 := int32(load32((*m.memory)[uint32(i32(13284)):]))
 					if t22 == v5 {
-						store32((*m.memory)[uint32(i32(77796)):], uint32(v0))
-						t23 := int32(load32((*m.memory)[uint32(i32(77784)):]))
+						store32((*m.memory)[uint32(i32(13284)):], uint32(v0))
+						t23 := int32(load32((*m.memory)[uint32(i32(13272)):]))
 						v1 = t23 + v1
-						store32((*m.memory)[uint32(i32(77784)):], uint32(v1))
+						store32((*m.memory)[uint32(i32(13272)):], uint32(v1))
 						store32((*m.memory)[int64(uint32(v0))+4:], uint32(v1|i32(1)))
-						t24 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+						t24 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 						if v0 != t24 {
 							return
 						}
-						store32((*m.memory)[uint32(i32(77780)):], uint32(i32(0)))
-						store32((*m.memory)[uint32(i32(77792)):], uint32(i32(0)))
+						store32((*m.memory)[uint32(i32(13268)):], uint32(i32(0)))
+						store32((*m.memory)[uint32(i32(13280)):], uint32(i32(0)))
 						return
 					}
-					t25 := int32(load32((*m.memory)[uint32(i32(77792)):]))
+					t25 := int32(load32((*m.memory)[uint32(i32(13280)):]))
 					v8 = t25
 					if v8 == v5 {
-						store32((*m.memory)[uint32(i32(77792)):], uint32(v0))
-						t26 := int32(load32((*m.memory)[uint32(i32(77780)):]))
+						store32((*m.memory)[uint32(i32(13280)):], uint32(v0))
+						t26 := int32(load32((*m.memory)[uint32(i32(13268)):]))
 						v1 = t26 + v1
-						store32((*m.memory)[uint32(i32(77780)):], uint32(v1))
+						store32((*m.memory)[uint32(i32(13268)):], uint32(v1))
 						store32((*m.memory)[int64(uint32(v0))+4:], uint32(v1|i32(1)))
 						store32((*m.memory)[uint32(v0+v1):], uint32(v1))
 						return
@@ -20495,8 +20495,8 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 						t28 := int32(load32((*m.memory)[int64(uint32(v5))+8:]))
 						v4 = t28
 						if v4 == v3 {
-							t29 := int32(load32((*m.memory)[uint32(i32(77772)):]))
-							store32((*m.memory)[uint32(i32(77772)):], uint32(t29&i32_rotl(i32(-2), int32(uint32(v2)>>3))))
+							t29 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
+							store32((*m.memory)[uint32(i32(0x33cc)):], uint32(t29&i32_rotl(i32(-2), int32(uint32(v2)>>3))))
 							goto l8
 						}
 						store32((*m.memory)[int64(uint32(v3))+8:], uint32(v4))
@@ -20561,14 +20561,14 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 				t37 := int32(load32((*m.memory)[int64(uint32(v5))+28:]))
 				v2 = t37
 				v4 = v2 << 2
-				t38 := int32(load32((*m.memory)[int64(uint32(v4))+78076:]))
+				t38 := int32(load32((*m.memory)[int64(uint32(v4))+13564:]))
 				if t38 == v5 {
-					store32((*m.memory)[uint32(v4+i32(78076)):], uint32(v3))
+					store32((*m.memory)[uint32(v4+i32(13564)):], uint32(v3))
 					if v3 != 0 {
 						goto l13
 					}
-					t39 := int32(load32((*m.memory)[uint32(i32(77776)):]))
-					store32((*m.memory)[uint32(i32(77776)):], uint32(t39&i32_rotl(i32(-2), v2)))
+					t39 := int32(load32((*m.memory)[uint32(i32(13264)):]))
+					store32((*m.memory)[uint32(i32(13264)):], uint32(t39&i32_rotl(i32(-2), v2)))
 					goto l8
 				}
 				{
@@ -20606,19 +20606,19 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 		if v0 != v8 {
 			goto l12
 		}
-		store32((*m.memory)[uint32(i32(77780)):], uint32(v1))
+		store32((*m.memory)[uint32(i32(13268)):], uint32(v1))
 		return
 	l12:
 		if uint32(v1) <= uint32(i32(255)) {
-			v2 = v1&i32(248) + i32(77812)
+			v2 = v1&i32(248) + i32(13300)
 			var p43 int32
 			{
-				t44 := int32(load32((*m.memory)[uint32(i32(77772)):]))
+				t44 := int32(load32((*m.memory)[uint32(i32(0x33cc)):]))
 				v3 = t44
 				t45 := v3
 				v1 = i32_shl(i32(1), int32(uint32(v1)>>3))
 				if t45&v1 == 0 {
-					store32((*m.memory)[uint32(i32(77772)):], uint32(v1|v3))
+					store32((*m.memory)[uint32(i32(0x33cc)):], uint32(v1|v3))
 					t46 := v2
 					p43 = t46
 					goto l15
@@ -20642,14 +20642,14 @@ func (m *Module) _dispose_chunk(v0, v1 int32) {
 		}
 		store32((*m.memory)[int64(uint32(v0))+28:], uint32(v3))
 		store64((*m.memory)[int64(uint32(v0))+16:], uint64(i64(0)))
-		v2 = v3<<2 + i32(78076)
-		t49 := int32(load32((*m.memory)[uint32(i32(77776)):]))
+		v2 = v3<<2 + i32(13564)
+		t49 := int32(load32((*m.memory)[uint32(i32(13264)):]))
 		v4 = t49
 		t50 := v4
 		v7 = i32_shl(i32(1), v3)
 		if t50&v7 == 0 {
 			store32((*m.memory)[uint32(v2):], uint32(v0))
-			store32((*m.memory)[uint32(i32(77776)):], uint32(v4|v7))
+			store32((*m.memory)[uint32(i32(13264)):], uint32(v4|v7))
 			store32((*m.memory)[int64(uint32(v0))+24:], uint32(v2))
 			store32((*m.memory)[int64(uint32(v0))+8:], uint32(v0))
 			store32((*m.memory)[int64(uint32(v0))+12:], uint32(v0))
@@ -20722,7 +20722,7 @@ func (m *Module) Xaligned_alloc(v0, v1 int32) int32 {
 		}
 	l0:
 		if uint32(i32(-64)-v0) <= uint32(v1) {
-			store32((*m.memory)[uint32(i32(77388)):], uint32(i32(48)))
+			store32((*m.memory)[uint32(i32(12876)):], uint32(i32(48)))
 			p1 = i32(0)
 			goto l2
 		}

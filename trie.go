@@ -77,7 +77,7 @@ type module struct {
 func instantiate(mem wmem.Memory) (*module, error) {
 	mod := &module{}
 	mod.mem = mem
-	mod.mem.Grow(2, 65536) // pre-grow to the wasm binary's initial 2 pages before New copies data in
+	mod.mem.Grow(2, 65535) // initial memory size is 2 pages
 	mod.io = &marisaIOImpl{Memory: mod.mem}
 	mod.wexcept = &wexcept.Module{Memory: mod.mem}
 	mod.marisa = marisa_wasm.New(mod.io, mod.wexcept, mod)
