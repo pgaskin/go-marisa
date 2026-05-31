@@ -28,8 +28,7 @@ COPY --link download.go /build/src/
 RUN go run download.go
 
 FROM golang:1.25 AS wasm2go
-RUN GOPROXY=direct GONOSUMDB=github.com/ncruces/wasm2go GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=url.https://github.com/pgaskin/wasm2go.insteadOf GIT_CONFIG_VALUE_0=https://github.com/ncruces/wasm2go \
-    GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@fd4131be85739bde939fddce6f055431a68bdcf5
+RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@e6aa75a04444ac3582e6752c79a5e806565f8c20
 
 FROM sdk AS build
 WORKDIR /build/
