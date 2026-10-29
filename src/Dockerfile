@@ -22,13 +22,13 @@ COPY --link --from=wasi-sdk /opt /opt
 COPY --link --from=binaryen /opt /opt
 ENV PATH="/opt/wasi-sdk/bin:/opt/binaryen/bin:$PATH"
 
-FROM golang:1.25 AS download
+FROM golang:1.26 AS download
 WORKDIR /build/src
 COPY --link download.go /build/src/
 RUN go run download.go
 
-FROM golang:1.25 AS wasm2go
-RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@e6aa75a04444ac3582e6752c79a5e806565f8c20
+FROM golang:1.26 AS wasm2go
+RUN GOBIN=/ go install -trimpath -v github.com/ncruces/wasm2go@3acef445bce9927a8e9a9534533ca0a025c94784
 
 FROM sdk AS build
 WORKDIR /build/
